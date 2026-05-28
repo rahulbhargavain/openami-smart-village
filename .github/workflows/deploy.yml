@@ -4,7 +4,11 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch: # <-- Fixed spelling and structure
+  workflow_dispatch:
+
+# Opt into Node 24 early to silence the deprecation warning
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 
 # Required permissions for requesting the OIDC JWT token from Google
 permissions:
@@ -38,3 +42,5 @@ jobs:
 
       - name: Deploy to Firebase
         run: npx firebase-tools deploy --project=sattal-a27f2
+        env:
+          GOOGLE_CLOUD_QUOTA_PROJECT: sattal-a27f2
