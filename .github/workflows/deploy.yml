@@ -36,6 +36,8 @@ jobs:
         run: npm run build --if-present
 
       - name: Deploy to Firebase
-        uses: w9jds/firebase-action@master
-        with:
-          args: deploy --project=sattal-a27f2
+        # npx will automatically fetch the Firebase CLI tool natively on the host runner
+        run: npx firebase-tools deploy --project=sattal-a27f2
+        #        uses: w9jds/firebase-action@master
+        # with:
+        #  args: deploy --project=sattal-a27f2
