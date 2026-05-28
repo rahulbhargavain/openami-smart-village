@@ -1,7 +1,7 @@
 ====== DokuWiki ======<br>
 ~~NOTOC~~
 
-DokuWiki is a simple to use and highly versatile Open Source [Wp>Wiki Software](/wiki/wp>wiki software) that doesn't require a database. It is loved by users for its clean and readable [Syntax](/wiki/wiki/syntax). The ease of maintenance, backup and integration makes it an administrator's favorite. Built in [access controls](/wiki/acl) and [Authentication Connectors](/wiki/authentication connectors) make DokuWiki especially useful in the enterprise context and the large number of [Plugins](/wiki/plugins) contributed by its vibrant community allow for a broad range of use cases beyond a traditional wiki.
+DokuWiki is a simple to use and highly versatile Open Source [Wp>Wiki Software](/wiki/wp>wiki software) that doesn't require a database. It is loved by users for its clean and readable [Syntax](/wiki/wiki/syntax). The ease of maintenance, backup and integration makes it an administrator's favorite. Built in [access controls](/wiki/acl) and [Authentication Connectors](/wiki/authentication connectors) make DokuWiki especially useful in the enterprise context and the large number of [Plugins](/wiki/playground/plugins) contributed by its vibrant community allow for a broad range of use cases beyond a traditional wiki.
 
 <br>
 Get started: [<img src="/media/marketing/download-big.png|Download the latest version" class="wiki-image" alt="Embedded Image">](http://download.dokuwiki.org)
@@ -46,8 +46,8 @@ Wikis are quick to update and new pages are easily added. Designed for collabora
 We support customization on all levels of expertise. From easy configuration via the admin interface through downloading of templates and plugins to developing your own extensions.
 
 * [Configuration](/wiki/config)<br>
-* [Plugins](/wiki/plugins)<br>
-* [Templates](/wiki/template) (aka. skins/themes)<br>
+* [Plugins](/wiki/playground/plugins)<br>
+* [Templates](/wiki/conceptnote/template) (aka. skins/themes)<br>
 * [Design Examples](/wiki/Design examples)<br>
 * [Tips & tricks](/wiki/tips)
 

@@ -11,11 +11,11 @@ ISV is a collection of Electrical Engineers, Entrepreneurs, Community Leaders, a
 
 | Region | Meeting Cadence | Meeting Link | Group Contact| |
 | --- | --- | --- | --- |
-| [North America](/wiki/wg/nawg) | Joan Kerr |
-| [Latin America](/wiki/wg/lawg) | Mario De La Ossa |
-| [Africa](/wiki/wg/awg) | Abiodun Okunola |
-| [China](/wiki/wg/sawg) |
-| [South Asia](/wiki/wg/sawg) | Sasi Kottayil |
+| [North America](/wiki/wg/tech) | Joan Kerr |
+| [Latin America](/wiki/wg/tech) | Mario De La Ossa |
+| [Africa](/wiki/wg/tech) | Abiodun Okunola |
+| [China](/wiki/wg/tech) |
+| [South Asia](/wiki/wg/tech) | Sasi Kottayil |
 
 ## Enterprise Lifecycle: Application & Execution
 Details on the Intake Process here. <img src="/media/screenshot_2024-07-25_at_4.05.26 pm.png" class="wiki-image" alt="Embedded Image"><br>

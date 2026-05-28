@@ -10,6 +10,44 @@ HTML_OUT_DIR = r"C:\Users\rhlbh\.gemini\antigravity\scratch\sattal-pitch\wiki"
 os.makedirs(MD_OUT_DIR, exist_ok=True)
 os.makedirs(HTML_OUT_DIR, exist_ok=True)
 
+# ── Smart Link Resolution Dictionary ──
+# Crawl the source directory to build a lookup of all pages.
+PAGE_MAP_PATH = {} # e.g. "wg/standards" -> "wg/standards"
+PAGE_MAP_BASE = {} # e.g. "standards" -> "wg/standards" (fallback)
+
+for root, dirs, files in os.walk(SRC_DIR):
+    for file in files:
+        if file.endswith(".txt"):
+            abs_path = os.path.join(root, file)
+            rel_path = os.path.relpath(abs_path, SRC_DIR)
+            clean_rel = rel_path.replace(".txt", "").replace("\\", "/")
+            
+            # Map full path lowercased
+            PAGE_MAP_PATH[clean_rel.lower()] = clean_rel
+            
+            # Map basename lowercased
+            base_name = os.path.basename(file).replace(".txt", "").lower()
+            if base_name not in PAGE_MAP_BASE:
+                PAGE_MAP_BASE[base_name] = clean_rel
+
+# Add manual custom mapping corrections
+CUSTOM_MAPPINGS = {
+    "playground/template_project": "playground/project_template",
+    "playground/template_projects": "playground/template_projects",
+    "platground/template_wg": "playground/project_template",
+    "platground/template_rwg": "playground/project_template",
+    "playground/template_wg": "playground/project_template",
+    "playground/template_rwg": "playground/project_template",
+    "wg/nawg": "wg/tech",
+    "wg/lawg": "wg/tech",
+    "wg/awg": "wg/tech",
+    "wg/sawg": "wg/tech",
+}
+for k, v in CUSTOM_MAPPINGS.items():
+    PAGE_MAP_PATH[k.lower()] = v
+    base = k.split("/")[-1].lower()
+    PAGE_MAP_BASE[base] = v
+
 # Styling template
 HTML_TEMPLATE = """<!DOCTYPE html>
 <html lang="en">
@@ -36,14 +74,16 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     body {{ font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; }}
     
     header {{
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      color: white; padding: 24px 40px; border-bottom: 3px solid var(--teal);
+      background: var(--card);
+      padding: 20px 40px;
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 3px rgba(15,23,42,0.05);
     }}
     header .container {{ display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }}
-    header h1 {{ font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }}
+    header h1 {{ font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; color: var(--text); }}
     header h1 strong {{ color: var(--teal); }}
-    header nav a {{ color: #cbd5e1; text-decoration: none; font-size: 0.85rem; font-weight: 600; margin-left: 20px; transition: color 0.2s; }}
-    header nav a:hover {{ color: white; }}
+    header nav a {{ color: var(--sub); text-decoration: none; font-size: 0.85rem; font-weight: 600; margin-left: 20px; transition: color 0.2s; }}
+    header nav a:hover {{ color: var(--teal); }}
 
     .main-layout {{ max-width: 1200px; margin: 40px auto; padding: 0 40px; display: grid; grid-template-columns: 3fr 1fr; gap: 40px; }}
     .content-card {{ background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; box-shadow: 0 4px 12px rgba(15,23,42,0.02); }}
@@ -151,6 +191,9 @@ def clean_dokuwiki_formatting(content):
     """
     Parses DokuWiki text formatting recursively into GFM Markdown syntax.
     """
+    # 0. Clean DokuWiki legacy font tags
+    content = re.sub(r'</?font[^>]*>', '', content)
+
     # 1. Bold: **bold** -> **bold** (already matches)
     
     # 2. Italic: //italic// -> *italic* (ignore URL protocol double slashes)
@@ -218,23 +261,39 @@ def parse_links(content):
             display_text = text if text else target
             return f"[{display_text}]({target})"
         
+        # If it's an email address (contains @ and no slashes or colons)
+        if "@" in target and ":" not in target and "/" not in target:
+            display_text = text if text else target
+            return f"[{display_text}](mailto:{target})"
+        
         # If it's an internal DokuWiki path link
-        # SGC/PAN paths represent absolute or relative paths with colons
         clean_target = target
         if clean_target.startswith(":"):
             clean_target = clean_target[1:]
         
         # Map colons to slashes
-        clean_target = clean_target.replace(":", "/")
+        clean_target = clean_target.replace(":", "/").strip("/")
         
-        # Resolve target name
+        # Match by path first, then fallback to basename
+        clean_target_lower = clean_target.lower()
+        if clean_target_lower in PAGE_MAP_PATH:
+            resolved_target = PAGE_MAP_PATH[clean_target_lower]
+        else:
+            # Try basename fallback
+            target_basename = clean_target.split("/")[-1].lower()
+            if target_basename in PAGE_MAP_BASE:
+                resolved_target = PAGE_MAP_BASE[target_basename]
+            else:
+                resolved_target = clean_target
+        
+        # Resolve target display name if text is not provided
         if not text:
-            display_text = clean_target.split("/")[-1].replace("_", " ").title()
+            display_text = resolved_target.split("/")[-1].replace("_", " ").title()
         else:
             display_text = text
             
         # Clean relative URLs served cleanly via Firebase Hosting
-        return f"[{display_text}](/wiki/{clean_target})"
+        return f"[{display_text}](/wiki/{resolved_target})"
         
     # Pattern: [[target|text]] or [[target]]
     content = re.sub(r'\[\[([^\]|]+)(?:\|([^\]]*))?\]\]', replace_link, content)

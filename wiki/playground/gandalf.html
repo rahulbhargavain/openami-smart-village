@@ -23,14 +23,16 @@
     body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; }
     
     header {
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      color: white; padding: 24px 40px; border-bottom: 3px solid var(--teal);
+      background: var(--card);
+      padding: 20px 40px;
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 3px rgba(15,23,42,0.05);
     }
     header .container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
-    header h1 { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
+    header h1 { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; color: var(--text); }
     header h1 strong { color: var(--teal); }
-    header nav a { color: #cbd5e1; text-decoration: none; font-size: 0.85rem; font-weight: 600; margin-left: 20px; transition: color 0.2s; }
-    header nav a:hover { color: white; }
+    header nav a { color: var(--sub); text-decoration: none; font-size: 0.85rem; font-weight: 600; margin-left: 20px; transition: color 0.2s; }
+    header nav a:hover { color: var(--teal); }
 
     .main-layout { max-width: 1200px; margin: 40px auto; padding: 0 40px; display: grid; grid-template-columns: 3fr 1fr; gap: 40px; }
     .content-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; box-shadow: 0 4px 12px rgba(15,23,42,0.02); }
@@ -102,7 +104,7 @@
 <div class="main-layout">
   <article class="content-card">
     <h3>John's playground space</h3>
-<p><a href="/wiki/docuwiki">Docuwiki</a></p>
+<p><a href="/wiki/playground/docuwiki">Docuwiki</a></p>
 <h1>Wiki contribution guide</h1>
 <p>The following standards should help keeping the wiki consistent, easy to understand for newbies, and easy to edit for casual contributors. There can be exceptions in some cases where it makes sense, but there should be a good reason for that.</p>
 <p>{{section>meta:infobox:registration_disabled&noheader&nofooter&noeditbutton}}</p>
@@ -112,13 +114,13 @@
 <h2>Structure</h2>
 <p>To give the Wiki a better structure, we employ <code>namespaces</code> and <code>categories</code> (and <code>tags</code>):</p>
 <ul>
-  <li><strong>Namespaces</strong> are highest. In each of these upper namespaces, there shall be a maximum of 3 (three) sublevels. * *<a href="/wiki/about/home">about</a>* about the OpenWrt project in general * *<a href="/wiki/toh/home">TOH</a>*documentation about supported devices, called "Table of Hardware". * *<a href="/wiki/packages/home">Packages</a>*documentation about available packages * *<a href="/wiki/downloads/home">Downloads</a>*landing page to download firmware for your device * *<a href="/wiki/docs/home">Documentation</a>*main documentation page * *<a href="/wiki/wiki/home">Wiki</a>*pages about wiki functionality and wiki contribution rules * *<a href="/wiki/faq/home">FAQ</a>*is the place for FAQ lists * *<a href="/wiki/inbox/start">Inbox</a>*place pages here you are working on and which are not mature enough yet * *<a href="/wiki/playground/playground">Playground</a>*is for trying out <a href="/wiki/wiki/syntax">wiki syntax</a> or similar shortlived actions</li>
+  <li><strong>Namespaces</strong> are highest. In each of these upper namespaces, there shall be a maximum of 3 (three) sublevels. * *<a href="/wiki/home">about</a>* about the OpenWrt project in general * *<a href="/wiki/home">TOH</a>*documentation about supported devices, called "Table of Hardware". * *<a href="/wiki/home">Packages</a>*documentation about available packages * *<a href="/wiki/home">Downloads</a>*landing page to download firmware for your device * *<a href="/wiki/home">Documentation</a>*main documentation page * *<a href="/wiki/home">Wiki</a>*pages about wiki functionality and wiki contribution rules * *<a href="/wiki/home">FAQ</a>*is the place for FAQ lists * *<a href="/wiki/inbox/start">Inbox</a>*place pages here you are working on and which are not mature enough yet * *<a href="/wiki/playground/playground">Playground</a>*is for trying out <a href="/wiki/wiki/syntax">wiki syntax</a> or similar shortlived actions</li>
 </ul>
 <ul>
-  <li><strong>Categories</strong> provide the first level of the namespaces. They distinguish different kinds of <strong>docs</strong>: * *<a href="/wiki/docs/guide-quick-start/start">Quick Start</a>*quick start tutorials, used for first installation and setup, or similar. * *<a href="/wiki/docs/guide-user/home">User Guide</a>*most of the documentation for users goes here * *<a href="/wiki/docs/guide-developer/home">Developer Guide</a>*developer documentation</li>
+  <li><strong>Categories</strong> provide the first level of the namespaces. They distinguish different kinds of <strong>docs</strong>: * *<a href="/wiki/docs/guide-quick-start/start">Quick Start</a>*quick start tutorials, used for first installation and setup, or similar. * *<a href="/wiki/home">User Guide</a>*most of the documentation for users goes here * *<a href="/wiki/home">Developer Guide</a>*developer documentation</li>
 </ul>
 <ul>
-  <li><strong>Tags</strong> are different. While the structure is exclusive, you can place an article only in one subcategory, tags are more flexible. More of them can be placed simultaneously in one article, and thus allow for a more flexible categorizing. To reproduce this with the structure we could write symbolic articles, which are placed in different subcategories and redirect to one article. But let's not do that. Tags will prove most useful, when you want to search for routers with certain features. * <a href="/wiki/meta/tags">Tags</a> Overview To ease navigation, we use a <a href="/wiki/sidebar/home">sidebar</a></li>
+  <li><strong>Tags</strong> are different. While the structure is exclusive, you can place an article only in one subcategory, tags are more flexible. More of them can be placed simultaneously in one article, and thus allow for a more flexible categorizing. To reproduce this with the structure we could write symbolic articles, which are placed in different subcategories and redirect to one article. But let's not do that. Tags will prove most useful, when you want to search for routers with certain features. * <a href="/wiki/meta/tags">Tags</a> Overview To ease navigation, we use a <a href="/wiki/home">sidebar</a></li>
 </ul>
   </article>
   

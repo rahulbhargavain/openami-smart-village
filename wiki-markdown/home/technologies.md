@@ -48,7 +48,7 @@ Solarman<br>
 #### MQTT
 Solarman MQTT: [https://github.com/mpepping/solarman-mqtt](https://github.com/mpepping/solarman-mqtt)
 
-** <font 18px/inherit;;inherit;;inherit>Safety</font>  **
+** Safety  **
 
 Here are a few pamphlets put together by ESFi ([Electrical Safety Foundation International](https://www.esfi.org/)):
 

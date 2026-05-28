@@ -7,7 +7,7 @@ See the [Projects Template](/wiki/playground/template_projects) for an outline o
 
 There is an emerging effort to develop our own Software Stack with accomodating Hardware options.
 
-* [Openami](/wiki/OpenAMI)
+* [Openami](/wiki/home/openami)
 
 
 <div class="pdf-card">

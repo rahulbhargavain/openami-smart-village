@@ -23,14 +23,16 @@
     body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; }
     
     header {
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      color: white; padding: 24px 40px; border-bottom: 3px solid var(--teal);
+      background: var(--card);
+      padding: 20px 40px;
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 3px rgba(15,23,42,0.05);
     }
     header .container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
-    header h1 { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
+    header h1 { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; color: var(--text); }
     header h1 strong { color: var(--teal); }
-    header nav a { color: #cbd5e1; text-decoration: none; font-size: 0.85rem; font-weight: 600; margin-left: 20px; transition: color 0.2s; }
-    header nav a:hover { color: white; }
+    header nav a { color: var(--sub); text-decoration: none; font-size: 0.85rem; font-weight: 600; margin-left: 20px; transition: color 0.2s; }
+    header nav a:hover { color: var(--teal); }
 
     .main-layout { max-width: 1200px; margin: 40px auto; padding: 0 40px; display: grid; grid-template-columns: 3fr 1fr; gap: 40px; }
     .content-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; box-shadow: 0 4px 12px rgba(15,23,42,0.02); }
@@ -130,7 +132,7 @@
 <p>This links to <a href="/wiki/syntax#internal">this Section</a>.</p>
 <p>Notes:</p>
 <ul>
-  <li>Links to <a href="/wiki/syntax">existing pages</a> are shown in a different style from <a href="/wiki/nonexisting">Nonexisting</a> ones.</li>
+  <li>Links to <a href="/wiki/wiki/syntax">existing pages</a> are shown in a different style from <a href="/wiki/nonexisting">Nonexisting</a> ones.</li>
   <li>DokuWiki does not use <a href="/wiki/wp>CamelCase">Wp>Camelcase</a> to automatically create links by default, but this behavior can be enabled in the <a href="/wiki/doku>config">Doku>Config</a> file. Hint: If DokuWiki is a link, then it's enabled.</li>
   <li>When a section's heading is changed, its bookmark changes, too. So don't rely on section linking too much.</li>
 </ul>
@@ -275,7 +277,7 @@
   <li>DELETEME %% DELETEME %%</li>
 </ul>
 <h3>Text to HTML Conversions</h3>
-<p>Typography: <a href="/wiki/DokuWiki">Dokuwiki</a> can convert simple text characters to their typographically correct entities. Here is an example of recognized characters.</p>
+<p>Typography: <a href="/wiki/wiki/dokuwiki">Dokuwiki</a> can convert simple text characters to their typographically correct entities. Here is an example of recognized characters.</p>
 <p>-> <- <-> => <= <=> >> << -- --- 640x480 (c) (tm) (r) "He thought 'It's a man's world'..."</p>
 <p><code> -> <- <-> => <= <=> >> << -- --- 640x480 (c) (tm) (r) "He thought 'It's a man's world'..." </code></p>
 <p>The same can be done to produce any kind of HTML, it just needs to be added to the <a href="/wiki/doku>entities">pattern file</a>.</p>
@@ -509,7 +511,7 @@
 <p><code> This is preformatted code all spaces are preserved: like              <-this </code></p>
 <p><file> This is pretty much the same, but you could use it to show that you quoted a file. </file></p>
 <h3>Syntax Highlighting</h3>
-<p><a href="/wiki/wiki/DokuWiki">Dokuwiki</a> can highlight sourcecode, which makes it easier to read. It uses the <a href="http://qbnz.com/highlighter/">GeSHi</a> Generic Syntax Highlighter -- so any language supported by GeSHi is supported. The syntax uses the same code and file blocks described in the previous section, but this time the name of the language syntax to be highlighted is included inside the tag, e.g. <code><nowiki><code java></nowiki></code> or <code><nowiki><file java></nowiki></code>.</p>
+<p><a href="/wiki/wiki/dokuwiki">Dokuwiki</a> can highlight sourcecode, which makes it easier to read. It uses the <a href="http://qbnz.com/highlighter/">GeSHi</a> Generic Syntax Highlighter -- so any language supported by GeSHi is supported. The syntax uses the same code and file blocks described in the previous section, but this time the name of the language syntax to be highlighted is included inside the tag, e.g. <code><nowiki><code java></nowiki></code> or <code><nowiki><file java></nowiki></code>.</p>
 <p><code java> /**</p>
 <ul>
   <li>The HelloWorldApp class implements an application that</li>
@@ -525,7 +527,7 @@
 <p><file php myexample.php> <?php echo "hello world!"; ?> </file></p>
 <p>If you don't want any highlighting but want a downloadable file, specify a dash (<code>-</code>) as the language code: <code>%%<code - myfile.foo>%%</code>.</p>
 <h2>RSS/ATOM Feed Aggregation</h2>
-<p><a href="/wiki/DokuWiki">Dokuwiki</a> can integrate data from external XML feeds. For parsing the XML feeds, <a href="http://simplepie.org/">SimplePie</a> is used. All formats understood by SimplePie can be used in DokuWiki as well. You can influence the rendering by multiple additional space separated parameters:</p>
+<p><a href="/wiki/wiki/dokuwiki">Dokuwiki</a> can integrate data from external XML feeds. For parsing the XML feeds, <a href="http://simplepie.org/">SimplePie</a> is used. All formats understood by SimplePie can be used in DokuWiki as well. You can influence the rendering by multiple additional space separated parameters:</p>
 <div class="table-wrapper"><table>
 <thead><tr>
   <th>Parameter</th>
@@ -561,7 +563,7 @@
   <td>refresh period, where d=days, h=hours, m=minutes. (e.g. 12h = 12 hours).</td>
 </tr>
 </tbody></table></div>
-<p>The refresh period defaults to 4 hours. Any value below 10 minutes will be treated as 10 minutes. <a href="/wiki/wiki/DokuWiki">Dokuwiki</a> will generally try to supply a cached version of a page, obviously this is inappropriate when the page contains dynamic external content. The parameter tells <a href="/wiki/wiki/DokuWiki">Dokuwiki</a> to re-render the page if it is more than *refresh period* since the page was last rendered.</p>
+<p>The refresh period defaults to 4 hours. Any value below 10 minutes will be treated as 10 minutes. <a href="/wiki/wiki/dokuwiki">Dokuwiki</a> will generally try to supply a cached version of a page, obviously this is inappropriate when the page contains dynamic external content. The parameter tells <a href="/wiki/wiki/dokuwiki">Dokuwiki</a> to re-render the page if it is more than *refresh period* since the page was last rendered.</p>
 <p>By default the feed will be sorted by date, newest items first. You can sort it by oldest first using the <code>reverse</code> parameter, or display the feed as is with <code>nosort</code>.</p>
 <p><strong>Example:</strong></p>
 <p>{{rss>http://slashdot.org/index.rss 5 author date 1h }}</p>

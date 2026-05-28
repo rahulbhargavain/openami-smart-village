@@ -23,14 +23,16 @@
     body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; }
     
     header {
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      color: white; padding: 24px 40px; border-bottom: 3px solid var(--teal);
+      background: var(--card);
+      padding: 20px 40px;
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 3px rgba(15,23,42,0.05);
     }
     header .container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
-    header h1 { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
+    header h1 { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; color: var(--text); }
     header h1 strong { color: var(--teal); }
-    header nav a { color: #cbd5e1; text-decoration: none; font-size: 0.85rem; font-weight: 600; margin-left: 20px; transition: color 0.2s; }
-    header nav a:hover { color: white; }
+    header nav a { color: var(--sub); text-decoration: none; font-size: 0.85rem; font-weight: 600; margin-left: 20px; transition: color 0.2s; }
+    header nav a:hover { color: var(--teal); }
 
     .main-layout { max-width: 1200px; margin: 40px auto; padding: 0 40px; display: grid; grid-template-columns: 3fr 1fr; gap: 40px; }
     .content-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; box-shadow: 0 4px 12px rgba(15,23,42,0.02); }
@@ -102,12 +104,12 @@
 <div class="main-layout">
   <article class="content-card">
     <h1>DokuWiki</h1>
-<p><a href="/wiki/doku>wiki/dokuwiki"><img src="/media/wiki/dokuwiki-128.png" class="wiki-image" alt="Embedded Image"></a> DokuWiki is a simple to use and highly versatile Open Source <a href="/wiki/wp>wiki">Wp>Wiki</a> software that doesn't require a database. It is loved by users for its clean and readable <a href="/wiki/wiki/syntax">Syntax</a>. The ease of maintenance, backup and integration makes it an administrator's favorite. Built in <a href="/wiki/doku>acl">access controls</a> and <a href="/wiki/doku>auth">authentication connectors</a> make DokuWiki especially useful in the enterprise context and the large number of <a href="/wiki/doku>plugins">Doku>Plugins</a> contributed by its vibrant community allow for a broad range of use cases beyond a traditional wiki.</p>
+<p><a href="/wiki/wiki/dokuwiki"><img src="/media/wiki/dokuwiki-128.png" class="wiki-image" alt="Embedded Image"></a> DokuWiki is a simple to use and highly versatile Open Source <a href="/wiki/wp>wiki">Wp>Wiki</a> software that doesn't require a database. It is loved by users for its clean and readable <a href="/wiki/wiki/syntax">Syntax</a>. The ease of maintenance, backup and integration makes it an administrator's favorite. Built in <a href="/wiki/doku>acl">access controls</a> and <a href="/wiki/doku>auth">authentication connectors</a> make DokuWiki especially useful in the enterprise context and the large number of <a href="/wiki/doku>plugins">Doku>Plugins</a> contributed by its vibrant community allow for a broad range of use cases beyond a traditional wiki.</p>
 <p>Read the <a href="/wiki/doku>manual">DokuWiki Manual</a> to unleash the full power of DokuWiki.</p>
 <h2>Download</h2>
 <p>DokuWiki is available at https://download.dokuwiki.org/</p>
 <h2>Read More</h2>
-<p>All documentation and additional information besides the <a href="/wiki/syntax">syntax description</a> is maintained in the DokuWiki at <a href="/wiki/doku>">www.dokuwiki.org</a>.</p>
+<p>All documentation and additional information besides the <a href="/wiki/wiki/syntax">syntax description</a> is maintained in the DokuWiki at <a href="/wiki/doku>">www.dokuwiki.org</a>.</p>
 <p><strong>About DokuWiki</strong></p>
 <ul>
   <li><a href="/wiki/doku>features">A feature list</a> :!:</li>

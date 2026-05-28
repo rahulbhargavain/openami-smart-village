@@ -23,14 +23,16 @@
     body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; }
     
     header {
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      color: white; padding: 24px 40px; border-bottom: 3px solid var(--teal);
+      background: var(--card);
+      padding: 20px 40px;
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 3px rgba(15,23,42,0.05);
     }
     header .container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
-    header h1 { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
+    header h1 { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; color: var(--text); }
     header h1 strong { color: var(--teal); }
-    header nav a { color: #cbd5e1; text-decoration: none; font-size: 0.85rem; font-weight: 600; margin-left: 20px; transition: color 0.2s; }
-    header nav a:hover { color: white; }
+    header nav a { color: var(--sub); text-decoration: none; font-size: 0.85rem; font-weight: 600; margin-left: 20px; transition: color 0.2s; }
+    header nav a:hover { color: var(--teal); }
 
     .main-layout { max-width: 1200px; margin: 40px auto; padding: 0 40px; display: grid; grid-template-columns: 3fr 1fr; gap: 40px; }
     .content-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; box-shadow: 0 4px 12px rgba(15,23,42,0.02); }
@@ -107,7 +109,7 @@
 <p>See the <a href="/wiki/playground/template_projects">Projects Template</a> for an outline of how we are thinking about featuring projects. Below is a table listing each project that has received support from ISV, including a link to a project page for documentation for each, followed by our most recent PDF report.</p>
 <p>There is an emerging effort to develop our own Software Stack with accomodating Hardware options.</p>
 <ul>
-  <li><a href="/wiki/OpenAMI">Openami</a></li>
+  <li><a href="/wiki/home/openami">Openami</a></li>
 </ul>
 <div class="pdf-card">
 <p><span class="pdf-icon">📄</span> <div class="pdf-info"> <div class="pdf-title">Isv 2022 Portfolio Of Project Briefs 2 Pagers Intro - Revised 25May22 By Mercy C .Pdf</div> <a href="/media/isv_2022_portfolio_of_project_briefs_2_pagers_intro_-_revised_25may22_by_mercy_c_.pdf" class="pdf-btn" target="_blank">View / Download PDF Manual</a> </div> </div></p>

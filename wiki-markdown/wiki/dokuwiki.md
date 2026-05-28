@@ -1,5 +1,5 @@
 # DokuWiki
-[<img src="/media/wiki/dokuwiki-128.png" class="wiki-image" alt="Embedded Image">](/wiki/doku>wiki/dokuwiki) DokuWiki is a simple to use and highly versatile Open Source [Wp>Wiki](/wiki/wp>wiki) software that doesn't require a database. It is loved by users for its clean and readable [Syntax](/wiki/wiki/syntax). The ease of maintenance, backup and integration makes it an administrator's favorite. Built in [access controls](/wiki/doku>acl) and [authentication connectors](/wiki/doku>auth) make DokuWiki especially useful in the enterprise context and the large number of [Doku>Plugins](/wiki/doku>plugins) contributed by its vibrant community allow for a broad range of use cases beyond a traditional wiki.
+[<img src="/media/wiki/dokuwiki-128.png" class="wiki-image" alt="Embedded Image">](/wiki/wiki/dokuwiki) DokuWiki is a simple to use and highly versatile Open Source [Wp>Wiki](/wiki/wp>wiki) software that doesn't require a database. It is loved by users for its clean and readable [Syntax](/wiki/wiki/syntax). The ease of maintenance, backup and integration makes it an administrator's favorite. Built in [access controls](/wiki/doku>acl) and [authentication connectors](/wiki/doku>auth) make DokuWiki especially useful in the enterprise context and the large number of [Doku>Plugins](/wiki/doku>plugins) contributed by its vibrant community allow for a broad range of use cases beyond a traditional wiki.
 
 Read the [DokuWiki Manual](/wiki/doku>manual) to unleash the full power of DokuWiki.
 
@@ -8,7 +8,7 @@ DokuWiki is available at https://download.dokuwiki.org/
 
 
 ## Read More
-All documentation and additional information besides the [syntax description](/wiki/syntax) is maintained in the DokuWiki at [www.dokuwiki.org](/wiki/doku>).
+All documentation and additional information besides the [syntax description](/wiki/wiki/syntax) is maintained in the DokuWiki at [www.dokuwiki.org](/wiki/doku>).
 
 **About DokuWiki**
 

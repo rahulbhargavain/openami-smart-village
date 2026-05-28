@@ -33,7 +33,7 @@ For SDG 6: *Ensure availability and sustainable management of water and sanitati
 The World Health Organization (WHO), through the UN-Water Global Analysis and Assessment of Sanitation and Drinking-Water (GLAAS), is responsible for global monitoring and reporting on the indicators for Targets 6.a and 6.b, 6.a.1 and 6.b.1 respectively, in collaboration with the Organisation for Economic Co-operation and Development
 (OECD) and United Nations Environment Programme (UNEP). 
 
-1. -- *[Rural Water Supply Network Hosted by Skat Foundation](/wiki/mario.ossa@ieee.org) 2025/04/13 07:00*
+1. -- *[Rural Water Supply Network Hosted by Skat Foundation](mailto:mario.ossa@ieee.org) 2025/04/13 07:00*
 
 "Dgroups is the starting point for groups and communities in international development. Currently Dgroups engages over 350000 people in ALL countries and territories of the world."
 

@@ -58,7 +58,7 @@ Linking to a specific section is possible, too. Just add the section name behind
 
 Notes:
 
-* Links to [existing pages](/wiki/syntax) are shown in a different style from [Nonexisting](/wiki/nonexisting) ones.
+* Links to [existing pages](/wiki/wiki/syntax) are shown in a different style from [Nonexisting](/wiki/nonexisting) ones.
 * DokuWiki does not use [Wp>Camelcase](/wiki/wp>CamelCase) to automatically create links by default, but this behavior can be enabled in the [Doku>Config](/wiki/doku>config) file. Hint: If DokuWiki is a link, then it's enabled.
 * When a section's heading is changed, its bookmark changes, too. So don't rely on section linking too much.
 
@@ -237,7 +237,7 @@ DokuWiki converts commonly used [Wp>Emoticon](/wiki/wp>emoticon)s to their graph
 * DELETEME %% DELETEME %%
 
 ### Text to HTML Conversions
-Typography: [Dokuwiki](/wiki/DokuWiki) can convert simple text characters to their typographically correct entities. Here is an example of recognized characters.
+Typography: [Dokuwiki](/wiki/wiki/dokuwiki) can convert simple text characters to their typographically correct entities. Here is an example of recognized characters.
 
 -> <- <-> => <= <=> >> << -- --- 640x480 (c) (tm) (r)
 "He thought 'It's a man's world'..."
@@ -392,7 +392,7 @@ Those blocks were created by this source:
   </file>
 
 ### Syntax Highlighting
-[Dokuwiki](/wiki/wiki/DokuWiki) can highlight sourcecode, which makes it easier to read. It uses the [GeSHi](http://qbnz.com/highlighter/) Generic Syntax Highlighter -- so any language supported by GeSHi is supported. The syntax uses the same code and file blocks described in the previous section, but this time the name of the language syntax to be highlighted is included inside the tag, e.g. `<nowiki><code java></nowiki>` or `<nowiki><file java></nowiki>`.
+[Dokuwiki](/wiki/wiki/dokuwiki) can highlight sourcecode, which makes it easier to read. It uses the [GeSHi](http://qbnz.com/highlighter/) Generic Syntax Highlighter -- so any language supported by GeSHi is supported. The syntax uses the same code and file blocks described in the previous section, but this time the name of the language syntax to be highlighted is included inside the tag, e.g. `<nowiki><code java></nowiki>` or `<nowiki><file java></nowiki>`.
 
 <code java>
 /**
@@ -426,7 +426,7 @@ When you use the `%%<code>%%` or `%%<file>%%` syntax as above, you might want to
 If you don't want any highlighting but want a downloadable file, specify a dash (`-`) as the language code: `%%<code - myfile.foo>%%`.
 
 ## RSS/ATOM Feed Aggregation
-[Dokuwiki](/wiki/DokuWiki) can integrate data from external XML feeds. For parsing the XML feeds, [SimplePie](http://simplepie.org/) is used. All formats understood by SimplePie can be used in DokuWiki as well. You can influence the rendering by multiple additional space separated parameters:
+[Dokuwiki](/wiki/wiki/dokuwiki) can integrate data from external XML feeds. For parsing the XML feeds, [SimplePie](http://simplepie.org/) is used. All formats understood by SimplePie can be used in DokuWiki as well. You can influence the rendering by multiple additional space separated parameters:
 
 | Parameter | Description |
 | --- | --- |
@@ -438,7 +438,7 @@ If you don't want any highlighting but want a downloadable file, specify a dash 
 | nosort | do not sort the items in the feed |
 | *n*[dhm] | refresh period, where d=days, h=hours, m=minutes. (e.g. 12h = 12 hours). |
 
-The refresh period defaults to 4 hours. Any value below 10 minutes will be treated as 10 minutes. [Dokuwiki](/wiki/wiki/DokuWiki) will generally try to supply a cached version of a page, obviously this is inappropriate when the page contains dynamic external content. The parameter tells [Dokuwiki](/wiki/wiki/DokuWiki) to re-render the page if it is more than *refresh period* since the page was last rendered.
+The refresh period defaults to 4 hours. Any value below 10 minutes will be treated as 10 minutes. [Dokuwiki](/wiki/wiki/dokuwiki) will generally try to supply a cached version of a page, obviously this is inappropriate when the page contains dynamic external content. The parameter tells [Dokuwiki](/wiki/wiki/dokuwiki) to re-render the page if it is more than *refresh period* since the page was last rendered.
 
 By default the feed will be sorted by date, newest items first. You can sort it by oldest first using the `reverse` parameter, or display the feed as is with `nosort`.
 
