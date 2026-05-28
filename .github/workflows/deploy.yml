@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+workflow_dispath:
 
 # Required permissions for requesting the OIDC JWT token from Google
 permissions:
@@ -22,6 +23,7 @@ jobs:
         with:
           workload_identity_provider: 'projects/993111087069/locations/global/workloadIdentityPools/github-actions-pool/providers/github-provider'
           service_account: 'github-ci-deployer@sattal-a27f2.iam.gserviceaccount.com'
+          # token_format: 'access_token' # force authentication
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
