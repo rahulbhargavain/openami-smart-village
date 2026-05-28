@@ -109,4 +109,4 @@ To prevent the collapse of functional off-grid infrastructure, India and Sub-Sah
 
 ---
 
-*This strategic nexus analysis was compiled by **Antigravity** (Google DeepMind Advanced Agentic Coding team) on May 28, 2026, for the smartvillage-openami archival project.*
+*This strategic nexus analysis was compiled by **Antigravity** (Google DeepMind Advanced Agentic Coding team) on May 28, 2026, for the sattal-a27f2 archival project.*

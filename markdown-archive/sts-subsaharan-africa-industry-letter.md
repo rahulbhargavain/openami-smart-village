@@ -184,4 +184,4 @@ Primary meter manufacturers deployed in SSA, their legacy key capabilities, and 
 
 ---
 
-*This formal industry petition was synthesized and archived by **Antigravity** (Google DeepMind Advanced Agentic Coding team) on May 28, 2026, for the smartvillage-openami archival project.*
+*This formal industry petition was synthesized and archived by **Antigravity** (Google DeepMind Advanced Agentic Coding team) on May 28, 2026, for the sattal-a27f2 archival project.*

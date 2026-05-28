@@ -50,7 +50,7 @@ markdown-archive/
 ```
 
 #### 🔌 [OpenAMI Smart Metering Reference Design (EMG-TRD-005)](file:///C:/Users/rhlbh/.gemini/antigravity/scratch/sattal-pitch/markdown-archive/openami-smart-metering-spec.md)
-* **Status:** 🌐 [Live HTML View (Firebase)](https://smartvillage-openami.web.app/reports/openami-smart-metering-spec) | 📝 [Raw GFM Markdown (GitHub)](./markdown-archive/openami-smart-metering-spec.md)
+* **Status:** 🌐 [Live HTML View (Firebase)](https://sattal.cottonspace.com/reports/openami-smart-metering-spec) | 📝 [Raw GFM Markdown (GitHub)](./markdown-archive/openami-smart-metering-spec.md)
 * **Core Technical Contents:**
   * **Hardware Architecture:** Specifies the core components of the **IHM-4000 Data Concentrator Unit (DCU)** and edge Smart Meters, mapping their communication pipelines.
   * **RF Downlink Mesh Topology:** Defines the **Wi-SUN sub-GHz mesh RF networking downlink** operating at 868/915 MHz, detailing automatic routing and link-quality parameters for high-attenuation environments.
@@ -58,7 +58,7 @@ markdown-archive/
   * **SGAM & OSI Mapping:** Formulates a complete 5-layer Smart Grid Architecture Model (SGAM) and 7-layer OSI communication model mapping, standardizing data payloads over DLMS/COSEM and MQTT protocols.
 
 #### 🛺 [Motrike TrikeXplor E-Truck Engineering Critique (TXE-CR-001)](file:///C:/Users/rhlbh/.gemini/antigravity/scratch/sattal-pitch/markdown-archive/trikexplor-etruck-critique.md)
-* **Status:** 🌐 [Live HTML View (Firebase)](https://smartvillage-openami.web.app/reports/trikexplor-etruck-critique) | 📝 [Raw GFM Markdown (GitHub)](./markdown-archive/trikexplor-etruck-critique.md)
+* **Status:** 🌐 [Live HTML View (Firebase)](https://sattal.cottonspace.com/reports/trikexplor-etruck-critique) | 📝 [Raw GFM Markdown (GitHub)](./markdown-archive/trikexplor-etruck-critique.md)
 * **Core Technical Contents:**
   * **Structural Vulnerabilities:** Documents physical failures under the stock 150 kg payload rating. Identifies thin-wall butted roll cage tubing buckling modes and light-weight rear axle traction slip under loaded grades.
   * **Chassis & Suspension Engineering:** Critiques the stock bicycle air-fork and outlines the transition to a robust **A-arm double wishbone suspension geometry** utilizing high-travel Gabriel India/Uno Minda coilovers.
@@ -77,7 +77,7 @@ markdown-archive/
 ```
 
 #### ⚖️ [UNECE Energy Interoperability & Digitalization Guidelines (EMG-REG-006)](file:///C:/Users/rhlbh/.gemini/antigravity/scratch/sattal-pitch/markdown-archive/unece-interoperability-guidelines.md)
-* **Status:** 🌐 [Live HTML View (Firebase)](https://smartvillage-openami.web.app/reports/unece-interoperability-guidelines) | 📝 [Raw GFM Markdown (GitHub)](./markdown-archive/unece-interoperability-guidelines.md)
+* **Status:** 🌐 [Live HTML View (Firebase)](https://sattal.cottonspace.com/reports/unece-interoperability-guidelines) | 📝 [Raw GFM Markdown (GitHub)](./markdown-archive/unece-interoperability-guidelines.md)
 * **Core Technical Contents:**
   * **Interoperability Dimensions:** Mapped directly to the GridWise Architecture Council (GWAC) stack, detailing the semantic, syntactic, and organizational interoperability layers.
   * **OpenPAYGO Tokenization:** Defines standard token encryption rules, standardizing the integration of OpenPAYGO key generation with decentralized billing architectures.
@@ -85,14 +85,14 @@ markdown-archive/
   * **Secure Hybrid Database Architecture:** Outlines the design of a hybrid database system combining local offline PostgreSQL caching with encrypted Google Cloud SQL sync.
 
 #### 📊 [Prepaid Metering & NERC Mini-Grid Regulations (EMG-REG-003)](file:///C:/Users/rhlbh/.gemini/antigravity/scratch/sattal-pitch/markdown-archive/nerc-afur-minigrid-tariffs.md)
-* **Status:** 🌐 [Live HTML View (Firebase)](https://smartvillage-openami.web.app/reports/nerc-afur-minigrid-tariffs) | 📝 [Raw GFM Markdown (GitHub)](./markdown-archive/nerc-afur-minigrid-tariffs.md)
+* **Status:** 🌐 [Live HTML View (Firebase)](https://sattal.cottonspace.com/reports/nerc-afur-minigrid-tariffs) | 📝 [Raw GFM Markdown (GitHub)](./markdown-archive/nerc-afur-minigrid-tariffs.md)
 * **Core Technical Contents:**
   * **NERC 2023 Regulation Mapping:** Codifies mini-grid classifications (under 100kW isolated vs. 100kW–1MW interconnected), streamlining portfolio licensing and the "Deemed Consent" grid arrival rules.
   * **MYTO Tariff Revenue Model:** Formalizes the Multi-Year Tariff Order (MYTO) math, applying a Grant "Haircut" (Net Regulatory Asset Base adjustment) to eliminate double-compensation on DFI capital grants.
   * **Loss Caps & Encroachment Buyouts:** Enforces maximum allowable mini-grid losses (**4% technical / 3% commercial**) and details the legal exit buyout formulas (Depreciated Asset Value + 12-Month Historical Revenue) upon grid encroachment.
 
 #### 🌱 [Solar Mini-Grids & Circular Bioenergy Policy (EMG-NEX-004)](file:///C:/Users/rhlbh/.gemini/antigravity/scratch/sattal-pitch/markdown-archive/cse-minigrid-biofuels-synthesis.md)
-* **Status:** 🌐 [Live HTML View (Firebase)](https://smartvillage-openami.web.app/reports/cse-minigrid-biofuels-synthesis) | 📝 [Raw GFM Markdown (GitHub)](./markdown-archive/cse-minigrid-biofuels-synthesis.md)
+* **Status:** 🌐 [Live HTML View (Firebase)](https://sattal.cottonspace.com/reports/cse-minigrid-biofuels-synthesis) | 📝 [Raw GFM Markdown (GitHub)](./markdown-archive/cse-minigrid-biofuels-synthesis.md)
 * **Core Technical Contents:**
   * **CapEx-OpEx CBG Metrics:** Audits Compressed Bio-Gas (CBG) plant business models, documenting the critical **30:70 CapEx-to-OpEx ratio** driven by feedstock supply chain volatility.
   * **State Bioenergy Performance Ratings:** Ranks 13 Indian states on policy execution, recognizing Gujarat's high-efficiency feed-in tariff structure and Jharkhand's regulatory hurdles.
@@ -112,28 +112,28 @@ markdown-archive/
 ```
 
 #### 💸 [IEEE Smart Village & OpenAMI Fundraising Prospectus (EMG-PITCH-007)](file:///C:/Users/rhlbh/.gemini/antigravity/scratch/sattal-pitch/markdown-archive/openami-funding-pitch.md)
-* **Status:** 🌐 [Live HTML View (Firebase)](https://smartvillage-openami.web.app/reports/openami-funding-pitch) | 📝 [Raw GFM Markdown (GitHub)](./markdown-archive/openami-funding-pitch.md)
+* **Status:** 🌐 [Live HTML View (Firebase)](https://sattal.cottonspace.com/reports/openami-funding-pitch) | 📝 [Raw GFM Markdown (GitHub)](./markdown-archive/openami-funding-pitch.md)
 * **Core Technical Contents:**
   * **Moody's Fundraising Laws:** Translates Fielding Graduate University's H.R. Moody principles into non-profit smart grid marketing and brand equity strategies.
   * **DFI Gated Capitalization:** Establishes a **4-stage capitalization roadmap** (Seed, Pilot, Expansion, Reserve) targeting a **$5M total fundraise** with strict technical milestone gates.
   * **Donor Objection Mitigation:** Synthesizes an active Objections Log targeting Development Finance Institution (DFI) concerns regarding local developer default risks, technical scalability, and battery disposal environmental profiles.
 
 #### 🚛 [eATV Mini-Grid Logistics & Rural Mobility Pitch (EMG-PITCH-002)](file:///C:/Users/rhlbh/.gemini/antigravity/scratch/sattal-pitch/markdown-archive/eatv-minigrid-pitch.md)
-* **Status:** 🌐 [Live HTML View (Firebase)](https://smartvillage-openami.web.app/reports/eatv-minigrid-pitch) | 📝 [Raw GFM Markdown (GitHub)](./markdown-archive/eatv-minigrid-pitch.md)
+* **Status:** 🌐 [Live HTML View (Firebase)](https://sattal.cottonspace.com/reports/eatv-minigrid-pitch) | 📝 [Raw GFM Markdown (GitHub)](./markdown-archive/eatv-minigrid-pitch.md)
 * **Core Technical Contents:**
   * **Off-Grid Mobility Deficits:** Documents Sub-Saharan African last-mile transport logistics costs and outlines solutions for expanded South Asian markets (India, Nepal, Bangladesh, Sri Lanka).
   * **PAYG Mobile Money Fleet Model:** Pairs mobile money PAYG micro-leasing with electric ATV fleet charging terminals integrated into off-grid solar mini-grid nodes.
   * **DFI Scale-Up Roadmap:** Details a 5-year mature capitalization path scaling up to **$40M CAPEX** to deploy 2,500 active productive-use vehicles.
 
 #### 🔋 [Electric Vehicles as Productive-Use Anchors (EMG-SSA-V001)](file:///C:/Users/rhlbh/.gemini/antigravity/scratch/sattal-pitch/markdown-archive/eatv-minigrid-ssa-vehicles.md)
-* **Status:** 🌐 [Live HTML View (Firebase)](https://smartvillage-openami.web.app/reports/eATV-minigrid-ssa-vehicles) | 📝 [Raw GFM Markdown (GitHub)](./markdown-archive/eatv-minigrid-ssa-vehicles.md)
+* **Status:** 🌐 [Live HTML View (Firebase)](https://sattal.cottonspace.com/reports/eATV-minigrid-ssa-vehicles) | 📝 [Raw GFM Markdown (GitHub)](./markdown-archive/eatv-minigrid-ssa-vehicles.md)
 * **Core Technical Contents:**
   * **7-Vehicle Evaluation Matrix:** Scores vehicles (Tachyon, Hamba, OGIRIDE, generic Chinese imports, Powerland Epic, etc.) across 5 core dimensions: payload capacity, off-grid range, acquisition cost, spare parts logistics, and mini-grid grid integration.
   * **Sizing and Role Division:** Defines a **3-tier operational fleet profile** (Supervisor light-weight, Daily light cargo, Heavy agricultural hauling).
   * **Procurement Engineering Checklist:** Standardizes mandatory hardware specifications, including minimum **IP65 ingress protection**, integrated cell monitoring BMS, agricultural tire treads, and dual-speed transfer cases.
 
 #### 🔑 [STS Prepaid Metering Key Management in SSA (SSA-STS-LEGACY-2026-001)](file:///C:/Users/rhlbh/.gemini/antigravity/scratch/sattal-pitch/markdown-archive/sts-subsaharan-africa-industry-letter.md)
-* **Status:** 🌐 [Live HTML View (Firebase)](https://smartvillage-openami.web.app/reports/STS-SubSaharanAfrica_Industry_Letter) | 📝 [Raw GFM Markdown (GitHub)](./markdown-archive/sts-subsaharan-africa-industry-letter.md)
+* **Status:** 🌐 [Live HTML View (Firebase)](https://sattal.cottonspace.com/reports/STS-SubSaharanAfrica_Industry_Letter) | 📝 [Raw GFM Markdown (GitHub)](./markdown-archive/sts-subsaharan-africa-industry-letter.md)
 * **Core Technical Contents:**
   * **STS Encryption Cryptography:** Critiques legacy Standard Transfer Specification (STS) key management inside off-grid local IPP grids, contrasting **EA07 (DES-based)** vs. **EA11 (MISTY1-based)** encryption standards.
   * **TID Rollover Rollout:** Outlines the critical **2024/2025 Token Identifier (TID) rollover** vulnerability (truncating tokens based on the 1993 base epoch) and details the Decoder Key Generation (DKGA01-04) migration paths.

@@ -183,4 +183,4 @@ When expanding or pivoting, engineers face a choice: write a "Functional Specifi
 
 ---
 
-*This regulatory blueprint was compiled by **Antigravity** (Google DeepMind Advanced Agentic Coding team) on May 28, 2026, for the smartvillage-openami archival project.*
+*This regulatory blueprint was compiled by **Antigravity** (Google DeepMind Advanced Agentic Coding team) on May 28, 2026, for the sattal-a27f2 archival project.*

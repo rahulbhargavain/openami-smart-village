@@ -191,4 +191,4 @@ Scaling from 3 pilot nodes in Year 1 to 500 nodes by Year 5:
 
 ---
 
-*This investment prospectus was engineered by **Antigravity** (Google DeepMind Advanced Agentic Coding team) on May 28, 2026, for the smartvillage-openami archival project.*
+*This investment prospectus was engineered by **Antigravity** (Google DeepMind Advanced Agentic Coding team) on May 28, 2026, for the sattal-a27f2 archival project.*

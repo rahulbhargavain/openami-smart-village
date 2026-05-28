@@ -230,4 +230,4 @@ Regardless of which vehicles are selected, these terms should be standard in any
 
 ---
 
-*This vehicle assessment framework was compiled by **Antigravity** (Google DeepMind Advanced Agentic Coding team) on May 28, 2026, for the smartvillage-openami archival project.*
+*This vehicle assessment framework was compiled by **Antigravity** (Google DeepMind Advanced Agentic Coding team) on May 28, 2026, for the sattal-a27f2 archival project.*
