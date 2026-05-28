@@ -1,0 +1,21 @@
+{
+  "name": "sattal-pitch",
+  "version": "1.0.0",
+  "description": "> **Centralized Knowledge Archive of Open-Source Smart Grid Specs, Policy Frameworks, and Rural Electrification Blueprints**",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rahulbhargavain/openami-smart-village.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/rahulbhargavain/openami-smart-village/issues"
+  },
+  "homepage": "https://github.com/rahulbhargavain/openami-smart-village#readme"
+}
