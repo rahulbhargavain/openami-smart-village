@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenAMI Strategic Proposal & Technical Reference Design — EMG-REG-008</title>
+    <meta name="description" content="An authoritative technical reference design and regulatory expansion strategy for OpenAMI (Open Advanced Metering Infrastructure for Africa), backed by IEEE Smart Village.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Sattal Reports Light Mode Theme */
+            --bg-base: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f1f5f9;
+            
+            --color-text-primary: #0f172a;
+            --color-text-muted: #475569;
+            --color-text-dimmed: #64748b;
+            
+            --accent-cyan: #0891b2;
+            --accent-cyan-glow: rgba(8, 145, 178, 0.08);
+            --accent-purple: #7c3aed;
+            --accent-purple-glow: rgba(124, 58, 237, 0.08);
+            
+            --color-green: #16a34a;
+            --color-green-glow: rgba(22, 163, 74, 0.08);
+            --color-orange: #d97706;
+            --color-orange-glow: rgba(217, 119, 6, 0.08);
+            
+            --glass-border: #e2e8f0;
+            --glass-bg: rgba(241, 245, 249, 0.85);
+            
+            --font-display: 'Outfit', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Basic Resets & Styling */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--color-text-primary);
+            font-family: var(--font-body);
+            line-height: 1.7;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Subtle glowing background blobs */
+        body::before, body::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            filter: blur(140px);
+            z-index: -1;
+            opacity: 0.15;
+        }
+        body::before {
+            top: 5%;
+            left: -100px;
+            background: var(--accent-cyan);
+        }
+        body::after {
+            bottom: 15%;
+            right: -100px;
+            background: var(--accent-purple);
+        }
+
+        a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+        a:hover {
+            color: var(--color-text-primary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 2.5rem 4rem 2.5rem;
+        }
+
+        /* Header Layout & Back Link */
+        header {
+            margin-bottom: 3rem;
+            position: relative;
+            padding-top: 1rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--color-text-dimmed);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+        .back-link:hover {
+            color: var(--accent-cyan);
+        }
+
+        .meta-pill-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .meta-pill {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            color: var(--color-text-dimmed);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .meta-pill .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-cyan);
+            box-shadow: 0 0 6px var(--accent-cyan);
+        }
+        .meta-pill.working-group .dot {
+            background: var(--accent-purple);
+            box-shadow: 0 0 6px var(--accent-purple);
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4.5vw, 3rem);
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            color: var(--color-text-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        h1 em {
+            font-style: normal;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-family: var(--font-display);
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            color: var(--color-text-muted);
+            font-weight: 400;
+            max-width: 850px;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        /* Tab Controls Style */
+        .nav-tabs {
+            display: flex;
+            overflow-x: auto;
+            gap: 0.4rem;
+            padding: 0.35rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
+            scrollbar-width: none;
+        }
+        .nav-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--color-text-dimmed);
+            padding: 0.85rem 1.35rem;
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px;
+            white-space: nowrap;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tab-btn:hover {
+            color: var(--color-text-primary);
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .tab-btn.active {
+            color: white;
+            background: var(--accent-cyan);
+            box-shadow: 0 4px 15px var(--accent-cyan-glow);
+        }
+
+        /* Glass Content Panels */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Glassmorphic Cards */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2.2rem;
+            margin-bottom: 1.5rem;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.02);
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(8, 145, 178, 0.3);
+            box-shadow: 0 12px 35px rgba(15, 23, 42, 0.05);
+        }
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        h2 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: var(--color-text-primary);
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 1.35rem;
+            background: var(--accent-cyan);
+            border-radius: 3px;
+            box-shadow: 0 0 6px var(--accent-cyan-glow);
+        }
+
+        h3 {
+            color: var(--color-text-primary);
+            font-family: var(--font-display);
+            font-weight: 700;
+        }
+
+        p {
+            color: var(--color-text-muted);
+            margin-bottom: 1rem;
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        strong {
+            color: var(--color-text-primary);
+            font-weight: 600;
+        }
+
+        /* Color classes */
+        .text-cyan { color: var(--accent-cyan); }
+        .text-purple { color: var(--accent-purple); }
+        .text-green { color: var(--color-green); }
+        .text-orange { color: var(--color-orange); }
+
+        /* Problem Section Styling */
+        .problem-badge {
+            background: var(--color-orange-glow);
+            color: var(--color-orange);
+            border: 1px solid rgba(217, 119, 6, 0.25);
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* OEM Section Accordions */
+        .oem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .oem-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            position: relative;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.01);
+        }
+        .oem-card:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 4px 18px var(--accent-cyan-glow);
+            transform: scale(1.02);
+        }
+
+        .oem-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+        }
+
+        .oem-name {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--color-text-primary);
+        }
+
+        .oem-status {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .oem-status.active {
+            background: var(--color-green-glow);
+            color: var(--color-green);
+            border: 1px solid rgba(22, 163, 74, 0.25);
+        }
+        .oem-status.pending {
+            background: var(--color-orange-glow);
+            color: var(--color-orange);
+            border: 1px solid rgba(217, 119, 6, 0.25);
+        }
+
+        .oem-desc {
+            font-size: 0.85rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .oem-detail {
+            border-top: 1px solid var(--glass-border);
+            padding-top: 0.8rem;
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            display: none;
+        }
+        .oem-card.expanded .oem-detail {
+            display: block;
+        }
+
+        /* NERC Nigeria Section & Interactive Visualizer */
+        .highlight-box {
+            background: var(--accent-cyan-glow);
+            border-left: 4px solid var(--accent-cyan);
+            padding: 1.1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.25rem 0;
+            font-size: 0.88rem;
+            color: var(--color-text-muted);
+            border-top: 1px solid rgba(8, 145, 178, 0.08);
+            border-right: 1px solid rgba(8, 145, 178, 0.08);
+            border-bottom: 1px solid rgba(8, 145, 178, 0.08);
+        }
+
+        .losses-visualizer {
+            background: var(--bg-card-hover);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.8rem;
+            margin-top: 1.5rem;
+        }
+
+        .loss-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .loss-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .loss-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+        }
+
+        .progress-container {
+            height: 10px;
+            background: rgba(15, 23, 42, 0.06);
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 5px;
+            width: 0;
+            transition: width 1s ease-out;
+        }
+        .progress-fill.tech {
+            background: var(--accent-cyan);
+            box-shadow: 0 0 8px rgba(8, 145, 178, 0.3);
+        }
+        .progress-fill.non-tech {
+            background: var(--accent-purple);
+            box-shadow: 0 0 8px rgba(124, 58, 237, 0.3);
+        }
+
+        .interactive-calculator {
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            background: var(--bg-card);
+            border-radius: 8px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.01);
+        }
+
+        .slider-row {
+            margin: 1rem 0;
+        }
+
+        .slider-row label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            margin-bottom: 0.4rem;
+            color: var(--color-text-muted);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--accent-cyan);
+            cursor: pointer;
+        }
+
+        .status-evaluator {
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-align: center;
+            padding: 0.65rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+            transition: var(--transition-smooth);
+        }
+        .status-evaluator.compliant {
+            background: var(--color-green-glow);
+            color: var(--color-green);
+            border: 1px solid rgba(22, 163, 74, 0.25);
+        }
+        .status-evaluator.non-compliant {
+            background: var(--color-orange-glow);
+            color: var(--color-orange);
+            border: 1px solid rgba(217, 119, 6, 0.25);
+        }
+
+        /* Timeline Roadmap */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            border-left: 2px dashed var(--glass-border);
+            margin: 1.5rem 0;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: calc(-2rem - 6px);
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent-cyan);
+            box-shadow: 0 0 6px var(--accent-cyan-glow);
+            border: 2px solid var(--bg-base);
+        }
+        .timeline-item.completed::before {
+            background: var(--color-green);
+            box-shadow: 0 0 6px rgba(22, 163, 74, 0.3);
+        }
+
+        .timeline-title {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+            color: var(--color-text-primary);
+        }
+
+        .timeline-desc {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+        }
+
+        /* Budget breakdown */
+        .budget-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+        }
+
+        .budget-card {
+            background: var(--bg-card-hover);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5rem 1.25rem;
+            text-align: center;
+            transition: var(--transition-smooth);
+        }
+        .budget-card:hover {
+            border-color: rgba(124, 58, 237, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .budget-value {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin: 0.5rem 0;
+            background: linear-gradient(135deg, var(--color-text-primary) 40%, var(--accent-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        footer {
+            border-top: 1px solid var(--glass-border);
+            padding: 3rem 2.5rem;
+            text-align: center;
+            color: var(--color-text-dimmed);
+            font-size: 0.85rem;
+            background: var(--bg-card);
+            margin-top: 3rem;
+        }
+        footer strong {
+            color: var(--accent-cyan);
+        }
+
+        /* Print stylesheet */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+            .nav-tabs, body::before, body::after, .interactive-calculator, .back-link {
+                display: none !important;
+            }
+            .tab-content {
+                display: block !important;
+                opacity: 1 !important;
+                margin-bottom: 3rem;
+            }
+            .card {
+                background: white !important;
+                border: 1px solid #ccc !important;
+                color: black !important;
+                page-break-inside: avoid;
+                box-shadow: none !important;
+            }
+            h1, h2, h3, .oem-name, .timeline-title {
+                color: black !important;
+                background: none !important;
+                -webkit-text-fill-color: initial !important;
+            }
+            p, .oem-desc, .oem-detail {
+                color: #333 !important;
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Vibe Pills Header -->
+        <header>
+            <a href="/reports" class="back-link">← Reports Index</a>
+            
+            <div class="meta-pill-container">
+                <div class="meta-pill">
+                    <span class="dot"></span>
+                    <span>IEEE Smart Village</span>
+                </div>
+                <div class="meta-pill working-group">
+                    <span class="dot"></span>
+                    <span>Lead: Akash</span>
+                </div>
+                <div class="meta-pill">
+                    <span>Cameroon: Jude</span>
+                </div>
+                <div class="meta-pill">
+                    <span>EnAccess: Vivien</span>
+                </div>
+            </div>
+            
+            <h1 id="main-heading">OpenAMI Strategic Report</h1>
+            <div class="subtitle">Open Advanced Metering Infrastructure for Africa: A Technical Reference Design &amp; Nigerian Regulatory Strategy</div>
+        </header>
+
+        <!-- Glass Vibe Navigation -->
+        <nav class="nav-tabs" role="tablist">
+            <button class="tab-btn active" id="tab-btn-exec" onclick="switchTab('exec')" role="tab" aria-selected="true" aria-controls="panel-exec">
+                Executive Summary
+            </button>
+            <button class="tab-btn" id="tab-btn-tech" onclick="switchTab('tech')" role="tab" aria-selected="false" aria-controls="panel-tech">
+                Technical Blueprint
+            </button>
+            <button class="tab-btn" id="tab-btn-oem" onclick="switchTab('oem')" role="tab" aria-selected="false" aria-controls="panel-oem">
+                OEM Interoperability
+            </button>
+            <button class="tab-btn" id="tab-btn-reg" onclick="switchTab('reg')" role="tab" aria-selected="false" aria-controls="panel-reg">
+                Nigeria NERC 2023
+            </button>
+            <button class="tab-btn" id="tab-btn-road" onclick="switchTab('road')" role="tab" aria-selected="false" aria-controls="panel-road">
+                Roadmap &amp; Budget
+            </button>
+        </nav>
+
+        <!-- Panel 1: Executive Summary -->
+        <main>
+            <section class="tab-content active" id="panel-exec" role="tabpanel" aria-labelledby="tab-btn-exec">
+                <div class="grid-2">
+                    <div class="card">
+                        <h2>The Standards Compliance Gap</h2>
+                        <p>In decentralized grids across Sub-Saharan Africa, power generation has become simple, but <strong>efficient distribution and cost recovery are complex</strong>. Standard metering systems suffer from fatal operational gaps.</p>
+                        <p>Through our volunteering work with <strong>IEEE Smart Village</strong> (under the IEEE Foundation) and direct feedback from our field leader <strong>Jude in Cameroon</strong>, we have cataloged severe constraints with incumbent setups:</p>
+                        <div class="highlight-box">
+                            <strong>"Blind Vending"</strong>: Utilities sell power without active monitoring. Faults go unnoticed until consumers report them, eroding trust.
+                        </div>
+                        <p>This data gap directly allows energy theft to flourish, driving Average Revenue Per User (ARPU) values to <strong>under $4.00</strong> and crippling developers' rates of return.</p>
+                    </div>
+
+                    <div class="card">
+                        <h2>The EmPower OpenGrid Concept</h2>
+                        <p>To scale sustainable smart village grids, the open-source software stack must be matched with commercial-grade accountability.</p>
+                        <p><strong>EmPower OpenGrid</strong> operates as a Special Purpose Vehicle (SPV) designed to solve this tension:</p>
+                        <p><strong>1. Commercial Vending Wrapper:</strong> Combines the flexible OpenAMI software standard with legal Service Level Agreements (SLAs) to assure security and uptime.</p>
+                        <p><strong>2. Vendor Agnosticism:</strong> Insulates developers from vendor lock-in, enabling multi-vendor grids where CHINT, Calin, and Savi/Donsun hardware co-exist.</p>
+                        <p><strong>3. Institutional Backing:</strong> Governed by a Board of Delegates, scaling is powered by grant resources and deep partnerships rather than volatile venture seed rounds.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Stakeholder Ecosystem</h2>
+                    <p>The OpenAMI alliance merges academic rigor, local field coordination, and industry-leading developer knowledge:</p>
+                    <div class="grid-3" style="margin-top: 1rem;">
+                        <div style="background: var(--bg-card-hover); padding: 1.25rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+                            <h3 class="text-cyan" style="font-family: var(--font-display); margin-bottom: 0.5rem;">Sponsors &amp; Promoters</h3>
+                            <p style="font-size: 0.85rem;"><strong>IEEE Smart Village:</strong> Seed funding and global academic compliance coordination under parent IEEE Foundation.</p>
+                        </div>
+                        <div style="background: var(--bg-card-hover); padding: 1.25rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+                            <h3 class="text-purple" style="font-family: var(--font-display); margin-bottom: 0.5rem;">Strategic Partners</h3>
+                            <p style="font-size: 0.85rem;"><strong>The EnAccess Foundation:</strong> Collaborating closely with Vivien (CEO) to build secure open-source smart metering pathways.</p>
+                        </div>
+                        <div style="background: var(--bg-card-hover); padding: 1.25rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+                            <h3 class="text-orange" style="font-family: var(--font-display); margin-bottom: 0.5rem;">Incumbents &amp; OEM</h3>
+                            <p style="font-size: 0.85rem;">Active coordination with <strong>SteamaCo</strong> and <strong>EarthSpark</strong>, adapting hardware with multiple manufacturers.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Panel 2: Technical Spec -->
+            <section class="tab-content" id="panel-tech" role="tabpanel" aria-labelledby="tab-btn-tech">
+                <div class="card">
+                    <h2>OpenAMI Digital Public Infrastructure</h2>
+                    <p>OpenAMI unifies hardware and servers under a highly secure, automated network architecture. Its design bridges the physical meter to the cloud HES securely.</p>
+                    
+                    <div class="grid-2" style="margin-top: 1.5rem;">
+                        <div>
+                            <h3 class="text-cyan" style="margin-bottom: 0.8rem; font-family: var(--font-display);">1. Unified Vending &amp; Security Keys</h3>
+                            <p>Utilizes unique hardware-integrated cryptographic security keys. Every meter communicates with the centralized Head-End System (HES) via encrypted tokens, preventing blind transactions and securing data flow.</p>
+                            
+                            <h3 class="text-purple" style="margin-top: 1.5rem; margin-bottom: 0.8rem; font-family: var(--font-display);">2. Time Orchestration (NTP Sync)</h3>
+                            <p>Decentralized time servers sync local time directly via NTP. DCUs verify serialized command timelines and read timestamps to protect from physical override, ensuring precise scheduling and time-of-use tariffs.</p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-orange" style="margin-bottom: 0.8rem; font-family: var(--font-display);">3. Edge Orchestration &amp; DCUs</h3>
+                            <p>Data Concentrator Units (DCUs) use Linux-based microservices to compile robust audit logs locally, managing subnets efficiently and minimizing cellular network costs.</p>
+
+                            <h3 class="text-green" style="margin-top: 1.5rem; margin-bottom: 0.8rem; font-family: var(--font-display);">4. OpenADR Vending &amp; Security</h3>
+                            <p>Leverages OpenADR to run storage management programs automatically during peak grids, keeping backup batteries safe. Validation features SOC2 compliance and NERC-CIP readiness via rigorous automatic checks.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Structural Data Flow Diagram</h2>
+                    <div style="background: var(--bg-card-hover); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--glass-border); text-align: center; font-family: var(--font-mono); font-size: 0.8rem; overflow-x: auto;">
+                        <pre style="display: inline-block; text-align: left; color: var(--color-text-primary);">
+[Vending CRM / ERP] 
+        │  (Vending API Commands)
+        ▼
+[Head-End System (HES)] ─── (Manages Cryptographic Security Keys)
+        │  (Encrypted cellular packets)
+        ▼
+[Linux Data Concentrator (DCU)] ─── (NTP Sync / High Granularity Audits)
+        │  (Local RS485 / RF Mesh / PLC)
+        ▼
+[Multi-Vendor Edge Smart Meters] (Calin, Savi/Donsun, CHINT, Hexing)
+                        </pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Panel 3: OEM Interop -->
+            <section class="tab-content" id="panel-oem" role="tabpanel" aria-labelledby="tab-btn-oem">
+                <div class="card">
+                    <h2>Defining "Technical Reference Design"</h2>
+                    <p>In smart hardware manufacturing, a <strong>Technical Reference Design</strong> serves as a reusable template or blueprint. Rather than enforcing an inflexible final product, it offers verified schematics, component layouts, and firmware interfaces. This allows individual OEMs to customize hardware for their own supply chains while strictly conforming to unified OpenAMI standards.</p>
+                    <p class="text-cyan"><em>Click on any manufacturer below to view the active integration pathways managed by our engineering teams:</em></p>
+                </div>
+
+                <div class="oem-grid">
+                    <!-- Calin -->
+                    <div class="oem-card" onclick="toggleOem(this)" id="oem-calin">
+                        <div class="oem-header">
+                            <div class="oem-name">Calin</div>
+                            <span class="oem-status active">Active Pilot</span>
+                        </div>
+                        <p class="oem-desc">Keypad-based prepaid meters highly prevalent in East Africa.</p>
+                        <div class="oem-detail">
+                            <strong>Integration Pathway:</strong> Flashing custom firmware to translate standard STS keypads to accept OpenAMI dynamic secure keys directly at the hardware layer.
+                        </div>
+                    </div>
+
+                    <!-- Savi/Donsun -->
+                    <div class="oem-card" onclick="toggleOem(this)" id="oem-savi">
+                        <div class="oem-header">
+                            <div class="oem-name">Savi / Donsun</div>
+                            <span class="oem-status active">Active Pilot</span>
+                        </div>
+                        <p class="oem-desc">Highly cost-effective split-type and DIN-rail smart meters.</p>
+                        <div class="oem-detail">
+                            <strong>Integration Pathway:</strong> Designing custom communication boards that slot directly into auxiliary module expansion slots to run OpenAMI local RF mesh modules.
+                        </div>
+                    </div>
+
+                    <!-- Inhe -->
+                    <div class="oem-card" onclick="toggleOem(this)" id="oem-inhe">
+                        <div class="oem-header">
+                            <div class="oem-name">Inhe</div>
+                            <span class="oem-status pending">In Engineering</span>
+                        </div>
+                        <p class="oem-desc">Industrial-grade and high-capacity transformer smart meters.</p>
+                        <div class="oem-detail">
+                            <strong>Integration Pathway:</strong> Adapting standard cellular modems inside Inhe casings to connect securely to the OpenAMI Head-End handshake sequences.
+                        </div>
+                    </div>
+
+                    <!-- CHINT -->
+                    <div class="oem-card" onclick="toggleOem(this)" id="oem-chint">
+                        <div class="oem-header">
+                            <div class="oem-name">CHINT</div>
+                            <span class="oem-status active">Active Pilot</span>
+                        </div>
+                        <p class="oem-desc">Global electrical hardware giant with extensive African supply.</p>
+                        <div class="oem-detail">
+                            <strong>Integration Pathway:</strong> Overriding proprietary DLMS protocols with OpenAMI cryptographic keys, enabling multi-vendor integration into national distribution grids.
+                        </div>
+                    </div>
+
+                    <!-- Hexing -->
+                    <div class="oem-card" onclick="toggleOem(this)" id="oem-hexing">
+                        <div class="oem-header">
+                            <div class="oem-name">Hexing</div>
+                            <span class="oem-status pending">In Engineering</span>
+                        </div>
+                        <p class="oem-desc">Mainstream supplier to major African national utilities.</p>
+                        <div class="oem-detail">
+                            <strong>Integration Pathway:</strong> Adapting industrial Hexing Data Concentrator Units (DCUs) to compile OpenAMI decentralized time stamps and secure local logs.
+                        </div>
+                    </div>
+
+                    <!-- CNBM -->
+                    <div class="oem-card" onclick="toggleOem(this)" id="oem-cnbm">
+                        <div class="oem-header">
+                            <div class="oem-name">CNBM</div>
+                            <span class="oem-status pending">In Engineering</span>
+                        </div>
+                        <p class="oem-desc">Comprehensive solar and clean infrastructure supplier.</p>
+                        <div class="oem-detail">
+                            <strong>Integration Pathway:</strong> Embedding the OpenAMI Reference blueprint directly into modular containerized mini-grid solar packages from the factory.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Panel 4: NERC Regulations -->
+            <section class="tab-content" id="panel-reg" role="tabpanel" aria-labelledby="tab-btn-reg">
+                <div class="card">
+                    <h2>Nigeria's NERC Mini-Grid Regulations 2023</h2>
+                    <p>Pivoting and expanding OpenAMI to Nigeria aligns perfectly with the regulatory landscape enforced in January 2024 by the <strong>Nigerian Electricity Regulatory Commission (NERC)</strong>.</p>
+                    
+                    <div class="grid-2" style="margin-top: 1.5rem;">
+                        <div>
+                            <h3 class="text-cyan" style="font-family: var(--font-display); margin-bottom: 0.5rem;">Streamlined Isolated &amp; Interconnected Licensing</h3>
+                            <p>The regulations establish a unified permit system for isolated and interconnected mini-grids between <strong>0 kW and 1 MW</strong>. DisCos must respond to applications within <strong>15 business days</strong>, or "deemed consent" triggers. OpenAMI's off-the-shelf reference designs allow developers to deploy immediately once consent is triggered.</p>
+                            
+                            <h3 class="text-purple" style="font-family: var(--font-display); margin-bottom: 0.5rem; margin-top: 1.5rem;">Interconnected Tripartite Contracts</h3>
+                            <p>Developers must execute registered agreements among developers, communities, and DisCos. OpenAMI provides an open, auditable data layer, giving all three parties transparent, real-time access to grid flow metrics, eliminating pricing disputes.</p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-orange" style="font-family: var(--font-display); margin-bottom: 0.5rem;">Direct Community Tariff Agreements</h3>
+                            <p>Operators can determine tariffs via direct community agreements (where community consumes >= 60% of output). This contrasts with the 2016 regulations that limited rates of return to 6%. Trust is a pre-requisite, and OpenAMI's open code builds this trust.</p>
+
+                            <h3 class="text-green" style="font-family: var(--font-display); margin-bottom: 0.5rem; margin-top: 1.5rem;">Strict Loss Caps (MYTO Rules)</h3>
+                            <p>If utilizing the cost-reflective Multi-Year Tariff Order (MYTO) model, NERC caps technical losses at <strong>4%</strong> and non-technical losses at <strong>3%</strong>. OpenAMI helps developers stay below these thresholds via real-time diagnostics.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Regulatory Loss Visualizer -->
+                <div class="card">
+                    <h2>Interactive NERC Loss Cap Evaluator</h2>
+                    <p>Adjust the sliders below to simulate technical and non-technical loss margins. Standard meters hide these values, but OpenAMI exposes them instantly, warning operators of potential non-compliance before NERC penalties apply.</p>
+                    
+                    <div class="losses-visualizer">
+                        <div class="loss-bars">
+                            <div class="loss-item">
+                                <div class="loss-labels">
+                                    <span>Technical Losses (Line resistance, hardware)</span>
+                                    <span id="tech-value">2.5%</span>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-fill tech" id="tech-progress" style="width: 62.5%;"></div>
+                                </div>
+                                <div style="font-size: 0.75rem; color: var(--color-text-dimmed);">NERC Strict Limit: <strong>4.0%</strong></div>
+                            </div>
+
+                            <div class="loss-item">
+                                <div class="loss-labels">
+                                    <span>Non-Technical Losses (Theft, vending discrepancies)</span>
+                                    <span id="nontech-value">1.8%</span>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-fill non-tech" id="nontech-progress" style="width: 60%;"></div>
+                                </div>
+                                <div style="font-size: 0.75rem; color: var(--color-text-dimmed);">NERC Strict Limit: <strong>3.0%</strong></div>
+                            </div>
+                        </div>
+
+                        <div class="interactive-calculator">
+                            <div class="slider-row">
+                                <label for="slider-tech">
+                                    <span>Adjust Technical Losses (%):</span>
+                                    <span class="text-cyan font-bold" id="label-slider-tech">2.5%</span>
+                                </label>
+                                <input type="range" id="slider-tech" min="0" max="8" step="0.1" value="2.5" oninput="updateLosses()">
+                            </div>
+
+                            <div class="slider-row">
+                                <label for="slider-nontech">
+                                    <span>Adjust Non-Technical Losses (%):</span>
+                                    <span class="text-purple font-bold" id="label-slider-nontech">1.8%</span>
+                                </label>
+                                <input type="range" id="slider-nontech" min="0" max="6" step="0.1" value="1.8" oninput="updateLosses()">
+                            </div>
+
+                            <div class="status-evaluator compliant" id="compliance-status">
+                                Compliant with NERC 2023 Guidelines
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Panel 5: Roadmap & Budget -->
+            <section class="tab-content" id="panel-road" role="tabpanel" aria-labelledby="tab-btn-road">
+                <div class="grid-2">
+                    <div class="card">
+                        <h2>Execution &amp; Deployment Plan</h2>
+                        <p>Our four-phase roll-out ensures continuous verification and testing as we transition the blueprint into deployed hardware.</p>
+                        
+                        <div class="timeline">
+                            <div class="timeline-item completed">
+                                <div class="timeline-title">Phase 1: Blueprint &amp; Architecture (Soft Launch)</div>
+                                <p class="timeline-desc">Finalize OpenAMI reference layout schematics and prototype code. Deploy HES on cloud virtual servers.</p>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-title">Phase 2: Field Testing &amp; Pilot Deployments</div>
+                                <p class="timeline-desc">Launch pilot installations with Jude in Cameroon, and register tripartite contracts for isolated pilots in Nigeria.</p>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-title">Phase 3: OEM Firmware Porting &amp; Verification</div>
+                                <p class="timeline-desc">Coordinate with Calin, Savi/Donsun, and CHINT to port OpenAMI security protocols natively. Implement edge DCUs.</p>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-title">Phase 4: Global Scale &amp; AMDA Integration</div>
+                                <p class="timeline-desc">Partner with the Africa Mini-Grid Association (AMDA) to advocate for the OpenAMI open standard. Form the OpenAMI Alliance.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2>EmPower OpenGrid Budget model</h2>
+                        <p>Unlike traditional tech startups, EmPower OpenGrid relies on committed engineering hours and grant capital. Our <strong>$35,000 preliminary budget</strong> is fully secured.</p>
+                        
+                        <div class="budget-grid">
+                            <div class="budget-card">
+                                <h3 style="font-size: 0.85rem; text-transform: uppercase;">Materials</h3>
+                                <div class="budget-value">$10K</div>
+                                <p style="font-size: 0.75rem;">10,000 edge meters &amp; local DCU testbeds.</p>
+                            </div>
+                            
+                            <div class="budget-card">
+                                <h3 style="font-size: 0.85rem; text-transform: uppercase;">Personnel</h3>
+                                <div class="budget-value">$5K</div>
+                                <p style="font-size: 0.75rem;">480 total engineering and integration hours.</p>
+                            </div>
+                            
+                            <div class="budget-card">
+                                <h3 style="font-size: 0.85rem; text-transform: uppercase;">Consumables</h3>
+                                <div class="budget-value">$10K</div>
+                                <p style="font-size: 0.75rem;">Electronic consumables, SIMs, testing gear.</p>
+                            </div>
+                            
+                            <div class="budget-card">
+                                <h3 style="font-size: 0.85rem; text-transform: uppercase;">Standards &amp; IoT</h3>
+                                <div class="budget-value">$10K</div>
+                                <p style="font-size: 0.75rem;">DLMS validation ($5K) and cloud operations ($5K).</p>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 1.5rem; background: var(--bg-card-hover); padding: 1.25rem; border-radius: 8px; border: 1px solid var(--glass-border); text-align: center;">
+                            <h3 class="text-green" style="font-family: var(--font-display); margin-bottom: 0.25rem; font-size: 1.1rem;">Total Required Vending Budget: $35,000</h3>
+                            <p style="font-size: 0.85rem; margin-bottom: 0;">100% Secure via Parent Foundations &amp; Grant Allotments</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Cottonspace / Dev Labs · <strong>sattal.cottonspace.com</strong> · OpenAMI Technical Reference EMG-REG-008</p>
+    </footer>
+
+    <!-- Tab & Slider Interactive Logic -->
+    <script>
+        function switchTab(tabId) {
+            // Remove active classes
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.setAttribute('aria-selected', 'false');
+            });
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Add active classes
+            const targetBtn = document.getElementById('tab-btn-' + tabId);
+            const targetContent = document.getElementById('panel-' + tabId);
+            
+            if (targetBtn && targetContent) {
+                targetBtn.classList.add('active');
+                targetBtn.setAttribute('aria-selected', 'true');
+                targetContent.classList.add('active');
+            }
+        }
+
+        function toggleOem(cardElement) {
+            cardElement.classList.toggle('expanded');
+        }
+
+        function updateLosses() {
+            const techSlider = document.getElementById('slider-tech');
+            const nontechSlider = document.getElementById('slider-nontech');
+            
+            const techVal = parseFloat(techSlider.value);
+            const nontechVal = parseFloat(nontechSlider.value);
+            
+            // Update labels
+            document.getElementById('tech-value').innerText = techVal.toFixed(1) + '%';
+            document.getElementById('label-slider-tech').innerText = techVal.toFixed(1) + '%';
+            
+            document.getElementById('nontech-value').innerText = nontechVal.toFixed(1) + '%';
+            document.getElementById('label-slider-nontech').innerText = nontechVal.toFixed(1) + '%';
+            
+            // Update progress fills
+            // Max bounds: Tech limit 4% -> let 8% slider be 100% width
+            const techPercent = (techVal / 8) * 100;
+            document.getElementById('tech-progress').style.width = techPercent + '%';
+            
+            // Max bounds: Non-Tech limit 3% -> let 6% slider be 100% width
+            const nontechPercent = (nontechVal / 6) * 100;
+            document.getElementById('nontech-progress').style.width = nontechPercent + '%';
+            
+            // Compliance calculation
+            const evalBox = document.getElementById('compliance-status');
+            if (techVal <= 4.0 && nontechVal <= 3.0) {
+                evalBox.className = 'status-evaluator compliant';
+                evalBox.innerText = 'Compliant with NERC 2023 Guidelines';
+            } else {
+                let reasons = [];
+                if (techVal > 4.0) reasons.push('Technical losses cap (4.0%) exceeded');
+                if (nontechVal > 3.0) reasons.push('Non-Technical losses cap (3.0%) exceeded');
+                evalBox.className = 'status-evaluator non-compliant';
+                evalBox.innerText = 'NON-COMPLIANT: ' + reasons.join(' & ');
+            }
+        }
+    </script>
+</body>
+</html>
