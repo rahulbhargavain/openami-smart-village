@@ -1,0 +1,41 @@
+name: Deploy to Firebase
+
+on:
+  push:
+    branches:
+      - main
+
+# Required permissions for requesting the OIDC JWT token from Google
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: 'projects/993111087069/locations/global/workloadIdentityPools/github-actions-pool/providers/github-provider'
+          service_account: 'github-ci-deployer@sattal-a27f2.iam.gserviceaccount.com'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Project
+        run: npm run build --if-present
+
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@v2
+        with:
+          args: deploy --project=sattal-a27f2
