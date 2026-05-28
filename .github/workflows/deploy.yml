@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-workflow_dispath:
+  workflow_dispatch: # <-- Fixed spelling and structure
 
 # Required permissions for requesting the OIDC JWT token from Google
 permissions:
@@ -23,7 +23,6 @@ jobs:
         with:
           workload_identity_provider: 'projects/993111087069/locations/global/workloadIdentityPools/github-actions-pool/providers/github-provider'
           service_account: 'github-ci-deployer@sattal-a27f2.iam.gserviceaccount.com'
-          # token_format: 'access_token' # force authentication
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -38,8 +37,4 @@ jobs:
         run: npm run build --if-present
 
       - name: Deploy to Firebase
-        # npx will automatically fetch the Firebase CLI tool natively on the host runner
         run: npx firebase-tools deploy --project=sattal-a27f2
-        #        uses: w9jds/firebase-action@master
-        # with:
-        #  args: deploy --project=sattal-a27f2
