@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Openami — IEEE Smart Village Wiki</title>
+  <meta name="description" content="Centralized collaborate archive for IEEE Smart Village Wiki. Migrated from DokuWiki with version control.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --bg2: #f1f5f9;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --teal: #0891b2;
+      --teal-dim: rgba(8, 145, 178, 0.08);
+      --text: #0f172a;
+      --sub: #475569;
+      --muted: #64748b;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; }
+    
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white; padding: 24px 40px; border-bottom: 3px solid var(--teal);
+    }
+    header .container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+    header h1 { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
+    header h1 strong { color: var(--teal); }
+    header nav a { color: #cbd5e1; text-decoration: none; font-size: 0.85rem; font-weight: 600; margin-left: 20px; transition: color 0.2s; }
+    header nav a:hover { color: white; }
+
+    .main-layout { max-width: 1200px; margin: 40px auto; padding: 0 40px; display: grid; grid-template-columns: 3fr 1fr; gap: 40px; }
+    .content-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; box-shadow: 0 4px 12px rgba(15,23,42,0.02); }
+    
+    h1, h2, h3, h4, h5 { font-weight: 800; letter-spacing: -0.02em; color: var(--text); margin-top: 1.8em; margin-bottom: 0.6em; line-height: 1.25; }
+    h1 { font-size: 2.2rem; border-bottom: 2px solid var(--border); padding-bottom: 12px; margin-top: 0; }
+    h2 { font-size: 1.6rem; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    h3 { font-size: 1.25rem; }
+    
+    p { margin-bottom: 1.5em; font-size: 0.95rem; color: var(--sub); }
+    strong { color: var(--text); }
+    
+    /* Links */
+    a { color: var(--teal); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+    a:hover { color: #06b6d4; text-decoration: underline; }
+    
+    /* Lists */
+    ul, ol { margin-bottom: 1.5em; padding-left: 24px; }
+    li { font-size: 0.95rem; color: var(--sub); margin-bottom: 0.5em; }
+    
+    /* Tables */
+    .table-wrapper { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); margin: 28px 0; box-shadow: 0 2px 8px rgba(15,23,42,0.02); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; }
+    thead tr { background: rgba(8, 145, 178, 0.06); border-bottom: 1px solid var(--border); }
+    th { padding: 12px 16px; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.75rem; }
+    td { padding: 12px 16px; border-top: 1px solid var(--border); color: var(--sub); vertical-align: middle; }
+    tr:hover td { background: rgba(8, 145, 178, 0.01); }
+    
+    /* PDF/Attachment Cards */
+    .pdf-card { display: flex; align-items: center; gap: 16px; padding: 18px 24px; border: 1px solid var(--border); border-radius: 12px; margin: 24px 0; background: var(--bg); }
+    .pdf-icon { font-size: 2rem; color: var(--teal); }
+    .pdf-info { flex: 1; }
+    .pdf-title { font-weight: 700; font-size: 0.9rem; color: var(--text); margin-bottom: 4px; }
+    .pdf-btn { display: inline-flex; align-items: center; justify-content: center; padding: 6px 14px; background: var(--teal); color: white !important; font-size: 0.78rem; font-weight: 700; border-radius: 6px; text-decoration: none !important; transition: background 0.2s; }
+    .pdf-btn:hover { background: #06b6d4; }
+    
+    /* Image Styling */
+    .wiki-image { max-width: 100%; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(15,23,42,0.04); margin: 20px 0; display: block; }
+    
+    /* Sidebar */
+    .sidebar { display: flex; flex-direction: column; gap: 24px; }
+    .sidebar-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; box-shadow: 0 4px 12px rgba(15,23,42,0.01); }
+    .sidebar-title { font-size: 0.85rem; font-weight: 800; color: var(--teal); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .sidebar-list { list-style: none; padding: 0; }
+    .sidebar-list li { font-size: 0.85rem; margin-bottom: 8px; }
+    
+    hr { border: 0; border-top: 1px solid var(--border); margin: 32px 0; }
+    footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 36px 40px; text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 60px; }
+    footer strong { color: var(--teal); }
+    
+    @media(max-width: 768px) {
+      .main-layout { grid-template-columns: 1fr; gap: 30px; margin: 20px auto; padding: 0 20px; }
+      header { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <h1>🌐 IEEE Smart Village <strong>Wiki</strong></h1>
+    <nav>
+      <a href="/wiki/home">Home</a>
+      <a href="/reports">Reports Index</a>
+    </nav>
+  </div>
+</header>
+
+<div class="main-layout">
+  <article class="content-card">
+    <h1>Open AMI</h1>
+<h3>Open-Source Advanced-Metering-Infrastructure to enable minigrids for electricity access.</h3>
+<p><code>Note: This page is actively under construction and will be updated frequently. Last update: Akash Borde, 28 October 2025</code></p>
+<h2>Background:</h2>
+<ul>
+  <li><a href="https://docs.google.com/presentation/d/1b1Bl63I-evfd20MW6XxDe0IIse-0Nm85/edit?usp=sharing&ouid=112191662511889552544&rtpof=true&sd=true">Power Africa Conference Presentation</a></li>
+  <li><a href="https://docs.google.com/presentation/d/1b1Bl63I-evfd20MW6XxDe0IIse-0Nm85/edit#slide=id.g28b247f5353_0_91">Linux Foundation Conference Presentation</a></li>
+</ul>
+<h2>Ongoing:</h2>
+<ul>
+  <li>There is a weekly meeting actively discussing and shaping this project. This takes places from 630-730am US Pacific Time on Wednesdays.</li>
+  <li>Contact Product Manager for more details: Akash Borde at borde.akash[at]gmail.com</li>
+</ul>
+<h2>Weekly Meeting Notes:</h2>
+<p><code>(I am struggling to figure out why the formatting breaks so badly, will work on figuring this format out… -Akash)</code></p>
+<p>There are two embedded editors, a WYSIWYG editor that is the default that applies its own markup and a DokuWiki Editor that requires tags for all markup. Pages can also be created from Word Docx or ODT uploads that plugins convert to Wikipages. I got Google Gemini 2.5 Pro to re-format to Wiki format. Please review and check that nothing was omitted.</p>
+<h2>29 Oct 2025</h2>
+<p>1)</font> <font inherit/inherit;;#cccccc;;inherit>[5 minutes] Logistics: Akash, (+Adam, Rajan, if available).</font> <font inherit/inherit;;#cccccc;;inherit>Proposed to move meeting 30 minutes later - no objections from people on call</font> <font inherit/inherit;;#6796e6;;inherit>2)</font> <font inherit/inherit;;#cccccc;;inherit>[15 minutes] Current Problem Statement: Akash, Jude, Rahul</font> <font inherit/inherit;;#cccccc;;inherit>Summarizing the problem as we understand it and having the team review it. Documenting this as the top item on the wiki. Short-term problems, long-term problems, and major pain points.</font> <font inherit/inherit;;#cccccc;;inherit>Jude proposal: (link):</font> <font inherit/inherit;;#cccccc;;inherit>Solution</font> <font inherit/inherit;;#cccccc;;inherit>The proposed solution is to establish an OpenAMI Association, a multi-stakeholder initiative that will develop, test, and promote a universal communications and interoperability standard for smart metering systems in Africa.</font> <font inherit/inherit;;#cccccc;;inherit>- Should allow remote monitoring</font> <font inherit/inherit;;#cccccc;;inherit>- Should allow controls (remote start/stop)</font> <font inherit/inherit;;#cccccc;;inherit>Rahul:</font> <font inherit/inherit;;#cccccc;;inherit>- HES is customized from the OEM by utilities, it's not proprietary</font> <font inherit/inherit;;#cccccc;;inherit>○ EU has strict guidelines on open and proprietary</font> <font inherit/inherit;;#cccccc;;inherit>- Size of group is too small, need backing from large institutions (e.g. World Bank)</font> <font inherit/inherit;;#cccccc;;inherit>○ Jude: Disagree - this is a very large problem. STS was created for the same reason</font> <font inherit/inherit;;#cccccc;;inherit>○ We can promote this standard to the OEMs. AMDA and World Bank are coming to us</font> <font inherit/inherit;;#cccccc;;inherit>○ StemaCo - willing to give us keys (showed interest)</font> <font inherit/inherit;;#cccccc;;inherit>- Plan for getting OEMs to participate</font> <font inherit/inherit;;#cccccc;;inherit>○ Drive demand - if the meters don't have OpenAMI certification, the minigrids won't buy</font> <font inherit/inherit;;#cccccc;;inherit>○ Use AMDA and WorldBank for leverage</font> <font inherit/inherit;;#cccccc;;inherit>- Rahul: Getting keys shouldn't be hard - manufacturers have not said no yet</font> <font inherit/inherit;;#cccccc;;inherit>○ Concerned about getting large enough to drive adoption. STS was created by large multinationals</font> <font inherit/inherit;;#cccccc;;inherit>- Create a reference that the minigrid developers adopt</font> <font inherit/inherit;;#cccccc;;inherit>- Don:</font> <font inherit/inherit;;#cccccc;;inherit>○ Could we reach out to OEM's about Jude's idea and get feedback about this concept? Or are we saying if we create something that is certified by World Bank and AMDA they will be forced to accept our certified standard?</font> <font inherit/inherit;;#6796e6;;inherit>3)</font> <font inherit/inherit;;#cccccc;;inherit>[10 minutes] Update on vendor relations: Rahul, Rajan, Jude, Michel</font> <font inherit/inherit;;#6796e6;;inherit>-</font> <font inherit/inherit;;#cccccc;;inherit>Any updates from Donsun, Sparkmeter, EarthSpark</font> <font inherit/inherit;;#cccccc;;inherit>Leeks has started saying that Donsun is still active (inaccurate)</font> <font inherit/inherit;;#cccccc;;inherit>Donsun has split into two - China and Rest-of-Worl</font> <font inherit/inherit;;#6796e6;;inherit>-</font> <font inherit/inherit;;#cccccc;;inherit>Asks from StemacoVP, who presented at Thursday ISV Bi-Weekly call</font> <font inherit/inherit;;#cccccc;;inherit>Willing to help out</font> <font inherit/inherit;;#cccccc;;inherit>ISV has a commercial relationship with them already.</font> <font inherit/inherit;;#cccccc;;inherit>StemaCo is moving away from Donsun</font> <font inherit/inherit;;#cccccc;;inherit>Any progress opening up DLMS Cosem yet?</font> <font inherit/inherit;;#cccccc;;inherit>Glenn to follow up with this person - Warren Scott White → will contact Sam (tech lead) at Stemaco</font> <font inherit/inherit;;#6796e6;;inherit>-</font> <font inherit/inherit;;#cccccc;;inherit>How is AMDA doing? Are they tracking this project?</font> <font inherit/inherit;;#6796e6;;inherit>-</font> <font inherit/inherit;;#cccccc;;inherit>Inhemeter: Inhemeter has requested some documents, NDA, MoU to continue working with them. Do we want to continue this at this time? Michel started drafting docs if so.</font> <font inherit/inherit;;#6796e6;;inherit>-</font> <font inherit/inherit;;#cccccc;;inherit>Not a no, but we need a better strategy</font> <font inherit/inherit;;#6796e6;;inherit>-</font> <font inherit/inherit;;#cccccc;;inherit>OEMs don't want to work with our group b/c we are too small</font> <font inherit/inherit;;#6796e6;;inherit>-</font> <font inherit/inherit;;#cccccc;;inherit>Work through GVE?</font> <font inherit/inherit;;#cccccc;;inherit>○ They are also very small and use legacy meters only</font> <font inherit/inherit;;#6796e6;;inherit>-</font> <font inherit/inherit;;#cccccc;;inherit>Challenge is if we use INHE-5000 now, Inhemeter will not support the next version</font> <font inherit/inherit;;#cccccc;;inherit>Glenn:</font> <font inherit/inherit;;#cccccc;;inherit>- Would be great if we can create a DCU that supports DLMS Cosem and non-DLMS protocols that is compatible with edge meters</font> <font inherit/inherit;;#cccccc;;inherit>- Getting backing from Stemaco for OpenAMI would be great</font> <font inherit/inherit;;#cccccc;;inherit>- Can we get ISV to support the creation of OpenAMI consortium?</font> <font inherit/inherit;;#6796e6;;inherit>4)</font> <font inherit/inherit;;#cccccc;;inherit>[15 minutes] Engineering development: Rahul, Glenn, Akash, Jude, Adam</font> <font inherit/inherit;;#cccccc;;inherit>People with source code - Adam, Vivien, Rahul, Glenn - can you walk us through what's been read, what's pending, etc?</font> <font inherit/inherit;;#cccccc;;inherit>Akash - no updates on MeshEMS still :(. Would it be useful for Cameroon lab? Energy IoT open source has requested it for January.</font> <font inherit/inherit;;#cccccc;;inherit>Is there funding for hardware manufacturing?</font> <font inherit/inherit;;#cccccc;;inherit>Jude - OpenAMI and other standards. Do we want to get into STS and try to replicate it for Metering/Vending?</font> <font inherit/inherit;;#6796e6;;inherit>5)</font> <font inherit/inherit;;#cccccc;;inherit>[10 minutes] All: Assignments for next week / planning ahead</font> <font inherit/inherit;;#cccccc;;inherit>Glenn - talk to the contact at StemaCo (Sam) → will discuss opening up DLMS protocol</font> <font inherit/inherit;;#cccccc;;inherit>Don - we need to update our document for OpenAMI</font> <font inherit/inherit;;#cccccc;;inherit>Continue discussion on "ISV AMI Subcomittee" whatsapp group</font> <font inherit/inherit;;#cccccc;;inherit>Glenn may come to Cameroon early January</font></p>
+<h3>October 22nd, 2025:</h3>
+<p>Follow-ups</p>
+<ul>
+  <li>Rahul weekly meeting? Meeting delayed, follow-up email to team sent today. — *<a href="/wiki/rahul.bhargava.in@ieee.org">Rahul Bhargava</a> 2025/10/28 14:10*</li>
+  <li>Stemaco and Donsun relationship? Donsun is splitting into two, with Synergy serving the global market, particularly African STS compliant hardware and a much more competitive (in terms of entrenchment and margins) Chinese domestic market. It is believed that the African market will continue to be served by Leets+Synergy. — *<a href="/wiki/rahul.bhargava.in@ieee.org">Rahul Bhargava</a> 2025/10/28 14:12*</li>
+  <li>Vivian hardware access?</li>
+  <li>Sparkmeter source code access?</li>
+  <li>EnAccess made introductions and the Emerging Markets codebase on gitlab is accessible to Glenn and Rahul, aside from EnAccess. Though, while there is no clarity on licensing and ownership, it is generally unadvisable to use the code. — *<a href="/wiki/rahul.bhargava.in@ieee.org">Rahul Bhargava</a> 2025/10/28 14:14*</li>
+</ul>
+<p>Logistics - Akash will make a new email series, including Jude. Agendas will be sent 24 hrs in advance over email.</p>
+<ul>
+  <li>Whatsapp: - OpenAMI Coms Integration → Inhemeter</li>
+  <li>Pending with Inhe who are expected to furnish REIc with a NDA and contract before sharing any doucmentation, let alone code stubs for querying meters from the DCU (only 5000 series, no legacy support). Meanwhile, SteamaCo is committing to provide legacy support including code. — *<a href="/wiki/rahul.bhargava.in@ieee.org">Rahul Bhargava</a> 2025/10/28 14:15*</li>
+  <li>Tech Comm and OpenAMI → used for presentations</li>
+  <li>ISV AMI Subcommittee</li>
+  <li>Arila is not on Whatsapp</li>
+  <li>Ask Rajan if he wants the weekly emails</li>
+</ul>
+<p>1) Any updates from the crowd – Donsun, Sparkmeter, EarthSpark current state Rahul + Daniel - SparkMeter has been "handed over" to EarthSpark after SparkMeter collapsed. Allison is the president of EarthSpark. She makes the call if/when SparkMeter becomes Open-Sourced. Vivien is the guy leading the open-source effort. Sparkmeter's operating costs are artificially very high. Sparkmeter wraps the cailin's hardware in their own protocol (SparkMeter replace the radios with their own and run custom firmware without STS; so legacy meters cannot be orchestrated by new DCUs and no one can participate on their private neighbourhood networks without matching radios and protocols). — *<a href="/wiki/rahul.bhargava.in@ieee.org">Rahul Bhargava</a> 2025/10/28 14:17*  Worldbank M300 → project from World Bank for electricity reach 300Mill new people in africa</p>
+<p>Things we need</p>
+<ul>
+  <li>How we're doing vending</li>
+  <li>Correct timestamps</li>
+  <li>Information about the grid</li>
+</ul>
+<p>Proposed solution: take the telemetry from the field, add an additional service (?) and have access to the data via the server infrastructure</p>
+<p>4 organizational members: IEEE, EnAccess, NESL, Arila</p>
+<p>Rahul proposal:</p>
+<ul>
+  <li>Daniel in convinced that telemetry should not go to MicoPowerManager (MPM) directly. We need middleware like Grid Fabric's backend (GFX) from Linux Foundation. The Frontend will still be MPM conceptually with a plugin that fetches required data more at a meter-level and associate billing and customer data in MPM. Meanwhile, grid-scale telemetry (distribution by phase of three-phase distribution from inverters) data can be analyzed by custom front-ends to a stable and mature Grid Fabric backend (that is heavy and requires servers and will not fit on DCUs). — *<a href="/wiki/rahul.bhargava.in@ieee.org">Rahul Bhargava</a> 2025/10/28 14:20*</li>
+  <li>Open AMI server, standardize schema (glenn has started this), called Grid Fabric. Linux foundation project. Not the Hyphae project.</li>
+  <li>This project takes the logs from the DCU</li>
+  <li>Glenn has defined a XML schema that is tuples, timestamp and readings for each meter. This can be optimized and adopted if compliant with IEEE 2030.5 — *<a href="/wiki/rahul.bhargava.in@ieee.org">Rahul Bhargava</a> 2025/10/28 14:21*</li>
+  <li>MicroPowerManager needs a plugin to ingest this data.</li>
+  <li>There is an ingestion plugin by the Linux Foundation but we may need middleware to log the telemtery and then pull aggregations to MPM — *<a href="/wiki/rahul.bhargava.in@ieee.org">Rahul Bhargava</a> 2025/10/28 14:22*</li>
+  <li>Grid Fabric supports 2 protocols, both can be run on DCU</li>
+  <li>DLMS →</li>
+  <li>MQTT →</li>
+  <li>Vendors are offering the keys to these protocols, not hacking the solutions</li>
+  <li>Donsun, StemaCo, Inhemeter (not explicitly yet)</li>
+  <li>This is on the table with support from SteamaCo — *<a href="/wiki/rahul.bhargava.in@ieee.org">Rahul Bhargava</a> 2025/10/28 14:23*</li>
+  <li>Donsun - has offered access to DCU (serial console / Telnet). Busybox linux environment. They have spare CPU cycles we can run other processes in.</li>
+  <li>The guy who offered the keys is now gone though, and said Donsun is bankrupt</li>
+  <li>Leets is not gone and Donsun's successor is not bankrupt, as per Warren of SteamaCo. HES support expected from SteamaCo — *<a href="/wiki/rahul.bhargava.in@ieee.org">Rahul Bhargava</a> 2025/10/28 14:23*</li>
+  <li>We weren't talking to Donsun directly though.</li>
+  <li>Let's not talk to OEMs directly, go through SteamaCo — *<a href="/wiki/rahul.bhargava.in@ieee.org">Rahul Bhargava</a> 2025/10/28 14:24*</li>
+  <li>"Leets" from Donsun</li>
+  <li>Jude has Nigeran Donsun hardware</li>
+  <li>StemaCo - service provider</li>
+  <li>Donsun is one of 6 chinese OEMs that StemaCo will support</li>
+  <li>If we go through StemaCo</li>
+</ul>
+<p>– EnAccess - any updates/questions/agenda topics? – Sparkmeter source code access? — Rahul/Enaccess currently have it – Akash-plan/idea to hack the SparkMeter from Sun Gate Solar Rahul has access to code base, but it's "a mess"</p>
+<p>Jude:</p>
+<ul>
+  <li>We thought we had commitments to get keys to access hardware.</li>
+  <li>Inhemeter is now asking for a contract</li>
+  <li>Sparkmeter - stuck asking Alison (EarthSpark) trying to get opensource access 1 month later</li>
+  <li>There may be some Google Drive with limited access to see source</li>
+  <li>We Cannot use anything from this drive, legally, without Open-Sourcing it</li>
+  <li>Rahul - we have pretty good reference of the architecture, but legally we cannot use it till Alison approves.</li>
+  <li>TAM (AMDA): 1M meters, $20/meter = $20M TAM</li>
+  <li>Seems unlikely we'll get access for free</li>
+  <li>Donsun - collapsed mid-conversation</li>
+  <li>StemaCo - we will probably hit the same wall</li>
+  <li>As of today, we have no keys to any hardware. Only open hardware is our own board.</li>
+</ul>
+<p>2) Clarification of problem statements, both short-term and long-term. – Short term will include exit of major metering vendors – Long term will include discussion of software and hardware solutions – We can use the Cairo OpenAMI slide deck (<a href="https://docs.google.com/presentation/d/1b1Bl63I-evfd20MW6XxDe0IIse-0Nm85/edit?usp=sharing&ouid=112191662511889552544&rtpof=true&sd=true">link</a>) to start the discussion.</p>
+<ul>
+  <li>Don - are we trying to hack existing systems or use the OpenAMI as our own standard?</li>
+  <li>Last meeting, we found all the OEMs are having the same vulnerability. Don't want to support legacy products of theirs.</li>
+</ul>
+<p>Question: Should we have this be a software-only solution? – Jude, Akash</p>
+<p>3) Hardware discussion – Utility and desires for the MeshEMS gateway – Arila, Jude, Glenn, Akash, Rahul – What if we made our own hardware?</p>
+<ul>
+  <li>2 major players have already failed</li>
+  <li>Rajan is skeptical</li>
+  <li>Vivian - thumbs up. Not for the meters, but maybe for the DCU.</li>
+  <li>Jude - yes let's talk about this</li>
+  <li>Lots of donor money available</li>
+  <li>Roadblocks - local developers/infrastructure</li>
+  <li>Stemaco, Sparkmeter → were all whitelabeling a few OEMs. Did not make their own hardware (both metering and DCU).</li>
+  <li>Sparkmeter - was whitelabeling their own meters, but making their own DCUs.</li>
+  <li>Jude's idea:</li>
+  <li>AMDA developers have 3 priorities:</li>
+  <li>Vending</li>
+  <li>Monitoring ability</li>
+  <li>Ability to do operations (on/off control)</li>
+  <li>Vending:</li>
+  <li>Solved by STS/OpenPay Go</li>
+  <li>So long as you have the CIU (customer intefface) at the meter level, and the token generation software, you can vend irrespective of the (?)</li>
+  <li>Monitoring and Operations</li>
+  <li>This is not yet solved. What if we take this as a standard?</li>
+  <li>Like STS, we build a comms standard that can be deployed by the OEMs for people that want to go beyond vending.</li>
+  <li>Maybe this requires an open-source DCU to go with it</li>
+  <li>Building software that can go on DCUs that lets the data seen in multiple places</li>
+  <li>Similar to an STS certification, this could be a selling point for new developers to use OEMS that are "OpenAMI" compliant</li>
+</ul>
+<p>OpenPay Go and STS - similar For talking to the edge meter (supports STS, version 2)</p>
+<ul>
+  <li>You'd need a key that talks to the STS</li>
+</ul>
+<p>4) Blockers / goals for setting up Yaounde lab with Glenn's VPN hardware – Glenn, Jude, Endurance</p>
+<p>5) ISV Funding and Project Plan Revisions – Don, Rajan, Jude</p>
+<ul>
+  <li>Adam- how can we live stream any existing data from villages?</li>
+</ul>
+<h4>October 15th, 2025:</h4>
+<p>0) Recap of Oct 8th meeting for folks traveling back from Power Africa (Arila or Daniel)? (5-10 mins)</p>
+<ul>
+  <li>Nothing major to discuss</li>
+</ul>
+<p>1) Akash/Jude: Power Africa Recap (5-10 mins) a. Presentation recap</p>
+<ul>
+  <li>Discussed with minigrid developers</li>
+  <li>Sun Moksha - Indian minigrid company that is building smart metering. 3 priorities</li>
+  <li>Vending - ability to make sales</li>
+  <li>Manage the energy / assets</li>
+  <li>Monitoring - what sparkmeter can provide</li>
+  <li>Sun Moksha agrees on scarcity of metering suppliers / availability</li>
+  <li>They have a prototype working on this that has solved their problem</li>
+  <li>Make their own controller that talks between the meters (modbus) and server (wifi mesh), which then talks to the cloud</li>
+  <li>They are open to share IP with the IEEE community; they've invested a lot of $ and don't have too much incentive to provide</li>
+  <li>Not open-sourcing, but some sort of license that gives other vendors</li>
+  <li>They built their own proprietary hardware (with ESP32 equivalent) that they could sell</li>
+</ul>
+<p>b. Discussion recap / feedback session</p>
+<ul>
+  <li>Jude: This looks like another locked solution, we would have the risk of being stuck on them</li>
+  <li>Arila: Is there any openness from the open-source perspective from SunMoksha?</li>
+  <li>Jude: This was developed for India, they had a sponsored project from India. Was a larger for minigrid developers in India previously, but currently isn't such a big market</li>
+  <li>Arila: Is there an open solution available on the cloud side?</li>
+  <li>Akash:</li>
+  <li>Mou Riiny - interested in OpenAMI, frustrated with Sparkmeter</li>
+  <li>Shared a sparkmeter to debug (malfunctional)</li>
+  <li>Sparkmeter</li>
+  <li>Vivien/Jude might have access to their repos</li>
+  <li>What's the goal with this one?</li>
+  <li>Just a test bed for now</li>
+  <li>Akash to share</li>
+  <li>Jude may have functional sparkmeters</li>
+  <li>Nova / Edge Meter</li>
+  <li>Has some spares</li>
+</ul>
+<p>c. Akash - will try to make a slide on this</p>
+<p>2) Jude: Client/customer's wishlist (5-10 mins) a. Jude's thoughts on the current status of the project b. Include pivots of the direction he would like to take this</p>
+<p>3) Inhemeter call - Jude/Michel/Akash (5 mins) a. Recap of call with Sanji from inhemeter They want a signed document before providing documentation Awaiting on the confidential agreement from Inhemeter <→ Michel F is working on this b. "Cannot support the Inhe-4000 you got from nigeria" Latest model available is the Inhemeter-5000 c. "Please give us your specs for a new order" Donsun - sales person is no longer at Donsun Donsun is now bankrupt (!) Purchased sample meters through StemaCo</p>
+<p>Rahul - Sparkmeter Sparkmeter has custom radios, not modbus 485 Need to be on their custom neighborhood network Rahul has access to the codebase and developers → can share answers to the queries Dominant architecture in Africa Radios are working on a certain set of frequencies, these are pretty locked Seems very hard to jailbreak existing sparkmeters based on this Recommends avoid committing to jailbreaking this Maybe easier to do if we are already in contact/customers with them</p>
+<p>Arila: Was under the impression that there is Modbus Donsun Splitting into 2 One for Africa One for rest of world? Could expect code stubs for AMI potentially Rahul → older conversations</p>
+<p>4) Formal roles within volunteer team - Jude a. Product Manager b. Project Manager c. Administrators d. Other roles?</p>
+<p>5) Auditing/Changing of project timeline - Akash in place of Don (cannot make it)</p>
+<p>6) Techincal debug and setup of REI-Cameroon Lab - Glenn/Endurance/Rahul a. Summarizing status of remote access b. Setup of new hardware / VPN from Glenn</p>
+<p>Looking forward:</p>
+<ul>
+  <li>So many meter vendors going bankrupt or not helpful</li>
+  <li>How do we salvage existing meters/hardware in the field from these bankruptcies?</li>
+  <li>Specific to REI-Cameroon,</li>
+  <li>Jude has Sparkmeter and Stemaco (using Donsun)</li>
+  <li>Sparkmeter has also moved to stop usage of older hardware</li>
+  <li>Currently has ~800 sparkmeters</li>
+  <li>Other hardware is at risk too</li>
+  <li>Rahul:</li>
+  <li>Would be great if we can support legacy systems. Some vendors (Sparkmeter for example) are not open to being supported</li>
+  <li>While providing this legacy support, we basically create the support/framework for OpenAMI</li>
+  <li>Vivien:</li>
+  <li>Sparkmeter has not yet committed to becoming open, but needs help (has a lot of tickets, backlog, etc).</li>
+</ul>
+<p>Sparkmeter</p>
+<ul>
+  <li>Allison is the person we need to convince</li>
+  <li>Rajan has talked, Vivien has talked to them, Jude has also talked to them, AMDA has also talked to them</li>
+  <li>M300 has given them $ to stay alive, we have about 3-6 months of funding there</li>
+</ul>
+<p>What do we as OpenAMI focus on in the next 3-6 months?</p>
+<ul>
+  <li>Rahul: Support on legacy solutions</li>
+  <li>Jude: Re-formulate the implementation plan</li>
+  <li>Seems like everyone will be legacy soon</li>
+  <li>Go back to drawing board</li>
+  <li>Open-Source Hardware?</li>
+  <li>Arila:</li>
+  <li>Open-source meter for EnAccess</li>
+  <li>Yes - but not available for use though</li>
+  <li>For next week:</li>
+  <li>Come with proposals for OpenAMI</li>
+  <li>Akash - hardware gateway prototype</li>
+  <li>No progress to report</li>
+  <li>Is anyone blocked by this yet?</li>
+  <li>Could be useful for some hardware prototyping</li>
+  <li>Glenn's hardware</li>
+  <li>Endurance hasn't been able</li>
+</ul>
+<p>Follow-ups - Rahul weekly meeting?</p>
+<ul>
+  <li>Stemaco and Donsun relationship?</li>
+  <li>Vivian hardware access?</li>
+  <li>Sparkmeter source code access?</li>
+</ul>
+  </article>
+  
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <div class="sidebar-title">Navigation</div>
+      <ul class="sidebar-list">
+        <li><a href="/wiki/home">🏠 Wiki Home</a></li>
+        <li><a href="/wiki/wiki/syntax">📝 Syntax Guide</a></li>
+        <li><a href="/wiki/ieeeguidelines">⚖️ IEEE Guidelines</a></li>
+        <li><a href="/wiki/playground/playground">🧪 Wiki Playground</a></li>
+        <li><a href="/wiki/wg/tech">⚙️ Technology Committee</a></li>
+        <li><a href="/wiki/home/technologies">🏭 Technologies Hub</a></li>
+        <li><a href="/wiki/home/projects">🌍 Initiatives Index</a></li>
+      </ul>
+    </div>
+    
+    <div class="sidebar-card">
+      <div class="sidebar-title">Repository</div>
+      <p style="font-size: 0.78rem; color: var(--muted); margin-bottom: 12px;">This wiki is fully version-controlled on GitHub with continuous integration deployment.</p>
+      <a href="https://github.com/rahulbhargavain/openami-smart-village" target="_blank" style="font-size: 0.8rem; font-weight: 700; color: var(--teal);">📂 View on GitHub</a>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <p>© 2026 <strong>IEEE Smart Village</strong> · <strong>wiki.smartvillage.ieee.org</strong> · Migrated by Antigravity</p>
+</footer>
+
+</body>
+</html>

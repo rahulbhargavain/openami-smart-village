@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Syntax — IEEE Smart Village Wiki</title>
+  <meta name="description" content="Centralized collaborate archive for IEEE Smart Village Wiki. Migrated from DokuWiki with version control.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --bg2: #f1f5f9;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --teal: #0891b2;
+      --teal-dim: rgba(8, 145, 178, 0.08);
+      --text: #0f172a;
+      --sub: #475569;
+      --muted: #64748b;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; }
+    
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white; padding: 24px 40px; border-bottom: 3px solid var(--teal);
+    }
+    header .container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+    header h1 { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
+    header h1 strong { color: var(--teal); }
+    header nav a { color: #cbd5e1; text-decoration: none; font-size: 0.85rem; font-weight: 600; margin-left: 20px; transition: color 0.2s; }
+    header nav a:hover { color: white; }
+
+    .main-layout { max-width: 1200px; margin: 40px auto; padding: 0 40px; display: grid; grid-template-columns: 3fr 1fr; gap: 40px; }
+    .content-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; box-shadow: 0 4px 12px rgba(15,23,42,0.02); }
+    
+    h1, h2, h3, h4, h5 { font-weight: 800; letter-spacing: -0.02em; color: var(--text); margin-top: 1.8em; margin-bottom: 0.6em; line-height: 1.25; }
+    h1 { font-size: 2.2rem; border-bottom: 2px solid var(--border); padding-bottom: 12px; margin-top: 0; }
+    h2 { font-size: 1.6rem; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    h3 { font-size: 1.25rem; }
+    
+    p { margin-bottom: 1.5em; font-size: 0.95rem; color: var(--sub); }
+    strong { color: var(--text); }
+    
+    /* Links */
+    a { color: var(--teal); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+    a:hover { color: #06b6d4; text-decoration: underline; }
+    
+    /* Lists */
+    ul, ol { margin-bottom: 1.5em; padding-left: 24px; }
+    li { font-size: 0.95rem; color: var(--sub); margin-bottom: 0.5em; }
+    
+    /* Tables */
+    .table-wrapper { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); margin: 28px 0; box-shadow: 0 2px 8px rgba(15,23,42,0.02); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; }
+    thead tr { background: rgba(8, 145, 178, 0.06); border-bottom: 1px solid var(--border); }
+    th { padding: 12px 16px; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.75rem; }
+    td { padding: 12px 16px; border-top: 1px solid var(--border); color: var(--sub); vertical-align: middle; }
+    tr:hover td { background: rgba(8, 145, 178, 0.01); }
+    
+    /* PDF/Attachment Cards */
+    .pdf-card { display: flex; align-items: center; gap: 16px; padding: 18px 24px; border: 1px solid var(--border); border-radius: 12px; margin: 24px 0; background: var(--bg); }
+    .pdf-icon { font-size: 2rem; color: var(--teal); }
+    .pdf-info { flex: 1; }
+    .pdf-title { font-weight: 700; font-size: 0.9rem; color: var(--text); margin-bottom: 4px; }
+    .pdf-btn { display: inline-flex; align-items: center; justify-content: center; padding: 6px 14px; background: var(--teal); color: white !important; font-size: 0.78rem; font-weight: 700; border-radius: 6px; text-decoration: none !important; transition: background 0.2s; }
+    .pdf-btn:hover { background: #06b6d4; }
+    
+    /* Image Styling */
+    .wiki-image { max-width: 100%; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(15,23,42,0.04); margin: 20px 0; display: block; }
+    
+    /* Sidebar */
+    .sidebar { display: flex; flex-direction: column; gap: 24px; }
+    .sidebar-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; box-shadow: 0 4px 12px rgba(15,23,42,0.01); }
+    .sidebar-title { font-size: 0.85rem; font-weight: 800; color: var(--teal); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .sidebar-list { list-style: none; padding: 0; }
+    .sidebar-list li { font-size: 0.85rem; margin-bottom: 8px; }
+    
+    hr { border: 0; border-top: 1px solid var(--border); margin: 32px 0; }
+    footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 36px 40px; text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 60px; }
+    footer strong { color: var(--teal); }
+    
+    @media(max-width: 768px) {
+      .main-layout { grid-template-columns: 1fr; gap: 30px; margin: 20px auto; padding: 0 20px; }
+      header { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <h1>🌐 IEEE Smart Village <strong>Wiki</strong></h1>
+    <nav>
+      <a href="/wiki/home">Home</a>
+      <a href="/reports">Reports Index</a>
+    </nav>
+  </div>
+</header>
+
+<div class="main-layout">
+  <article class="content-card">
+    <h1>Formatting Syntax</h1>
+<p><a href="/wiki/doku>DokuWiki">Doku>Dokuwiki</a> supports some simple markup language, which tries to make the datafiles to be as readable as possible. This page contains all possible syntax you may use when editing the pages. Simply have a look at the source of this page by pressing "Edit this page". If you want to try something, just use the <a href="/wiki/playground/playground">playground</a> page. The simpler markup is easily accessible via <a href="/wiki/doku>toolbar">quickbuttons</a>, too.</p>
+<h2>Basic Text Formatting</h2>
+<p>DokuWiki supports <strong>bold</strong>, *italic*, <u>underlined</u> and <code>monospaced</code> texts. Of course you can <strong><u>*<code>combine</code>*</u></strong> all these.</p>
+<p>DokuWiki supports <strong>bold</strong>, *italic*, <u>underlined</u> and <code>monospaced</code> texts. Of course you can <strong><u>*<code>combine</code>*</u></strong> all these.</p>
+<p>You can use <sub>subscript</sub> and <sup>superscript</sup>, too.</p>
+<p>You can use <sub>subscript</sub> and <sup>superscript</sup>, too.</p>
+<p>You can mark something as <del>deleted</del> as well.</p>
+<p>You can mark something as <del>deleted</del> as well.</p>
+<p><strong>Paragraphs</strong> are created from blank lines. If you want to <strong>force a newline</strong> without a paragraph, you can use two backslashes followed by a whitespace or the end of line.</p>
+<p>This is some text with some linebreaks<br> Note that the two backslashes are only recognized at the end of a line<br> or followed by<br> a whitespace \\this happens without it.</p>
+<p>This is some text with some linebreaks<br> Note that the two backslashes are only recognized at the end of a line<br> or followed by<br> a whitespace \\this happens without it.</p>
+<p>You should use forced newlines only if really needed.</p>
+<h2>Links</h2>
+<p>DokuWiki supports multiple ways of creating links.</p>
+<h3>External</h3>
+<p>External links are recognized automagically: http://www.google.com or simply www.google.com - You can set the link text as well: <a href="http://www.google.com">This Link points to google</a>. Email addresses like this one: <andi@splitbrain.org> are recognized, too.</p>
+<p>DokuWiki supports multiple ways of creating links. External links are recognized automagically: http://www.google.com or simply www.google.com - You can set link text as well: <a href="http://www.google.com">This Link points to google</a>. Email addresses like this one: <andi@splitbrain.org> are recognized, too.</p>
+<h3>Internal</h3>
+<p>Internal links are created by using square brackets. You can either just give a <a href="/wiki/pagename">Pagename</a> or use an additional <a href="/wiki/pagename">link text</a>.</p>
+<p>Internal links are created by using square brackets. You can either just give a <a href="/wiki/pagename">Pagename</a> or use an additional <a href="/wiki/pagename">link text</a>.</p>
+<p><a href="/wiki/doku>pagename">Wiki pagenames</a> are converted to lowercase automatically, special characters are not allowed.</p>
+<p>You can use <a href="/wiki/some/namespaces">Namespaces</a> by using a colon in the pagename.</p>
+<p>You can use <a href="/wiki/some/namespaces">Namespaces</a> by using a colon in the pagename.</p>
+<p>For details about namespaces see <a href="/wiki/doku>namespaces">Doku>Namespaces</a>.</p>
+<p>Linking to a specific section is possible, too. Just add the section name behind a hash character as known from HTML. This links to <a href="/wiki/syntax#internal">this Section</a>.</p>
+<p>This links to <a href="/wiki/syntax#internal">this Section</a>.</p>
+<p>Notes:</p>
+<ul>
+  <li>Links to <a href="/wiki/syntax">existing pages</a> are shown in a different style from <a href="/wiki/nonexisting">Nonexisting</a> ones.</li>
+  <li>DokuWiki does not use <a href="/wiki/wp>CamelCase">Wp>Camelcase</a> to automatically create links by default, but this behavior can be enabled in the <a href="/wiki/doku>config">Doku>Config</a> file. Hint: If DokuWiki is a link, then it's enabled.</li>
+  <li>When a section's heading is changed, its bookmark changes, too. So don't rely on section linking too much.</li>
+</ul>
+<h3>Interwiki</h3>
+<p>DokuWiki supports <a href="/wiki/doku>Interwiki">Doku>Interwiki</a> links. These are quick links to other Wikis. For example this is a link to Wikipedia's page about Wikis: <a href="/wiki/wp>Wiki">Wp>Wiki</a>.</p>
+<p>DokuWiki supports <a href="/wiki/doku>Interwiki">Doku>Interwiki</a> links. These are quick links to other Wikis. For example this is a link to Wikipedia's page about Wikis: <a href="/wiki/wp>Wiki">Wp>Wiki</a>.</p>
+<h3>Windows Shares</h3>
+<p>Windows shares like <a href="/wiki/\\server\share">this</a> are recognized, too. Please note that these only make sense in a homogeneous user group like a corporate <a href="/wiki/wp>Intranet">Wp>Intranet</a>.</p>
+<p>Windows Shares like <a href="/wiki/\\server\share">this</a> are recognized, too.</p>
+<p>Notes:</p>
+<ul>
+  <li>For security reasons direct browsing of windows shares only works in Microsoft Internet Explorer per default (and only in the "local zone").</li>
+  <li>For Mozilla and Firefox it can be enabled through different workaround mentioned in the <a href="http://kb.mozillazine.org/Links_to_local_pages_do_not_work">Mozilla Knowledge Base</a>. However, there will still be a JavaScript warning about trying to open a Windows Share. To remove this warning (for all users), put the following line in <code>conf/lang/en/lang.php</code> (more details at <a href="/wiki/doku>localization#changing_some_localized_texts_and_strings_in_your_installation">localization</a>): <code - conf/lang/en/lang.php></li>
+</ul>
+<p><?php /**</p>
+<ul>
+  <li>Customization of the english language file</li>
+  <li>Copy only the strings that needs to be modified</li>
+  <li>/</li>
+</ul>
+<p>$lang['js']['nosmblinks'] = ''; </code></p>
+<h3>Image Links</h3>
+<p>You can also use an image to link to another internal or external page by combining the syntax for links and <a href="/wiki/#images_and_other_files">images</a> (see below) like this:</p>
+<p><a href="http://php.net"><img src="/media/wiki/dokuwiki-128.png" class="wiki-image" alt="Embedded Image"></a></p>
+<p><a href="http://php.net"><img src="/media/wiki/dokuwiki-128.png" class="wiki-image" alt="Embedded Image"></a></p>
+<p>Please note: The image formatting is the only formatting syntax accepted in link names.</p>
+<p>The whole <a href="/wiki/#images_and_other_files">image</a> and <a href="/wiki/#links">link</a> syntax is supported (including image resizing, internal and external images and URLs and interwiki links).</p>
+<h2>Footnotes</h2>
+<p>You can add footnotes ((This is a footnote)) by using double parentheses.</p>
+<p>You can add footnotes ((This is a footnote)) by using double parentheses.</p>
+<h2>Sectioning</h2>
+<p>You can use up to five different levels of headlines to structure your content. If you have more than three headlines, a table of contents is generated automatically -- this can be disabled by including the string <code><nowiki>~~NOTOC~~</nowiki></code> in the document.</p>
+<h3>Headline Level 3</h3>
+<h4>Headline Level 4</h4>
+<h5>Headline Level 5</h5>
+<p>==== Headline Level 3 ==== === Headline Level 4 === == Headline Level 5 ==</p>
+<p>By using four or more dashes, you can make a horizontal line:</p>
+<hr>
+<h2>Media Files</h2>
+<p>You can include external and internal <a href="/wiki/doku>images">images, videos and audio files</a> with curly brackets. Optionally you can specify the size of them.</p>
+<p>Real size:                        <img src="/media/wiki/dokuwiki-128.png" class="wiki-image" alt="Embedded Image"></p>
+<p>Resize to given width:            <img src="/media/wiki/dokuwiki-128.png" class="wiki-image" alt="Embedded Image"></p>
+<p>Resize to given width and height((when the aspect ratio of the given width and height doesn't match that of the image, it will be cropped to the new ratio before resizing)): <img src="/media/wiki/dokuwiki-128.png" class="wiki-image" alt="Embedded Image"></p>
+<p>Resized external image:           <img src="/media/https///www.php.net/images/php.gif" class="wiki-image" alt="Embedded Image"></p>
+<p>Real size:                        <img src="/media/wiki/dokuwiki-128.png" class="wiki-image" alt="Embedded Image"> Resize to given width:            <img src="/media/wiki/dokuwiki-128.png" class="wiki-image" alt="Embedded Image"> Resize to given width and height: <img src="/media/wiki/dokuwiki-128.png" class="wiki-image" alt="Embedded Image"> Resized external image:           <img src="/media/https///www.php.net/images/php.gif" class="wiki-image" alt="Embedded Image"></p>
+<p>By using left or right whitespaces you can choose the alignment.</p>
+<img src="/media/wiki/dokuwiki-128.png" class="wiki-image" alt="Embedded Image">
+<img src="/media/wiki/dokuwiki-128.png" class="wiki-image" alt="Embedded Image">
+<img src="/media/wiki/dokuwiki-128.png" class="wiki-image" alt="Embedded Image">
+<img src="/media/wiki/dokuwiki-128.png" class="wiki-image" alt="Embedded Image">
+<img src="/media/wiki/dokuwiki-128.png" class="wiki-image" alt="Embedded Image">
+<img src="/media/wiki/dokuwiki-128.png" class="wiki-image" alt="Embedded Image">
+<p>Of course, you can add a title (displayed as a tooltip by most browsers), too.</p>
+<img src="/media/wiki/dokuwiki-128.png |This is the caption" class="wiki-image" alt="Embedded Image">
+<img src="/media/wiki/dokuwiki-128.png |This is the caption" class="wiki-image" alt="Embedded Image">
+<p>For linking an image to another page see <a href="/wiki/#Image Links">#Image Links</a> above.</p>
+<h3>Supported Media Formats</h3>
+<p>DokuWiki can embed the following media formats directly.</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+  <th>Image</th>
+  <th><code>gif</code>, <code>jpg</code>, <code>png</code></th>
+</tr></thead>
+<tr>
+  <td>Video</td>
+  <td><code>webm</code>, <code>ogv</code>, <code>mp4</code></td>
+</tr>
+<tr>
+  <td>Audio</td>
+  <td><code>ogg</code>, <code>mp3</code>, <code>wav</code></td>
+</tr>
+<tr>
+  <td>Flash</td>
+  <td><code>swf</code></td>
+</tr>
+</tbody></table></div>
+<p>If you specify a filename that is not a supported media format, then it will be displayed as a link instead.</p>
+<p>By adding <code>?linkonly</code> you provide a link to the media without displaying it inline</p>
+<img src="/media/wiki/dokuwiki-128.png" class="wiki-image" alt="Embedded Image">
+<img src="/media/wiki/dokuwiki-128.png" class="wiki-image" alt="Embedded Image"> This is just a link to the image.
+<h3>Fallback Formats</h3>
+<p>Unfortunately not all browsers understand all video and audio formats. To mitigate the problem, you can upload your file in different formats for maximum browser compatibility.</p>
+<p>For example consider this embedded mp4 video:</p>
+<p>{{video.mp4|A funny video}}</p>
+<p>When you upload a <code>video.webm</code> and <code>video.ogv</code> next to the referenced <code>video.mp4</code>, DokuWiki will automatically add them as alternatives so that one of the three files is understood by your browser.</p>
+<p>Additionally DokuWiki supports a "poster" image which will be shown before the video has started. That image needs to have the same filename as the video and be either a jpg or png file. In the example above a <code>video.jpg</code> file would work.</p>
+<h2>Lists</h2>
+<p>Dokuwiki supports ordered and unordered lists. To create a list item, indent your text by two spaces and use a <code>*</code> for unordered lists or a <code>-</code> for ordered ones.</p>
+<ul>
+  <li>This is a list</li>
+  <li>The second item</li>
+  <li>You may have different levels</li>
+  <li>Another item</li>
+</ul>
+<ol>
+  <li>The same list but ordered</li>
+  <li>Another item</li>
+  <li>Just use indention for deeper levels</li>
+  <li>That's it</li>
+</ol>
+<p><code></p>
+<ul>
+  <li>This is a list</li>
+  <li>The second item</li>
+  <li>You may have different levels</li>
+  <li>Another item</li>
+</ul>
+<ol>
+  <li>The same list but ordered</li>
+  <li>Another item</li>
+  <li>Just use indention for deeper levels</li>
+  <li>That's it</li>
+</ol>
+<p></code></p>
+<p>Also take a look at the <a href="/wiki/doku>faq/lists">FAQ on list items</a>.</p>
+<h2>Text Conversions</h2>
+<p>DokuWiki can convert certain pre-defined characters or strings into images or other text or HTML.</p>
+<p>The text to image conversion is mainly done for smileys. And the text to HTML conversion is used for typography replacements, but can be configured to use other HTML as well.</p>
+<h3>Text to Image Conversions</h3>
+<p>DokuWiki converts commonly used <a href="/wiki/wp>emoticon">Wp>Emoticon</a>s to their graphical equivalents. Those <a href="/wiki/doku>Smileys">Doku>Smileys</a> and other images can be configured and extended. Here is an overview of Smileys included in DokuWiki:</p>
+<ul>
+  <li>8-) %%  8-)  %%</li>
+  <li>8-O %%  8-O  %%</li>
+  <li>:-( %%  :-(  %%</li>
+  <li>:-) %%  :-)  %%</li>
+  <li>=)  %%  =)   %%</li>
+  <li>:-/ %%  :-/  %%</li>
+  <li>:-\ %%  :-\  %%</li>
+  <li>:-? %%  :-?  %%</li>
+  <li>:-D %%  :-D  %%</li>
+  <li>:-P %%  :-P  %%</li>
+  <li>:-O %%  :-O  %%</li>
+  <li>:-X %%  :-X  %%</li>
+  <li>:-| %%  :-|  %%</li>
+  <li>;-) %%  ;-)  %%</li>
+  <li>^_^ %%  ^_^  %%</li>
+  <li>m(  %%  m(   %%</li>
+  <li>:?: %%  :?:  %%</li>
+  <li>:!: %%  :!:  %%</li>
+  <li>LOL %%  LOL  %%</li>
+  <li>FIXME %%  FIXME %%</li>
+  <li>DELETEME %% DELETEME %%</li>
+</ul>
+<h3>Text to HTML Conversions</h3>
+<p>Typography: <a href="/wiki/DokuWiki">Dokuwiki</a> can convert simple text characters to their typographically correct entities. Here is an example of recognized characters.</p>
+<p>-> <- <-> => <= <=> >> << -- --- 640x480 (c) (tm) (r) "He thought 'It's a man's world'..."</p>
+<p><code> -> <- <-> => <= <=> >> << -- --- 640x480 (c) (tm) (r) "He thought 'It's a man's world'..." </code></p>
+<p>The same can be done to produce any kind of HTML, it just needs to be added to the <a href="/wiki/doku>entities">pattern file</a>.</p>
+<p>There are three exceptions which do not come from that pattern file: multiplication entity (640x480), 'single' and "double quotes". They can be turned off through a <a href="/wiki/doku>config/typography">config option</a>.</p>
+<h2>Quoting</h2>
+<p>Some times you want to mark some text to show it's a reply or comment. You can use the following syntax:</p>
+<p><code> I think we should do it</p>
+<p>> No we shouldn't</p>
+<p>>> Well, I say we should</p>
+<p>> Really?</p>
+<p>>> Yes!</p>
+<p>>>> Then lets do it! </code></p>
+<p>I think we should do it</p>
+<p>> No we shouldn't</p>
+<p>>> Well, I say we should</p>
+<p>> Really?</p>
+<p>>> Yes!</p>
+<p>>>> Then lets do it!</p>
+<h2>Tables</h2>
+<p>DokuWiki supports a simple syntax to create tables.</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+  <th>Heading 1</th>
+  <th>Heading 2</th>
+  <th>Heading 3</th>
+</tr></thead>
+<tbody>
+<tr>
+  <td>Row 1 Col 1</td>
+  <td>Row 1 Col 2</td>
+  <td>Row 1 Col 3</td>
+</tr>
+<tr>
+  <td>Row 2 Col 1</td>
+  <td>some colspan (note the double pipe)</td>
+  <td></td>
+</tr>
+<tr>
+  <td>Row 3 Col 1</td>
+  <td>Row 3 Col 2</td>
+  <td>Row 3 Col 3</td>
+</tr>
+</tbody></table></div>
+<p>Table rows have to start and end with a <code>|</code> for normal rows or a <code>^</code> for headers.</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+  <th>Heading 1</th>
+  <th>Heading 2</th>
+  <th>Heading 3</th>
+</tr></thead>
+<tbody>
+<tr>
+  <td>Row 1 Col 1</td>
+  <td>Row 1 Col 2</td>
+  <td>Row 1 Col 3</td>
+</tr>
+<tr>
+  <td>Row 2 Col 1</td>
+  <td>some colspan (note the double pipe)</td>
+  <td></td>
+</tr>
+<tr>
+  <td>Row 3 Col 1</td>
+  <td>Row 3 Col 2</td>
+  <td>Row 3 Col 3</td>
+</tr>
+</tbody></table></div>
+<p>To connect cells horizontally, just make the next cell completely empty as shown above. Be sure to have always the same amount of cell separators!</p>
+<p>Vertical tableheaders are possible, too.</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+  <th>^ Heading 1            ^ Heading 2          ^</th>
+</tr></thead>
+<tr>
+  <td>Heading 3</td>
+  <td>Row 1 Col 2</td>
+  <td>Row 1 Col 3</td>
+  <td></td>
+</tr>
+<tbody>
+<tr>
+  <td>Heading 4</td>
+  <td>no colspan this time</td>
+  <td></td>
+  <td></td>
+</tr>
+<tbody>
+<tr>
+  <td>Heading 5</td>
+  <td>Row 2 Col 2</td>
+  <td>Row 2 Col 3</td>
+  <td></td>
+</tr>
+<tbody>
+</tbody></table></div>
+<p>As you can see, it's the cell separator before a cell which decides about the formatting:</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+  <th>^ Heading 1            ^ Heading 2          ^</th>
+</tr></thead>
+<tr>
+  <td>Heading 3</td>
+  <td>Row 1 Col 2</td>
+  <td>Row 1 Col 3</td>
+  <td></td>
+</tr>
+<tbody>
+<tr>
+  <td>Heading 4</td>
+  <td>no colspan this time</td>
+  <td></td>
+  <td></td>
+</tr>
+<tbody>
+<tr>
+  <td>Heading 5</td>
+  <td>Row 2 Col 2</td>
+  <td>Row 2 Col 3</td>
+  <td></td>
+</tr>
+<tbody>
+</tbody></table></div>
+<p>You can have rowspans (vertically connected cells) by adding <code>%%:::%%</code> into the cells below the one to which they should connect.</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+  <th>Heading 1</th>
+  <th>Heading 2</th>
+  <th>Heading 3</th>
+</tr></thead>
+<tbody>
+<tr>
+  <td>Row 1 Col 1</td>
+  <td>this cell spans vertically</td>
+  <td>Row 1 Col 3</td>
+</tr>
+<tr>
+  <td>Row 2 Col 1</td>
+  <td>:::</td>
+  <td>Row 2 Col 3</td>
+</tr>
+<tr>
+  <td>Row 3 Col 1</td>
+  <td>:::</td>
+  <td>Row 2 Col 3</td>
+</tr>
+</tbody></table></div>
+<p>Apart from the rowspan syntax those cells should not contain anything else.</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+  <th>Heading 1</th>
+  <th>Heading 2</th>
+  <th>Heading 3</th>
+</tr></thead>
+<tbody>
+<tr>
+  <td>Row 1 Col 1</td>
+  <td>this cell spans vertically</td>
+  <td>Row 1 Col 3</td>
+</tr>
+<tr>
+  <td>Row 2 Col 1</td>
+  <td>:::</td>
+  <td>Row 2 Col 3</td>
+</tr>
+<tr>
+  <td>Row 3 Col 1</td>
+  <td>:::</td>
+  <td>Row 2 Col 3</td>
+</tr>
+</tbody></table></div>
+<p>You can align the table contents, too. Just add at least two whitespaces at the opposite end of your text: Add two spaces on the left to align right, two spaces on the right to align left and two spaces at least at both ends for centered text.</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+  <th>Table with alignment</th>
+  <th></th>
+  <th></th>
+</tr></thead>
+<tbody>
+<tr>
+  <td>right</td>
+  <td>center</td>
+  <td>left</td>
+</tr>
+<tr>
+  <td>left</td>
+  <td>right</td>
+  <td>center</td>
+</tr>
+<tr>
+  <td>xxxxxxxxxxxx</td>
+  <td>xxxxxxxxxxxx</td>
+  <td>xxxxxxxxxxxx</td>
+</tr>
+</tbody></table></div>
+<p>This is how it looks in the source:</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+  <th>Table with alignment</th>
+  <th></th>
+  <th></th>
+</tr></thead>
+<tbody>
+<tr>
+  <td>right</td>
+  <td>center</td>
+  <td>left</td>
+</tr>
+<tr>
+  <td>left</td>
+  <td>right</td>
+  <td>center</td>
+</tr>
+<tr>
+  <td>xxxxxxxxxxxx</td>
+  <td>xxxxxxxxxxxx</td>
+  <td>xxxxxxxxxxxx</td>
+</tr>
+</tbody></table></div>
+<p>Note: Vertical alignment is not supported.</p>
+<h2>No Formatting</h2>
+<p>If you need to display text exactly like it is typed (without any formatting), enclose the area either with <code>%%<nowiki>%%</code> tags or even simpler, with double percent signs <code><nowiki>%%</nowiki></code>.</p>
+<p><nowiki> This is some text which contains addresses like this: http://www.splitbrain.org and <strong>formatting</strong>, but nothing is done with it. </nowiki> The same is true for %%*<u>this</u> text* with a smiley ;-)%%.</p>
+<p><nowiki> This is some text which contains addresses like this: http://www.splitbrain.org and <strong>formatting</strong>, but nothing is done with it. </nowiki> The same is true for %%*<u>this</u> text* with a smiley ;-)%%.</p>
+<h2>Code Blocks</h2>
+<p>You can include code blocks into your documents by either indenting them by at least two spaces (like used for the previous examples) or by using the tags <code>%%<code>%%</code> or <code>%%<file>%%</code>.</p>
+<p>This is text is indented by two spaces.</p>
+<p><code> This is preformatted code all spaces are preserved: like              <-this </code></p>
+<p><file> This is pretty much the same, but you could use it to show that you quoted a file. </file></p>
+<p>Those blocks were created by this source:</p>
+<p>This is text is indented by two spaces.</p>
+<p><code> This is preformatted code all spaces are preserved: like              <-this </code></p>
+<p><file> This is pretty much the same, but you could use it to show that you quoted a file. </file></p>
+<h3>Syntax Highlighting</h3>
+<p><a href="/wiki/wiki/DokuWiki">Dokuwiki</a> can highlight sourcecode, which makes it easier to read. It uses the <a href="http://qbnz.com/highlighter/">GeSHi</a> Generic Syntax Highlighter -- so any language supported by GeSHi is supported. The syntax uses the same code and file blocks described in the previous section, but this time the name of the language syntax to be highlighted is included inside the tag, e.g. <code><nowiki><code java></nowiki></code> or <code><nowiki><file java></nowiki></code>.</p>
+<p><code java> /**</p>
+<ul>
+  <li>The HelloWorldApp class implements an application that</li>
+  <li>simply displays "Hello World!" to the standard output.</li>
+  <li>/</li>
+</ul>
+<p>class HelloWorldApp { public static void main(String[] args) { System.out.println("Hello World!"); //Display the string. } } </code></p>
+<p>The following language strings are currently recognized: *4cs 6502acme 6502kickass 6502tasm 68000devpac abap actionscript3 actionscript ada aimms algol68 apache applescript apt_sources arm asm asp asymptote autoconf autohotkey autoit avisynth awk bascomavr bash basic4gl batch bf biblatex bibtex blitzbasic bnf boo caddcl cadlisp ceylon cfdg cfm chaiscript chapel cil c_loadrunner clojure c_mac cmake cobol coffeescript c cpp cpp-qt cpp-winapi csharp css cuesheet c_winapi dart dcl dcpu16 dcs delphi diff div dos dot d ecmascript eiffel email epc e erlang euphoria ezt f1 falcon fo fortran freebasic freeswitch fsharp gambas gdb genero genie gettext glsl gml gnuplot go groovy gwbasic haskell haxe hicest hq9plus html html4strict html5 icon idl ini inno intercal io ispfpanel java5 java javascript jcl j jquery julia kixtart klonec klonecpp kotlin latex lb ldif lisp llvm locobasic logtalk lolcode lotusformulas lotusscript lscript lsl2 lua m68k magiksf make mapbasic mathematica matlab mercury metapost mirc mk-61 mmix modula2 modula3 mpasm mxml mysql nagios netrexx newlisp nginx nimrod nsis oberon2 objc objeck ocaml-brief ocaml octave oobas oorexx oracle11 oracle8 oxygene oz parasail parigp pascal pcre perl6 perl per pf phix php-brief php pic16 pike pixelbender pli plsql postgresql postscript povray powerbuilder powershell proftpd progress prolog properties providex purebasic pycon pys60 python qbasic qml q racket rails rbs rebol reg rexx robots roff rpmspec rsplus ruby rust sas sass scala scheme scilab scl sdlbasic smalltalk smarty spark sparql sql sshconfig standardml stonescript swift systemverilog tclegg tcl teraterm texgraph text thinbasic tsql twig typoscript unicon upc urbi uscript vala vbnet vb vbscript vedit verilog vhdl vim visualfoxpro visualprolog whitespace whois winbatch wolfram xbasic xml xojo xorg_conf xpp yaml z80 zxbasic*</p>
+<p>There are additional <a href="/wiki/doku>syntax_highlighting">advanced options</a> available for syntax highlighting, such as highlighting lines or adding line numbers.</p>
+<h3>Downloadable Code Blocks</h3>
+<p>When you use the <code>%%<code>%%</code> or <code>%%<file>%%</code> syntax as above, you might want to make the shown code available for download as well. You can do this by specifying a file name after language code like this:</p>
+<p><code> <file php myexample.php> <?php echo "hello world!"; ?> </file> </code></p>
+<p><file php myexample.php> <?php echo "hello world!"; ?> </file></p>
+<p>If you don't want any highlighting but want a downloadable file, specify a dash (<code>-</code>) as the language code: <code>%%<code - myfile.foo>%%</code>.</p>
+<h2>RSS/ATOM Feed Aggregation</h2>
+<p><a href="/wiki/DokuWiki">Dokuwiki</a> can integrate data from external XML feeds. For parsing the XML feeds, <a href="http://simplepie.org/">SimplePie</a> is used. All formats understood by SimplePie can be used in DokuWiki as well. You can influence the rendering by multiple additional space separated parameters:</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+  <th>Parameter</th>
+  <th>Description</th>
+</tr></thead>
+<tbody>
+<tr>
+  <td>any number</td>
+  <td>will be used as maximum number items to show, defaults to 8</td>
+</tr>
+<tr>
+  <td>reverse</td>
+  <td>display the last items in the feed first</td>
+</tr>
+<tr>
+  <td>author</td>
+  <td>show item authors names</td>
+</tr>
+<tr>
+  <td>date</td>
+  <td>show item dates</td>
+</tr>
+<tr>
+  <td>description</td>
+  <td>show the item description. All HTML tags will be stripped</td>
+</tr>
+<tr>
+  <td>nosort</td>
+  <td>do not sort the items in the feed</td>
+</tr>
+<tr>
+  <td>*n*[dhm]</td>
+  <td>refresh period, where d=days, h=hours, m=minutes. (e.g. 12h = 12 hours).</td>
+</tr>
+</tbody></table></div>
+<p>The refresh period defaults to 4 hours. Any value below 10 minutes will be treated as 10 minutes. <a href="/wiki/wiki/DokuWiki">Dokuwiki</a> will generally try to supply a cached version of a page, obviously this is inappropriate when the page contains dynamic external content. The parameter tells <a href="/wiki/wiki/DokuWiki">Dokuwiki</a> to re-render the page if it is more than *refresh period* since the page was last rendered.</p>
+<p>By default the feed will be sorted by date, newest items first. You can sort it by oldest first using the <code>reverse</code> parameter, or display the feed as is with <code>nosort</code>.</p>
+<p><strong>Example:</strong></p>
+<p>{{rss>http://slashdot.org/index.rss 5 author date 1h }}</p>
+<p>{{rss>http://slashdot.org/index.rss 5 author date 1h }}</p>
+<h2>Control Macros</h2>
+<p>Some syntax influences how DokuWiki renders a page without creating any output it self. The following control macros are availble:</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+  <th>Macro</th>
+  <th>Description</th>
+  <th></th>
+</tr></thead>
+<tbody>
+<tr>
+  <td>%%~~NOTOC~~%%</td>
+  <td>If this macro is found on the page, no table of contents will be created</td>
+</tr>
+<tr>
+  <td>%%~~NOCACHE~~%%</td>
+  <td>DokuWiki caches all output by default. Sometimes this might not be wanted (eg. when the %%<php>%% syntax above is used), adding this macro will force DokuWiki to rerender a page on every call</td>
+</tr>
+</tbody></table></div>
+<h2>Syntax Plugins</h2>
+<p>DokuWiki's syntax can be extended by <a href="/wiki/doku>plugins">Plugins</a>. How the installed plugins are used is described on their appropriate description pages. The following syntax plugins are available in this particular DokuWiki installation:</p>
+<p>~~INFO:syntaxplugins~~</p>
+  </article>
+  
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <div class="sidebar-title">Navigation</div>
+      <ul class="sidebar-list">
+        <li><a href="/wiki/home">🏠 Wiki Home</a></li>
+        <li><a href="/wiki/wiki/syntax">📝 Syntax Guide</a></li>
+        <li><a href="/wiki/ieeeguidelines">⚖️ IEEE Guidelines</a></li>
+        <li><a href="/wiki/playground/playground">🧪 Wiki Playground</a></li>
+        <li><a href="/wiki/wg/tech">⚙️ Technology Committee</a></li>
+        <li><a href="/wiki/home/technologies">🏭 Technologies Hub</a></li>
+        <li><a href="/wiki/home/projects">🌍 Initiatives Index</a></li>
+      </ul>
+    </div>
+    
+    <div class="sidebar-card">
+      <div class="sidebar-title">Repository</div>
+      <p style="font-size: 0.78rem; color: var(--muted); margin-bottom: 12px;">This wiki is fully version-controlled on GitHub with continuous integration deployment.</p>
+      <a href="https://github.com/rahulbhargavain/openami-smart-village" target="_blank" style="font-size: 0.8rem; font-weight: 700; color: var(--teal);">📂 View on GitHub</a>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <p>© 2026 <strong>IEEE Smart Village</strong> · <strong>wiki.smartvillage.ieee.org</strong> · Migrated by Antigravity</p>
+</footer>
+
+</body>
+</html>

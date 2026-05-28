@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Informationdigest — IEEE Smart Village Wiki</title>
+  <meta name="description" content="Centralized collaborate archive for IEEE Smart Village Wiki. Migrated from DokuWiki with version control.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --bg2: #f1f5f9;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --teal: #0891b2;
+      --teal-dim: rgba(8, 145, 178, 0.08);
+      --text: #0f172a;
+      --sub: #475569;
+      --muted: #64748b;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; }
+    
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white; padding: 24px 40px; border-bottom: 3px solid var(--teal);
+    }
+    header .container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+    header h1 { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
+    header h1 strong { color: var(--teal); }
+    header nav a { color: #cbd5e1; text-decoration: none; font-size: 0.85rem; font-weight: 600; margin-left: 20px; transition: color 0.2s; }
+    header nav a:hover { color: white; }
+
+    .main-layout { max-width: 1200px; margin: 40px auto; padding: 0 40px; display: grid; grid-template-columns: 3fr 1fr; gap: 40px; }
+    .content-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; box-shadow: 0 4px 12px rgba(15,23,42,0.02); }
+    
+    h1, h2, h3, h4, h5 { font-weight: 800; letter-spacing: -0.02em; color: var(--text); margin-top: 1.8em; margin-bottom: 0.6em; line-height: 1.25; }
+    h1 { font-size: 2.2rem; border-bottom: 2px solid var(--border); padding-bottom: 12px; margin-top: 0; }
+    h2 { font-size: 1.6rem; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    h3 { font-size: 1.25rem; }
+    
+    p { margin-bottom: 1.5em; font-size: 0.95rem; color: var(--sub); }
+    strong { color: var(--text); }
+    
+    /* Links */
+    a { color: var(--teal); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+    a:hover { color: #06b6d4; text-decoration: underline; }
+    
+    /* Lists */
+    ul, ol { margin-bottom: 1.5em; padding-left: 24px; }
+    li { font-size: 0.95rem; color: var(--sub); margin-bottom: 0.5em; }
+    
+    /* Tables */
+    .table-wrapper { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); margin: 28px 0; box-shadow: 0 2px 8px rgba(15,23,42,0.02); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; }
+    thead tr { background: rgba(8, 145, 178, 0.06); border-bottom: 1px solid var(--border); }
+    th { padding: 12px 16px; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.75rem; }
+    td { padding: 12px 16px; border-top: 1px solid var(--border); color: var(--sub); vertical-align: middle; }
+    tr:hover td { background: rgba(8, 145, 178, 0.01); }
+    
+    /* PDF/Attachment Cards */
+    .pdf-card { display: flex; align-items: center; gap: 16px; padding: 18px 24px; border: 1px solid var(--border); border-radius: 12px; margin: 24px 0; background: var(--bg); }
+    .pdf-icon { font-size: 2rem; color: var(--teal); }
+    .pdf-info { flex: 1; }
+    .pdf-title { font-weight: 700; font-size: 0.9rem; color: var(--text); margin-bottom: 4px; }
+    .pdf-btn { display: inline-flex; align-items: center; justify-content: center; padding: 6px 14px; background: var(--teal); color: white !important; font-size: 0.78rem; font-weight: 700; border-radius: 6px; text-decoration: none !important; transition: background 0.2s; }
+    .pdf-btn:hover { background: #06b6d4; }
+    
+    /* Image Styling */
+    .wiki-image { max-width: 100%; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(15,23,42,0.04); margin: 20px 0; display: block; }
+    
+    /* Sidebar */
+    .sidebar { display: flex; flex-direction: column; gap: 24px; }
+    .sidebar-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; box-shadow: 0 4px 12px rgba(15,23,42,0.01); }
+    .sidebar-title { font-size: 0.85rem; font-weight: 800; color: var(--teal); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .sidebar-list { list-style: none; padding: 0; }
+    .sidebar-list li { font-size: 0.85rem; margin-bottom: 8px; }
+    
+    hr { border: 0; border-top: 1px solid var(--border); margin: 32px 0; }
+    footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 36px 40px; text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 60px; }
+    footer strong { color: var(--teal); }
+    
+    @media(max-width: 768px) {
+      .main-layout { grid-template-columns: 1fr; gap: 30px; margin: 20px auto; padding: 0 20px; }
+      header { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <h1>🌐 IEEE Smart Village <strong>Wiki</strong></h1>
+    <nav>
+      <a href="/wiki/home">Home</a>
+      <a href="/reports">Reports Index</a>
+    </nav>
+  </div>
+</header>
+
+<div class="main-layout">
+  <article class="content-card">
+    <h2>Introduction</h2>
+<p>Energy access is essential to development. For the last century, quality of life has been dependent on affordable and plentiful fossil fuels. Off-grid renewable energy has the potential to both reach the remotest underserved corners of the Earth, and have a disproportionate impact on empowering remote communities in an environmentally sustainable manner. Initiatives to reduce poverty by the UN, World Bank and private foundations highlight energy development as fundamental in their plans. To escape poverty, the very poor need more stable incomes and new opportunities to earn that are closely related to the availability of energy. Energy makes local business and transportation of commercial goods to markets possible, fueling local trade and enabling market access. Information flow requires energy too.</p>
+<p>IEEE Smart Village targets communities unserved or poorly served by the national electricity grid. The program emphasizes clean solar-based electricity, over dirty kerosene, smoky unhealthy wood or inefficient dried biomass, as a transformational foundation to catalyze community-wide change. An effort is made to develop a business model for the distribution of energy, often as physically delivered lead-acid batteries charged by a solar generation installation, with the entire system maintained by the community themselves to make the effort sustainable. Offered classes cover everything from the basic principles of electricity needed for solar power distribution, maintenance of the microgrids, in-home wiring, and installation and operation of community power distribution.</p>
+<p>Micro-grid electrification is supplemented with additional assistance from IEEE Smart Village and its partners for broad-based advanced education for (pre-K to grade 12) children through internet-delivered digital supplementary content in powered classrooms and for adults through a SECI-based (socialization, externalization, combination, and internalization) approach using case studies and independent problem solving. Additional classes include brick-making and construction, beekeeping, beadwork, computer skills, customized agricultural training, financial management, food dehydration and processing, retail operations, and dealing with the water and sanitation systems. Additionally projects support community entrepreneurs, with their electrified businesses. Implementing partners are reinvesting revenues back into their communities to provide access to clean water, improve sanitation and hygiene, and advocate for better informed citizens, providing gender sensitization training, and making available solar lamps and LED lights, as well.</p>
+<p>IEEE Smart Village believes that electricity increases productivity through extended hours for work or study, facilitating cleaner irrigation, making charging mobile devices easier, making the internet ubiquitous and powering labor saving tools. Several in-country leaders of IEEE Smart Village projects have pursued a fully accredited Master of Development program of the IEEE Global Classroom in Denver, CO.</p>
+<p>IEEE Smart Village was initially conceived to align with UN Millennium Development Goals (MDG, later, Sustainable Development Goals, SDG) to develop market-based, sustainable, scalable enterprises consistent with the Millennium Villages Project Sachs model.</p>
+<p>Early on, more than a decade ago, Smart Village engineered and designed a portable (on-wheels, with foldable solar panels) 1KW solar power station called the SunBlazer for charging hot-swapped lead acid batteries. These are still in use today in early and new projects around the world. Newer projects in rapidly developing communities are now supplementing grid electricity with solar generated energy. Even so, the Portable Battery Kit (PBK) is still in active use for electricity distribution to micro-entrepreneurs. Following a 2012 workshop at the Power Africa conference, IEEE Smart Village has focused on making a sustainable difference to off-grid communities by co-financing village-scale integrated development energy projects with regional NGOs and businesses in the remotest parts of the world, through an in-country engineer-led entrepreneur model. To firmly align such projects to their integrated development expectations, a three pillar approach is prescribed, requiring implementing organizations to re-invest in their communities in education, entrepreneurship and sustainable energy.</p>
+<p>Further, all villagers regardless of socioeconomic status, gender or race, are to be provided equal access to energy and education to grow. IEEE Smart Village partners with in-country NGOs and entrepreneurs for execution of approved and aligned proposals keeping implementation costs low, tapping local knowledge and supplementing available resources, while making efforts more institutionally sustainable. Each IEEE Smart Village proposal surrounding energy availability along with education, WASH, health services delivery enablement, and supporting entrepreneurs and enterprises aim to reach a million people sustainably in a decade. Ray Larsen and Robin Podmore co-founded the Smart Village initiative in 2009 (as Community Solutions Initiative). Ray is currently the Chair of this global organization of volunteers engaged with the program partners in the field. There are leaders of Committees supporting the teams’ efforts in Technology, Operations, Finance, Education, Development, and Marketing.</p>
+<h2>Mission</h2>
+<p>IEEE Smart Village integrates sustainable electricity, education, and entrepreneurial solutions to empower off-grid communities.</p>
+<h2>Vision</h2>
+<p>A world where all people enjoy equal access to electricity and education to grow opportunities and leverage change for themselves and others.</p>
+<h2>Specifications</h2>
+<p>The IEEE Foundation accepted IEEE Smart Village as a Signature Program in late 2014 and simultaneously launched a fundraising program to support the plan for ten new reliable electricity startups per year, each charged with a goal of reaching a million people in its first five years of operation for an aggregate 50 million people in a decade. In parallel, IEEE Smart Village promotes an innovative Community Based Online Curricula education program plus expanded technology partnerships to develop other infrastructure critical to empowering villages in a sustainable way. The key partners are the village members and entrepreneurs joining in a reciprocal learning and sustainable development experience, and a key goal is community ownership.</p>
+<h2>Background</h2>
+<p>Rebranded in November 2014, what is now IEEE Smart Village (ISV) was launched in 2009 as Community Solutions Initiative (CSI). CSI was a response to the question of how professional societies can contribute to poverty eradication; the IEEE Humanitarian Technology Challenge (HTC). As part of the IEEE HTC program, CSI volunteers from IEEE societies worked together to develop solutions for community-scale electricity, education and business models. CSI’s journey since its creation can be summarized as follows:</p>
+<h3>2009 - 2011: Aligning with UN Millenium Development Goals (MDG, later Sustainable Development Goals, SDG)</h3>
+<p>CSI was formed in 2009 to align with the UN MDGs. Now more specifically the SDG Goals of Affordable Energy, Quality Education, Ending Poverty, Gender Equality, Water & Sanitation, Good Health, Zero Hunger, and Partnerships. The initial approach was to have engineers develop technical solutions, which were piloted in collaboration with local NGOs and then handed over to these NGOs to maintain, manage and develop sustainable businesses around. In 2010 CSI developed a technical model & franchise business plan, aligned with an NGO in Haiti (Sirona Cares), and received funding from HTC & NPS Society November 2010. This enabled the delivery of 6 village scale solar power systems to Haiti in June 2011.</p>
+<h3>2012: Power Africa Workshop articulated an integrated development approach</h3>
+<p>In July 2012 nine more solar power systems were delivered to Haiti with successful business models. These solar power systems were called SunBlazer and have continued to be improved over the years to better serve off-grid communities. CSI had its first workshop at the annual PES/IAS Power Africa conference in 2012. The workshop reinforced 3 pillars critical to sustainable scaling; electricity, education, enterprise. Recognizing that the original mission of addressing energy poverty, i.e., deploying solar power, was insufficient to promote deep, sustainable change, the IEEE Smart Village team adopted a multifaceted approach. This approach involves local ownership and fosters vocational and educational improvements in the community.</p>
+<h3>2014 - Now: IEEE foundation supports ISV goal of scaling to reach 50 million people by 2025</h3>
+<p>CSI name officially changed to IEEE Smart Village (ISV). ISV becomes IEEE Foundation’s “Signature Program” and receives support from IEEE Foundation towards scaling the electricity, education and business plan strategy to reach 50 million people by 2025.</p>
+<h2>ISV Pillars</h2>
+<p>ISV has identified three areas critical to implementing sustainable impact through its projects; Electricity, Education and Enterprise. ISV’s experience so far has proven that these three aspects working together facilitates and supports the empowerment of the community. Therefore ISV takes up projects that address at least two of its three pillars.</p>
+<img src="/media/sdg-relationships.png" class="wiki-image" alt="Embedded Image">
+<h3>Electricity - Introducing Technology</h3>
+<p>ISV develops technical solutions that supply the community with electricity to improve wellbeing and living standards. The presence of electricity also stimulates the local business environment.</p>
+<h3>Education - Expanding Education</h3>
+<p>ISV has created various learning opportunities for the benefit of everyone involved in the projects; from the local entrepreneur to community members who are empowered to effect positive changes in their lives, families and community.</p>
+<h3>Enterprise - Fostering Entrepreneurship</h3>
+<p>ISV assists local energy entrepreneurs to help them implement their business plans successfully and sustainably with the support and participation of the local community.</p>
+<img src="/media/pillars.png" class="wiki-image" alt="Embedded Image">
+<h2>ISV Solutions</h2>
+<p>ISV’s solutions are tailored to focus on empowerment and not charity. Charity has proven to not be as effective in poverty reduction. Over a trillion dollars have already been spent on private charity and government-to-government foreign aid programs but have failed to budge approximately 20% of global poverty. Most aid programs are not designed to empower those most in need. Big businesses and government solutions are typically rendered ineffective by corruption, capitalism and not to mention, charity breeds dependency. The main beneficiaries of these funds end up being the developed country personnel responsible for the disbursement of the funds. Basic electricity is necessary but not sufficient for significant and sustainable poverty alleviation. Without education, clean water, sanitation, health care, job creation to prosper on a community scale, initiatives cannot become sustainable, scalable, community-owned and reinvested. We believe that the intelligence and energy needed for community transformation lies primarily within community members themselves. ISV or any other outside force is a change agent only, not the solution. In summary, ISV solutions are embedded in the following process. Micro-utility equipment based on solar power is seed-funded to in-country, non-governmental organization (NGO) or SME partners to create self-sustaining, community-owned and -operated micro-utilities in off-grid areas. The entire community participates in the success of the local electricity business, and profits are reinvested in community empowerment through economic development and education initiatives.</p>
+<h3>Continuous Development</h3>
+<p>Viable, sustainable development is achieved in four steps:</p>
+<ol>
+  <li>Invest/Seed market-based, community-based solutions at electricity entry point</li>
+  <li>Develop standardized drop-in tech solutions; design for growth in level of service; adopt successful entrepreneur approaches; IEEE Open Source</li>
+  <li>Commercialize modular products in-country for job creation, local supply chains</li>
+  <li>Assist entrepreneurs with Total Project Support Teams (TPSTs) to:</li>
+  <li>address all 3 Pillars in proposals & deploy</li>
+  <li>design 10-year plan to reach at least 1M people</li>
+  <li>achieve sustainable business models, attract new bridge grants, loans, equity investment</li>
+</ol>
+<h3>Collaboration and Reciprocal learning</h3>
+<p>This involves the local community to be empowered, well trained entrepreneurs (on sustainable development), energy authorities, educators, investors and strategic partners (like the Posner Center and Rotary International).</p>
+<h3>Smart Villages</h3>
+<p>The goal is to transform these impoverished rural communities into smart villages empowered to generate wealth. This will bring prosperity that will in turn reverse brain drain to big city slums and overseas for jobs and education.</p>
+<h3>Programs</h3>
+<ol>
+  <li><strong>Community Based Education</strong>: “Learning Beyond the Light Bulb” is a nine month program conveniently made available to local communities.</li>
+  <li><strong>Master of Development Practice</strong>: ISV partners with Regis University in Denver, Colorado, to implement the Master of Development Practice (MDP) that equips leaders.</li>
+  <li><strong>SunBlazer II</strong>: ISV flagship product, is a modular, easy-to-install PV solar-based community charging station deployed to villages.</li>
+  <li><strong>Vocational Training</strong>: ISV enables systematic vocational training of local labor, creating jobs and thus increasing income within the community.</li>
+</ol>
+<h3>Proposal review</h3>
+<p>An NGO or SME’s journey with ISV typically begins with the submission of a proposal. The process of evaluating an organization can be summarized in the figure below.</p>
+<img src="/media/flowchart.png" class="wiki-image" alt="Embedded Image">
+<p>Full proposal outline is summarized below:</p>
+<img src="/media/full-proposal.png" class="wiki-image" alt="Embedded Image">
+<h2>ISV Impact</h2>
+<p>To date, IEEE Smart Village has achieved considerable success with projects in Cameroon, Haiti, Kenya, Nigeria, Uganda, South Sudan, Zambia, Papua New Guinea, Uttar Pradesh, and India. Potential NGO/SME partners have been identified in Burkina Faso, Gambia, Ghana, Tanzania, Malawi, Ethiopia, Zimbabwe and future implementations are planned in more countries. The tables below show how ISV’s work closely aligns with several Sustainable Development Goals.</p>
+<img src="/media/sdg1.png" class="wiki-image" alt="Embedded Image">
+<img src="/media/sdg2.png" class="wiki-image" alt="Embedded Image">
+  </article>
+  
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <div class="sidebar-title">Navigation</div>
+      <ul class="sidebar-list">
+        <li><a href="/wiki/home">🏠 Wiki Home</a></li>
+        <li><a href="/wiki/wiki/syntax">📝 Syntax Guide</a></li>
+        <li><a href="/wiki/ieeeguidelines">⚖️ IEEE Guidelines</a></li>
+        <li><a href="/wiki/playground/playground">🧪 Wiki Playground</a></li>
+        <li><a href="/wiki/wg/tech">⚙️ Technology Committee</a></li>
+        <li><a href="/wiki/home/technologies">🏭 Technologies Hub</a></li>
+        <li><a href="/wiki/home/projects">🌍 Initiatives Index</a></li>
+      </ul>
+    </div>
+    
+    <div class="sidebar-card">
+      <div class="sidebar-title">Repository</div>
+      <p style="font-size: 0.78rem; color: var(--muted); margin-bottom: 12px;">This wiki is fully version-controlled on GitHub with continuous integration deployment.</p>
+      <a href="https://github.com/rahulbhargavain/openami-smart-village" target="_blank" style="font-size: 0.8rem; font-weight: 700; color: var(--teal);">📂 View on GitHub</a>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <p>© 2026 <strong>IEEE Smart Village</strong> · <strong>wiki.smartvillage.ieee.org</strong> · Migrated by Antigravity</p>
+</footer>
+
+</body>
+</html>

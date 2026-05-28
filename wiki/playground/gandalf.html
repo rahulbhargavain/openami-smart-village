@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gandalf — IEEE Smart Village Wiki</title>
+  <meta name="description" content="Centralized collaborate archive for IEEE Smart Village Wiki. Migrated from DokuWiki with version control.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --bg2: #f1f5f9;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --teal: #0891b2;
+      --teal-dim: rgba(8, 145, 178, 0.08);
+      --text: #0f172a;
+      --sub: #475569;
+      --muted: #64748b;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; }
+    
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white; padding: 24px 40px; border-bottom: 3px solid var(--teal);
+    }
+    header .container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+    header h1 { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
+    header h1 strong { color: var(--teal); }
+    header nav a { color: #cbd5e1; text-decoration: none; font-size: 0.85rem; font-weight: 600; margin-left: 20px; transition: color 0.2s; }
+    header nav a:hover { color: white; }
+
+    .main-layout { max-width: 1200px; margin: 40px auto; padding: 0 40px; display: grid; grid-template-columns: 3fr 1fr; gap: 40px; }
+    .content-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; box-shadow: 0 4px 12px rgba(15,23,42,0.02); }
+    
+    h1, h2, h3, h4, h5 { font-weight: 800; letter-spacing: -0.02em; color: var(--text); margin-top: 1.8em; margin-bottom: 0.6em; line-height: 1.25; }
+    h1 { font-size: 2.2rem; border-bottom: 2px solid var(--border); padding-bottom: 12px; margin-top: 0; }
+    h2 { font-size: 1.6rem; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    h3 { font-size: 1.25rem; }
+    
+    p { margin-bottom: 1.5em; font-size: 0.95rem; color: var(--sub); }
+    strong { color: var(--text); }
+    
+    /* Links */
+    a { color: var(--teal); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+    a:hover { color: #06b6d4; text-decoration: underline; }
+    
+    /* Lists */
+    ul, ol { margin-bottom: 1.5em; padding-left: 24px; }
+    li { font-size: 0.95rem; color: var(--sub); margin-bottom: 0.5em; }
+    
+    /* Tables */
+    .table-wrapper { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); margin: 28px 0; box-shadow: 0 2px 8px rgba(15,23,42,0.02); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; }
+    thead tr { background: rgba(8, 145, 178, 0.06); border-bottom: 1px solid var(--border); }
+    th { padding: 12px 16px; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.75rem; }
+    td { padding: 12px 16px; border-top: 1px solid var(--border); color: var(--sub); vertical-align: middle; }
+    tr:hover td { background: rgba(8, 145, 178, 0.01); }
+    
+    /* PDF/Attachment Cards */
+    .pdf-card { display: flex; align-items: center; gap: 16px; padding: 18px 24px; border: 1px solid var(--border); border-radius: 12px; margin: 24px 0; background: var(--bg); }
+    .pdf-icon { font-size: 2rem; color: var(--teal); }
+    .pdf-info { flex: 1; }
+    .pdf-title { font-weight: 700; font-size: 0.9rem; color: var(--text); margin-bottom: 4px; }
+    .pdf-btn { display: inline-flex; align-items: center; justify-content: center; padding: 6px 14px; background: var(--teal); color: white !important; font-size: 0.78rem; font-weight: 700; border-radius: 6px; text-decoration: none !important; transition: background 0.2s; }
+    .pdf-btn:hover { background: #06b6d4; }
+    
+    /* Image Styling */
+    .wiki-image { max-width: 100%; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(15,23,42,0.04); margin: 20px 0; display: block; }
+    
+    /* Sidebar */
+    .sidebar { display: flex; flex-direction: column; gap: 24px; }
+    .sidebar-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; box-shadow: 0 4px 12px rgba(15,23,42,0.01); }
+    .sidebar-title { font-size: 0.85rem; font-weight: 800; color: var(--teal); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .sidebar-list { list-style: none; padding: 0; }
+    .sidebar-list li { font-size: 0.85rem; margin-bottom: 8px; }
+    
+    hr { border: 0; border-top: 1px solid var(--border); margin: 32px 0; }
+    footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 36px 40px; text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 60px; }
+    footer strong { color: var(--teal); }
+    
+    @media(max-width: 768px) {
+      .main-layout { grid-template-columns: 1fr; gap: 30px; margin: 20px auto; padding: 0 20px; }
+      header { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <h1>🌐 IEEE Smart Village <strong>Wiki</strong></h1>
+    <nav>
+      <a href="/wiki/home">Home</a>
+      <a href="/reports">Reports Index</a>
+    </nav>
+  </div>
+</header>
+
+<div class="main-layout">
+  <article class="content-card">
+    <h3>John's playground space</h3>
+<p><a href="/wiki/docuwiki">Docuwiki</a></p>
+<h1>Wiki contribution guide</h1>
+<p>The following standards should help keeping the wiki consistent, easy to understand for newbies, and easy to edit for casual contributors. There can be exceptions in some cases where it makes sense, but there should be a good reason for that.</p>
+<p>{{section>meta:infobox:registration_disabled&noheader&nofooter&noeditbutton}}</p>
+<h2>Mantras</h2>
+<p>- <strong>Articles must be easy to read and easy to edit, simpler is better. </strong> Articles should be formatted only using basic features found in the editor GUI, plus the code tag and table construct where necessary.<br> Why? More advanced formatting would give this wiki a more "professional" look, but it will also be harder to read and edit for casual users and contributors. More advanced layouts with tabs and buttons are more compact but are usually more confusing than a simpler layout with just a single list of actions and links where readers scroll through and click. Also a simple non-interactive layout allows easy printing. For example, look at this tutorial <a href="/wiki/docs/guide-quick-start/factory_installation">Factory install: First-time installation on a device</a>.</p>
+<p>- <strong>Avoid duplicating information within this wiki</strong> : Information on the same topic shall appear in the wiki only <strong>*once</strong>*  . If it is needed somewhere else, we refer to it with a link!<br> For example if you are writing a tutorial and one of the step is "configure USB storage" you should link to <a href="/wiki/docs/guide-user/storage/usb-drives">Using storage devices</a>. DO NOT write down (or copy-paste) the same procedures in your new tutorial!<br> <br> - <strong>Avoid duplicating upstream documentation</strong> : consider contributing the more generic parts of the documentation to <strong>*upstream</strong>*  , and just link to that in your article. This wiki exists for OpenWrt-related documentation, for example <a href="/wiki/docs/guide-user/network/ipv4/start">Start</a>. Some example upstream wikis: i.e. <a href="https://wireless.wiki.kernel.org/">Linux WiFi drivers wiki</a>, <a href="https://community.openvpn.net/openvpn/wiki">OpenVPN Wiki</a> etc. Not all employ wikis, and not all accept contributions from third parties. If upstream contributions are impossible, then it's fine to have that info in the OpenWrt wiki.<br> <br> - <strong>Versioning information</strong>: the information in the articles should be valid for the <strong>*current stable release</strong>*  . Information that applies <strong>only</strong> to older or snapshot releases (either deprecated or very new features) should be marked as such.<br> <br> - <strong>Articles should be easy to find</strong> most people will search for information with the search engine of their choice, or with the wiki's own internal search. Use short, descriptive titles and introductions that contain the right keywords to be found. You can try to search for your article with your favorite search engine (after a few days you posted the article, because search engines need time to update their indexes). If you won't find your own content, others probably won't as well!<br> E.g. <strong>installing.opkg.packages.in.mount.point.other.than.root</strong> is a long title that could be replaced with something like *opkg – Installation Destinations*, but the latter will not be as easily be found as the first one when someone does not browse the wiki, but uses a search engine instead.<br> <br> - <strong>Articles should explain why they exist, what is their goal</strong>. Please add an "introduction" paragraph or two where you explain what is the feature you are configuring, and what needs can be satisfied by following the instructions. It does not need to be very verbose. For example, the first paragraph here: <a href="/wiki/docs/guide-user/additional-software/imagebuilder">Using the Image Generator (Image Builder)</a><br> <br> - <strong>Articles should contain VERIFIABLE information, speculation should be clearly labeled as such</strong>. Really, this is very important in any wiki. Cite sources for statements that aren't common knowledge, or write enough information to allow easy google searching for sources. For example: <a href="/wiki/docs/guide-user/network/wifi/usb3.0-wifi-issues">USB 3.0 and WiFi problems</a><br> <br> - <strong>All tutorials you write must be tested personally or must have a warning</strong> stating that testing was not possible when writing them (and to remove the warning when someone successfully tested it).<br> <br> - <strong>One topic per article</strong>. Articles should be focused on a single, focused topic, for example "<strong>installing and configuring Adblock</strong>". General articles that span many different topics, for example "<strong>filtering web traffic</strong>" (where you talk of Adblock, proxy servers, and maybe Tor and VPNs) should be split up.<br> <br> - <strong>Large tutorials should be split up</strong>. Large tutorials where each step is long should be split up in separate articles, each covering a part of the steps. This is even more important if the tutorial contains conditional or optional steps (for example: "do step <strong>A</strong>, then you can do either step <strong>B</strong> or <strong>C</strong>, then do <strong>D</strong>"). For example <a href="/wiki/docs/guide-quick-start/factory_installation">Factory install: First-time installation on a device</a> or this <a href="/wiki/docs/guide-developer/helloworld/start">"Hello, world!" for OpenWrt</a><br> <br> - <strong>Articles should be accessible from within the wiki</strong> Please make sure your article has a link in one of the main Categories pages (links below) if it is some kind of tutorial. Some articles may not need this if they are part of a multi-article tutorial, but again make sure ALL articles can be reached either from the main Categories pages or from the other pages of its multi-article tutorial. Very popular articles will also be linked from within other tutorials, as explained in the <strong>Avoid duplicating information within this wiki</strong> mantra above. For a handy list of pages linking to the current page, click on the "<strong>chain</strong>" icon you find on the right tool panel (it's under the <strong>clock</strong> icon).</p>
+<h2>Structure</h2>
+<p>To give the Wiki a better structure, we employ <code>namespaces</code> and <code>categories</code> (and <code>tags</code>):</p>
+<ul>
+  <li><strong>Namespaces</strong> are highest. In each of these upper namespaces, there shall be a maximum of 3 (three) sublevels. * *<a href="/wiki/about/home">about</a>* about the OpenWrt project in general * *<a href="/wiki/toh/home">TOH</a>*documentation about supported devices, called "Table of Hardware". * *<a href="/wiki/packages/home">Packages</a>*documentation about available packages * *<a href="/wiki/downloads/home">Downloads</a>*landing page to download firmware for your device * *<a href="/wiki/docs/home">Documentation</a>*main documentation page * *<a href="/wiki/wiki/home">Wiki</a>*pages about wiki functionality and wiki contribution rules * *<a href="/wiki/faq/home">FAQ</a>*is the place for FAQ lists * *<a href="/wiki/inbox/start">Inbox</a>*place pages here you are working on and which are not mature enough yet * *<a href="/wiki/playground/playground">Playground</a>*is for trying out <a href="/wiki/wiki/syntax">wiki syntax</a> or similar shortlived actions</li>
+</ul>
+<ul>
+  <li><strong>Categories</strong> provide the first level of the namespaces. They distinguish different kinds of <strong>docs</strong>: * *<a href="/wiki/docs/guide-quick-start/start">Quick Start</a>*quick start tutorials, used for first installation and setup, or similar. * *<a href="/wiki/docs/guide-user/home">User Guide</a>*most of the documentation for users goes here * *<a href="/wiki/docs/guide-developer/home">Developer Guide</a>*developer documentation</li>
+</ul>
+<ul>
+  <li><strong>Tags</strong> are different. While the structure is exclusive, you can place an article only in one subcategory, tags are more flexible. More of them can be placed simultaneously in one article, and thus allow for a more flexible categorizing. To reproduce this with the structure we could write symbolic articles, which are placed in different subcategories and redirect to one article. But let's not do that. Tags will prove most useful, when you want to search for routers with certain features. * <a href="/wiki/meta/tags">Tags</a> Overview To ease navigation, we use a <a href="/wiki/sidebar/home">sidebar</a></li>
+</ul>
+  </article>
+  
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <div class="sidebar-title">Navigation</div>
+      <ul class="sidebar-list">
+        <li><a href="/wiki/home">🏠 Wiki Home</a></li>
+        <li><a href="/wiki/wiki/syntax">📝 Syntax Guide</a></li>
+        <li><a href="/wiki/ieeeguidelines">⚖️ IEEE Guidelines</a></li>
+        <li><a href="/wiki/playground/playground">🧪 Wiki Playground</a></li>
+        <li><a href="/wiki/wg/tech">⚙️ Technology Committee</a></li>
+        <li><a href="/wiki/home/technologies">🏭 Technologies Hub</a></li>
+        <li><a href="/wiki/home/projects">🌍 Initiatives Index</a></li>
+      </ul>
+    </div>
+    
+    <div class="sidebar-card">
+      <div class="sidebar-title">Repository</div>
+      <p style="font-size: 0.78rem; color: var(--muted); margin-bottom: 12px;">This wiki is fully version-controlled on GitHub with continuous integration deployment.</p>
+      <a href="https://github.com/rahulbhargavain/openami-smart-village" target="_blank" style="font-size: 0.8rem; font-weight: 700; color: var(--teal);">📂 View on GitHub</a>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <p>© 2026 <strong>IEEE Smart Village</strong> · <strong>wiki.smartvillage.ieee.org</strong> · Migrated by Antigravity</p>
+</footer>
+
+</body>
+</html>

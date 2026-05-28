@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sunblazeriii — IEEE Smart Village Wiki</title>
+  <meta name="description" content="Centralized collaborate archive for IEEE Smart Village Wiki. Migrated from DokuWiki with version control.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --bg2: #f1f5f9;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --teal: #0891b2;
+      --teal-dim: rgba(8, 145, 178, 0.08);
+      --text: #0f172a;
+      --sub: #475569;
+      --muted: #64748b;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; }
+    
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white; padding: 24px 40px; border-bottom: 3px solid var(--teal);
+    }
+    header .container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+    header h1 { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
+    header h1 strong { color: var(--teal); }
+    header nav a { color: #cbd5e1; text-decoration: none; font-size: 0.85rem; font-weight: 600; margin-left: 20px; transition: color 0.2s; }
+    header nav a:hover { color: white; }
+
+    .main-layout { max-width: 1200px; margin: 40px auto; padding: 0 40px; display: grid; grid-template-columns: 3fr 1fr; gap: 40px; }
+    .content-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; box-shadow: 0 4px 12px rgba(15,23,42,0.02); }
+    
+    h1, h2, h3, h4, h5 { font-weight: 800; letter-spacing: -0.02em; color: var(--text); margin-top: 1.8em; margin-bottom: 0.6em; line-height: 1.25; }
+    h1 { font-size: 2.2rem; border-bottom: 2px solid var(--border); padding-bottom: 12px; margin-top: 0; }
+    h2 { font-size: 1.6rem; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    h3 { font-size: 1.25rem; }
+    
+    p { margin-bottom: 1.5em; font-size: 0.95rem; color: var(--sub); }
+    strong { color: var(--text); }
+    
+    /* Links */
+    a { color: var(--teal); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+    a:hover { color: #06b6d4; text-decoration: underline; }
+    
+    /* Lists */
+    ul, ol { margin-bottom: 1.5em; padding-left: 24px; }
+    li { font-size: 0.95rem; color: var(--sub); margin-bottom: 0.5em; }
+    
+    /* Tables */
+    .table-wrapper { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); margin: 28px 0; box-shadow: 0 2px 8px rgba(15,23,42,0.02); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; }
+    thead tr { background: rgba(8, 145, 178, 0.06); border-bottom: 1px solid var(--border); }
+    th { padding: 12px 16px; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.75rem; }
+    td { padding: 12px 16px; border-top: 1px solid var(--border); color: var(--sub); vertical-align: middle; }
+    tr:hover td { background: rgba(8, 145, 178, 0.01); }
+    
+    /* PDF/Attachment Cards */
+    .pdf-card { display: flex; align-items: center; gap: 16px; padding: 18px 24px; border: 1px solid var(--border); border-radius: 12px; margin: 24px 0; background: var(--bg); }
+    .pdf-icon { font-size: 2rem; color: var(--teal); }
+    .pdf-info { flex: 1; }
+    .pdf-title { font-weight: 700; font-size: 0.9rem; color: var(--text); margin-bottom: 4px; }
+    .pdf-btn { display: inline-flex; align-items: center; justify-content: center; padding: 6px 14px; background: var(--teal); color: white !important; font-size: 0.78rem; font-weight: 700; border-radius: 6px; text-decoration: none !important; transition: background 0.2s; }
+    .pdf-btn:hover { background: #06b6d4; }
+    
+    /* Image Styling */
+    .wiki-image { max-width: 100%; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(15,23,42,0.04); margin: 20px 0; display: block; }
+    
+    /* Sidebar */
+    .sidebar { display: flex; flex-direction: column; gap: 24px; }
+    .sidebar-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; box-shadow: 0 4px 12px rgba(15,23,42,0.01); }
+    .sidebar-title { font-size: 0.85rem; font-weight: 800; color: var(--teal); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .sidebar-list { list-style: none; padding: 0; }
+    .sidebar-list li { font-size: 0.85rem; margin-bottom: 8px; }
+    
+    hr { border: 0; border-top: 1px solid var(--border); margin: 32px 0; }
+    footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 36px 40px; text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 60px; }
+    footer strong { color: var(--teal); }
+    
+    @media(max-width: 768px) {
+      .main-layout { grid-template-columns: 1fr; gap: 30px; margin: 20px auto; padding: 0 20px; }
+      header { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <h1>🌐 IEEE Smart Village <strong>Wiki</strong></h1>
+    <nav>
+      <a href="/wiki/home">Home</a>
+      <a href="/reports">Reports Index</a>
+    </nav>
+  </div>
+</header>
+
+<div class="main-layout">
+  <article class="content-card">
+    <h1>Sun Blazer III</h1>
+<div class="pdf-card">
+<p><span class="pdf-icon">📄</span> <div class="pdf-info"> <div class="pdf-title">Copy Of Sunblazeriii Spec Sheet.Pdf</div> <a href="/media/home/technologies/solarpv/copy_of_sunblazeriii_spec_sheet.pdf" class="pdf-btn" target="_blank">View / Download PDF Manual</a> </div> </div></p>
+  </article>
+  
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <div class="sidebar-title">Navigation</div>
+      <ul class="sidebar-list">
+        <li><a href="/wiki/home">🏠 Wiki Home</a></li>
+        <li><a href="/wiki/wiki/syntax">📝 Syntax Guide</a></li>
+        <li><a href="/wiki/ieeeguidelines">⚖️ IEEE Guidelines</a></li>
+        <li><a href="/wiki/playground/playground">🧪 Wiki Playground</a></li>
+        <li><a href="/wiki/wg/tech">⚙️ Technology Committee</a></li>
+        <li><a href="/wiki/home/technologies">🏭 Technologies Hub</a></li>
+        <li><a href="/wiki/home/projects">🌍 Initiatives Index</a></li>
+      </ul>
+    </div>
+    
+    <div class="sidebar-card">
+      <div class="sidebar-title">Repository</div>
+      <p style="font-size: 0.78rem; color: var(--muted); margin-bottom: 12px;">This wiki is fully version-controlled on GitHub with continuous integration deployment.</p>
+      <a href="https://github.com/rahulbhargavain/openami-smart-village" target="_blank" style="font-size: 0.8rem; font-weight: 700; color: var(--teal);">📂 View on GitHub</a>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <p>© 2026 <strong>IEEE Smart Village</strong> · <strong>wiki.smartvillage.ieee.org</strong> · Migrated by Antigravity</p>
+</footer>
+
+</body>
+</html>

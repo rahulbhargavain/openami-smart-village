@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Template — IEEE Smart Village Wiki</title>
+  <meta name="description" content="Centralized collaborate archive for IEEE Smart Village Wiki. Migrated from DokuWiki with version control.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --bg2: #f1f5f9;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --teal: #0891b2;
+      --teal-dim: rgba(8, 145, 178, 0.08);
+      --text: #0f172a;
+      --sub: #475569;
+      --muted: #64748b;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; }
+    
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white; padding: 24px 40px; border-bottom: 3px solid var(--teal);
+    }
+    header .container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+    header h1 { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
+    header h1 strong { color: var(--teal); }
+    header nav a { color: #cbd5e1; text-decoration: none; font-size: 0.85rem; font-weight: 600; margin-left: 20px; transition: color 0.2s; }
+    header nav a:hover { color: white; }
+
+    .main-layout { max-width: 1200px; margin: 40px auto; padding: 0 40px; display: grid; grid-template-columns: 3fr 1fr; gap: 40px; }
+    .content-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; box-shadow: 0 4px 12px rgba(15,23,42,0.02); }
+    
+    h1, h2, h3, h4, h5 { font-weight: 800; letter-spacing: -0.02em; color: var(--text); margin-top: 1.8em; margin-bottom: 0.6em; line-height: 1.25; }
+    h1 { font-size: 2.2rem; border-bottom: 2px solid var(--border); padding-bottom: 12px; margin-top: 0; }
+    h2 { font-size: 1.6rem; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    h3 { font-size: 1.25rem; }
+    
+    p { margin-bottom: 1.5em; font-size: 0.95rem; color: var(--sub); }
+    strong { color: var(--text); }
+    
+    /* Links */
+    a { color: var(--teal); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+    a:hover { color: #06b6d4; text-decoration: underline; }
+    
+    /* Lists */
+    ul, ol { margin-bottom: 1.5em; padding-left: 24px; }
+    li { font-size: 0.95rem; color: var(--sub); margin-bottom: 0.5em; }
+    
+    /* Tables */
+    .table-wrapper { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); margin: 28px 0; box-shadow: 0 2px 8px rgba(15,23,42,0.02); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; }
+    thead tr { background: rgba(8, 145, 178, 0.06); border-bottom: 1px solid var(--border); }
+    th { padding: 12px 16px; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.75rem; }
+    td { padding: 12px 16px; border-top: 1px solid var(--border); color: var(--sub); vertical-align: middle; }
+    tr:hover td { background: rgba(8, 145, 178, 0.01); }
+    
+    /* PDF/Attachment Cards */
+    .pdf-card { display: flex; align-items: center; gap: 16px; padding: 18px 24px; border: 1px solid var(--border); border-radius: 12px; margin: 24px 0; background: var(--bg); }
+    .pdf-icon { font-size: 2rem; color: var(--teal); }
+    .pdf-info { flex: 1; }
+    .pdf-title { font-weight: 700; font-size: 0.9rem; color: var(--text); margin-bottom: 4px; }
+    .pdf-btn { display: inline-flex; align-items: center; justify-content: center; padding: 6px 14px; background: var(--teal); color: white !important; font-size: 0.78rem; font-weight: 700; border-radius: 6px; text-decoration: none !important; transition: background 0.2s; }
+    .pdf-btn:hover { background: #06b6d4; }
+    
+    /* Image Styling */
+    .wiki-image { max-width: 100%; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(15,23,42,0.04); margin: 20px 0; display: block; }
+    
+    /* Sidebar */
+    .sidebar { display: flex; flex-direction: column; gap: 24px; }
+    .sidebar-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; box-shadow: 0 4px 12px rgba(15,23,42,0.01); }
+    .sidebar-title { font-size: 0.85rem; font-weight: 800; color: var(--teal); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .sidebar-list { list-style: none; padding: 0; }
+    .sidebar-list li { font-size: 0.85rem; margin-bottom: 8px; }
+    
+    hr { border: 0; border-top: 1px solid var(--border); margin: 32px 0; }
+    footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 36px 40px; text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 60px; }
+    footer strong { color: var(--teal); }
+    
+    @media(max-width: 768px) {
+      .main-layout { grid-template-columns: 1fr; gap: 30px; margin: 20px auto; padding: 0 20px; }
+      header { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <h1>🌐 IEEE Smart Village <strong>Wiki</strong></h1>
+    <nav>
+      <a href="/wiki/home">Home</a>
+      <a href="/reports">Reports Index</a>
+    </nav>
+  </div>
+</header>
+
+<div class="main-layout">
+  <article class="content-card">
+    <h1>Concept Note Two-Pager Overview</h1>
+<p><note>Submitted input based on this public template will be emailed to Regional Working Group Leadership contact addresses and used to create unique sub-pages for each submission .</note></p>
+<p><note important>Developer note: SQLite and embedded structured data have been enabled</note></p>
+<p><note>Outline</note></p>
+<h3>Project Name - Location Name</h3>
+<p>*Picture of Region*</p>
+<h3>Project Total Cost, ISV Funding Sought, Self-funded</h3>
+<h3>Purpose</h3>
+<p><note important>This 2-pager template should give a good overview, with necessary details, of the proposed project for which seed funding is sought from the IEEE Smart Village, ISVx. Under the section titles below, briefly provide the requested information, including areas highlighted in yellow. If needed, you may request assistance from your ISVx Point-of-Contact. The completed document should be kept to a maximum of 2 pages.</note></p>
+<p>In this section, provide details of the following key items:</p>
+<ul>
+  <li>Description of proposed project and how it aligns with ISVx three Pillars? (2-3 lines description)</li>
+  <li>Community location and beneficiaries of the proposed project, including estimated number of people to be served in Phase 1 Pilot of the project (2-3 lines)</li>
+  <li>Lead organization that will sign Project Agreement with ISVx to receive seed money and be responsible for project execution; include expertise and history of connection with the community. (3-4-lines)</li>
+  <li>Highlight(s) of other related key item(s).</li>
+</ul>
+<h3>Objective</h3>
+<p><note>Provide details on key goal(s) / milestone(s) of the proposed project and expected impact on the community served in terms of livelihood improvement.  </note></p>
+<h3>Background and Portfolio</h3>
+<p>*Application Project site*</p>
+<p>Include details on:</p>
+<ul>
+  <li>History of the community served and its needs</li>
+  <li>Relationship between the project team and the community</li>
+  <li>Summary of discussion between the team and community on execution and impact of the project</li>
+  <li>How and who from the community will be involved</li>
+  <li>Other partners in the project execution, and their history of collaboration with the lead organization and the community.</li>
+  <li>What community resources will be used, and provision of legal right to use them.</li>
+</ul>
+<h3>Leveraging and sustainability/scalability plans</h3>
+<p>Discuss details on:</p>
+<ul>
+  <li>The solution model or strategy adopted in the project (e.g. formation of partnerships, donor sources);</li>
+  <li>Plans for assessment, measurement, and evaluation of risk/barriers and associated impact(s);</li>
+  <li>Plans/opportunity to grow the project beyond Phase 1 Pilot via community, team and funding potential for scaling business plan to achieve long-term positive ROI;</li>
+  <li>How the team and/or community will sustain the project beyond the execution period</li>
+</ul>
+<h3>Team</h3>
+<p>Provide:</p>
+<ul>
+  <li>Short bio (1-2 lines each) of lead persons and management in the project organization.</li>
+  <li>Short bio (1-2 lines each) of lead person in the partner organization.</li>
+  <li>Names of community counterparts and their roles in the community and the project.</li>
+</ul>
+<h3>Perspective and Theory of Change</h3>
+<p>Make a case for the project, and provide details on:</p>
+<ul>
+  <li>Expected Outputs (e.g.: kilowatt hours/day, number of homes connected), Expected Outcomes (e.g.: 100 women employed in beekeeping), and Expected Impact (e.g., Long-term benefit(s) to the beneficiaries).</li>
+</ul>
+<hr>
+<h3>Timeline</h3>
+<p>In a descriptive, concise format, state the approximate:</p>
+<ul>
+  <li>Project start and end date.</li>
+  <li>Key milestones start and end dates</li>
+</ul>
+<hr>
+<h3>At a glance (illustration)</h3>
+<div class="table-wrapper"><table>
+<thead><tr>
+  <th>Project Locations</th>
+  <th>Nearest village or city. State and country</th>
+  <th></th>
+</tr></thead>
+<tbody>
+<tr>
+  <td>GPS Coordinates</td>
+  <td>36° 14′ 6.21″ N, 112° 41′ 18.97″ W</td>
+  <td></td>
+</tr>
+<tbody>
+<tr>
+  <td>Requested Funding from ISV Donors</td>
+  <td>$100,000</td>
+  <td></td>
+</tr>
+<tbody>
+<tr>
+  <td>Payment Tranches</td>
+  <td>Tranches per time</td>
+  <td></td>
+</tr>
+<tbody>
+<tr>
+  <td>Names of ISV and IEEE Members Involved</td>
+  <td>STAFF MEMBERS AND VOLUNTEERS WHO ARE IEEE MEMBERS</td>
+  <td></td>
+</tr>
+<tbody>
+<tr>
+  <td>Technologies to be Deployed</td>
+  <td>Fixed wireless Internet networks, solar energy sources</td>
+  <td></td>
+</tr>
+<tbody>
+<tr>
+  <td>Beneficiaries</td>
+  <td>Who, How many, where</td>
+  <td></td>
+</tr>
+<tbody>
+<tr>
+  <td>Commissioning/Service Start Date</td>
+  <td>Q2 2020</td>
+  <td></td>
+</tr>
+<tbody>
+<tr>
+  <td>Pilot Completion/ Demonstration</td>
+  <td>Q4 2020 - preliminary network operations, Q1 2022 - fully sustainable network</td>
+  <td></td>
+</tr>
+<tbody>
+<tr>
+  <td>IEEE Review and Reporting Period</td>
+  <td>Monthly & Quarterly</td>
+  <td></td>
+</tr>
+<tbody>
+<tr>
+  <td>Sustainability/ Scalability</td>
+  <td>Names of Regions/Communities. Potential population served. Potential sources of funds for future phases</td>
+  <td></td>
+</tr>
+<tbody>
+<tr>
+  <td>Project Lead Contact</td>
+  <td>Name, email, mobile/WhatsApp number, Postal address</td>
+  <td></td>
+</tr>
+<tbody>
+</tbody></table></div>
+<p><note important>The following housekeeping section is not part of the two-pager.</note></p>
+<p><a href="/wiki/conceptnote/submit">Submission</a></p>
+<h2>Housekeeping metadata</h2>
+<div class="table-wrapper"><table>
+<thead><tr>
+  <th>Metadata</th>
+  <th></th>
+</tr></thead>
+<tbody>
+<tr>
+  <td>Filename</td>
+  <td>[Organization name] Concept Note [$<u></u>] [V_(version number)] [date].docx</td>
+  <td></td>
+</tr>
+<tbody>
+<tr>
+  <td>Date</td>
+  <td>dd-Mmm-yyyy</td>
+  <td></td>
+</tr>
+<tbody>
+</tbody></table></div>
+<h3>Contact</h3>
+<ul>
+  <li>Inform Regional working group leads</li>
+</ul>
+<p>--- struct table ---- cols: region, name, email, user schema: rwglead sort: ^name csv: 0</p>
+<hr>
+<ul>
+  <li>cc. to Mike Wilson, Sr. Program Manager, ISVx: m.m.wilson@ieee.org</li>
+  <li>ISVx Leadership Point-of-Contact who recommended your submission of a 2-pager document</li>
+</ul>
+  </article>
+  
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <div class="sidebar-title">Navigation</div>
+      <ul class="sidebar-list">
+        <li><a href="/wiki/home">🏠 Wiki Home</a></li>
+        <li><a href="/wiki/wiki/syntax">📝 Syntax Guide</a></li>
+        <li><a href="/wiki/ieeeguidelines">⚖️ IEEE Guidelines</a></li>
+        <li><a href="/wiki/playground/playground">🧪 Wiki Playground</a></li>
+        <li><a href="/wiki/wg/tech">⚙️ Technology Committee</a></li>
+        <li><a href="/wiki/home/technologies">🏭 Technologies Hub</a></li>
+        <li><a href="/wiki/home/projects">🌍 Initiatives Index</a></li>
+      </ul>
+    </div>
+    
+    <div class="sidebar-card">
+      <div class="sidebar-title">Repository</div>
+      <p style="font-size: 0.78rem; color: var(--muted); margin-bottom: 12px;">This wiki is fully version-controlled on GitHub with continuous integration deployment.</p>
+      <a href="https://github.com/rahulbhargavain/openami-smart-village" target="_blank" style="font-size: 0.8rem; font-weight: 700; color: var(--teal);">📂 View on GitHub</a>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <p>© 2026 <strong>IEEE Smart Village</strong> · <strong>wiki.smartvillage.ieee.org</strong> · Migrated by Antigravity</p>
+</footer>
+
+</body>
+</html>

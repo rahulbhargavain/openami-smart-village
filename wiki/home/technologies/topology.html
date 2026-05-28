@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Topology — IEEE Smart Village Wiki</title>
+  <meta name="description" content="Centralized collaborate archive for IEEE Smart Village Wiki. Migrated from DokuWiki with version control.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --bg2: #f1f5f9;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --teal: #0891b2;
+      --teal-dim: rgba(8, 145, 178, 0.08);
+      --text: #0f172a;
+      --sub: #475569;
+      --muted: #64748b;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; }
+    
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white; padding: 24px 40px; border-bottom: 3px solid var(--teal);
+    }
+    header .container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+    header h1 { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
+    header h1 strong { color: var(--teal); }
+    header nav a { color: #cbd5e1; text-decoration: none; font-size: 0.85rem; font-weight: 600; margin-left: 20px; transition: color 0.2s; }
+    header nav a:hover { color: white; }
+
+    .main-layout { max-width: 1200px; margin: 40px auto; padding: 0 40px; display: grid; grid-template-columns: 3fr 1fr; gap: 40px; }
+    .content-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; box-shadow: 0 4px 12px rgba(15,23,42,0.02); }
+    
+    h1, h2, h3, h4, h5 { font-weight: 800; letter-spacing: -0.02em; color: var(--text); margin-top: 1.8em; margin-bottom: 0.6em; line-height: 1.25; }
+    h1 { font-size: 2.2rem; border-bottom: 2px solid var(--border); padding-bottom: 12px; margin-top: 0; }
+    h2 { font-size: 1.6rem; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    h3 { font-size: 1.25rem; }
+    
+    p { margin-bottom: 1.5em; font-size: 0.95rem; color: var(--sub); }
+    strong { color: var(--text); }
+    
+    /* Links */
+    a { color: var(--teal); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+    a:hover { color: #06b6d4; text-decoration: underline; }
+    
+    /* Lists */
+    ul, ol { margin-bottom: 1.5em; padding-left: 24px; }
+    li { font-size: 0.95rem; color: var(--sub); margin-bottom: 0.5em; }
+    
+    /* Tables */
+    .table-wrapper { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); margin: 28px 0; box-shadow: 0 2px 8px rgba(15,23,42,0.02); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; }
+    thead tr { background: rgba(8, 145, 178, 0.06); border-bottom: 1px solid var(--border); }
+    th { padding: 12px 16px; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.75rem; }
+    td { padding: 12px 16px; border-top: 1px solid var(--border); color: var(--sub); vertical-align: middle; }
+    tr:hover td { background: rgba(8, 145, 178, 0.01); }
+    
+    /* PDF/Attachment Cards */
+    .pdf-card { display: flex; align-items: center; gap: 16px; padding: 18px 24px; border: 1px solid var(--border); border-radius: 12px; margin: 24px 0; background: var(--bg); }
+    .pdf-icon { font-size: 2rem; color: var(--teal); }
+    .pdf-info { flex: 1; }
+    .pdf-title { font-weight: 700; font-size: 0.9rem; color: var(--text); margin-bottom: 4px; }
+    .pdf-btn { display: inline-flex; align-items: center; justify-content: center; padding: 6px 14px; background: var(--teal); color: white !important; font-size: 0.78rem; font-weight: 700; border-radius: 6px; text-decoration: none !important; transition: background 0.2s; }
+    .pdf-btn:hover { background: #06b6d4; }
+    
+    /* Image Styling */
+    .wiki-image { max-width: 100%; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(15,23,42,0.04); margin: 20px 0; display: block; }
+    
+    /* Sidebar */
+    .sidebar { display: flex; flex-direction: column; gap: 24px; }
+    .sidebar-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; box-shadow: 0 4px 12px rgba(15,23,42,0.01); }
+    .sidebar-title { font-size: 0.85rem; font-weight: 800; color: var(--teal); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .sidebar-list { list-style: none; padding: 0; }
+    .sidebar-list li { font-size: 0.85rem; margin-bottom: 8px; }
+    
+    hr { border: 0; border-top: 1px solid var(--border); margin: 32px 0; }
+    footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 36px 40px; text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 60px; }
+    footer strong { color: var(--teal); }
+    
+    @media(max-width: 768px) {
+      .main-layout { grid-template-columns: 1fr; gap: 30px; margin: 20px auto; padding: 0 20px; }
+      header { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <h1>🌐 IEEE Smart Village <strong>Wiki</strong></h1>
+    <nav>
+      <a href="/wiki/home">Home</a>
+      <a href="/reports">Reports Index</a>
+    </nav>
+  </div>
+</header>
+
+<div class="main-layout">
+  <article class="content-card">
+    <h1>Notes from the literature</h1>
+<img src="/media/wg/news-202204111013564732.png" class="wiki-image" alt="Embedded Image">
+<img src="/media/home/technologies/news-202204111013561764.png" class="wiki-image" alt="Embedded Image">
+<p><a href="https://www.deltaww.com/en-us/news/Delta-ami-smart-meter">via [https://www.deltaww.com/en-us/news/Delta-ami-smart-meter</a> ]</p>
+<h2>gridds : A Data Science Toolkit for Energy Grid Machine Learning</h2>
+<p>https://github.com/LLNL/gridds</p>
+<p><note>MIT License</p>
+<p>Copyright (c) 2022 Alexander Ladd </note> Recent research on distributed energy resources (DER) has been focused on aggregating data and feedback control to enhance the reliability and performance of energy grid. The ability to forecast load factor at transformers and substations can greatly improve demand and supply side load management. Similarly, detecting incipient failures for key devices in the system can reduce the entire grid failure, which effectively enhances the reliability of the energy grid. Machine learning models, such as fault detection and time series forecasting models, present new and innovative approaches to solving these aforementioned challenges [7, 10, 45].</p>
+<p>[There] are many types of identifiable faults, ranging from arching faults, where errant electrical currents discharge energy over the course of several microseconds [11], to distribution management system faults corresponding to load flow over the course of several days [34], to incipient transformer faults over the course of months. Energy standards, such as the Institute of Electrical and Electronics Engineers (IEEE) Standard 1547, [4] and monitoring with wide area monitoring systems (WAMS) [32, 57] have enabled large scale data collection and storage. WAMS for numerous localities are recording and storing advanced metering infrastructure (AMI), outage management systems data (OMS) and supervisory control data acquisition (SCADA), and geographic information systems (GIS).</p>
+<p><a href="https://dl.acm.org/doi/pdf/10.1145/3538637.3539614">https://dl.acm.org/doi/pdf/10.1145/3538637.3539614</a></p>
+<h3>Anomaly detection</h3>
+<p>[We] utilize data from a micro-phasor measurement unit (𝜇PMU), a synchrophasor commonly used in WAMS measurement and control of dynamic grid and microgrid applications. 𝜇PMUs report reports four measurements (voltage magnitude, voltage phase angle, current magnitude, and current phase angle per phase) on three phases, resulting in 3 × 4 = 12 channels of highly-resolved data [31]. The utilized 𝜇PMU dataset is sourced from a US-based utility company. For this study, we focused on one month of fault labelled 𝜇PMU data and performed our experiments using three channels of voltage magnitude from this dataset. Results are shown on randomly selected non-contiguous hours of concatenated 𝜇PMU data. Models were trained on 3 randomly selected 1 hour segments of training data consisting of an average of 20 faults. Models are tested using the remaining 14 unseen hours containing roughly 140 faults. This process is repeated through K-Fold cross validation with K=5.</p>
+<img src="/media/home/technologies/p542-ladd-supp4.png" class="wiki-image" alt="Embedded Image">
+<p>https://colab.research.google.com/github/LLNL/gridds/blob/master/docs/source/autoregression.ipynb</p>
+<p>https://colab.research.google.com/github/LLNL/gridds/blob/master/docs/source/autoregression_visualization.ipynb</p>
+<p>Touched up requirements.txt:</p>
+<p><csv hdr_rows=0 file=:home:technologies:requirements.csv maxlines=10>requirements.txt</csv></p>
+<p>requirements.txt {{ :home:technologies:requirements.csv |}}</p>
+<p><code>!git clone https://github.com/LLNL/gridds</code></p>
+<p><code>!pip install -r requirements.txt</code></p>
+<p>At least one dependency unmet: Our proposed method uses a data-driven deep learning method called Latent Ordinary Differential Equations (LatentODE) for data imputation, followed by a Bayesian non-parametric method called <strong>distance-dependent Chinese Restaurant Franchise</strong> (dd-CRF) for unsupervised discovery of latent states of the energy grid.</p>
+<p><note warning>/content/gridds/experimenter.py in <module> 17 from abc import ABCMeta, abstractmethod 18 import numpy as np ---> 19 from ddcrf.run_ddcrf import run_ddcrf 20 import gridds.tools.utils as utils 21 from sklearn import preprocessing</p>
+<p>ModuleNotFoundError: No module named 'ddcrf'</note></p>
+  </article>
+  
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <div class="sidebar-title">Navigation</div>
+      <ul class="sidebar-list">
+        <li><a href="/wiki/home">🏠 Wiki Home</a></li>
+        <li><a href="/wiki/wiki/syntax">📝 Syntax Guide</a></li>
+        <li><a href="/wiki/ieeeguidelines">⚖️ IEEE Guidelines</a></li>
+        <li><a href="/wiki/playground/playground">🧪 Wiki Playground</a></li>
+        <li><a href="/wiki/wg/tech">⚙️ Technology Committee</a></li>
+        <li><a href="/wiki/home/technologies">🏭 Technologies Hub</a></li>
+        <li><a href="/wiki/home/projects">🌍 Initiatives Index</a></li>
+      </ul>
+    </div>
+    
+    <div class="sidebar-card">
+      <div class="sidebar-title">Repository</div>
+      <p style="font-size: 0.78rem; color: var(--muted); margin-bottom: 12px;">This wiki is fully version-controlled on GitHub with continuous integration deployment.</p>
+      <a href="https://github.com/rahulbhargavain/openami-smart-village" target="_blank" style="font-size: 0.8rem; font-weight: 700; color: var(--teal);">📂 View on GitHub</a>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <p>© 2026 <strong>IEEE Smart Village</strong> · <strong>wiki.smartvillage.ieee.org</strong> · Migrated by Antigravity</p>
+</footer>
+
+</body>
+</html>

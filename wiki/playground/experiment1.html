@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiment1 — IEEE Smart Village Wiki</title>
+  <meta name="description" content="Centralized collaborate archive for IEEE Smart Village Wiki. Migrated from DokuWiki with version control.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --bg2: #f1f5f9;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --teal: #0891b2;
+      --teal-dim: rgba(8, 145, 178, 0.08);
+      --text: #0f172a;
+      --sub: #475569;
+      --muted: #64748b;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; }
+    
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white; padding: 24px 40px; border-bottom: 3px solid var(--teal);
+    }
+    header .container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+    header h1 { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
+    header h1 strong { color: var(--teal); }
+    header nav a { color: #cbd5e1; text-decoration: none; font-size: 0.85rem; font-weight: 600; margin-left: 20px; transition: color 0.2s; }
+    header nav a:hover { color: white; }
+
+    .main-layout { max-width: 1200px; margin: 40px auto; padding: 0 40px; display: grid; grid-template-columns: 3fr 1fr; gap: 40px; }
+    .content-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; box-shadow: 0 4px 12px rgba(15,23,42,0.02); }
+    
+    h1, h2, h3, h4, h5 { font-weight: 800; letter-spacing: -0.02em; color: var(--text); margin-top: 1.8em; margin-bottom: 0.6em; line-height: 1.25; }
+    h1 { font-size: 2.2rem; border-bottom: 2px solid var(--border); padding-bottom: 12px; margin-top: 0; }
+    h2 { font-size: 1.6rem; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    h3 { font-size: 1.25rem; }
+    
+    p { margin-bottom: 1.5em; font-size: 0.95rem; color: var(--sub); }
+    strong { color: var(--text); }
+    
+    /* Links */
+    a { color: var(--teal); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+    a:hover { color: #06b6d4; text-decoration: underline; }
+    
+    /* Lists */
+    ul, ol { margin-bottom: 1.5em; padding-left: 24px; }
+    li { font-size: 0.95rem; color: var(--sub); margin-bottom: 0.5em; }
+    
+    /* Tables */
+    .table-wrapper { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); margin: 28px 0; box-shadow: 0 2px 8px rgba(15,23,42,0.02); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; }
+    thead tr { background: rgba(8, 145, 178, 0.06); border-bottom: 1px solid var(--border); }
+    th { padding: 12px 16px; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.75rem; }
+    td { padding: 12px 16px; border-top: 1px solid var(--border); color: var(--sub); vertical-align: middle; }
+    tr:hover td { background: rgba(8, 145, 178, 0.01); }
+    
+    /* PDF/Attachment Cards */
+    .pdf-card { display: flex; align-items: center; gap: 16px; padding: 18px 24px; border: 1px solid var(--border); border-radius: 12px; margin: 24px 0; background: var(--bg); }
+    .pdf-icon { font-size: 2rem; color: var(--teal); }
+    .pdf-info { flex: 1; }
+    .pdf-title { font-weight: 700; font-size: 0.9rem; color: var(--text); margin-bottom: 4px; }
+    .pdf-btn { display: inline-flex; align-items: center; justify-content: center; padding: 6px 14px; background: var(--teal); color: white !important; font-size: 0.78rem; font-weight: 700; border-radius: 6px; text-decoration: none !important; transition: background 0.2s; }
+    .pdf-btn:hover { background: #06b6d4; }
+    
+    /* Image Styling */
+    .wiki-image { max-width: 100%; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(15,23,42,0.04); margin: 20px 0; display: block; }
+    
+    /* Sidebar */
+    .sidebar { display: flex; flex-direction: column; gap: 24px; }
+    .sidebar-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; box-shadow: 0 4px 12px rgba(15,23,42,0.01); }
+    .sidebar-title { font-size: 0.85rem; font-weight: 800; color: var(--teal); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .sidebar-list { list-style: none; padding: 0; }
+    .sidebar-list li { font-size: 0.85rem; margin-bottom: 8px; }
+    
+    hr { border: 0; border-top: 1px solid var(--border); margin: 32px 0; }
+    footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 36px 40px; text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 60px; }
+    footer strong { color: var(--teal); }
+    
+    @media(max-width: 768px) {
+      .main-layout { grid-template-columns: 1fr; gap: 30px; margin: 20px auto; padding: 0 20px; }
+      header { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <h1>🌐 IEEE Smart Village <strong>Wiki</strong></h1>
+    <nav>
+      <a href="/wiki/home">Home</a>
+      <a href="/reports">Reports Index</a>
+    </nav>
+  </div>
+</header>
+
+<div class="main-layout">
+  <article class="content-card">
+    <p><br> <strong>IEEE Smart Village</strong></p>
+<p><br> <br> <strong>Technical Guidelines Document</strong></p>
+<p><strong>DRAFT</strong></p>
+<p><br> <br> <br> <br> <br> <br> <br> <br> <br> <br></p>
+<h1>Table of Contents</h1>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.pu92jee48nhs">Table of Contents 2</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.mg70296kpe93">System Design 3</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.h6shgqsd2u82">Electrical Safety 3</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.ctd1cyn3yq3t">Hazard Mitigation 3</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.bci5ti7cqzso">Lightning Arrestors 3</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.wregzdw3qw8">Battery Management 3</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.ezbwl3zcicbm">Technologies to be Deployed 4</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.pup9ibf1yrgb">Generation 4</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.pqa9pwyd76nd">Solar PhotoVoltaic 4</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.5imxro28pgv2">Hydro 4</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.6dfi3f1fyltd">Wind 4</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.9mrpkfeef9s2">Transmission 4</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.lr08urnc4gfh">Distribution 4</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.kti1g4n31v1">Telecom 4</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.ntzi2e47rd6z">Communications for System 4</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.8k8r9y7om97e">Intranet 4</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.y1ylv7b2aiq7">Communications for Customers 4</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.lfqvculofn9o">Starlink 4</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.pxqet8lhbvwb">Grid-Connections 5</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.ga4wt93loc4s">Construction/Commissioning 6</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.mokxhjc4lwb3">Monitoring 7</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.55bmpsnnv6f0">Past Examples 7</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.d4y5kodiva8e">Grafana 7</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.ken763ohuss0">Vendor Options 7</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.j70sg9h322iy">NewSunRoad 7</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.ne4dq0d2k7se">SparkMeter 7</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.40xep8m1wbw5">SteamaCo 7</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.ohqcat47ufjz">Schneider 7</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.w0ym25vrykvg">Victron 7</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.84ararmnum93">Spiral Tech 7</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.c5hxb9ypscus">Jinco 7</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.v7r5l0rw9jn8">GroWatts 7</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.zc9wguqw1r4g">Studer 7</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.kl85f9ddi9q8">Maintenance 8</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.6g9dw036z724">Power Consumers 9</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.hj4uzk7s0mcg">PBK 9</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.vi6uhupogk25">Service Kiosk 9</a></strong></p>
+<p><strong><a href="https://docs.google.com/document/d/1Ysr_8xd_Y6dog0wUHyNeoNKVLoqk7cAQgRuETonO8WM/edit#heading=h.y4n9ywbypr7p">Information Kiosk 9</a></strong></p>
+<h1>System Design</h1>
+<h2><strong>Electrical Safety</strong></h2>
+<h3>Hazard Mitigation</h3>
+<h4><strong>Lightning Protection (Arrestors/Air terminals/Earthing)</strong></h4>
+<p><strong>Alain may have document to link in here (in the future)</strong></p>
+<h4>Battery Management</h4>
+<h2></h2>
+<h2>Technologies to be Deployed</h2>
+<h3><strong>Generation</strong></h3>
+<h4>Solar PhotoVoltaic</h4>
+<h4><strong>Hydro</strong></h4>
+<h4>Wind</h4>
+<p><strong>Hybrid ((solar plus generators , saving on expensive batteries)</strong></p>
+<h3>Transmission</h3>
+<h3>Distribution</h3>
+<h3><strong>Telecom</strong></h3>
+<h4>Communications for System</h4>
+<h5><strong>Intranet</strong></h5>
+<h4>Communications for Customers</h4>
+<h5><strong>Starlink</strong></h5>
+<p><strong><a href="https://www.starlink.com/map">https://www.starlink.com/map</a></strong></p>
+<p><strong>{{https://lh7-us.googleusercontent.com/docsz/AD_4nXdg4sPdhd9n29ronVZij3rC9OKMYHRrUUqW0vAGpLGTxV3zBrKK5TF893OBH62spJ9tA7g4clOxBd_eI0Q1bpQle2ZN541wECJ16PHL5QsEedXhE0osgLss9JJ8X9enWB9xPDbeYAZbvhnThIEhRWugl-NB?nolink&624x303}}</strong></p>
+<h2>Grid-Connections</h2>
+<h1></h1>
+<h1>Construction/Commissioning</h1>
+<h1></h1>
+<h1>Monitoring</h1>
+<h2><strong>Past Examples</strong></h2>
+<h3>Grafana</h3>
+<p><strong>KW4H Dashboard: <a href="http://kw4h.org/?orgId=2">http://kw4h.org/?orgId=2</a></strong></p>
+<h2>Vendor Options</h2>
+<h3><strong>NewSunRoad</strong></h3>
+<p><strong>Tech Comm Meeting Notes from when they joined: <a href="https://drive.google.com/drive/folders/1Ixgd5mXAfL3tatUhbCe1EypTibqUYlve?usp=drive_link">https://drive.google.com/drive/folders/1Ixgd5mXAfL3tatUhbCe1EypTibqUYlve?usp=drive_link</a></strong></p>
+<p><br></p>
+<h3>SparkMeter</h3>
+<h3><strong>SteamaCo</strong></h3>
+<h3>Schneider</h3>
+<p><strong>Schneider devices can be monitored through the Wiser Energy API: <a href="https://exchange.se.com/devportal/api/wiser-energy-api/section/Documentation">https://exchange.se.com/devportal/api/wiser-energy-api/section/Documentation</a></strong></p>
+<h3>Victron</h3>
+<p><strong>Victron offers an API that organizes devices by site: <a href="https://vrm-api-docs.victronenergy.com/#/">https://vrm-api-docs.victronenergy.com/#/</a></strong></p>
+<h3>Spiral Tech</h3>
+<h3><strong>Jinco</strong></h3>
+<h3>GroWatts</h3>
+<h3><strong>Studer </strong></h3>
+<h1></h1>
+<h1>Maintenance</h1>
+<p><br> <br> <br> <br> <br> <br></p>
+<h1></h1>
+<h1>Power Consumers</h1>
+<h2><strong>PBK</strong></h2>
+<h2>Service Kiosk</h2>
+<p><strong>Are those kiosks in ISV mission (access to energy) or in entrepreneurs mission (profitable us of energy)? Who is serving tourists, ISV or ISV entrepreneurs?</strong></p>
+<h3>Information Kiosk</h3>
+<p><strong>Solar Powered, connected via Starlink and local Intranet. Local businesses are key beneficiaries. Tourists can find opportunities while in town, and give reviews on quality of experiences. This is a need for 4 islands, and needs to be met locally.</strong></p>
+  </article>
+  
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <div class="sidebar-title">Navigation</div>
+      <ul class="sidebar-list">
+        <li><a href="/wiki/home">🏠 Wiki Home</a></li>
+        <li><a href="/wiki/wiki/syntax">📝 Syntax Guide</a></li>
+        <li><a href="/wiki/ieeeguidelines">⚖️ IEEE Guidelines</a></li>
+        <li><a href="/wiki/playground/playground">🧪 Wiki Playground</a></li>
+        <li><a href="/wiki/wg/tech">⚙️ Technology Committee</a></li>
+        <li><a href="/wiki/home/technologies">🏭 Technologies Hub</a></li>
+        <li><a href="/wiki/home/projects">🌍 Initiatives Index</a></li>
+      </ul>
+    </div>
+    
+    <div class="sidebar-card">
+      <div class="sidebar-title">Repository</div>
+      <p style="font-size: 0.78rem; color: var(--muted); margin-bottom: 12px;">This wiki is fully version-controlled on GitHub with continuous integration deployment.</p>
+      <a href="https://github.com/rahulbhargavain/openami-smart-village" target="_blank" style="font-size: 0.8rem; font-weight: 700; color: var(--teal);">📂 View on GitHub</a>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <p>© 2026 <strong>IEEE Smart Village</strong> · <strong>wiki.smartvillage.ieee.org</strong> · Migrated by Antigravity</p>
+</footer>
+
+</body>
+</html>

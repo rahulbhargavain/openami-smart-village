@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word2Dwmacro — IEEE Smart Village Wiki</title>
+  <meta name="description" content="Centralized collaborate archive for IEEE Smart Village Wiki. Migrated from DokuWiki with version control.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --bg2: #f1f5f9;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --teal: #0891b2;
+      --teal-dim: rgba(8, 145, 178, 0.08);
+      --text: #0f172a;
+      --sub: #475569;
+      --muted: #64748b;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; }
+    
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white; padding: 24px 40px; border-bottom: 3px solid var(--teal);
+    }
+    header .container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+    header h1 { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
+    header h1 strong { color: var(--teal); }
+    header nav a { color: #cbd5e1; text-decoration: none; font-size: 0.85rem; font-weight: 600; margin-left: 20px; transition: color 0.2s; }
+    header nav a:hover { color: white; }
+
+    .main-layout { max-width: 1200px; margin: 40px auto; padding: 0 40px; display: grid; grid-template-columns: 3fr 1fr; gap: 40px; }
+    .content-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; box-shadow: 0 4px 12px rgba(15,23,42,0.02); }
+    
+    h1, h2, h3, h4, h5 { font-weight: 800; letter-spacing: -0.02em; color: var(--text); margin-top: 1.8em; margin-bottom: 0.6em; line-height: 1.25; }
+    h1 { font-size: 2.2rem; border-bottom: 2px solid var(--border); padding-bottom: 12px; margin-top: 0; }
+    h2 { font-size: 1.6rem; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    h3 { font-size: 1.25rem; }
+    
+    p { margin-bottom: 1.5em; font-size: 0.95rem; color: var(--sub); }
+    strong { color: var(--text); }
+    
+    /* Links */
+    a { color: var(--teal); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+    a:hover { color: #06b6d4; text-decoration: underline; }
+    
+    /* Lists */
+    ul, ol { margin-bottom: 1.5em; padding-left: 24px; }
+    li { font-size: 0.95rem; color: var(--sub); margin-bottom: 0.5em; }
+    
+    /* Tables */
+    .table-wrapper { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); margin: 28px 0; box-shadow: 0 2px 8px rgba(15,23,42,0.02); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; }
+    thead tr { background: rgba(8, 145, 178, 0.06); border-bottom: 1px solid var(--border); }
+    th { padding: 12px 16px; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.75rem; }
+    td { padding: 12px 16px; border-top: 1px solid var(--border); color: var(--sub); vertical-align: middle; }
+    tr:hover td { background: rgba(8, 145, 178, 0.01); }
+    
+    /* PDF/Attachment Cards */
+    .pdf-card { display: flex; align-items: center; gap: 16px; padding: 18px 24px; border: 1px solid var(--border); border-radius: 12px; margin: 24px 0; background: var(--bg); }
+    .pdf-icon { font-size: 2rem; color: var(--teal); }
+    .pdf-info { flex: 1; }
+    .pdf-title { font-weight: 700; font-size: 0.9rem; color: var(--text); margin-bottom: 4px; }
+    .pdf-btn { display: inline-flex; align-items: center; justify-content: center; padding: 6px 14px; background: var(--teal); color: white !important; font-size: 0.78rem; font-weight: 700; border-radius: 6px; text-decoration: none !important; transition: background 0.2s; }
+    .pdf-btn:hover { background: #06b6d4; }
+    
+    /* Image Styling */
+    .wiki-image { max-width: 100%; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(15,23,42,0.04); margin: 20px 0; display: block; }
+    
+    /* Sidebar */
+    .sidebar { display: flex; flex-direction: column; gap: 24px; }
+    .sidebar-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; box-shadow: 0 4px 12px rgba(15,23,42,0.01); }
+    .sidebar-title { font-size: 0.85rem; font-weight: 800; color: var(--teal); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .sidebar-list { list-style: none; padding: 0; }
+    .sidebar-list li { font-size: 0.85rem; margin-bottom: 8px; }
+    
+    hr { border: 0; border-top: 1px solid var(--border); margin: 32px 0; }
+    footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 36px 40px; text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 60px; }
+    footer strong { color: var(--teal); }
+    
+    @media(max-width: 768px) {
+      .main-layout { grid-template-columns: 1fr; gap: 30px; margin: 20px auto; padding: 0 20px; }
+      header { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <h1>🌐 IEEE Smart Village <strong>Wiki</strong></h1>
+    <nav>
+      <a href="/wiki/home">Home</a>
+      <a href="/reports">Reports Index</a>
+    </nav>
+  </div>
+</header>
+
+<div class="main-layout">
+  <article class="content-card">
+    <ul>
+  <li>Copy the code from below, and save it as Word2Doku.bas</li>
+  <li>Start Word</li>
+  <li>Bring up the Visual Basic Editor (Tools->Macro->Visual Basic Editor or Alt+F11).</li>
+  <li>From the VBE, import the macro library (File->Import File...) and select the file you downloaded.</li>
+</ul>
+<p><code> Attribute VB_Name = "Word2DokuWikiv3"</p>
+<p>Sub Word2DokuWiki() Application.ScreenUpdating = False ReplaceQuotes DokuWikiEscapeChars DokuWikiConvertHyperlinks DokuWikiConvertH1 DokuWikiConvertH2 DokuWikiConvertH3 DokuWikiConvertH4 DokuWikiConvertH5 DokuWikiConvertItalic DokuWikiConvertBold DokuWikiConvertUnderline DokuWikiConvertStrikeThrough DokuWikiConvertSuperscript DokuWikiConvertSubscript DokuWikiConvertLists DokuWikiConvertTable UndoDokuWikiEscapeChars ' Copy to clipboard ActiveDocument.Content.Copy Application.ScreenUpdating = True End Sub</p>
+<p>Private Sub DokuWikiConvertH1() ReplaceHeading wdStyleHeading1, "======" End Sub</p>
+<p>Private Sub DokuWikiConvertH2() ReplaceHeading wdStyleHeading2, "=====" End Sub</p>
+<p>Private Sub DokuWikiConvertH3() ReplaceHeading wdStyleHeading3, "====" End Sub</p>
+<p>Private Sub DokuWikiConvertH4() ReplaceHeading wdStyleHeading4, "===" End Sub</p>
+<p>Private Sub DokuWikiConvertH5() ReplaceHeading wdStyleHeading5, "==" End Sub</p>
+<p>Private Sub DokuWikiConvertH6() ReplaceHeading wdStyleHeading5, "=" End Sub</p>
+<p>Private Sub DokuWikiConvertBold() ActiveDocument.Select With Selection.Find .ClearFormatting .Font.Bold = True .Text = "" .Format = True .MatchCase = False .MatchWholeWord = False .MatchWildcards = False .MatchSoundsLike = False .MatchAllWordForms = False .Forward = True .Wrap = wdFindContinue</p>
+<p>Do While .Execute With Selection If Len(.Text) > 1 And InStr(1, .Text, vbCr) Then ' Just process the chunk before any newline characters ' We'll pick-up the rest with the next search .Collapse .MoveEndUntil vbCr End If</p>
+<p>' Don't bother to markup newline characters (prevents a loop, as well)</p>
+<p>If Not .Text = vbCr Then If Not Left(.Text, 2) = "<strong>" Then .InsertBefore "</strong>" End If If Not Right(.Text, 2) = "<strong>" Then .InsertAfter "</strong>" End If End If</p>
+<p>.Style = ActiveDocument.Styles("Default Paragraph Font") .Font.Bold = False End With Loop End With End Sub</p>
+<p>Private Sub DokuWikiConvertItalic() ActiveDocument.Select</p>
+<p>With Selection.Find</p>
+<p>.ClearFormatting .Font.Italic = True .Text = ""</p>
+<p>.Format = True .MatchCase = False .MatchWholeWord = False .MatchWildcards = False .MatchSoundsLike = False .MatchAllWordForms = False</p>
+<p>.Forward = True .Wrap = wdFindContinue</p>
+<p>Do While .Execute With Selection If Len(.Text) > 1 And InStr(1, .Text, vbCr) Then ' Just process the chunk before any newline characters ' We'll pick-up the rest with the next search .Collapse .MoveEndUntil vbCr End If</p>
+<p>' Don't bother to markup newline characters (prevents a loop, as well) If Not .Text = vbCr Then If Not Left(.Text, 2) = "//" Then .InsertBefore "//" End If If Not Right(.Text, 2) = "//" Then .InsertAfter "//" End If End If</p>
+<p>.Style = ActiveDocument.Styles("Default Paragraph Font") .Font.Italic = False End With Loop End With End Sub</p>
+<p>Private Sub DokuWikiConvertUnderline() ActiveDocument.Select</p>
+<p>With Selection.Find</p>
+<p>.ClearFormatting .Font.Underline = True .Text = ""</p>
+<p>.Format = True .MatchCase = False .MatchWholeWord = False .MatchWildcards = False .MatchSoundsLike = False .MatchAllWordForms = False</p>
+<p>.Forward = True .Wrap = wdFindContinue</p>
+<p>Do While .Execute With Selection If Len(.Text) > 1 And InStr(1, .Text, vbCr) Then ' Just process the chunk before any newline characters ' We'll pick-up the rest with the next search .Collapse .MoveEndUntil vbCr End If</p>
+<p>' Don't bother to markup newline characters (prevents a loop, as well) If Not .Text = vbCr Then If Not Left(.Text, 2) = "__" Then .InsertBefore "__" End If If Not Right(.Text, 2) = "__" Then .InsertAfter "__" End If End If</p>
+<p>.Style = ActiveDocument.Styles("Default Paragraph Font") .Font.Underline = False End With Loop End With End Sub</p>
+<p>Private Sub DokuWikiConvertStrikeThrough() ActiveDocument.Select</p>
+<p>With Selection.Find</p>
+<p>.ClearFormatting .Font.StrikeThrough = True .Text = ""</p>
+<p>.Format = True .MatchCase = False .MatchWholeWord = False .MatchWildcards = False .MatchSoundsLike = False .MatchAllWordForms = False</p>
+<p>.Forward = True .Wrap = wdFindContinue</p>
+<p>Do While .Execute With Selection If Len(.Text) > 1 And InStr(1, .Text, vbCr) Then ' Just process the chunk before any newline characters ' We'll pick-up the rest with the next search .Collapse .MoveEndUntil vbCr End If</p>
+<p>' Don't bother to markup newline characters (prevents a loop, as well) If Not .Text = vbCr Then If Not Left(.Text, 2) = "<del>" Then .InsertBefore "<del>" End If If Not Right(.Text, 2) = "</del>" Then .InsertAfter "</del>" End If End If</p>
+<p>.Style = ActiveDocument.Styles("Default Paragraph Font") .Font.StrikeThrough = False End With Loop End With End Sub</p>
+<p>Private Sub DokuWikiConvertSuperscript() ActiveDocument.Select</p>
+<p>With Selection.Find</p>
+<p>.ClearFormatting .Font.Superscript = True .Text = ""</p>
+<p>.Format = True .MatchCase = False .MatchWholeWord = False .MatchWildcards = False .MatchSoundsLike = False .MatchAllWordForms = False</p>
+<p>.Forward = True .Wrap = wdFindContinue</p>
+<p>Do While .Execute With Selection .Text = Trim(.Text) If Len(.Text) > 1 And InStr(1, .Text, vbCr) Then ' Just process the chunk before any newline characters ' We'll pick-up the rest with the next search .Collapse .MoveEndUntil vbCr End If</p>
+<p>' Don't bother to markup newline characters (prevents a loop, as well) If Not .Text = vbCr Then If Not Left(.Text, 2) = "<sup>" Then .InsertBefore "<sup>" End If If Not Right(.Text, 2) = "</sup>" Then .InsertAfter "</sup>" End If End If</p>
+<p>.Style = ActiveDocument.Styles("Default Paragraph Font") .Font.Superscript = False End With Loop End With End Sub</p>
+<p>Private Sub DokuWikiConvertSubscript() ActiveDocument.Select</p>
+<p>With Selection.Find</p>
+<p>.ClearFormatting .Font.Subscript = True .Text = ""</p>
+<p>.Format = True .MatchCase = False .MatchWholeWord = False .MatchWildcards = False .MatchSoundsLike = False .MatchAllWordForms = False</p>
+<p>.Forward = True .Wrap = wdFindContinue</p>
+<p>Do While .Execute With Selection .Text = Trim(.Text) If Len(.Text) > 1 And InStr(1, .Text, vbCr) Then ' Just process the chunk before any newline characters ' We'll pick-up the rest with the next search .Collapse .MoveEndUntil vbCr End If</p>
+<p>' Don't bother to markup newline characters (prevents a loop, as well) If Not .Text = vbCr Then If Not Left(.Text, 2) = "<sub>" Then .InsertBefore "<sub>" End If If Not Right(.Text, 2) = "</sub>" Then .InsertAfter "</sub>" End If End If</p>
+<p>.Style = ActiveDocument.Styles("Default Paragraph Font") .Font.Subscript = False End With Loop End With End Sub</p>
+<p>Private Sub DokuWikiConvertLists() Dim para As Paragraph For Each para In ActiveDocument.ListParagraphs With para.Range .InsertBefore "  " If .ListFormat.ListType = wdListBullet Then .InsertBefore "*" Else .InsertBefore "-" End If For i = 1 To .ListFormat.ListLevelNumber .InsertBefore "  " Next i .ListFormat.RemoveNumbers End With Next para End Sub</p>
+<p>Private Sub DokuWikiConvertHyperlinks() Dim hyperCount As Integer</p>
+<p>hyperCount = ActiveDocument.Hyperlinks.Count</p>
+<p>For i = 1 To hyperCount With ActiveDocument.Hyperlinks(1) Dim addr As String addr = .Address .Delete .Range.InsertBefore "[" .Range.InsertAfter "-" & addr & "]" End With Next i End Sub</p>
+<p>' Replace all smart quotes with their dumb equivalents Private Sub ReplaceQuotes() Dim quotes As Boolean quotes = Options.AutoFormatAsYouTypeReplaceQuotes Options.AutoFormatAsYouTypeReplaceQuotes = False ReplaceString ChrW(8220), """" ReplaceString ChrW(8221), """" ReplaceString "ë", "'" ReplaceString "í", "'" Options.AutoFormatAsYouTypeReplaceQuotes = quotes End Sub</p>
+<p>Private Sub DokuWikiEscapeChars() EscapeCharacter "*" EscapeCharacter "#" EscapeCharacter "_" EscapeCharacter "-" EscapeCharacter "+" EscapeCharacter "{" EscapeCharacter "}" EscapeCharacter "[" EscapeCharacter "]" EscapeCharacter "~" EscapeCharacter "^^" EscapeCharacter "|" EscapeCharacter "'" End Sub</p>
+<p>Private Function ReplaceHeading(styleHeading As String, headerPrefix As String) Dim normalStyle As Style Set normalStyle = ActiveDocument.Styles(wdStyleNormal)</p>
+<p>ActiveDocument.Select</p>
+<p>With Selection.Find</p>
+<p>.ClearFormatting .Style = ActiveDocument.Styles(styleHeading) .Text = ""</p>
+<p>.Format = True .MatchCase = False .MatchWholeWord = False .MatchWildcards = False .MatchSoundsLike = False .MatchAllWordForms = False</p>
+<p>.Forward = True .Wrap = wdFindContinue</p>
+<p>Do While .Execute With Selection If InStr(1, .Text, vbCr) Then ' Just process the chunk before any newline characters ' We'll pick-up the rest with the next search .Collapse .MoveEndUntil vbCr End If</p>
+<p>' Don't bother to markup newline characters (prevents a loop, as well) If Not .Text = vbCr Then .InsertBefore headerPrefix .InsertBefore vbCr .InsertAfter headerPrefix End If .Style = normalStyle End With Loop End With End Function</p>
+<p>Private Sub DokuWikiConvertTable() Dim TotTables As Long Do While ActiveDocument.Tables.Count() > 0 ActiveDocument.Tables(1).Range.Select Selection.Find.ClearFormatting Selection.Find.Replacement.ClearFormatting With Selection.Find .Text = " $s$|$s$ " .Replacement.Text = "I" .Forward = True .Wrap = wdFindContinue .Format = False .MatchCase = False .MatchWholeWord = False .MatchWildcards = False .MatchSoundsLike = False .MatchAllWordForms = False End With Selection.Find.Execute Replace:=wdReplaceAll Selection.Find.ClearFormatting Selection.Find.Replacement.ClearFormatting With Selection.Find .Text = " $s$^^$s$ " .Replacement.Text = "/\" .Forward = True .Wrap = wdFindContinue .Format = False .MatchCase = False .MatchWholeWord = False .MatchWildcards = False .MatchSoundsLike = False .MatchAllWordForms = False End With Selection.Find.Execute Replace:=wdReplaceAll Selection.Find.ClearFormatting Application.DefaultTableSeparator = "|" Selection.Rows.ConvertToText Separator:=wdSeparateByDefaultListSeparator, NestedTables:=True Selection.Find.ClearFormatting Selection.Find.Replacement.ClearFormatting With Selection.Find .Text = "^p" .Replacement.Text = "|^p|" .Forward = True .Wrap = wdFindStop .Format = False .MatchCase = False .MatchWholeWord = False .MatchWildcards = False .MatchSoundsLike = False .MatchAllWordForms = False End With Selection.Find.Execute Replace:=wdReplaceAll Selection.InsertBefore ("|") Selection.InsertParagraphAfter Selection.Find.ClearFormatting Selection.Find.Replacement.ClearFormatting With Selection.Find .Text = "^p|^p" .Replacement.Text = "^p" .Forward = True .Wrap = wdFindStop .Format = False .MatchCase = False .MatchWholeWord = False .MatchWildcards = False .MatchSoundsLike = False .MatchAllWordForms = False End With Selection.Find.Execute Replace:=wdReplaceAll Selection.Find.ClearFormatting Selection.Find.Replacement.ClearFormatting With Selection.Find .Text = "$s$blank$s$" .Replacement.Text = "" .Forward = True .Wrap = wdFindContinue .Format = False .MatchCase = False .MatchWholeWord = False .MatchWildcards = False .MatchSoundsLike = False .MatchAllWordForms = False End With Selection.Find.Execute Replace:=wdReplaceAll Selection.Find.ClearFormatting Selection.Find.Replacement.ClearFormatting With Selection.Find .Text = "||" .Replacement.Text = "|  |" .Forward = True .Wrap = wdFindStop .Format = False .MatchCase = False .MatchWholeWord = False .MatchWildcards = False .MatchSoundsLike = False .MatchAllWordForms = False End With Selection.Find.Execute Replace:=wdReplaceAll With Selection.Find .Text = "||" .Replacement.Text = "|  |" .Forward = True .Wrap = wdFindStop .Format = False .MatchCase = False .MatchWholeWord = False .MatchWildcards = False .MatchSoundsLike = False .MatchAllWordForms = False End With Selection.Find.Execute Replace:=wdReplaceAll Selection.Find.ClearFormatting Selection.Find.Replacement.ClearFormatting With Selection.Find .Text = "| |" .Replacement.Text = "|  |" .Forward = True .Wrap = wdFindStop .Format = False .MatchCase = False .MatchWholeWord = False .MatchWildcards = False .MatchSoundsLike = False .MatchAllWordForms = False End With Selection.Find.Execute Replace:=wdReplaceAll With Selection.Find .Text = "| |" .Replacement.Text = "|  |" .Forward = True .Wrap = wdFindStop .Format = False .MatchCase = False .MatchWholeWord = False .MatchWildcards = False .MatchSoundsLike = False .MatchAllWordForms = False End With Selection.Find.Execute Replace:=wdReplaceAll Selection.Paragraphs(1).Range.Select Selection.Find.ClearFormatting Selection.Find.Replacement.ClearFormatting With Selection.Find .Text = "|" .Replacement.Text = "^^" .Forward = True .Wrap = wdFindStop .Format = False .MatchCase = False .MatchWholeWord = False .MatchWildcards = False .MatchSoundsLike = False .MatchAllWordForms = False End With Selection.Find.Execute Replace:=wdReplaceAll Loop End Sub Private Sub UndoDokuWikiEscapeChars()</p>
+<p>UndoEscapeCharacter "*" UndoEscapeCharacter "#" UndoEscapeCharacter "_" UndoEscapeCharacter "-" UndoEscapeCharacter "+" UndoEscapeCharacter "{" UndoEscapeCharacter "}" UndoEscapeCharacter "[" UndoEscapeCharacter "]" UndoEscapeCharacter "~" UndoEscapeCharacter "^^" UndoEscapeCharacter "|" UndoEscapeCharacter "'"</p>
+<p>End Sub</p>
+<p>Private Function EscapeCharacter(char As String) ReplaceString char, " $s$" & char & "$s$ " End Function</p>
+<p>Private Function UndoEscapeCharacter(char As String) ReplaceString " $s$" & char & "$s$ ", char End Function</p>
+<p>Private Function ReplaceString(findStr As String, replacementStr As String) Selection.Find.ClearFormatting Selection.Find.Replacement.ClearFormatting With Selection.Find .Text = findStr .Replacement.Text = replacementStr .Forward = True .Wrap = wdFindContinue .Format = False .MatchCase = False .MatchWholeWord = False .MatchWildcards = False .MatchSoundsLike = False .MatchAllWordForms = False End With Selection.Find.Execute Replace:=wdReplaceAll End Function </code></p>
+  </article>
+  
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <div class="sidebar-title">Navigation</div>
+      <ul class="sidebar-list">
+        <li><a href="/wiki/home">🏠 Wiki Home</a></li>
+        <li><a href="/wiki/wiki/syntax">📝 Syntax Guide</a></li>
+        <li><a href="/wiki/ieeeguidelines">⚖️ IEEE Guidelines</a></li>
+        <li><a href="/wiki/playground/playground">🧪 Wiki Playground</a></li>
+        <li><a href="/wiki/wg/tech">⚙️ Technology Committee</a></li>
+        <li><a href="/wiki/home/technologies">🏭 Technologies Hub</a></li>
+        <li><a href="/wiki/home/projects">🌍 Initiatives Index</a></li>
+      </ul>
+    </div>
+    
+    <div class="sidebar-card">
+      <div class="sidebar-title">Repository</div>
+      <p style="font-size: 0.78rem; color: var(--muted); margin-bottom: 12px;">This wiki is fully version-controlled on GitHub with continuous integration deployment.</p>
+      <a href="https://github.com/rahulbhargavain/openami-smart-village" target="_blank" style="font-size: 0.8rem; font-weight: 700; color: var(--teal);">📂 View on GitHub</a>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <p>© 2026 <strong>IEEE Smart Village</strong> · <strong>wiki.smartvillage.ieee.org</strong> · Migrated by Antigravity</p>
+</footer>
+
+</body>
+</html>
