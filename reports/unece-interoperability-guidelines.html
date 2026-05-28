@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UN ECE Interoperability &amp; Open-Source Guidelines: Digitalizing Off-Grid Utilities &amp; Mobility — EMG-REG-006</title>
+  <meta name="description" content="Strategic synthesis of the 2025 UNECE guidelines on energy digitalization. Exploring technical, informational, and organizational interoperability, SGAM layers, OpenPAYGO protocols, hybrid software models, and the Moldova NRPC case study in off-grid solar and electric mobility contexts.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --bg2: #f1f5f9;
+      --card: #ffffff;
+      --card2: #f8fafc;
+      --border: #e2e8f0;
+      --border2: #cbd5e1;
+      --teal: #0891b2;
+      --teal-dim: rgba(8, 145, 178, 0.08);
+      --green: #16a34a;
+      --green-dim: rgba(22, 163, 74, 0.08);
+      --amber: #d97706;
+      --amber-dim: rgba(217, 119, 6, 0.08);
+      --red: #dc2626;
+      --red-dim: rgba(220, 38, 38, 0.08);
+      --blue: #3b82f6;
+      --blue-dim: rgba(59, 130, 246, 0.08);
+      --purple: #7c3aed;
+      --purple-dim: rgba(124, 58, 237, 0.08);
+      --text: #0f172a;
+      --sub: #475569;
+      --muted: #64748b;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); line-height:1.75; }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg,#f8fafc 0%,#e2f4f1 55%,#f1f5f9 100%);
+      padding: 70px 40px 60px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content:''; position:absolute; top:-120px; right:-120px;
+      width:450px; height:450px;
+      background:radial-gradient(circle,rgba(8,145,178,0.06) 0%,transparent 65%);
+      pointer-events:none;
+    }
+    .back-link {
+      display:inline-flex; align-items:center; gap:6px;
+      color:var(--muted); text-decoration:none;
+      font-size:.8rem; margin-bottom:28px; transition:color .2s;
+    }
+    .back-link:hover { color:var(--teal); }
+    .eyebrow { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; }
+    .tag {
+      display:inline-flex; align-items:center; gap:6px;
+      padding:5px 13px; border-radius:20px;
+      font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px;
+    }
+    .tag-teal { background:var(--teal-dim); border:1px solid rgba(20, 184, 166, 0.35); color:var(--teal); }
+    .tag-amber { background:var(--amber-dim); border:1px solid rgba(245, 158, 11, 0.35); color:var(--amber); }
+    .tag-purple { background:var(--purple-dim); border:1px solid rgba(139, 92, 246, 0.35); color:var(--purple); }
+
+    h1 { font-size:clamp(1.9rem,4.5vw,2.9rem); font-weight:800; line-height:1.15; margin-bottom:18px; letter-spacing:-0.03em; }
+    h1 em { font-style:normal; background:linear-gradient(135deg,var(--teal),var(--blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .hero-sub { color:var(--sub); font-size:1.05rem; max-width:820px; margin-bottom:36px; line-height:1.8; }
+    .hero-kpis { display:flex; flex-wrap:wrap; gap:16px; }
+    .kpi { background:var(--bg2); border:1px solid var(--border); border-radius:12px; padding:14px 22px; min-width:140px; box-shadow:0 2px 8px rgba(15,23,42,0.05); }
+    .kpi-v { font-size:1.7rem; font-weight:800; font-family:'JetBrains Mono',monospace; color:var(--teal); }
+    .kpi-l { font-size:.68rem; color:var(--muted); text-transform:uppercase; letter-spacing:.8px; margin-top:3px; }
+
+    /* NAV */
+    nav { background:var(--bg2); border-bottom:1px solid var(--border); padding:0 40px; position:sticky; top:0; z-index:100; box-shadow:0 2px 8px rgba(15,23,42,0.05); backdrop-filter:blur(8px); }
+    .nav-inner { display:flex; overflow-x:auto; }
+    .nav-inner a { color:var(--muted); text-decoration:none; font-size:.8rem; font-weight:600; padding:16px 16px; border-bottom:2px solid transparent; white-space:nowrap; transition:all .2s; }
+    .nav-inner a:hover { color:var(--teal); border-bottom-color:var(--teal); }
+
+    .container { max-width:1200px; margin:0 auto; padding:0 40px; }
+    .section { padding:70px 0; border-bottom:1px solid var(--border); }
+    .section-header { margin-bottom:40px; }
+    .sec-num { font-size:.7rem; font-weight:700; color:var(--teal); letter-spacing:2px; text-transform:uppercase; margin-bottom:8px; }
+    .sec-title { font-size:clamp(1.5rem,3.2vw,2.2rem); font-weight:800; margin-bottom:12px; letter-spacing:-0.02em; }
+    .sec-desc { color:var(--sub); font-size:.95rem; max-width:800px; }
+
+    /* ALERTS */
+    .alert { padding:18px 22px; border-radius:12px; margin:24px 0; display:flex; gap:16px; box-shadow:0 4px 12px rgba(0,0,0,0.02); }
+    .alert-teal { background:var(--teal-dim); border-left:4px solid var(--teal); border-top:1px solid rgba(20,184,166,0.15); border-right:1px solid rgba(20,184,166,0.15); border-bottom:1px solid rgba(20,184,166,0.15); }
+    .alert-amber { background:var(--amber-dim); border-left:4px solid var(--amber); border-top:1px solid rgba(245,158,11,0.15); border-right:1px solid rgba(245,158,11,0.15); border-bottom:1px solid rgba(245,158,11,0.15); }
+    .alert-red { background:var(--red-dim); border-left:4px solid var(--red); border-top:1px solid rgba(239,68,68,0.15); border-right:1px solid rgba(239,68,68,0.15); border-bottom:1px solid rgba(239,68,68,0.15); }
+    .alert-blue { background:var(--blue-dim); border-left:4px solid var(--blue); border-top:1px solid rgba(59,130,246,0.15); border-right:1px solid rgba(59,130,246,0.15); border-bottom:1px solid rgba(59,130,246,0.15); }
+    .alert-icon { font-size:1.3rem; flex-shrink:0; margin-top:2px; }
+    .alert-content { flex:1; }
+    .alert-title { font-weight:700; font-size:.92rem; margin-bottom:5px; color:var(--text); }
+    .alert-text { font-size:.86rem; color:var(--sub); line-height:1.65; }
+
+    /* TABLES */
+    .tw { overflow-x:auto; border-radius:12px; border:1px solid var(--border); margin:28px 0; box-shadow:0 4px 16px rgba(0,0,0,0.01); }
+    table { width:100%; border-collapse:collapse; font-size:.83rem; text-align:left; }
+    thead tr { background:rgba(20,184,166,.08); border-bottom:1px solid var(--border); }
+    th { padding:14px 16px; font-weight:700; color:var(--teal); font-size:.75rem; text-transform:uppercase; letter-spacing:1px; }
+    td { padding:12px 16px; border-top:1px solid var(--border); color:var(--sub); vertical-align:middle; line-height:1.6; }
+    tr:hover td { background:rgba(255,255,255,0.02); }
+    td strong { color:var(--text); }
+    td code { font-family:'JetBrains Mono',monospace; background:rgba(20,184,166,.12); color:var(--teal); padding:2px 6px; border-radius:4px; font-size:.76rem; border:1px solid rgba(20,184,166,0.2); }
+
+    /* GRIDS */
+    .card-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(330px,1fr)); gap:20px; margin:28px 0; }
+    .card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:28px; transition:all .3s; box-shadow:0 4px 12px rgba(0,0,0,0.02); }
+    .card:hover { border-color:rgba(20,184,166,.35); transform:translateY(-2px); box-shadow:0 8px 30px rgba(0,0,0,0.05); }
+    .card-title { font-size:1.1rem; font-weight:700; margin-bottom:12px; display:flex; align-items:center; gap:10px; color:var(--text); }
+    .card-icon { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.15rem; flex-shrink:0; }
+    .card p { font-size:.86rem; color:var(--sub); line-height:1.65; }
+
+    ul.styled { list-style:none; padding:0; }
+    ul.styled li { padding:6px 0 6px 22px; position:relative; font-size:.85rem; color:var(--sub); line-height:1.6; }
+    ul.styled li::before { content:'▸'; position:absolute; left:0; color:var(--teal); font-size:.72rem; top:8px; }
+
+    ul.check { list-style:none; padding:0; }
+    ul.check li { padding:8px 0 8px 26px; position:relative; font-size:.86rem; color:var(--sub); border-bottom:1px solid rgba(0,0,0,0.05); line-height:1.6; }
+    ul.check li:last-child { border:none; }
+    ul.check li::before { content:'✓'; position:absolute; left:0; color:var(--green); font-weight:700; }
+
+    footer { background:var(--bg2); border-top:1px solid var(--border); padding:36px 40px; text-align:center; color:var(--muted); font-size:.8rem; }
+    footer strong { color:var(--teal); }
+
+    @media(max-width:768px){ .hero{padding:40px 20px;} .container{padding:0 20px;} nav{padding:0 20px;} }
+  </style>
+</head>
+<body>
+
+<header class="hero">
+  <a href="/reports" class="back-link">← Reports Index</a>
+  <div class="eyebrow">
+    <span class="tag tag-teal">🌍 Policy Framework</span>
+    <span class="tag tag-amber">⚡ UNECE 2025</span>
+    <span class="tag tag-purple">🔑 Open-Source &amp; PAYG</span>
+  </div>
+  <h1>UN ECE Interoperability Guidelines:<br><em>Open-Source &amp; Hybrid Models</em><br>in Rural Energy &amp; Mobility Context</h1>
+  <p class="hero-sub">A strategic policy synthesis of the 2025 United Nations Economic Commission for Europe (UNECE) expert group guidelines on energy system digitalization. Analyzing the GridWise interoperability dimensions, SGAM reference models, OpenPAYGO token protocols, hybrid system architectures, and practical applications for off-grid mini-grids and electric mobility platforms in Sub-Saharan Africa and South Asia.</p>
+  <div class="hero-kpis">
+    <div class="kpi"><div class="kpi-v">64%</div><div class="kpi-l">Utility OS Adoption</div></div>
+    <div class="kpi"><div class="kpi-v">GridWise</div><div class="kpi-l">3 Dimensions</div></div>
+    <div class="kpi"><div class="kpi-v">SGAM</div><div class="kpi-l">5-Layer Model</div></div>
+    <div class="kpi"><div class="kpi-v">OpenPAYGO</div><div class="kpi-l">Prepaid Standard</div></div>
+    <div class="kpi"><div class="kpi-v">NRPC</div><div class="kpi-l">Moldova Case Study</div></div>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#summary">Introduction</a>
+    <a href="#dimensions">3 Dimensions</a>
+    <a href="#standards">Open Standards</a>
+    <a href="#hybrid">Hybrid Architectures</a>
+    <a href="#casestudies">Off-Grid Context</a>
+    <a href="#metrics">Measurement Framework</a>
+  </div>
+</nav>
+
+<main class="container">
+
+  <!-- INTRODUCTION -->
+  <section id="summary" class="section">
+    <div class="section-header">
+      <div class="sec-num">Section 01</div>
+      <h2 class="sec-title">Introduction &amp; Digitalization Rationale</h2>
+      <p class="sec-desc">Modern energy transition requires a massive shift toward localized, decentralized, and digitalized architectures. The 2025 joint report by the UNECE Group of Experts on Energy Efficiency and Cleaner Electricity Systems establishes a global consensus: interoperability and open-source models are critical to digitizing the electricity value chain.</p>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--teal-dim);color:var(--teal);">⚡</div>
+          <span>Digitalization Rationale</span>
+        </div>
+        <p>Decentralization, variable solar/wind resources, and growing loads (such as electric vehicles and AI computing) place unprecedented stress on electric grids. Digitalization—deploying IoT, predictive AI, and real-time control—is critical to enhance operational visibility, shift demand dynamically, optimize assets, and prevent territory-wide blackouts.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--amber-dim);color:var(--amber);">🔓</div>
+          <span>Avoiding Vendor Lock-in</span>
+        </div>
+        <p>Historically, power grids relied on rigid, proprietary systems, establishing localized monopolies and high integration barriers. Open-source solutions democratize advanced technology access, reduce capital expenditures, and eliminate vendor lock-in, enabling emerging economies to establish scalable, low-cost utility systems.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--purple-dim);color:var(--purple);">🌱</div>
+          <span>Developing Market Focus</span>
+        </div>
+        <p>Developing regions in Sub-Saharan Africa and South Asia face severe financial constraints. Open-source ecosystems and open-data frameworks represent a transformative opportunity to deploy decentralized solar mini-grids and clean last-mile logistics, directly supporting Sustainable Development Goal 7 (SDG 7).</p>
+      </div>
+    </div>
+
+    <div class="alert alert-blue">
+      <div class="alert-icon">📈</div>
+      <div class="alert-content">
+        <div class="alert-title">Utility Open-Source Adoption Trend</div>
+        <div class="alert-text">
+          According to the 2023 Energy Transformation Readiness Study cited by UNECE, <strong>64 percent of modern electric utilities</strong> report using predominantly open-source software within their tech stack, recognizing that collaborative development reduces cost barriers and accelerates transition dynamics.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE THREE DIMENSIONS -->
+  <section id="dimensions" class="section">
+    <div class="section-header">
+      <div class="sec-num">Section 02</div>
+      <h2 class="sec-title">The Three Dimensions of Interoperability</h2>
+      <p class="sec-desc">The UNECE framework adopts the GridWise Architecture Council definitions, establishing that true smart grid interoperability extends far beyond hardware interfaces, encompassing informational and organizational alignment.</p>
+    </div>
+
+    <div class="tw">
+      <table>
+        <thead>
+          <tr>
+            <th>Interoperability Dimension</th>
+            <th>Primary Focus Area</th>
+            <th>Core Sub-Categories</th>
+            <th>Off-Grid Mini-Grid &amp; Electric Mobility Contextual Application</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Technical</strong></td>
+            <td>Physical connection, syntax, formats, and communication links.</td>
+            <td>
+              * Basic Connectivity<br>
+              * Network Interoperability<br>
+              * Syntactic Interoperability
+            </td>
+            <td>
+              Ensures smart meters can physically communicate with the Data Concentrator Unit (DCU) over a local <strong>Wi-SUN RF mesh</strong> or RS-485 bus, and that messages conform to strict data structures (e.g. A-XDR encoded packets or JSON strings).
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Informational</strong></td>
+            <td>Semantic meaning and context of exchanged data concepts.</td>
+            <td>
+              * Semantic Interoperability<br>
+              * Business Context Alignment
+            </td>
+            <td>
+              Ensures that a billing value is read with identical context across systems. For example, using the <strong>Common Information Model (CIM)</strong> or standard <strong>DLMS/COSEM OBIS codes</strong> to represent voltage, cumulative kWh, or remaining prepaid balance in the HES and billing gateways.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Organizational</strong></td>
+            <td>Economic, regulatory, and policy-driven procedures.</td>
+            <td>
+              * Business Procedures<br>
+              * Business Objectives<br>
+              * Economic &amp; Regulatory Policies
+            </td>
+            <td>
+              Aligns operational mini-grid billing rules with national tariffs, grant requirements, and safety policies. Maps customer cash flows from local mobile money wallets (e.g. M-Pesa) directly to regulatory <strong>NERC/EPRA tariff caps</strong> and asset valuations.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert alert-teal">
+      <div class="alert-icon">💡</div>
+      <div class="alert-content">
+        <div class="alert-title">SGAM Alignment (IEC SRD 63200)</div>
+        <div class="alert-text">
+          UNECE promotes the <strong>Smart Grid Architecture Model (SGAM)</strong> to map grid elements. SGAM is structured across five interoperable layers: <strong>Business</strong> (organizational goals), <strong>Function</strong> (operational use cases), <strong>Information</strong> (data models/CIM), <strong>Communication</strong> (protocols), and <strong>Component</strong> (physical hardware like smart meters and DCUs). In an off-grid context, this ensures that local battery banks, solar arrays, and mobile load points function within a single technical blueprint.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPEN STANDARDS & TECHNOLOGIES -->
+  <section id="standards" class="section">
+    <div class="section-header">
+      <div class="sec-num">Section 03</div>
+      <h2 class="sec-title">Open-Source Technologies &amp; Standards in Action</h2>
+      <p class="sec-desc">To translate policy into impact, the UNECE guidelines identify concrete open-source tools and standards currently revolutionizing the energy sector, cataloged into four strategic domains.</p>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--blue-dim);color:var(--blue);">💻</div>
+          <span>1. Software for Management</span>
+        </div>
+        <p>Modular systems optimize generation, battery storage, and dynamic load scheduling. Highlights include <strong>OpenEMS</strong> (Open Energy Management System) for microgrid orchestration, and the Linux Energy Foundation's <strong>GXF</strong> (secure grid communications) and <strong>Hyphae</strong> (microgrid community coordination).</p>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--green-dim);color:var(--green);">🔑</div>
+          <span>2. Open Protocols &amp; PAYG</span>
+        </div>
+        <p>The <strong>OpenPAYGO Suite</strong> (by Solaris Offgrid) defines open-source tools for prepaid, affordable off-grid utilities. Crucially, the <strong>OpenPAYGO Token</strong> provides a secure, offline cryptographic token standard allowing PAYG solar arrays and meters to operate securely in areas without cellular networks.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--teal-dim);color:var(--teal);">🔋</div>
+          <span>3. EV &amp; Grid-Edge Protocols</span>
+        </div>
+        <p>Decentralized grid-edge networks utilize open protocols for interoperable component communication: <strong>OCPP</strong> (Open Charge Point Protocol) links EVs and chargers to utility billing, while <strong>OpenFMB</strong> (Open Field Message Bus) enables localized peer-to-peer data exchange directly at the grid edge.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--purple-dim);color:var(--purple);">📊</div>
+          <span>4. Open Data &amp; Modeling</span>
+        </div>
+        <p>Automated machine learning pipelines like <strong>OpenSTEF</strong> forecast grid load shifts. Electric power distribution system simulators, including <strong>OpenDSS</strong> and <strong>PowSyBl</strong> (Linux Foundation Energy), support DER grid integration, load-flow simulations, and medium-term network planning.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HYBRID ARCHITECTURES -->
+  <section id="hybrid" class="section">
+    <div class="section-header">
+      <div class="sec-num">Section 04</div>
+      <h2 class="sec-title">Hybrid Software Models &amp; Layered Security</h2>
+      <p class="sec-desc">Deploying pure open-source or pure proprietary platforms is rarely practical for modern utilities. The UNECE framework details how hybrid software architectures optimize cost, flexibility, and grid reliability.</p>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--amber-dim);color:var(--amber);">🛡️</div>
+          <span>Critical vs. Non-Critical Partitioning</span>
+        </div>
+        <p>In hybrid architectures, <strong>mission-critical operational layers</strong> (e.g. grid stabilization, hardware protection relays, and system breakers) remain on high-security proprietary systems. Meanwhile, <strong>supplementary modules</strong> (e.g. data analytics, load forecasting, and mobile customer portals) leverage open-source solutions to scale efficiently and minimize licensing expenditures.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--teal-dim);color:var(--teal);">🔌</div>
+          <span>Open API Integration Layers</span>
+        </div>
+        <p>Seamless communication between proprietary core controllers and open modules requires well-defined, secure <strong>Application Programming Interfaces (APIs)</strong> and standardized interface layers. This modularity prevents vendor lock-in while allowing utilities to plug in advanced third-party machine learning models for energy forecasting.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--red-dim);color:var(--red);">🚨</div>
+          <span>Layered Cybersecurity Strategy</span>
+        </div>
+        <p>Combining open-source with proprietary platforms exposes the network to potential security vulnerabilities. Off-grid systems adopt a <strong>layered defense strategy</strong>, combining robust industrial hardware protection (such as physical isolation breakers) with open-source network monitoring and threat detection tools (e.g. Prometheus, Snort) to maintain end-to-end data integrity.</p>
+      </div>
+    </div>
+
+    <div class="alert alert-amber">
+      <div class="alert-icon">⚠️</div>
+      <div class="alert-content">
+        <div class="alert-title">Compliance &amp; Licensing Risks</div>
+        <div class="alert-text">
+          Deploying hybrid software architectures requires strict compliance with open-source licensing terms (e.g., GPL copyleft boundaries vs. permissive MIT/Apache licenses). Utilities must establish strict organizational mapping of library dependencies to prevent intellectual property exposure and legal disputes across jurisdictional boundaries.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OFF-GRID APPLICATION & CASE STUDY -->
+  <section id="casestudies" class="section">
+    <div class="section-header">
+      <div class="sec-num">Section 05</div>
+      <h2 class="sec-title">Off-Grid Mini-Grid &amp; Mobility Context</h2>
+      <p class="sec-desc">Applying these guidelines directly to our Sattal / Dev Labs off-grid operations yields immediate strategic solutions. We synthesize the UNECE guidelines with the historic Republic of Moldova case study.</p>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--teal-dim);color:var(--teal);">🌍</div>
+          <span>Moldova's NRPC Strategy</span>
+        </div>
+        <p>As part of its Strategy for Digitalization, Moldova established a <strong>National Register of Place of Consumption (NRPC)</strong> using a distributed database. Every billing customer point (residential, commercial, industrial) is assigned a unique alphanumeric code recording cadastral identifiers and coordinates to streamline billing, tracking, and utility switching.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--purple-dim);color:var(--purple);">🔄</div>
+          <span>National Energy Platform (NEMP)</span>
+        </div>
+        <p>Moldova's <strong>National Energy Management Platform (NEMP)</strong> consolidates all energy vectors—electricity, natural gas, thermal heating—into a single digital cockpit. This centralized, secure platform allows the state to monitor grid inefficiencies, dynamically track losses, acquire real-world planning data, and maintain strict data privacy.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--blue-dim);color:var(--blue);">🚀</div>
+          <span>Sattal/Dev Labs Adaptation</span>
+        </div>
+        <p>For our multi-grid deployment, we will construct a localized digital register based on the NRPC. Each household meter, stationary solar BESS array, and electric cargo eATV mobile charging node is mapped with a unique alphanumeric tag. Feeding this tracking into a unified local platform enables automated, real-time energy audits.</p>
+      </div>
+    </div>
+
+    <div class="alert alert-blue">
+      <div class="alert-icon">⚡</div>
+      <div class="alert-content">
+        <div class="alert-title">eATV Mobile Load Integration</div>
+        <div class="alert-text">
+          Applying the Technical, Informational, and Organizational dimensions:
+          <ul>
+            <li><strong>Technical:</strong> Electric eATVs use standard <strong>OCPP</strong> parameters over local Wi-Fi to request charging permissions at mini-grid battery bank nodes.</li>
+            <li><strong>Informational:</strong> The charging transaction, energy delivered (kWh), and battery health metrics are modeled using <strong>IEC CIM</strong> structures, ensuring consistent records in the billing ledger.</li>
+            <li><strong>Organizational:</strong> Charge rates adapt dynamically: low tariffs are applied during peak solar hours (promoting day-time anchor loads), while high rates are applied during evening battery discharging to prevent local grid depletion.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEASUREMENT FRAMEWORK -->
+  <section id="metrics" class="section">
+    <div class="section-header">
+      <div class="sec-num">Section 06</div>
+      <h2 class="sec-title">Structured Interoperability Measurement Framework</h2>
+      <p class="sec-desc">Regulators and utility operators require concrete metrics to assess the success of interoperability programs. The UNECE framework compiles a structured measurement model across our core dimensions.</p>
+    </div>
+
+    <div class="tw">
+      <table>
+        <thead>
+          <tr>
+            <th>Interoperability Dimension</th>
+            <th>KPI / Metric Name</th>
+            <th>Technical Description &amp; Formula</th>
+            <th>Target Threshold &amp; Comments</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="4"><strong>Technical Interoperability</strong><br><small>Focuses on syntax, physical connectivity, and network protocol standardization.</small></td>
+            <td><code>Connectivity Success Rate</code></td>
+            <td>Percentage of system connection attempts that successfully establish physical and logical links between edge smart devices and the DCU.</td>
+            <td><strong>&gt;= 99.5%</strong>. Benchmarked directly to IEC 61850 and IEEE 2030.5 physical profiles.</td>
+          </tr>
+          <tr>
+            <td><code>Message Transmission Efficiency</code></td>
+            <td>Evaluates packet delivery reliability, considering latency, transmission data loss rate, and network resilience.</td>
+            <td><strong>Latency &lt;= 200ms</strong> over Wi-SUN RF mesh; packet loss rate &lt; 0.1%.</td>
+          </tr>
+          <tr>
+            <td><code>Protocol Standardization Rate</code></td>
+            <td>Proportion of grid edge devices, inverters, and meters utilizing standard protocols (DLMS, Modbus, OCPP) vs. proprietary APIs.</td>
+            <td><strong>Target: 100%</strong> to eliminate vendor lock-in across the system.</td>
+          </tr>
+          <tr>
+            <td><code>Data Structure Compliance Score</code></td>
+            <td>Examines the rate of exchanged messages that strictly adhere to predefined syntactic standards (e.g. JSON schema, XML validation).</td>
+            <td><strong>Target: 100%</strong> compliance to prevent logical parsing errors in the HES databases.</td>
+          </tr>
+          <tr>
+            <td rowspan="2"><strong>Information Interoperability</strong><br><small>Focuses on semantic integrity and consistent interpretation of data structures.</small></td>
+            <td><code>Semantic Consistency Index</code></td>
+            <td>Measures the level of alignment in data interpretation across different systems, ensuring zero discrepancies in semantic definition.</td>
+            <td><strong>Target: 100%</strong> semantic mapping, utilizing standard CIM and OBIS object codes.</td>
+          </tr>
+          <tr>
+            <td><code>Ontology Adherence Score</code></td>
+            <td>Assesses how strictly active database schemas and device models conform to standard smart grid ontologies (e.g. IEC 62559-2).</td>
+            <td>Aligns with standard CIM and the Interoperability Testing &amp; Certification Authority (ITCA) benchmarks.</td>
+          </tr>
+          <tr>
+            <td rowspan="3"><strong>Organizational Interoperability</strong><br><small>Focuses on procedures, policy alignment, and shared business objectives.</small></td>
+            <td><code>Business Procedure Alignment Rate</code></td>
+            <td>Evaluates the integration and automation rate of operational business processes (e.g., automated prepaid credit generation).</td>
+            <td>Improves mini-grid O&amp;M, optimizes assets, and reduces manual administrative tasks.</td>
+          </tr>
+          <tr>
+            <td><code>Resource Sharing &amp; Data Reuse Index</code></td>
+            <td>Measures the rate at which gathered grid data is securely shared and reused across departments (e.g., billing data feeding grid planning).</td>
+            <td>Ensures that edge smart meter records feed load forecasting (OpenSTEF) and asset planning.</td>
+          </tr>
+          <tr>
+            <td><code>Regulatory Compliance Rate</code></td>
+            <td>Tracks adherence to national tariffs, state bioenergy goals, WACC return policies, and grid code constraints.</td>
+            <td>Ensures full compliance with NERC 2023 MYTO parameters and Kenya Electricity Grid Code ride-through zones.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert alert-purple">
+      <div class="alert-icon">⚖️</div>
+      <div class="alert-content">
+        <div class="alert-title">Strategic Path Forward</div>
+        <div class="alert-text">
+          By adopting the UNECE 2025 digitalization guidelines, off-grid developers in Sub-Saharan Africa and South Asia can design robust, interoperable networks that combine open-source flexibility with secure industrial architectures. This prevents capital lock-up, reduces grid edge operational costs, and secures long-term regulatory compliance.
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>© 2026 Cottonspace / Dev Labs · <strong>sattal.cottonspace.com</strong> · UN ECE Digitalization Synthesis EMG-REG-006</p>
+</footer>
+
+</body>
+</html>

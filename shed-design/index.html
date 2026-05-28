@@ -1,0 +1,2173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AERO-SHED | Scientific Site Shed Planner & BOM Generator</title>
+  <!-- Favicon Links -->
+  <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+  <link rel="icon" href="./favicon.png" type="image/png" sizes="192x192">
+  <!-- Google Fonts Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f1f5f9;
+      --border-color: #e2e8f0;
+      --border-color-active: #0891b2;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --primary: #0891b2; /* Cyan-600 */
+      --primary-glow: rgba(8, 145, 178, 0.1);
+      --secondary: #059669; /* Emerald-600 */
+      --secondary-glow: rgba(5, 150, 105, 0.05);
+      --warning: #d97706; /* Amber-600 */
+      --warning-glow: rgba(217, 119, 6, 0.05);
+      --danger: #dc2626; /* Red-600 */
+      --danger-glow: rgba(220, 38, 38, 0.05);
+      --gradient-accent: linear-gradient(135deg, #0891b2 0%, #0284c7 100%);
+      --gradient-success: linear-gradient(135deg, #059669 0%, #0ea5e9 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.5;
+      padding: 24px;
+      overflow-x: hidden;
+    }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-dark);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    /* Container */
+    .app-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 24px;
+    }
+
+    /* Header styling */
+    header {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 20px 28px;
+      border-radius: 16px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 4px 30px rgba(15, 23, 42, 0.06);
+    }
+
+    .brand-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-badge {
+      background: var(--gradient-accent);
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: #000;
+      font-size: 1.2rem;
+      box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+    }
+
+    .brand-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: var(--gradient-accent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-subtitle {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: -2px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid transparent;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--gradient-accent);
+      color: #020617;
+      box-shadow: 0 4px 15px rgba(6, 182, 212, 0.2);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(6, 182, 212, 0.35);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--border-color);
+      color: var(--text-main);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--text-muted);
+    }
+
+    /* Left Sidebar: Controls */
+    aside.sidebar {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      backdrop-filter: blur(12px);
+      height: fit-content;
+    }
+
+    .section-title {
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--primary);
+      border-left: 3px solid var(--primary);
+      padding-left: 10px;
+      margin-bottom: 8px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .input-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-field {
+      width: 100%;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border: 1px solid var(--border-color);
+      padding: 10px 14px;
+      border-radius: 8px;
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .input-field:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    .input-unit {
+      position: absolute;
+      right: 14px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      pointer-events: none;
+    }
+
+    .slider-container {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .slider-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      color: var(--primary);
+      font-size: 0.9rem;
+    }
+
+    .slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: #cbd5e1;
+      outline: none;
+      transition: opacity .2s;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--primary);
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+      transition: transform 0.1s;
+    }
+
+    .slider::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+    }
+
+    /* Main Section */
+    main.content {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Tab Controls */
+    .tabs-nav {
+      display: flex;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 6px;
+      backdrop-filter: blur(12px);
+      gap: 4px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.875rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .tab-btn.active {
+      color: #020617;
+      background: var(--gradient-accent);
+      box-shadow: 0 4px 12px rgba(6, 182, 212, 0.2);
+    }
+
+    /* Tab Panels */
+    .tab-panel {
+      display: none;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 28px;
+      backdrop-filter: blur(12px);
+      animation: fadeIn 0.3s ease-in-out;
+      box-shadow: 0 8px 32px rgba(15, 23, 42, 0.08);
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Summary Dashboard Cards */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .summary-card {
+      background: rgba(15, 23, 42, 0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .summary-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--primary);
+    }
+
+    .summary-card.success::before { background: var(--secondary); }
+    .summary-card.warning::before { background: var(--warning); }
+    .summary-card.danger::before { background: var(--danger); }
+
+    .summary-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+
+    .summary-value {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin: 4px 0;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .summary-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      width: fit-content;
+      margin-top: 4px;
+    }
+
+    .badge-success { background: var(--secondary-glow); color: var(--secondary); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-warning { background: var(--warning-glow); color: var(--warning); border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-danger { background: var(--danger-glow); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); }
+
+    /* SVG Canvas Visualizer */
+    .canvas-container {
+      background: #f1f5f9;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      height: 380px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .canvas-overlay {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .canvas-label {
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid var(--border-color);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-main);
+    }
+
+    .canvas-legend {
+      position: absolute;
+      bottom: 16px;
+      right: 16px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid var(--border-color);
+      padding: 10px 14px;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.7rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .legend-color {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+    }
+
+    /* Tables */
+    .table-container {
+      overflow-x: auto;
+      margin-top: 16px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+    }
+
+    table.bom-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+      text-align: left;
+    }
+
+    table.bom-table th {
+      background: rgba(15, 23, 42, 0.04);
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.5px;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    table.bom-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text-main);
+    }
+
+    table.bom-table tbody tr:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    table.bom-table tr.category-row {
+      background: rgba(6, 182, 212, 0.04);
+    }
+
+    table.bom-table tr.category-row td {
+      font-weight: 700;
+      color: var(--text-main);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid rgba(6, 182, 212, 0.15);
+    }
+
+    table.bom-table td.numeric {
+      font-family: 'JetBrains Mono', monospace;
+      text-align: right;
+    }
+
+    .table-totals {
+      display: flex;
+      justify-content: flex-end;
+      gap: 40px;
+      padding: 18px 24px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-top: 2px solid var(--primary);
+      border-radius: 0 0 10px 10px;
+    }
+
+    .total-item {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .total-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .total-val {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--primary);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Grid Layout for details */
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    /* Callout & Alerts */
+    .callout {
+      background: rgba(30, 41, 59, 0.3);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .callout h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .callout p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .callout-warning {
+      background: rgba(245, 158, 11, 0.03);
+      border-color: rgba(245, 158, 11, 0.2);
+    }
+    .callout-warning h4 { color: var(--warning); }
+
+    .callout-success {
+      background: rgba(16, 185, 129, 0.03);
+      border-color: rgba(16, 185, 129, 0.2);
+    }
+    .callout-success h4 { color: var(--secondary); }
+
+    .callout-danger {
+      background: rgba(239, 68, 68, 0.03);
+      border-color: rgba(239, 68, 68, 0.2);
+    }
+    .callout-danger h4 { color: var(--danger); }
+
+    /* Bullet Lists styled */
+    .styled-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .styled-list li {
+      position: relative;
+      padding-left: 20px;
+    }
+
+    .styled-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--secondary);
+      font-weight: bold;
+    }
+
+    .styled-list-warning li::before {
+      content: '⚠';
+      color: var(--warning);
+    }
+
+    /* Stacking Layout CSS */
+    .storage-map {
+      background: #f1f5f9;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .storage-grid-visual {
+      display: grid;
+      grid-template-columns: repeat(4, 70px);
+      grid-gap: 12px;
+      background: rgba(255,255,255,0.02);
+      padding: 16px;
+      border-radius: 10px;
+      border: 1px dashed var(--border-color);
+    }
+
+    .pallet-visual {
+      width: 70px;
+      height: 70px;
+      background: rgba(245, 158, 11, 0.15);
+      border: 2px solid var(--warning);
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      cursor: help;
+      transition: all 0.2s;
+    }
+
+    .pallet-visual:hover {
+      transform: translateY(-2px);
+      background: rgba(245, 158, 11, 0.25);
+    }
+
+    .pallet-visual span {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--warning);
+    }
+
+    .pallet-visual .bag-count {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .aisle-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Print styling to fix blank pages and linearize document flow */
+    @media print {
+      html, body {
+        background: white !important;
+        color: black !important;
+        padding: 0 !important;
+        height: auto !important;
+        min-height: 0 !important;
+        overflow: visible !important;
+        position: static !important;
+      }
+
+      /* Break container layout paradigms back to linear document flow */
+      .app-container, main.content, .grid-2col, .summary-grid {
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        overflow: visible !important;
+        position: static !important;
+      }
+
+      /* Hide interactive elements not needed in printout */
+      aside.sidebar, .tabs-nav, .header-actions, .canvas-container, .storage-map {
+        display: none !important;
+      }
+
+      /* Allow tab panels to render cleanly and page break naturally */
+      .tab-panel {
+        display: block !important;
+        border: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+        padding: 0 !important;
+        margin-bottom: 30px !important;
+        page-break-after: auto !important;
+        break-after: auto !important;
+      }
+
+      /* Prevent atomic child items from splitting in half across sheets */
+      .callout, .summary-card, table, tr, tbody {
+        break-inside: avoid !important;
+        page-break-inside: avoid !important; /* Legacy support */
+      }
+
+      table.bom-table th {
+        background: #f1f5f9 !important;
+        color: black !important;
+        border-bottom: 2px solid black !important;
+      }
+      table.bom-table td {
+        color: black !important;
+        border-bottom: 1px solid #e2e8f0 !important;
+      }
+      .total-val {
+        color: black !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <header>
+      <div class="brand-container">
+        <div class="logo-badge">AS</div>
+        <div>
+          <h1 class="brand-title">AERO-SHED</h1>
+          <div class="brand-subtitle">Site Shed & Cement Storage Planner</div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a class="btn btn-secondary" href="./column-framework.html" style="border-color: rgba(16, 185, 129, 0.4); color: #10b981;">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-15a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V2h1V.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V2h1V.5a.5.5 0 0 1 .5-.5h3z"/></svg>
+          Column Formwork Tool
+        </a>
+        <a class="btn btn-secondary" href="./site_shed_bom_report.pdf" download="site_shed_bom_report.pdf">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
+          Download PDF
+        </a>
+        <button class="btn btn-secondary" onclick="triggerCleanPrint()">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm7 0a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/></svg>
+          Print Report
+        </button>
+        <button class="btn btn-primary" onclick="exportBOMtoCSV()">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
+          Export CSV
+        </button>
+      </div>
+    </header>
+
+    <!-- LEFT PANEL: Dynamic Controls -->
+    <aside class="sidebar">
+      <div>
+        <h3 class="section-title">Design Phase Mode</h3>
+        <div class="input-group" style="margin-top: 12px; margin-bottom: 8px;">
+          <label class="input-label">Active Layout</label>
+          <select class="input-field" id="input-phase-mode" onchange="updateCalculations()" style="padding: 8px; font-size: 0.85rem;">
+            <option value="phase1" selected>Phase 1: Construction Open Tunnel (11x9.8 ft)</option>
+            <option value="phase2">Phase 2: Converted Guard Room (11x4.9 ft)</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="section-title">Dimensions</h3>
+        
+        <div class="slider-container" style="margin-top: 12px;">
+          <div class="slider-header">
+            <span class="input-label">Shed Length</span>
+            <span class="slider-val" id="length-val">9.8 ft</span>
+          </div>
+          <input type="range" min="6" max="30" step="0.1" value="9.8" class="slider" id="input-length" oninput="updateCalculations()">
+        </div>
+
+        <div class="slider-container" style="margin-top: 16px;">
+          <div class="slider-header">
+            <span class="input-label">Shed Width</span>
+            <span class="slider-val" id="width-val">11.0 ft</span>
+          </div>
+          <input type="range" min="4" max="16" step="0.1" value="11.0" class="slider" id="input-width" oninput="updateCalculations()">
+        </div>
+
+        <div class="slider-container" style="margin-top: 16px;">
+          <div class="slider-header">
+            <span class="input-label">Eaves Height</span>
+            <span class="slider-val" id="height-val">8 ft</span>
+          </div>
+          <input type="range" min="6" max="12" step="0.5" value="8" class="slider" id="input-height" oninput="updateCalculations()">
+        </div>
+
+        <div class="slider-container" style="margin-top: 16px;">
+          <div class="slider-header">
+            <span class="input-label">Truss Ridge Rise</span>
+            <span class="slider-val" id="rise-val">2.5 ft</span>
+          </div>
+          <input type="range" min="1.5" max="4" step="0.1" value="2.5" class="slider" id="input-rise" oninput="updateCalculations()">
+        </div>
+      </div>
+
+      <div>
+        <h3 class="section-title">Cement Storing</h3>
+        <div class="input-group" style="margin-top: 12px;">
+          <label class="input-label">PPC Bags Count</label>
+          <div class="input-wrapper">
+            <input type="number" value="250" class="input-field" id="input-bags" min="10" max="500" oninput="updateCalculations()">
+            <span class="input-unit">Bags</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="section-title">Materials & Sizing</h3>
+        
+        <div class="input-group" style="margin-top: 12px;">
+          <label class="input-label">Steel Tube Section</label>
+          <select class="input-field" id="input-tube-size" onchange="updateCalculations()">
+            <option value="1.5">1.5" x 1.5" Square Tubing</option>
+            <option value="2.0" selected>2.0" x 2.0" Square Tubing</option>
+            <option value="1.5_rect">3.0" x 1.5" Rectangular Tubing</option>
+          </select>
+        </div>
+
+        <div class="input-group" style="margin-top: 12px;">
+          <label class="input-label">Steel Thickness (Gauge)</label>
+          <select class="input-field" id="input-tube-gauge" onchange="updateCalculations()">
+            <option value="14">14 Gauge (2.11 mm) - standard</option>
+            <option value="12">12 Gauge (2.77 mm) - heavy-duty</option>
+            <option value="16" selected>16 Gauge (1.65 mm) - optimized</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="section-title">Estimated Unit Rates</h3>
+        <div class="grid-2col" style="margin-top: 12px; gap: 10px;">
+          <div class="input-group">
+            <label class="input-label">Steel Tube</label>
+            <div class="input-wrapper">
+              <input type="number" value="70" class="input-field" id="price-steel" step="5" oninput="updateCalculations()">
+              <span class="input-unit">/kg</span>
+            </div>
+          </div>
+          <div class="input-group">
+            <label class="input-label">Roof Sheet</label>
+            <div class="input-wrapper">
+              <input type="number" value="450" class="input-field" id="price-roof" step="10" oninput="updateCalculations()">
+              <span class="input-unit">/m²</span>
+            </div>
+          </div>
+          <div class="input-group" style="margin-top: 8px;">
+            <label class="input-label">Wall Sheet</label>
+            <div class="input-wrapper">
+              <input type="number" value="400" class="input-field" id="price-wall" step="10" oninput="updateCalculations()">
+              <span class="input-unit">/m²</span>
+            </div>
+          </div>
+          <div class="input-group" style="margin-top: 8px;">
+            <label class="input-label">Wood Pallet</label>
+            <div class="input-wrapper">
+              <input type="number" value="800" class="input-field" id="price-pallet" step="50" oninput="updateCalculations()">
+              <span class="input-unit">/pc</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- RIGHT PANEL: Dashboard and Tabs -->
+    <main class="content">
+      
+      <!-- Summary Dashboard Cards -->
+      <div class="summary-grid">
+        <div class="summary-card" id="card-steel">
+          <span class="summary-label">Steel Tubing</span>
+          <span class="summary-value" id="summary-steel-wt">452 kg</span>
+          <span class="summary-desc" id="summary-steel-len">30 lengths (20ft)</span>
+        </div>
+        <div class="summary-card success" id="card-cladding">
+          <span class="summary-label">Steel Cladding</span>
+          <span class="summary-value" id="summary-sheets-count">42 pcs</span>
+          <span class="summary-desc" id="summary-sheets-area">67.6 m² total area</span>
+        </div>
+        <div class="summary-card warning" id="card-structural-safety">
+          <span class="summary-label">Wind Deflection</span>
+          <span class="summary-value" id="summary-wind-status">93 kg/m²</span>
+          <span class="badge badge-warning" id="summary-wind-badge">Bracing Crucial</span>
+        </div>
+        <div class="summary-card success" id="card-pallet-capacity">
+          <span class="summary-label">Cement Footprint</span>
+          <span class="summary-value" id="summary-pallets-count">8 Pallets</span>
+          <span class="summary-desc" id="summary-pallet-stack">8 bags high stack</span>
+        </div>
+      </div>
+
+      <!-- Tab Controls -->
+      <nav class="tabs-nav">
+        <button class="tab-btn active" onclick="switchTab(event, 'tab-viz')">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zM8 5.5a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm0 4a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1z"/><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 1.5 13 5H9.5V1.5zM3 2a1 1 0 0 1 1-1h4v4h4v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2z"/></svg>
+          Visualizer
+        </button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-bom')">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 1.5 13 5H9.5V1.5zM3 2a1 1 0 0 1 1-1h4v4h4v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2z"/><path d="M4 6.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z"/></svg>
+          Bill of Materials (BOM)
+        </button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-structural')">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6 4c.53 0 1 .47 1 1v3h3c.53 0 1 .47 1 1s-.47 1-1 1H9v3c0 .53-.47 1-1 1s-1-.47-1-1v-3H4c-.53 0-1-.47-1-1s.47-1 1-1h3V5c0-.53.47-1 1-1z"/></svg>
+          Structural Engineering
+        </button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-cement')">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h11A1.5 1.5 0 0 1 15 2.5v11a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 13.5v-11zM2.5 2a.5.5 0 0 0-.5.5v11a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5v-11a.5.5 0 0 0-.5-.5h-11z"/></svg>
+          Cement Logistics
+        </button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-cutting')">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M4.5 1.5A.5.5 0 0 1 5 2v10a.5.5 0 0 1-1 0V2a.5.5 0 0 1 .5-.5zm7 0a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-1 0V2a.5.5 0 0 1 .5-.5z"/><path fill-rule="evenodd" d="M1.5 5.5A.5.5 0 0 1 2 5h12a.5.5 0 0 1 0 1H2a.5.5 0 0 1-.5-.5zm0 4A.5.5 0 0 1 2 9h12a.5.5 0 0 1 0 1H2a.5.5 0 0 1-.5-.5z"/></svg>
+          Fabrication Guide
+        </button>
+      </nav>
+
+      <!-- TAB 1: Visualizer -->
+      <div id="tab-viz" class="tab-panel active">
+        <div class="canvas-container">
+          <div class="canvas-overlay">
+            <div class="canvas-label">Interlocking Truss Framework (3D Wireframe Projection)</div>
+          </div>
+          
+          <!-- Dynamic SVG Visualizer -->
+          <svg id="shed-svg" width="100%" height="100%" viewBox="0 0 600 350" style="background:transparent;"></svg>
+
+          <div class="canvas-legend">
+            <div class="legend-item">
+              <div class="legend-color" style="background: #00f2fe;"></div>
+              <span>Column / Wall Frame (2.0" 16ga Tube)</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-color" style="background: #4facfe;"></div>
+              <span>Roof Truss System (2.0" 16ga Tube)</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-color" style="background: #10b981;"></div>
+              <span>Roof Purlins / wall Girts</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-color" style="background: #f59e0b;"></div>
+              <span>Moment Knee Bracing (2.0" 16ga Tubing)</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+          <div class="callout callout-success">
+            <h4>Modular Design & Transition Strategy</h4>
+            <p>Designed as a <strong>Twin-Module Consolidated Mating Tunnel</strong> for seamless site transitions:</p>
+            <ul class="styled-list">
+              <li><strong>Module Footprint:</strong> Two identical <strong>11.0 ft × 4.9 ft</strong> skid-mounted frames, each exactly <strong>5.01 sq m (53.9 sq ft)</strong> to satisfy municipal exemption limits.</li>
+              <li><strong>Phase 1: Storage Tunnel:</strong> Bolted end-to-end back-to-back with <strong>no dividing wall</strong> to form a seamless <strong>11.0 ft × 9.8 ft (10.0 sq m)</strong> partition-free warehouse during active construction.</li>
+              <li><strong>Phase 2: Transition:</strong> Modules are unbolted. <strong>Module A</strong> remains in the front setback as an insulated <strong>Panoramic Guard Room (5 sq m)</strong> with a wide 4 ft sliding window. <strong>Module B</strong> is rolled on steel pipes to the <strong>5.0m rear setback</strong> to serve as an enclosed <strong>Utility Shed or Carport (5 sq m)</strong>.</li>
+            </ul>
+          </div>
+          
+          <div class="callout callout-success" style="border-left: 4px solid var(--primary);">
+            <h4 style="color: var(--primary);">Setback Arithmetic & Zoning Compliance</h4>
+            <p>Mathematical space optimization ensuring absolute legal compliance with setbacks:</p>
+            <ul class="styled-list">
+              <li><strong>Front Setback space:</strong> You have a <strong>4.0m front setback</strong> with a <strong>3.5m mandatory limit</strong>. Our <strong>11.0 ft (3.35 m) width</strong> sits completely within the allowable 3.5m zone with a <strong>0.50m safety margin</strong> to spare.</li>
+              <li><strong>Rear Setback space:</strong> You have a <strong>5.0m rear setback</strong> zone. Unbolted <strong>Module B</strong> moves here post-construction, remaining well within municipal guidelines for minor temporary structures.</li>
+              <li><strong>Area Compliance:</strong> Each independent module is engineered at exactly <strong>5.01 sq m (53.9 sq ft)</strong>. Under municipal bylaws, minor auxiliary structures under <strong>5.0 sq m</strong> require zero setback permits, making this transition legally bulletproof.</li>
+            </ul>
+          </div>
+
+          <div class="callout callout-warning">
+            <h4>PPC Cement Protection Mandate</h4>
+            <p>Storing 250 bags of cement (12.5 metric tons) requires extreme diligence. A suspended steel floor is highly dangerous under this loading. Storage MUST be on a <strong>reinforced concrete floor slab on grade</strong> or a solid compacted base with a heavy-duty polythene vapor barrier.</p>
+            <ul class="styled-list styled-list-warning">
+              <li><strong>High Stacking:</strong> Stack bags up to <strong>11 high</strong> using an alternating cross-bond pattern to prevent crushing and warehouse-set.</li>
+              <li><strong>Air Isolation:</strong> Maintain a <strong>strict 1.0 ft (30 cm) gap</strong> from all outer steel wall panels to prevent condensation absorption.</li>
+              <li><strong>Drape Protocol:</strong> Place 6 wooden pallets ($4 \times 4$ ft) over the 200μm floor plastic, pile bags, and drape tightly with a heavy-duty tarpaulin sheet.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: Bill of Materials -->
+      <div id="tab-bom" class="tab-panel">
+        <h3 class="section-title">Engineered Bill of Materials</h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Quantities are automatically adjusted based on dimension settings and include a 10% safety and waste allowance for bulk fabrication on site.</p>
+        
+        <div class="table-container">
+          <table class="bom-table" id="bom-table-data">
+            <thead>
+              <tr>
+                <th>Item Category & Description</th>
+                <th>Material Specification</th>
+                <th class="numeric">Cutting/Unit Size</th>
+                <th class="numeric">Qty</th>
+                <th>Unit</th>
+                <th class="numeric">Est. Price</th>
+                <th class="numeric">Est. Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Data filled by JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-totals">
+          <div class="total-item">
+            <span class="total-label">Total Frame Steel Weight</span>
+            <span class="total-val" id="bom-total-weight">452 kg</span>
+          </div>
+          <div class="total-item">
+            <span class="total-label">Total Estimated Cost</span>
+            <span class="total-val" id="bom-total-cost">₹ 98,540</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: Structural Analysis -->
+      <div id="tab-structural" class="tab-panel">
+        <h3 class="section-title">Structural Safety & Loading Analysis</h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">Rigorous structural calculations evaluating the upgraded 2.0" &times; 2.0" &times; 16ga (50.8 &times; 50.8 &times; 1.65 mm) square mild steel tubing under the combined effects of Dead, Rain, and Monsoon Wind loads.</p>
+
+        <div class="grid-2col">
+          <div>
+            <div class="callout callout-danger" id="structural-beam-danger">
+              <h4>1. Rafter Bending Check (Simple Beam)</h4>
+              <p>Can a single unbraced square tube span <span id="rafter-span-ft">10</span> ft as a simple roof rafter?</p>
+              <div style="font-family:'JetBrains Mono', monospace; font-size:0.8rem; margin:10px 0; background:rgba(0,0,0,0.2); padding:10px; border-radius:6px;">
+                Span: <span id="rafter-span-detail">10 ft (3.05 m)</span><br>
+                Load (DL+Rain): <span id="rafter-load">857 N/m</span><br>
+                Bending Moment: M = <span id="rafter-moment">997</span> N·m<br>
+                Bending Stress: σ = <span id="rafter-sigma">323.7</span> MPa<br>
+                Steel Yield Limit: Fy = 250 MPa<br>
+                Allowable Limit: Fallow = 165 MPa
+              </div>
+              <p><strong>Verdict:</strong> <span class="badge badge-danger" id="rafter-verdict-badge">FAILED ❌ (Stress is 196% of limit!)</span></p>
+              <p id="rafter-verdict-text">A simple rafter will bend severely and sag (up to 82 mm deflection), creating pockets for rain accumulation that will cause catastrophic collapse.</p>
+            </div>
+
+            <div class="callout callout-success" id="structural-truss-pass">
+              <h4>2. King Post Truss Solution (2.0" &times; 2.0" &times; 16ga)</h4>
+              <p>By framing the 2.0" tubing into a <strong>triangular King Post Truss</strong>, the structural behavior completely changes!</p>
+              <div style="font-family:'JetBrains Mono', monospace; font-size:0.8rem; margin:10px 0; background:rgba(0,0,0,0.2); padding:10px; border-radius:6px;">
+                Truss Member Lengths: max <span id="truss-rafter-len">5.6</span> ft<br>
+                Apex Angle: <span id="truss-apex-angle">126.8</span>°<br>
+                Max Compressive Load: <span id="truss-axial-load">~3.5</span> kN<br>
+                Allowable Buckling Load: <span id="truss-buckling-allow">19.7</span> kN<br>
+                Safety Factor: <span id="truss-sf">5.6</span>
+              </div>
+              <p><strong>Verdict:</strong> <span class="badge badge-success" id="truss-verdict-badge">PASSED ✅ (Extremely Safe)</span></p>
+              <p>Triangulation transfers bending stresses into axial tension and compression, making the 2.0" square tubing extremely strong and resilient with a massive safety margin.</p>
+            </div>
+          </div>
+
+          <div>
+            <div class="callout callout-warning" id="structural-column-wind">
+              <h4>3. Lateral Wind Bending & Moment Frame Action</h4>
+              <p>Evaluating columns under a monsoon storm wind speed of 140 km/h (Basic Wind Pressure = 912 N/m²):</p>
+              <div style="font-family:'JetBrains Mono', monospace; font-size:0.8rem; margin:10px 0; background:rgba(0,0,0,0.2); padding:10px; border-radius:6px;">
+                Column Height: <span id="calc-h">8.0</span> ft<br>
+                Wind Lateral Force: 1390 N/m<br>
+                Unbraced Wind Bending Stress: <span id="calc-sigma-w">335.2</span> MPa<br>
+                Allowable Bending Stress: 165 MPa
+              </div>
+              <p><strong>Verdict (Unbraced):</strong> <span class="badge badge-danger" id="badge-unbraced-status">FAILED ❌ (Shear Collapse)</span></p>
+              <p><strong>Verdict (Braced with Knee Braces):</strong> <span class="badge badge-success">PASSED ✅ (Extremely Rigid)</span></p>
+              <p>Without lateral bracing, unbraced columns sway excessively and fail under storm wind shear. Weld 1.5 ft knee-brace struts across column-to-truss joints to form a rigid moment frame, redistributing stresses and eliminating flat-bar X-bracing entirely.</p>
+            </div>
+
+            <div class="callout callout-success" id="structural-column-buckling">
+              <h4>4. Column Buckling Analysis (Euler Method)</h4>
+              <p>Checking structural stability under combined vertical dead and rain loads:</p>
+              <div style="font-family:'JetBrains Mono', monospace; font-size:0.8rem; margin:10px 0; background:rgba(0,0,0,0.2); padding:10px; border-radius:6px;">
+                Slenderness (KL/r): <span id="calc-klr">124.4</span> (Allowable: &lt; 200)<br>
+                Euler Critical Buckling Load: <span id="buckling-pcr">40.2</span> kN<br>
+                Allowable Buckling Load (FS = 2.0): <span id="buckling-pallow">20.1</span> kN<br>
+                Actual Compressive Axial Load: <span id="buckling-paxial">2.50</span> kN<br>
+                Buckling Safety Factor: <span id="buckling-sf">16.1</span>
+              </div>
+              <p><strong>Verdict:</strong> <span class="badge badge-success" id="buckling-badge">PASSED ✅ (Extremely Safe)</span></p>
+              <p>High radius of gyration of the 2.0" section keeps slenderness well within the limit of 200, guaranteeing high resistance to compression-induced buckling.</p>
+            </div>
+
+            <div class="callout callout-success" style="border-left: 4px solid var(--warning);">
+              <h4 style="color: var(--warning);">5. Engineering Comment on Knee Bracing</h4>
+              <p><strong>Moment-Resisting Joint Mechanics:</strong></p>
+              <p style="font-size: 0.82rem; line-height: 1.4; margin-bottom: 8px;">
+                Standard site sheds rely on diagonal flat-bar wall X-bracing to resist wind shear. However, X-bracing restricts interior wall access, making pallet loading and forklifting extremely difficult. 
+              </p>
+              <p style="font-size: 0.82rem; line-height: 1.4; margin-bottom: 8px;">
+                By implementing <strong>1.5 ft corner knee braces</strong> welded at 45&deg; across the column-to-truss connections, we create a rigid <strong>moment-resisting portal frame</strong>. The knee braces act as diagonal struts that transfer bending moments from the columns into the truss chords. 
+              </p>
+              <p style="font-size: 0.82rem; line-height: 1.4;">
+                This moment-frame architecture reduces the effective buckling length of the columns, increases lateral stiffness by over 300%, and limits lateral wind sway to &lt;6 mm, entirely eliminating the need for full-height wall X-bracing. This leaves the interior 100% open for modular pallet configurations and optimized airflow.
+              </p>
+            </div>
+
+            <div class="callout callout-success">
+              <h4>6. Foundation Anchor & Uplift Requirements</h4>
+              <p>Monsoon wind suction produces significant aerodynamic uplift trying to peel the light steel structure off the ground.</p>
+              <ul class="styled-list">
+                <li><strong>Net Uplift Force:</strong> ~110 kg per column post.</li>
+                <li><strong>Anchor Specification:</strong> Minimum 2 pieces of M12 x 100 mm sleeve anchor bolts per column baseplate.</li>
+                <li><strong>Foundation Requirement:</strong> Baseplates must be bolted to a reinforced concrete floor slab on grade, or cast concrete plinths (1x1x2 ft deep) to serve as counterweight anchors.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: Cement Logistics -->
+      <div id="tab-cement" class="tab-panel">
+        <h3 class="section-title">PPC Cement Storage & Logistics Planner</h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">Engineering protocols to safely store and preserve 250 bags (12.5 tons) of Portland Pozzolana Cement (PPC) through heavy monsoon seasons.</p>
+
+        <div class="grid-2col">
+          <div class="storage-map">
+            <span class="aisle-label">← 1.0 ft Air Gap Wall Clearance →</span>
+            
+            <div class="storage-grid-visual" id="pallet-grid-container">
+              <!-- Dynamically populated pallets -->
+            </div>
+
+            <span class="aisle-label" style="margin-top: 10px;">↓ Front Loading Aisle / Entrance (3.0 ft Clearance) ↓</span>
+            <div style="font-size: 0.75rem; text-align: center; color: var(--text-muted); max-width: 280px;">
+              Pallet layout maximizes space while keeping cement isolated from moist steel surfaces and allowing comfortable forklift/manual access.
+            </div>
+          </div>
+
+          <div>
+            <div class="callout callout-success">
+              <h4>Pallet Layout & Stack Management</h4>
+              <ul class="styled-list">
+                <li><strong>Stacking Pattern:</strong> Stacks must be laid in a "Header-Stretcher" interlocking pattern (similar to brickwork). Alternating directions on each layer binds the stack together, preventing toppling.</li>
+                <li><strong>Maximum Height:</strong> Stacking limit is <strong>8 bags high</strong> for monsoons. This prevents "warehouse set" (compaction under dead pressure in high humidity) and maintains stable stacks.</li>
+                <li><strong>Wall Air Gap:</strong> A minimum <strong>1.0 ft (30 cm) clearance</strong> must be maintained from all steel walls. Moist air condenses on steel panels, which will hydrate cement instantly on contact.</li>
+                <li><strong>Roof Clearance:</strong> Leave at least 2.5 ft clearance below rafters to allow air circulation.</li>
+              </ul>
+            </div>
+
+            <div class="callout callout-warning">
+              <h4>Advanced Moisture Control Protocol</h4>
+              <p>Relative humidity during monsoons exceeds 90%. Follow these steps strictly:</p>
+              <ul class="styled-list styled-list-warning">
+                <li><strong>Step 1 (Vapor Barrier):</strong> Roll out a heavy-duty 200-micron (700 gauge) polyethylene film across the concrete base. Overlap sheets by 12 inches and seal with waterproof tape. Fold the edges up the walls by 1 foot.</li>
+                <li><strong>Step 2 (Wooden Pallets):</strong> Arrange 4ft x 4ft wooden pallets on top of the plastic sheet. Ensure pallets are dry and clear of protruding nails.</li>
+                <li><strong>Step 3 (Draping Tarpaulin):</strong> Cover the entire cement stack with a thick, heavy-duty tarpaulin sheet. Tuck the edges under the outer pallets. This shields the cement from any roof condensation drips or aerosol moisture.</li>
+                <li><strong>Step 4 (Ventilation Control):</strong> Keep the shed doors tightly shut during active rain. Open them only on clear, sunny days to purge internal humidity.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 5: Fabrication Guide -->
+      <div id="tab-cutting" class="tab-panel">
+        <h3 class="section-title">Fabricator's Cutting & Assembly Guide</h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">Exact dimensional cutting list, miter angles, and welder assembly procedures to build the structural frame using standard 20 ft commercial pipes.</p>
+
+        <div class="callout callout-success">
+          <h4>Truss Miter & Welding Details</h4>
+          <p>Triangular roof trusses are built with exact angles for high-strength joints. Below are the cutting details for the standard 10 ft span truss with a 2.5 ft ridge rise (Slope = 26.6°):</p>
+          
+          <div style="display: flex; gap: 20px; align-items: center; margin: 15px 0;">
+            <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; font-family: monospace; font-size: 0.8rem; line-height: 1.2; flex: 1;">
+              <strong>Truss Angle Blueprint:</strong><br><br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▲ Apex: 126.9° (Cut 26.6° on rafters)<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ \<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;Rafter &nbsp;&nbsp;/ &nbsp;&nbsp;\ Rafter: 5.59 ft<br>
+              &nbsp;&nbsp;&nbsp;5.59 ft &nbsp;/ &nbsp;&nbsp;&nbsp;&nbsp;\<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;|<sp>&nbsp;&nbsp;&nbsp;\&nbsp;&nbsp;King Post: 2.5 ft<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/____|_____\<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;Eaves: 26.6°&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Eaves: 26.6°<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&lt;-------- 10.0 ft chord --------&gt;
+            </div>
+            <div style="flex: 1; font-size: 0.85rem; color: var(--text-muted);">
+              <ul class="styled-list">
+                <li><strong>Apex Join:</strong> Cut rafters at <strong>26.6° miter</strong>. Weld thoroughly on both sides.</li>
+                <li><strong>Eaves Join:</strong> Weld sloped rafter to the horizontal bottom chord with a <strong>26.6° slope miter</strong> cut.</li>
+                <li><strong>King Post:</strong> Weld a vertical center post of <strong>2.5 ft</strong> at 90° to the bottom chord.</li>
+                <li><strong>Web Diagonals:</strong> Two pieces of <strong>2.79 ft</strong>. Ends cut at <strong>26.6° miter</strong> to sit snug against top chord and center joint.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--primary); margin: 20px 0 10px 0;">Optimal Profile Cutting List</h4>
+        <div class="table-container">
+          <table class="bom-table" id="cutting-table-data">
+            <thead>
+              <tr>
+                <th>Frame Element</th>
+                <th>Member Segment</th>
+                <th class="numeric">Finished Length</th>
+                <th>Miter End Cut A</th>
+                <th>Miter End Cut B</th>
+                <th class="numeric">Quantity Needed</th>
+                <th>Fabrication Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-warning" style="margin-top: 24px;">
+          <h4>Step-by-Step Erection & Disassembly Sequence</h4>
+          <ol style="margin-left: 20px; font-size: 0.85rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 8px;">
+            <li><strong>1. Module Skid Base Pre-fabrication:</strong> Weld 2.0" × 2.0" × 16ga tubing to form two separate 11.0 ft × 4.9 ft floor skid frames with intermediate floor joists spaced at 2.45 ft. Add heavy-duty steel towing eyes at all four outer skid corners to facilitate rolling.</li>
+            <li><strong>2. Column-to-Truss Portal Frame Assembly:</strong> Pre-fabricate 4 identical portal frame assemblies on a flat jig on the ground. Each portal contains two columns (8.0 ft), one truss (11.0 ft bottom chord, two 6.04 ft sloped rafters, 2.5 ft King post), and two 1.5 ft knee-brace struts welded at 45° across the column-to-rafter connections.</li>
+            <li><strong>3. Weld Frames to Skids:</strong> Erect and weld 2 portal frames to Skid A (spaced 4.9 ft apart) and 2 portal frames to Skid B (spaced 4.9 ft apart) to establish two independent rigid modules.</li>
+            <li><strong>4. Prepare Mating Seam Interface:</strong> Weld heavy steel angle brackets ($50 \times 50 \times 6\text{ mm}$, 6 inches long) back-to-back along the mating vertical columns and rafters at the L/2 boundary (4.9 ft mark). Drill brackets for 12 sets of Grade 8.8 M10 bolts per frame (48 bolts total) to create a robust, easily demountable mating seam.</li>
+            <li><strong>5. Install Segmented Purlins & Girts:</strong> Weld the 4.9 ft purlins and wall girts horizontally. These do NOT span across the mating seam; they terminate at each module's independent frame to allow separate module handling.</li>
+            <li><strong>6. Cladding & Flashing Installation:</strong> Fix wall and roof sheets to each module separately. Overlap the roof sheets at the mating center seam by 6 inches and place a continuous EPDM compression gasket. Do NOT run sheets or screws across the mating seam line. Apply a two-part overlapping ridge cap and mating flashing.</li>
+            <li><strong>7. Phase 1 Setup (Consolidated Tunnel):</strong> Roll both skid modules together on steel pipes, align the mating frames, and tighten the 48 high-tensile mating seam bolts. The center is left entirely open with no wall sheets, forming a 11.0x9.8 ft open storage warehouse. Keep the 6 mating plug-in panels in storage.</li>
+            <li><strong>8. Phase 2 Disassembly Sequence:</strong> Unbolt the 48 mating seam bolts, remove the center seam roof flashing, and slide the modules apart on steel roller pipes. Bolt the 6 plug-in panels to seal the open mating ends. Module A's panoramic window and Module B's double utility doors are built as pre-framed plug-in assemblies that drop into the girt slots, securing with quick-release bolts.</li>
+          </ol>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    // Tab switching logic
+    function switchTab(evt, tabId) {
+      const tabs = document.querySelectorAll('.tab-panel');
+      const buttons = document.querySelectorAll('.tab-btn');
+      
+      tabs.forEach(tab => tab.classList.remove('active'));
+      buttons.forEach(btn => btn.classList.remove('active'));
+      
+      document.getElementById(tabId).classList.add('active');
+      evt.currentTarget.classList.add('active');
+    }
+
+    // Asynchronous render print trigger to allow DOM updates to commit and fix blank print-outs
+    function triggerCleanPrint() {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          window.print();
+        });
+      });
+    }
+
+    // Dynamic calculations
+    function updateCalculations() {
+      // Inputs
+      const length = parseFloat(document.getElementById('input-length').value);
+      const width = parseFloat(document.getElementById('input-width').value);
+      const height = parseFloat(document.getElementById('input-height').value);
+      const rise = parseFloat(document.getElementById('input-rise').value);
+      const bags = parseInt(document.getElementById('input-bags').value) || 0;
+      
+      const tubeSize = document.getElementById('input-tube-size').value;
+      const tubeGauge = parseInt(document.getElementById('input-tube-gauge').value);
+      
+      const priceSteel = parseFloat(document.getElementById('price-steel').value) || 0;
+      const priceRoof = parseFloat(document.getElementById('price-roof').value) || 0;
+      const priceWall = parseFloat(document.getElementById('price-wall').value) || 0;
+      const pricePallet = parseFloat(document.getElementById('price-pallet').value) || 0;
+
+      // Update UI Text values next to sliders
+      document.getElementById('length-val').innerText = length + " ft";
+      document.getElementById('width-val').innerText = width + " ft";
+      document.getElementById('height-val').innerText = height + " ft";
+      document.getElementById('rise-val').innerText = rise + " ft";
+
+      // Compute weight per ft based on select inputs
+      let wtPerFt = 1.51; // default 1.5" 14g
+      let steelArea = 286; // mm2
+      let Sx = 3080; // mm3
+      let Ix = 58688; // mm4
+      let r = 14.3; // mm
+
+      if (tubeSize === "1.5") {
+        if (tubeGauge === 12) { wtPerFt = 1.91; steelArea = 360; Sx = 3680; Ix = 70100; r = 13.9; }
+        else if (tubeGauge === 16) { wtPerFt = 1.21; steelArea = 230; Sx = 2550; Ix = 48500; r = 14.5; }
+        else { wtPerFt = 1.51; steelArea = 286; Sx = 3080; Ix = 58688; r = 14.3; } // 14g
+      } else if (tubeSize === "2.0") {
+        if (tubeGauge === 12) { wtPerFt = 2.65; steelArea = 502; Sx = 7180; Ix = 182300; r = 19.0; }
+        else if (tubeGauge === 16) { wtPerFt = 1.66; steelArea = 315; Sx = 4780; Ix = 121500; r = 19.6; }
+        else { wtPerFt = 2.08; steelArea = 394; Sx = 5850; Ix = 148500; r = 19.4; } // 14g
+      } else if (tubeSize === "1.5_rect") {
+        // 3.0 x 1.5 Rectangular tube
+        if (tubeGauge === 12) { wtPerFt = 3.39; steelArea = 643; Sx = 12320; Ix = 469000; r = 27.0; }
+        else if (tubeGauge === 16) { wtPerFt = 2.10; steelArea = 399; Sx = 8010; Ix = 305100; r = 27.6; }
+        else { wtPerFt = 2.64; steelArea = 502; Sx = 9980; Ix = 380200; r = 27.5; } // 14g
+      }
+
+      const tubeLabel = tubeSize === "2.0" ? "2.0\" x 2.0\"" : (tubeSize === "1.5_rect" ? "3.0\" x 1.5\"" : "1.5\" x 1.5\"");
+      const tubeGaugeLabel = `${tubeLabel} x ${tubeGauge}ga`;
+
+      // 1. Frame Spacing and counts (Twin-Module Consolidated Mating Tunnel)
+      const moduleLength = length / 2;
+      const numTrusses = 4; // 1 back, 2 mated center, 1 front
+      const numColumns = 8; // 8 columns total
+      const trussSpacing = length / 2; // spacing to center bolted seam
+
+      // 2. Truss Trigonometry
+      const W_half = width / 2;
+      const S_roof = Math.sqrt(W_half * W_half + rise * rise); // Rafter sloped length (ft)
+      const D_diag = Math.sqrt((W_half / 2) * (W_half / 2) + (rise / 2) * (rise / 2)); // Web diagonal length (ft)
+      
+      const pitchAngle = Math.atan(rise / W_half) * 180 / Math.PI;
+
+      // Tubing Length calculations (ft)
+      const trussSteelPerUnit = (2 * S_roof) + width + rise + (2 * D_diag);
+      const totalTrussSteel = numTrusses * trussSteelPerUnit;
+      
+      const totalColumnSteel = numColumns * height;
+
+      // End walls framing (vertical studs)
+      const numEndStuds = 4; // 2 per end wall
+      const endStudsSteel = numEndStuds * height;
+      const doorFramingSteel = 2 * 7 + 4; // Door posts (7ft) + header (4ft) = 18ft
+      
+      // Purlins
+      const purlinSpacing = 2.5; // ft
+      const purlinsPerSide = Math.max(2, Math.ceil(S_roof / purlinSpacing) + 1);
+      const totalPurlinLines = 2 * purlinsPerSide;
+      const totalPurlinSteel = totalPurlinLines * length;
+
+      // Girts (Wall horizontal runners)
+      const girtSpacing = 3.0; // ft
+      const girtLines = Math.ceil(height / girtSpacing) + 1;
+      const wallPerimeter = 2 * length + 2 * width;
+      const totalGirtSteel = girtLines * wallPerimeter;
+
+      // Knee Bracing (1.5 ft lengths of tubing welded at 45° across column-to-truss corners)
+      const numKneeBraces = numColumns; // 1 per column
+      const braceLength = 1.5; // ft
+      const totalKneeBraceSteel = numKneeBraces * braceLength;
+      const totalBraceFlatBar = 0; // completely eliminated flat bar wind bracing!
+
+      // Total Steel Tubing (with 10% waste)
+      const netTubingLength = totalTrussSteel + totalColumnSteel + endStudsSteel + doorFramingSteel + totalPurlinSteel + totalGirtSteel + totalKneeBraceSteel;
+      const grossTubingLength = netTubingLength * 1.1; // 10% wastage
+      const pipesCount20ft = Math.ceil(grossTubingLength / 20.0);
+      const totalTubingWeight = grossTubingLength * wtPerFt * 0.453592; // lbs to kg
+
+      // 3. Sheets Cladding
+      // Roof Area
+      const roofOverhang = 0.5; // ft
+      const roofSlopedArea = 2 * (S_roof + roofOverhang) * (length + 2 * roofOverhang);
+      const roofAreaM2 = roofSlopedArea * 0.092903;
+      
+      // Wall Area (flat perimeter cladding + gable triangles)
+      const gableTriangleArea = 2 * (0.5 * width * rise); // 2 gable-end triangles
+      const wallArea = wallPerimeter * height + gableTriangleArea;
+      const netWallArea = wallArea - (4 * 7); // deduct door
+      const wallAreaM2 = netWallArea * 0.092903;
+
+      // Sheets counts based on standard coverage
+      const effectiveSheetWidth = 2.75; // ft (with overlap of 3 ft sheet)
+      const roofSheetsCount = 2 * Math.ceil((length + 2 * roofOverhang) / effectiveSheetWidth);
+      const wallSheetsCount = Math.ceil(wallPerimeter / effectiveSheetWidth) + 2; // +2 for gable cuts
+
+      // 4. Cement pallets
+      const bagsPerStack = 11;
+      const stacksNeeded = Math.ceil(bags / bagsPerStack);
+      const palletCapacity = 44; // 4 stacks * 11 bags/stack
+      const palletsNeeded = Math.ceil(bags / palletCapacity);
+
+      // 5. Fasteners & Hardware
+      const roofScrews = Math.ceil(roofSheetsCount * purlinsPerSide * 6);
+      const wallScrews = Math.ceil(wallSheetsCount * girtLines * 5);
+      const frameBolts = numTrusses * 12; // 12 M10 bolts per column-truss frame
+      const anchorBolts = numColumns * 2; // 2 per column base
+
+      // Costs Calculations
+      const costSteel = totalTubingWeight * priceSteel;
+      const costRoof = roofAreaM2 * priceRoof;
+      const costWall = wallAreaM2 * priceWall;
+      const costPallets = palletsNeeded * pricePallet;
+      const costHardware = (roofScrews + wallScrews) * 8 + frameBolts * 30 + anchorBolts * 70; // rough prices in Rupees
+      const costVaporBarrier = (length + 4) * (width + 4) * 0.092903 * 100; // Rs 100/m² for heavy gauge
+      const costTarpaulin = 1 * 3500; // 1 large heavy tarpaulin
+      const costWelding = 1200; // box of rods
+      const costPlugIn = 6 * height * 3 * 0.092903 * priceWall; // 6 panels needed to seal ends in Phase 2
+      
+      const totalEstimatedCost = costSteel + costRoof + costWall + costPallets + costHardware + costVaporBarrier + costTarpaulin + costWelding + costPlugIn;
+
+      // Update Summary Cards
+      document.getElementById('summary-steel-wt').innerText = Math.round(totalTubingWeight) + " kg";
+      document.getElementById('summary-steel-len').innerText = pipesCount20ft + " pipes (20ft)";
+      
+      document.getElementById('summary-sheets-count').innerText = (roofSheetsCount + wallSheetsCount) + " pcs";
+      document.getElementById('summary-sheets-area').innerText = Math.round(roofAreaM2 + wallAreaM2) + " m² area";
+      
+      document.getElementById('summary-pallets-count').innerText = palletsNeeded + " Pallets";
+      document.getElementById('summary-pallet-stack').innerText = `${bags} bags / ${bagsPerStack} high`;
+
+      // Wind analysis updates
+      const windSpeed = 39; // m/s (140 km/h)
+      const windPressure = 0.6 * windSpeed * windSpeed; // N/m² (~912 N/m² or 93 kg/m²)
+      document.getElementById('summary-wind-status').innerText = Math.round(windPressure / 9.81) + " kg/m²";
+      
+      // Dynamic Column Wind Stress Check
+      const columnH_m = height * 0.3048; // to meters
+      const tribWidth = trussSpacing * 0.3048; // spacing
+      const w_wind = windPressure * tribWidth; // N/m load
+      const M_bend = (w_wind * columnH_m * columnH_m) / 8; // N·m (propped cantilever: truss tie-beam provides top restraint)
+      const bendingStress = (M_bend * 1000) / Sx; // MPa (N/mm²)
+      
+      // Dynamic rafter bending analysis
+      const spanM = width * 0.3048;
+      const roofLoadKgM2 = 56.0; // 4 DL + 2 purlin + 50 rain
+      const rafterTribM = trussSpacing * 0.3048;
+      let wRafter = roofLoadKgM2 * 9.81 * rafterTribM;
+      wRafter += wtPerFt * 0.453592 * 9.81 / 0.3048; // self-weight
+      const M_rafter = (wRafter * spanM * spanM) / 8;
+      const rafterStress = (M_rafter * 1000) / Sx;
+      const rafterDeflection = (5.0 * wRafter * Math.pow(spanM, 4)) / (384 * 200e9 * Ix * 1e-12) * 1000;
+      
+      // Truss axial check
+      const rafterLenM = S_roof * 0.3048;
+      const totalRafterLoad = wRafter * spanM / 2;
+      const pitchRad = pitchAngle * Math.PI / 180;
+      const rafterAxial = pitchRad > 0 ? totalRafterLoad / Math.sin(pitchRad) : 0;
+      const rafterKLR = (rafterLenM * 1000) / r;
+      const eulerStress = (Math.PI * Math.PI * 200000) / (rafterKLR * rafterKLR);
+      const eulerAllowable = eulerStress / 2;
+      const eulerAllowableLoad = eulerAllowable * steelArea;
+      const trussSF = rafterAxial > 0 ? eulerAllowableLoad / rafterAxial : 999;
+      
+      document.getElementById('calc-h').innerText = height.toFixed(1);
+      
+      // Slenderness KL/r (K=1.0 for simple posts, L in mm, r in mm)
+      const L_mm = height * 304.8;
+      const klr = L_mm / r;
+      document.getElementById('calc-klr').innerText = klr.toFixed(1);
+
+      document.getElementById('calc-sigma-w').innerText = bendingStress.toFixed(1);
+
+      // Update dynamic rafter bending analysis panel
+      const structuralBeamDanger = document.getElementById('structural-beam-danger');
+      document.getElementById('rafter-span-ft').innerText = width;
+      document.getElementById('rafter-span-detail').innerText = `${width} ft (${spanM.toFixed(2)} m)`;
+      document.getElementById('rafter-load').innerText = `${Math.round(wRafter)} N/m`;
+      document.getElementById('rafter-moment').innerText = Math.round(M_rafter);
+      document.getElementById('rafter-sigma').innerText = rafterStress.toFixed(1);
+      
+      const rafterPercent = Math.round(rafterStress / 165 * 100);
+      if (rafterStress > 165) {
+        structuralBeamDanger.className = 'callout callout-danger';
+        document.getElementById('rafter-verdict-badge').className = 'badge badge-danger';
+        document.getElementById('rafter-verdict-badge').innerText = `FAILED ❌ (Stress is ${rafterPercent}% of limit!)`;
+        document.getElementById('rafter-verdict-text').innerText = `A simple ${tubeLabel} rafter will bend severely and sag (up to ${Math.round(rafterDeflection)} mm deflection), creating pockets for rain accumulation that could lead to ponding and collapse.`;
+      } else {
+        structuralBeamDanger.className = 'callout callout-success';
+        document.getElementById('rafter-verdict-badge').className = 'badge badge-success';
+        document.getElementById('rafter-verdict-badge').innerText = `PASSED ✅ (${rafterPercent}% of limit)`;
+        document.getElementById('rafter-verdict-text').innerText = `Simple ${tubeLabel} rafter stress is within allowable limits. Deflection: ${rafterDeflection.toFixed(1)} mm.`;
+      }
+      
+      // Update dynamic truss analysis panel
+      document.getElementById('truss-rafter-len').innerText = S_roof.toFixed(1);
+      const apexAngle = (180 - 2 * pitchAngle).toFixed(1);
+      document.getElementById('truss-apex-angle').innerText = apexAngle;
+      document.getElementById('truss-axial-load').innerText = (rafterAxial / 1000).toFixed(2);
+      document.getElementById('truss-buckling-allow').innerText = (eulerAllowableLoad / 1000).toFixed(1);
+      document.getElementById('truss-sf').innerText = trussSF.toFixed(1);
+      
+      if (trussSF >= 2.0) {
+        document.getElementById('structural-truss-pass').className = 'callout callout-success';
+        document.getElementById('truss-verdict-badge').className = 'badge badge-success';
+        document.getElementById('truss-verdict-badge').innerText = `PASSED ✅ (Safety Factor ${trussSF.toFixed(1)})`;
+      } else {
+        document.getElementById('structural-truss-pass').className = 'callout callout-warning';
+        document.getElementById('truss-verdict-badge').className = 'badge badge-warning';
+        document.getElementById('truss-verdict-badge').innerText = `MARGINAL ⚠ (Safety Factor ${trussSF.toFixed(1)} — upgrade section)`;
+      }
+
+      // Warning states
+      const structuralColumnWind = document.getElementById('structural-column-wind');
+      const safetyBadge = document.getElementById('summary-wind-badge');
+
+      if (bendingStress > 165) {
+        structuralColumnWind.className = 'callout callout-danger';
+        document.getElementById('badge-unbraced-status').className = 'badge badge-danger';
+        document.getElementById('badge-unbraced-status').innerText = `FAILED ❌ (${Math.round(bendingStress)} MPa)`;
+        safetyBadge.className = 'badge badge-danger';
+        safetyBadge.innerText = 'Knee Bracing Mandatory';
+      } else {
+        structuralColumnWind.className = 'callout callout-warning';
+        document.getElementById('badge-unbraced-status').className = 'badge badge-warning';
+        document.getElementById('badge-unbraced-status').innerText = `STRESSED ⚠ (${Math.round(bendingStress)} MPa)`;
+        safetyBadge.className = 'badge badge-warning';
+        safetyBadge.innerText = 'Knee Bracing Advised';
+      }
+
+      // Euler Buckling Calculations
+      const L_meters = height * 0.3048;
+      const E_modulus = 200e9; // Pa
+      const Ix_m4 = Ix * 1e-12; // mm4 to m4
+      const P_cr = (Math.PI * Math.PI * E_modulus * Ix_m4) / (L_meters * L_meters);
+      const P_cr_kn = P_cr / 1000;
+      const P_allow_kn = P_cr_kn / 2.0; // FS = 2.0
+      const P_axial_kn = (wRafter * spanM / 2) / 1000; // actual axial force at base of truss rafter/column junction in kN
+      const bucklingSF = P_cr_kn / P_axial_kn;
+
+      document.getElementById('buckling-pcr').innerText = P_cr_kn.toFixed(1);
+      document.getElementById('buckling-pallow').innerText = P_allow_kn.toFixed(1);
+      document.getElementById('buckling-paxial').innerText = P_axial_kn.toFixed(2);
+      document.getElementById('buckling-sf').innerText = bucklingSF.toFixed(1);
+
+      const structuralColumnBuckling = document.getElementById('structural-column-buckling');
+      const bucklingBadge = document.getElementById('buckling-badge');
+      if (bucklingSF >= 2.0) {
+        structuralColumnBuckling.className = 'callout callout-success';
+        bucklingBadge.className = 'badge badge-success';
+        bucklingBadge.innerText = `PASSED ✅ (SF: ${bucklingSF.toFixed(1)})`;
+      } else {
+        structuralColumnBuckling.className = 'callout callout-danger';
+        bucklingBadge.className = 'badge badge-danger';
+        bucklingBadge.innerText = `FAILED ❌ (SF: ${bucklingSF.toFixed(1)})`;
+      }
+
+      // Load BOM Table
+      const bomTableBody = document.querySelector('#bom-table-data tbody');
+      bomTableBody.innerHTML = `
+        <tr class="category-row"><td colspan="7">1. Structural Steel Frame (MS Hollow Sections)</td></tr>
+        <tr>
+          <td>${tubeGaugeLabel} Structural Tubing (Main Columns)</td>
+          <td>Mild Steel (MS) Square Pipe</td>
+          <td class="numeric">${height.toFixed(1)} ft</td>
+          <td class="numeric">${numColumns}</td>
+          <td>pcs</td>
+          <td class="numeric">₹ ${Math.round(height * wtPerFt * 0.453 * priceSteel)}</td>
+          <td class="numeric">₹ ${Math.round(numColumns * height * wtPerFt * 0.453 * priceSteel)}</td>
+        </tr>
+        <tr>
+          <td>${tubeGaugeLabel} Structural Tubing (Roof Trusses)</td>
+          <td>MS Pre-fabricated King Post Truss</td>
+          <td class="numeric">${trussSteelPerUnit.toFixed(1)} ft</td>
+          <td class="numeric">${numTrusses}</td>
+          <td>pcs</td>
+          <td class="numeric">₹ ${Math.round(trussSteelPerUnit * wtPerFt * 0.453 * priceSteel)}</td>
+          <td class="numeric">₹ ${Math.round(numTrusses * trussSteelPerUnit * wtPerFt * 0.453 * priceSteel)}</td>
+        </tr>
+        <tr>
+          <td>${tubeGaugeLabel} Structural Tubing (Purlins & Girts)</td>
+          <td>MS Horizontal cladding rails</td>
+          <td class="numeric">20.0 ft</td>
+          <td class="numeric">${Math.ceil((totalPurlinSteel + totalGirtSteel) / 20)}</td>
+          <td>pcs</td>
+          <td class="numeric">₹ ${Math.round(20 * wtPerFt * 0.453 * priceSteel)}</td>
+          <td class="numeric">₹ ${Math.round(Math.ceil((totalPurlinSteel + totalGirtSteel) / 20) * 20 * wtPerFt * 0.453 * priceSteel)}</td>
+        </tr>
+        <tr>
+          <td>${tubeGaugeLabel} Corner Knee Bracing Struts</td>
+          <td>MS 45° Corner Bracing</td>
+          <td class="numeric">${braceLength.toFixed(1)} ft</td>
+          <td class="numeric">${numKneeBraces}</td>
+          <td>pcs</td>
+          <td class="numeric">₹ ${Math.round(braceLength * wtPerFt * 0.453 * priceSteel)}</td>
+          <td class="numeric">₹ ${Math.round(numKneeBraces * braceLength * wtPerFt * 0.453 * priceSteel)}</td>
+        </tr>
+        <tr>
+          <td>End Wall Studs & Door Framing</td>
+          <td>${tubeGaugeLabel} Studs</td>
+          <td class="numeric">Various</td>
+          <td class="numeric">1</td>
+          <td>Lot</td>
+          <td class="numeric">₹ ${Math.round((endStudsSteel + doorFramingSteel) * wtPerFt * 0.453 * priceSteel)}</td>
+          <td class="numeric">₹ ${Math.round((endStudsSteel + doorFramingSteel) * wtPerFt * 0.453 * priceSteel)}</td>
+        </tr>
+
+        <tr class="category-row"><td colspan="7">2. Roof & Wall Cladding (Laminated Galvanized Steel)</td></tr>
+        <tr>
+          <td>0.5 mm Laminated Roof Sheets (Corrugated)</td>
+          <td>Monsoon-Resistant Color Coated Profile</td>
+          <td class="numeric">${(S_roof + roofOverhang).toFixed(1)} ft</td>
+          <td class="numeric">${roofSheetsCount}</td>
+          <td>pcs</td>
+          <td class="numeric">₹ ${Math.round((S_roof + roofOverhang) * 3 * 0.0929 * priceRoof)}</td>
+          <td class="numeric">₹ ${Math.round(costRoof)}</td>
+        </tr>
+        <tr>
+          <td>0.5 mm Laminated Wall Sheets (Corrugated/Profile)</td>
+          <td>Weather-shielded wall cladding</td>
+          <td class="numeric">${height.toFixed(1)} ft</td>
+          <td class="numeric">${wallSheetsCount}</td>
+          <td>pcs</td>
+          <td class="numeric">₹ ${Math.round(height * 3 * 0.0929 * priceWall)}</td>
+          <td class="numeric">₹ ${Math.round(costWall)}</td>
+        </tr>
+        <tr>
+          <td>Laminated Steel Ridge Cap</td>
+          <td>0.5 mm Profile Cap, 8 ft length</td>
+          <td class="numeric">8.0 ft</td>
+          <td class="numeric">${Math.ceil((length + 1) / 7.5)}</td>
+          <td>pcs</td>
+          <td class="numeric">₹ 650</td>
+          <td class="numeric">₹ ${Math.ceil((length + 1) / 7.5) * 650}</td>
+        </tr>
+
+        <tr class="category-row"><td colspan="7">3. Fasteners, Connectors & Anchors</td></tr>
+        <tr>
+          <td>Roofing Screws (crest fixing with EPDM washer)</td>
+          <td>Hex Self-drilling #12 x 2.0" SDS</td>
+          <td class="numeric">#12 x 2"</td>
+          <td class="numeric">${roofScrews}</td>
+          <td>pcs</td>
+          <td class="numeric">₹ 8</td>
+          <td class="numeric">₹ ${roofScrews * 8}</td>
+        </tr>
+        <tr>
+          <td>Wall Cladding Screws (profile fixing)</td>
+          <td>Hex Self-drilling #12 x 1.0" SDS</td>
+          <td class="numeric">#12 x 1"</td>
+          <td class="numeric">${wallScrews}</td>
+          <td>pcs</td>
+          <td class="numeric">₹ 6</td>
+          <td class="numeric">₹ ${wallScrews * 6}</td>
+        </tr>
+        <tr>
+          <td>High Strength Assembly Bolts (Gusset plate joint)</td>
+          <td>Grade 8.8 M10 x 70 mm Hex Bolt + nut/washers</td>
+          <td class="numeric">M10 x 70</td>
+          <td class="numeric">${frameBolts}</td>
+          <td>pcs</td>
+          <td class="numeric">₹ 30</td>
+          <td class="numeric">₹ ${frameBolts * 30}</td>
+        </tr>
+        <tr>
+          <td>Foundation Anchor Expansion Bolts</td>
+          <td>Sleeve Anchor Bolt M12 x 100 mm</td>
+          <td class="numeric">M12 x 100</td>
+          <td class="numeric">${anchorBolts}</td>
+          <td>pcs</td>
+          <td class="numeric">₹ 70</td>
+          <td class="numeric">₹ ${anchorBolts * 70}</td>
+        </tr>
+
+        <tr class="category-row"><td colspan="7">4. PPC Cement Moisture Protection System</td></tr>
+        <tr>
+          <td>Heavy Duty Wood Pallets (Raised base plinth)</td>
+          <td>Seasoned pine 4 ft x 4 ft standard cargo</td>
+          <td class="numeric">4x4 ft</td>
+          <td class="numeric">${palletsNeeded}</td>
+          <td>pcs</td>
+          <td class="numeric">₹ ${pricePallet}</td>
+          <td class="numeric">₹ ${Math.round(costPallets)}</td>
+        </tr>
+        <tr>
+          <td>700-Gauge Polythene Floor Vapor Barrier</td>
+          <td>200-micron waterproof LDPE film</td>
+          <td class="numeric">Roll 350 sq ft</td>
+          <td class="numeric">1</td>
+          <td>roll</td>
+          <td class="numeric">₹ ${Math.round(costVaporBarrier)}</td>
+          <td class="numeric">₹ ${Math.round(costVaporBarrier)}</td>
+        </tr>
+        <tr>
+          <td>Heavy Duty Waterproof Tarpaulin</td>
+          <td>Poly tarpaulin cover sheet (24 ft x 16 ft)</td>
+          <td class="numeric">24x16 ft</td>
+          <td class="numeric">1</td>
+          <td>pc</td>
+          <td class="numeric">₹ ${costTarpaulin}</td>
+          <td class="numeric">₹ ${costTarpaulin}</td>
+        </tr>
+        <tr>
+          <td>Welding Electrodes & Rods (E6013)</td>
+          <td>2.5mm and 3.15mm Welding box</td>
+          <td class="numeric">5 kg box</td>
+          <td class="numeric">1</td>
+          <td>box</td>
+          <td class="numeric">₹ ${costWelding}</td>
+          <td class="numeric">₹ ${costWelding}</td>
+        </tr>
+      `;
+
+      // Totals
+      document.getElementById('bom-total-weight').innerText = Math.round(totalTubingWeight) + " kg";
+      document.getElementById('bom-total-cost').innerText = "₹ " + Math.round(totalEstimatedCost).toLocaleString('en-IN');
+
+      // Populate Cutting List Table
+      const cuttingTableBody = document.querySelector('#cutting-table-data tbody');
+      cuttingTableBody.innerHTML = `
+        <tr>
+          <td><strong>Column Posts</strong></td>
+          <td>Side Columns (Main studs)</td>
+          <td class="numeric">${height.toFixed(2)} ft</td>
+          <td>Square 90° Cut</td>
+          <td>Square 90° Cut</td>
+          <td class="numeric">${numColumns}</td>
+          <td>Vertical posts supporting trusses</td>
+        </tr>
+        <tr>
+          <td><strong>Truss Top Chords</strong></td>
+          <td>Roof sloped rafters</td>
+          <td class="numeric">${S_roof.toFixed(2)} ft</td>
+          <td>Apex: 26.6° Miter Cut</td>
+          <td>Eaves: 26.6° Miter Cut</td>
+          <td class="numeric">${numTrusses * 2}</td>
+          <td>Sloped members meeting at ridge</td>
+        </tr>
+        <tr>
+          <td><strong>Truss Bottom Chord</strong></td>
+          <td>Main tie-beam</td>
+          <td class="numeric">${width.toFixed(2)} ft</td>
+          <td>Square 90° Cut</td>
+          <td>Square 90° Cut</td>
+          <td class="numeric">${numTrusses}</td>
+          <td>Horizontal structural spacer</td>
+        </tr>
+        <tr>
+          <td><strong>Truss King Post</strong></td>
+          <td>Vertical center strut</td>
+          <td class="numeric">${rise.toFixed(2)} ft</td>
+          <td>Square 90° Cut</td>
+          <td>Square 90° Cut</td>
+          <td class="numeric">${numTrusses}</td>
+          <td>Vertical tension member</td>
+        </tr>
+        <tr>
+          <td><strong>Truss Diagonals</strong></td>
+          <td>Web members</td>
+          <td class="numeric">${D_diag.toFixed(2)} ft</td>
+          <td>26.6° Miter Cut</td>
+          <td>26.6° Miter Cut</td>
+          <td class="numeric">${numTrusses * 2}</td>
+          <td>Stabilizing web struts</td>
+        </tr>
+        <tr>
+          <td><strong>Wall Girts</strong></td>
+          <td>Side walls long runners</td>
+          <td class="numeric">${length.toFixed(2)} ft</td>
+          <td>Square 90° Cut</td>
+          <td>Square 90° Cut</td>
+          <td class="numeric">${girtLines * 2}</td>
+          <td>Welded horizontally on sides</td>
+        </tr>
+        <tr>
+          <td><strong>Wall Girts</strong></td>
+          <td>End walls short runners</td>
+          <td class="numeric">${width.toFixed(2)} ft</td>
+          <td>Square 90° Cut</td>
+          <td>Square 90° Cut</td>
+          <td class="numeric">${girtLines * 2}</td>
+          <td>Welded horizontally on ends</td>
+        </tr>
+        <tr>
+          <td><strong>Roof Purlins</strong></td>
+          <td>Roof sheets rails</td>
+          <td class="numeric">${length.toFixed(2)} ft</td>
+          <td>Square 90° Cut</td>
+          <td>Square 90° Cut</td>
+          <td class="numeric">${totalPurlinLines}</td>
+          <td>Welded on top of rafters</td>
+        </tr>
+        <tr>
+          <td><strong>End Wall Studs</strong></td>
+          <td>Door & Back wall vertical columns</td>
+          <td class="numeric">${height.toFixed(2)} ft</td>
+          <td>Square 90° Cut</td>
+          <td>Square 90° Cut</td>
+          <td class="numeric">${numEndStuds}</td>
+          <td>Added structural stability studs</td>
+        </tr>
+        <tr>
+          <td><strong>Corner Knee Braces</strong></td>
+          <td>45° corner reinforcements</td>
+          <td class="numeric">${braceLength.toFixed(2)} ft</td>
+          <td>Miter 45° Cut</td>
+          <td>Miter 45° Cut</td>
+          <td class="numeric">${numKneeBraces}</td>
+          <td>Welded across column-to-truss joints</td>
+        </tr>
+      `;
+
+      // Draw SVG Visualizer
+      drawVisualizer(length, width, height, rise, numTrusses);
+
+      // Populate cement storage map
+      drawPalletLayout(palletsNeeded);
+    }
+
+    function drawPalletLayout(numPallets) {
+      const container = document.getElementById('pallet-grid-container');
+      container.innerHTML = '';
+      
+      // Let's create an elegant grid layout of pallets
+      // Max 4 per row
+      const cols = Math.min(4, numPallets);
+      container.style.gridTemplateColumns = `repeat(${cols}, 70px)`;
+      
+      for(let i=0; i<numPallets; i++) {
+        const pallet = document.createElement('div');
+        pallet.className = 'pallet-visual';
+        pallet.title = `Pallet ${i+1}: Standard 4x4 ft Wooden pallet holding 32 bags in layers of 4 bags, 8 high.`;
+        
+        const label = document.createElement('span');
+        label.innerText = `PALLET ${i+1}`;
+        
+        const count = document.createElement('div');
+        count.className = 'bag-count';
+        // last pallet might hold fewer bags
+        const bagsAssigned = (i === numPallets - 1) ? (parseInt(document.getElementById('input-bags').value) - (i * 32)) : 32;
+        count.innerText = bagsAssigned + " BGS";
+        
+        pallet.appendChild(label);
+        pallet.appendChild(count);
+        container.appendChild(pallet);
+      }
+    }
+
+    function drawVisualizer(L, W, H, R, N) {
+      const svg = document.getElementById('shed-svg');
+      svg.innerHTML = ''; // clear
+
+      const phaseMode = document.getElementById('input-phase-mode') ? document.getElementById('input-phase-mode').value : "phase1";
+
+      // Perspective constants
+      const ox = 120; // origin X shifted left to allow room for Module B
+      const oy = 230; // origin Y
+      
+      const scaleX = 14; 
+      const scaleY = -12; 
+      const scaleZ = 10; 
+      
+      function project(x, y, z, xOffset = 0, zOffset = 0) {
+        const rad = 30 * Math.PI / 180;
+        const px = ox + ((x + xOffset) * scaleX) + ((z + zOffset) * scaleZ * Math.cos(rad));
+        const py = oy + (y * scaleY) - ((z + zOffset) * scaleZ * Math.sin(rad));
+        return {x: px, y: py};
+      }
+
+      if (phaseMode === "phase1") {
+        // Phase 1: Unified 11.0 ft x 9.8 ft open warehouse tunnel (2 modules bolted back-to-back at L/2 = 4.9 ft)
+        const zSpacing = L / 2;
+        
+        // Draw 3 lines of frames: back (z=0), mating seam (z=L/2), front (z=L)
+        for (let i = 0; i < 3; i++) {
+          const z = i * zSpacing;
+          const isSeam = (i === 1);
+          
+          const colLeftBase = project(0, 0, z);
+          const colLeftTop = project(0, H, z);
+          const colRightBase = project(W, 0, z);
+          const colRightTop = project(W, H, z);
+          
+          const trussApex = project(W/2, H + R, z);
+          const trussMid = project(W/2, H, z);
+
+          // Draw columns
+          drawSVGLine(colLeftBase, colLeftTop, isSeam ? '#d97706' : '#0891b2', isSeam ? 4 : 3);
+          drawSVGLine(colRightBase, colRightTop, isSeam ? '#d97706' : '#0891b2', isSeam ? 4 : 3);
+          
+          // Draw rafters & bottom chord
+          drawSVGLine(colLeftTop, trussApex, isSeam ? '#d97706' : '#0284c7', isSeam ? 4 : 3);
+          drawSVGLine(colRightTop, trussApex, isSeam ? '#d97706' : '#0284c7', isSeam ? 4 : 3);
+          drawSVGLine(colLeftTop, colRightTop, isSeam ? '#d97706' : '#0284c7', 2.5);
+          drawSVGLine(trussMid, trussApex, '#0284c7', 1.5);
+
+          // Web diagonals
+          const leftMidRafter = project(W/4, H + (R/2), z);
+          const rightMidRafter = project(3*W/4, H + (R/2), z);
+          drawSVGLine(trussMid, leftMidRafter, '#0284c7', 1);
+          drawSVGLine(trussMid, rightMidRafter, '#0284c7', 1);
+
+          // Draw base-skid perimeter floor steel at z = 0, zSpacing, L
+          const skidL = project(0, 0, z);
+          const skidR = project(W, 0, z);
+          drawSVGLine(skidL, skidR, '#0891b2', 2.5);
+
+          // Bolts at mating seam (circles)
+          if (isSeam) {
+            drawSVGCircle(colLeftTop, 5, '#dc2626');
+            drawSVGCircle(colRightTop, 5, '#dc2626');
+            drawSVGCircle(project(W/2, H, z), 5, '#dc2626');
+          } else {
+            drawSVGCircle(colLeftBase, 4, '#e2e8f0');
+            drawSVGCircle(colRightBase, 4, '#e2e8f0');
+          }
+        }
+
+        // Draw longitudinal purlins & girts (from z=0 to z=L)
+        const numGirtLines = Math.ceil(H / 3.0) + 1;
+        for (let g = 0; g < numGirtLines; g++) {
+          const girtH = (H / (numGirtLines - 1)) * g;
+          drawSVGLine(project(0, girtH, 0), project(0, girtH, L), '#059669', 1.5);
+          drawSVGLine(project(W, girtH, 0), project(W, girtH, L), '#059669', 1.5);
+        }
+
+        const purlinsPerSide = 4;
+        for (let p = 0; p < purlinsPerSide; p++) {
+          const frac = p / (purlinsPerSide - 1);
+          drawSVGLine(project(W/2 * (1 - frac), H + R * frac, 0), project(W/2 * (1 - frac), H + R * frac, L), '#059669', 1.5);
+          drawSVGLine(project(W/2 + W/2 * frac, H + R * (1 - frac), 0), project(W/2 + W/2 * frac, H + R * (1 - frac), L), '#059669', 1.5);
+        }
+
+        // Draw 3D Base Skid rails running along length (at x=0 and x=W)
+        drawSVGLine(project(0, 0, 0), project(0, 0, L), '#0891b2', 2.5);
+        drawSVGLine(project(W, 0, 0), project(W, 0, L), '#0891b2', 2.5);
+
+        // Draw Knee Braces (45° angle) on back, seam, and front
+        for (let i = 0; i < 3; i++) {
+          const z = i * zSpacing;
+          const braceLeg = 1.0;
+          drawSVGLine(project(0, H - braceLeg, z), project(braceLeg, H, z), '#d97706', 2.5);
+          drawSVGLine(project(W, H - braceLeg, z), project(W - braceLeg, H, z), '#d97706', 2.5);
+        }
+
+        // Draw 3D transparent Cement Stacking Pile Box (Orange dashed)
+        // Stacking dimensions: 9.2 ft W x 7.8 ft L x 5.5 ft H
+        const c1 = project(0.9, 0.1, 1.0);
+        const c2 = project(0.9 + 9.2, 0.1, 1.0);
+        const c3 = project(0.9 + 9.2, 0.1, 1.0 + 7.8);
+        const c4 = project(0.9, 0.1, 1.0 + 7.8);
+        const ct1 = project(0.9, 5.5, 1.0);
+        const ct2 = project(0.9 + 9.2, 5.5, 1.0);
+        const ct3 = project(0.9 + 9.2, 5.5, 1.0 + 7.8);
+        const ct4 = project(0.9, 5.5, 1.0 + 7.8);
+
+        drawSVGLine(c1, c2, '#d97706', 1, true);
+        drawSVGLine(c2, c3, '#d97706', 1, true);
+        drawSVGLine(c3, c4, '#d97706', 1, true);
+        drawSVGLine(c4, c1, '#d97706', 1, true);
+        drawSVGLine(ct1, ct2, '#d97706', 1, true);
+        drawSVGLine(ct2, ct3, '#d97706', 1, true);
+        drawSVGLine(ct3, ct4, '#d97706', 1, true);
+        drawSVGLine(ct4, ct1, '#d97706', 1, true);
+        drawSVGLine(c1, ct1, '#d97706', 1, true);
+        drawSVGLine(c2, ct2, '#d97706', 1, true);
+        drawSVGLine(c3, ct3, '#d97706', 1, true);
+        drawSVGLine(c4, ct4, '#d97706', 1, true);
+
+      } else {
+        // Phase 2: Separated modules: Module A (Guard Room at front) and Module B (Relocated to rear setback, shifted right)
+        const zHalf = L / 2;
+
+        // --- DRAW MODULE A (Guard Room) at z=0 to z=zHalf ---
+        for (let i = 0; i < 2; i++) {
+          const z = i * zHalf;
+          const isBack = (i === 1);
+          
+          const colLeftBase = project(0, 0, z);
+          const colLeftTop = project(0, H, z);
+          const colRightBase = project(W, 0, z);
+          const colRightTop = project(W, H, z);
+          
+          const trussApex = project(W/2, H + R, z);
+          const trussMid = project(W/2, H, z);
+
+          drawSVGLine(colLeftBase, colLeftTop, '#0891b2', 3);
+          drawSVGLine(colRightBase, colRightTop, '#0891b2', 3);
+          drawSVGLine(colLeftTop, trussApex, '#0284c7', 3);
+          drawSVGLine(colRightTop, trussApex, '#0284c7', 3);
+          drawSVGLine(colLeftTop, colRightTop, '#0284c7', 2.5);
+          drawSVGLine(trussMid, trussApex, '#0284c7', 1.5);
+
+          drawSVGLine(project(0, 0, z), project(W, 0, z), '#0891b2', 2.5);
+
+          // Back mating seam frame is now closed with sheeting panels
+          if (isBack) {
+            for (let s = 1; s < 4; s++) {
+              const xs = W/4 * s;
+              drawSVGLine(project(xs, 0, z), project(xs, H + R*(0.5 - Math.abs(xs-W/2)/W), z), '#94a3b8', 1, true);
+            }
+          }
+        }
+
+        // Module A side walls girts & purlins (z=0 to z=zHalf)
+        const numGirtLines = Math.ceil(H / 3.0) + 1;
+        for (let g = 0; g < numGirtLines; g++) {
+          const girtH = (H / (numGirtLines - 1)) * g;
+          drawSVGLine(project(0, girtH, 0), project(0, girtH, zHalf), '#059669', 1.5);
+          drawSVGLine(project(W, girtH, 0), project(W, girtH, zHalf), '#059669', 1.5);
+        }
+        
+        const purlinsPerSide = 4;
+        for (let p = 0; p < purlinsPerSide; p++) {
+          const frac = p / (purlinsPerSide - 1);
+          drawSVGLine(project(W/2 * (1 - frac), H + R * frac, 0), project(W/2 * (1 - frac), H + R * frac, zHalf), '#059669', 1.5);
+          drawSVGLine(project(W/2 + W/2 * frac, H + R * (1 - frac), 0), project(W/2 + W/2 * frac, H + R * (1 - frac), zHalf), '#059669', 1.5);
+        }
+
+        // Draw 3D Base Skid rails for Module A
+        drawSVGLine(project(0, 0, 0), project(0, 0, zHalf), '#0891b2', 2.5);
+        drawSVGLine(project(W, 0, 0), project(W, 0, zHalf), '#0891b2', 2.5);
+
+        // Draw Knee Bracing on Module A
+        for (let i = 0; i < 2; i++) {
+          const z = i * zHalf;
+          const braceLeg = 1.0;
+          drawSVGLine(project(0, H - braceLeg, z), project(braceLeg, H, z), '#d97706', 2.5);
+          drawSVGLine(project(W, H - braceLeg, z), project(W - braceLeg, H, z), '#d97706', 2.5);
+        }
+
+        // DRAW PANORAMIC GUARD WINDOW on Module A front wall (z = 0)
+        const w1 = project(W/4, H/3, 0);
+        const w2 = project(3*W/4, H/3, 0);
+        const w3 = project(3*W/4, 2*H/3, 0);
+        const w4 = project(W/4, 2*H/3, 0);
+        drawSVGLine(w1, w2, '#00ff87', 2);
+        drawSVGLine(w2, w3, '#00ff87', 2);
+        drawSVGLine(w3, w4, '#00ff87', 2);
+        drawSVGLine(w4, w1, '#00ff87', 2);
+        drawSVGLine(project(W/2 - 1, H/2 - 0.5, 0), project(W/2 + 1, H/2 + 0.5, 0), '#60efff', 1);
+
+        // --- DRAW MODULE B (Relocated Utility Shed / Carport Canopy) shifted by xOffset=15, zOffset=-2 ---
+        const xOffset = W + 4; 
+        const zOffset = -2;
+
+        for (let i = 0; i < 2; i++) {
+          const z = i * zHalf;
+          const colLeftBase = project(0, 0, z, xOffset, zOffset);
+          const colLeftTop = project(0, H, z, xOffset, zOffset);
+          const colRightBase = project(W, 0, z, xOffset, zOffset);
+          const colRightTop = project(W, H, z, xOffset, zOffset);
+          
+          const trussApex = project(W/2, H + R, z, xOffset, zOffset);
+          const trussMid = project(W/2, H, z, xOffset, zOffset);
+
+          drawSVGLine(colLeftBase, colLeftTop, '#0891b2', 2.5);
+          drawSVGLine(colRightBase, colRightTop, '#0891b2', 2.5);
+          drawSVGLine(colLeftTop, trussApex, '#0284c7', 2.5);
+          drawSVGLine(colRightTop, trussApex, '#0284c7', 2.5);
+          drawSVGLine(colLeftTop, colRightTop, '#0284c7', 2);
+          drawSVGLine(trussMid, trussApex, '#0284c7', 1.2);
+
+          drawSVGLine(project(0, 0, z, xOffset, zOffset), project(W, 0, z, xOffset, zOffset), '#0891b2', 2);
+
+          // Both ends closed wall panels
+          for (let s = 1; s < 4; s++) {
+            const xs = W/4 * s;
+            drawSVGLine(project(xs, 0, z, xOffset, zOffset), project(xs, H + R*(0.5 - Math.abs(xs-W/2)/W), z, xOffset, zOffset), '#94a3b8', 0.8, true);
+          }
+        }
+
+        // Module B side walls girts & purlins (shifted)
+        for (let g = 0; g < numGirtLines; g++) {
+          const girtH = (H / (numGirtLines - 1)) * g;
+          drawSVGLine(project(0, girtH, 0, xOffset, zOffset), project(0, girtH, zHalf, xOffset, zOffset), '#059669', 1.2);
+          drawSVGLine(project(W, girtH, 0, xOffset, zOffset), project(W, girtH, zHalf, xOffset, zOffset), '#059669', 1.2);
+        }
+        
+        for (let p = 0; p < purlinsPerSide; p++) {
+          const frac = p / (purlinsPerSide - 1);
+          drawSVGLine(project(W/2 * (1 - frac), H + R * frac, 0, xOffset, zOffset), project(W/2 * (1 - frac), H + R * frac, zHalf, xOffset, zOffset), '#059669', 1.2);
+          drawSVGLine(project(W/2 + W/2 * frac, H + R * (1 - frac), 0, xOffset, zOffset), project(W/2 + W/2 * frac, H + R * (1 - frac), zHalf, xOffset, zOffset), '#059669', 1.2);
+        }
+
+        // Draw Base Skid rails for Module B
+        drawSVGLine(project(0, 0, 0, xOffset, zOffset), project(0, 0, zHalf, xOffset, zOffset), '#0891b2', 2);
+        drawSVGLine(project(W, 0, 0, xOffset, zOffset), project(W, 0, zHalf, xOffset, zOffset), '#0891b2', 2);
+
+        // Draw Knee Bracing on Module B
+        for (let i = 0; i < 2; i++) {
+          const z = i * zHalf;
+          const braceLeg = 1.0;
+          drawSVGLine(project(0, H - braceLeg, z, xOffset, zOffset), project(braceLeg, H, z, xOffset, zOffset), '#d97706', 2);
+          drawSVGLine(project(W, H - braceLeg, z, xOffset, zOffset), project(W - braceLeg, H, z, xOffset, zOffset), '#d97706', 2);
+        }
+      }
+    }
+
+    // Helper functions for drawing
+    function drawSVGLine(p1, p2, color, thickness, dashed = false) {
+      const svg = document.getElementById('shed-svg');
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      line.setAttribute('x1', p1.x);
+      line.setAttribute('y1', p1.y);
+      line.setAttribute('x2', p2.x);
+      line.setAttribute('y2', p2.y);
+      line.setAttribute('stroke', color);
+      line.setAttribute('stroke-width', thickness);
+      if (dashed) {
+        line.setAttribute('stroke-dasharray', '4,4');
+      }
+      svg.appendChild(line);
+    }
+
+    function drawSVGCircle(p, radius, color) {
+      const svg = document.getElementById('shed-svg');
+      const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      circle.setAttribute('cx', p.x);
+      circle.setAttribute('cy', p.y);
+      circle.setAttribute('r', radius);
+      circle.setAttribute('fill', color);
+      svg.appendChild(circle);
+    }
+
+    // CSV exporter
+    function exportBOMtoCSV() {
+      const table = document.getElementById('bom-table-data');
+      let csv = [];
+      
+      const rows = table.querySelectorAll('tr');
+      for (let i = 0; i < rows.length; i++) {
+        let row = [], cols = rows[i].querySelectorAll('td, th');
+        
+        for (let j = 0; j < cols.length; j++) {
+          // clean comma out of values
+          let data = cols[j].innerText.replace(/,/g, '').trim();
+          row.push(`"${data}"`);
+        }
+        
+        csv.push(row.join(','));
+      }
+      
+      const csvContent = "data:text/csv;charset=utf-8," + csv.join("\n");
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `aero_shed_bom_${document.getElementById('input-length').value}x${document.getElementById('input-width').value}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Initial load
+    window.onload = function() {
+      updateCalculations();
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sattal Hybrid Eco-Adventure | Pitch to Interact Club of Naukuchiatal & Rotary Nainital</title>
+  <!-- Favicon Links -->
+  <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+  <link rel="icon" href="./favicon.png" type="image/png" sizes="192x192">
+  <meta name="description" content="A hybrid road-and-trail touring enterprise creating sustainable youth livelihoods in the Sattal-Naukuchiatal region, Kumaon Himalayas." />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --forest:   #1a3a2a;
+      --emerald:  #2d6a4f;
+      --jade:     #40916c;
+      --sage:     #74c69d;
+      --mist:     #b7e4c7;
+      --dawn:     #f4a261;
+      --saffron:  #e76f51;
+      --gold:     #ffd166;
+      --sky:      #90e0ef;
+      --deep:     #f8fafc;
+      --slate:    #f1f5f9;
+      --carbon:   #f8fafc;
+      --cream:    #fdf6ec;
+      --white:    #ffffff;
+      --text-light: #1b3a2b;
+      --text-muted: #64748b;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--carbon);
+      color: #1b3a2b;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAVIGATION ─────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2.5rem;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(64,145,108,0.25);
+      transition: background 0.3s;
+    }
+    .nav-brand {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-weight: 800; font-size: 1rem; letter-spacing: 0.04em;
+      color: var(--emerald);
+    }
+    .nav-brand .wheel { font-size: 1.4rem; }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a {
+      color: #475569; font-size: 0.85rem; font-weight: 500;
+      text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--sage); }
+    .nav-cta {
+      background: linear-gradient(135deg, var(--jade), var(--emerald));
+      color: white; padding: 0.5rem 1.25rem; border-radius: 999px;
+      font-size: 0.8rem; font-weight: 700; letter-spacing: 0.05em;
+      text-transform: uppercase; text-decoration: none;
+      border: 1px solid rgba(116,198,157,0.3);
+      transition: all 0.3s;
+    }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(64,145,108,0.4); }
+
+    /* ─── HERO ───────────────────────────────────── */
+    .hero {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('sattal_hero.png');
+      background-size: cover; background-position: center;
+      transform: scale(1.05);
+      animation: heroZoom 20s ease-in-out infinite alternate;
+    }
+    @keyframes heroZoom { from { transform: scale(1.05); } to { transform: scale(1.12); } }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        160deg,
+        rgba(255,255,255,0.72) 0%,
+        rgba(183,228,199,0.55) 45%,
+        rgba(255,255,255,0.82) 100%
+      );
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center; padding: 2rem;
+      max-width: 860px;
+      animation: fadeUp 1.2s ease-out both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(64,145,108,0.12);
+      border: 1px solid rgba(64,145,108,0.4);
+      border-radius: 999px; padding: 0.4rem 1.2rem;
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--emerald);
+      margin-bottom: 1.8rem;
+      backdrop-filter: blur(8px);
+    }
+    .hero-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--emerald); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.5)} }
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 900; line-height: 1.1;
+      letter-spacing: -0.02em; margin-bottom: 0.5rem;
+      color: #0f172a;
+    }
+    .hero h1 .accent { color: var(--jade); }
+    .hero h1 .accent2 { color: #b45309; }
+    .hero-subtitle {
+      font-family: 'Lora', serif; font-style: italic;
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: #1b3a2b; margin: 1.2rem 0 2.5rem;
+      line-height: 1.6;
+    }
+    .hero-orgs {
+      display: flex; align-items: center; justify-content: center; gap: 1.5rem;
+      margin-bottom: 2.5rem; flex-wrap: wrap;
+    }
+    .org-chip {
+      background: rgba(255,255,255,0.8);
+      border: 1px solid rgba(64,145,108,0.3);
+      border-radius: 999px; padding: 0.45rem 1.1rem;
+      font-size: 0.82rem; font-weight: 600; color: #1b3a2b;
+      backdrop-filter: blur(8px);
+    }
+    .org-divider { color: var(--text-muted); font-size: 1.2rem; }
+    .hero-scroll {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      color: var(--text-muted); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+    .hero-scroll svg { width: 20px; opacity: 0.6; }
+
+    /* ─── SECTION BASE ───────────────────────────── */
+    section {
+      padding: 6rem 2rem;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .full-bleed {
+      max-width: none;
+      padding-left: 0; padding-right: 0;
+    }
+    .section-label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--emerald);
+      margin-bottom: 0.8rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .section-label::before {
+      content: ''; display: block;
+      width: 28px; height: 2px; background: var(--jade);
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800; line-height: 1.2; letter-spacing: -0.02em;
+      margin-bottom: 1.2rem;
+    }
+    .section-desc {
+      font-size: 1.05rem; color: #475569;
+      line-height: 1.75; max-width: 680px;
+    }
+
+    /* ─── DIVIDER ────────────────────────────────── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(64,145,108,0.2), transparent);
+      margin: 0 2rem;
+    }
+
+    /* ─── PROBLEM/OPPORTUNITY ────────────────────── */
+    #opportunity { background: #f8fafc; }
+    .cards-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 1.2rem; padding: 2rem;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .card::after {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--jade), var(--sage));
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(15,23,42,0.08); border-color: rgba(64,145,108,0.4); }
+    .card:hover::after { opacity: 1; }
+    .card-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+    .card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .card p { font-size: 0.9rem; color: #475569; line-height: 1.65; }
+    .card .tag {
+      display: inline-block; margin-top: 1rem;
+      background: rgba(116,198,157,0.15); border: 1px solid rgba(116,198,157,0.3);
+      border-radius: 999px; padding: 0.25rem 0.75rem;
+      font-size: 0.72rem; font-weight: 600; color: var(--sage); letter-spacing: 0.06em;
+    }
+
+    /* ─── ROUTE SECTION ──────────────────────────── */
+    #route { background: linear-gradient(180deg, #f1f5f9, #e8f4f0); }
+    .route-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2rem; margin-top: 3rem; align-items: start;
+    }
+    @media(max-width:768px){ .route-grid { grid-template-columns: 1fr; } }
+    .route-card {
+      border-radius: 1.2rem; padding: 2.2rem;
+      position: relative; overflow: hidden;
+    }
+    .route-card.paved {
+      background: linear-gradient(135deg, rgba(64,145,108,0.08), rgba(26,58,42,0.05));
+      border: 1px solid rgba(64,145,108,0.3);
+    }
+    .route-card.forest {
+      background: linear-gradient(135deg, rgba(244,162,97,0.07), rgba(231,111,81,0.05));
+      border: 1px solid rgba(244,162,97,0.3);
+    }
+    .route-card h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.8rem; }
+    .route-card p { font-size: 0.92rem; color: #475569; line-height: 1.65; }
+    .route-card .pct-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 2.4rem; font-weight: 900; margin-bottom: 0.5rem;
+    }
+    .route-card.paved .pct-badge { color: var(--sage); }
+    .route-card.forest .pct-badge { color: var(--dawn); }
+    .route-features { list-style: none; margin-top: 1.2rem; display: flex; flex-direction: column; gap: 0.6rem; }
+    .route-features li {
+      display: flex; align-items: flex-start; gap: 0.6rem;
+      font-size: 0.9rem; color: #475569;
+    }
+    .route-features li .check { color: var(--sage); flex-shrink: 0; font-size: 1rem; }
+    .route-features li .warn { color: var(--dawn); flex-shrink: 0; font-size: 1rem; }
+    .compliance-box {
+      margin-top: 2.5rem;
+      background: rgba(116,198,157,0.08);
+      border: 1px solid rgba(116,198,157,0.25);
+      border-radius: 1rem; padding: 1.5rem 2rem;
+      display: flex; align-items: flex-start; gap: 1rem;
+    }
+    .compliance-box .icon { font-size: 2rem; flex-shrink: 0; }
+    .compliance-box h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.4rem; color: var(--sage); }
+    .compliance-box p { font-size: 0.875rem; color: #475569; line-height: 1.6; }
+
+    /* ─── FLEET TABLE ────────────────────────────── */
+    #fleet { background: #f8fafc; }
+    .table-wrap {
+      margin-top: 3rem; overflow-x: auto; border-radius: 1rem;
+      border: 1px solid #e2e8f0;
+    }
+    table {
+      width: 100%; border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    thead tr {
+      background: linear-gradient(90deg, rgba(64,145,108,0.08), rgba(45,106,79,0.06));
+    }
+    th {
+      padding: 1.1rem 1.5rem; text-align: left;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--sage);
+      border-bottom: 1px solid rgba(116,198,157,0.25);
+    }
+    tbody tr {
+      border-bottom: 1px solid #e2e8f0;
+      transition: background 0.2s;
+    }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: rgba(64,145,108,0.04); }
+    td {
+      padding: 1.1rem 1.5rem; color: #475569;
+      vertical-align: top; line-height: 1.5;
+    }
+    td:first-child { color: #0f172a; font-weight: 600; }
+    .td-old { color: #94a3b8; text-decoration: line-through; font-size: 0.85rem; }
+    .td-new { color: var(--sage); font-weight: 600; }
+    .td-new span { display: block; font-weight: 400; color: #475569; font-size: 0.83rem; margin-top: 0.3rem; }
+
+    /* ─── FINANCIALS ─────────────────────────────── */
+    #financials {
+      background: linear-gradient(180deg, #e8f4f0, #f8fafc);
+    }
+    .fin-hero {
+      margin-top: 3rem;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+    .fin-stat {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 1.2rem; padding: 2rem;
+      text-align: center; position: relative; overflow: hidden;
+      transition: transform 0.3s;
+    }
+    .fin-stat:hover { transform: translateY(-4px); }
+    .fin-stat::before {
+      content:''; position:absolute; bottom:0; left:0; right:0; height:3px;
+      background: linear-gradient(90deg, var(--jade), var(--sage));
+    }
+    .fin-stat .val {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 900; letter-spacing: -0.03em;
+      background: linear-gradient(135deg, var(--sage), var(--gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .fin-stat .lbl {
+      font-size: 0.8rem; color: #64748b; font-weight: 500;
+      margin-top: 0.4rem; letter-spacing: 0.04em;
+    }
+    .fin-stat .sub {
+      font-size: 0.75rem; color: var(--sage); margin-top: 0.3rem; font-weight: 600;
+    }
+
+    .phases {
+      margin-top: 3rem;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    }
+    @media(max-width:768px){ .phases { grid-template-columns: 1fr; } }
+    .phase {
+      border-radius: 1.2rem; padding: 1.8rem;
+      border: 1px solid rgba(116,198,157,0.18);
+      position: relative;
+    }
+    .phase-1 { background: linear-gradient(135deg, rgba(64,145,108,0.07), rgba(26,58,42,0.04)); border: 1px solid rgba(64,145,108,0.2); }
+    .phase-2 { background: linear-gradient(135deg, rgba(244,162,97,0.07), rgba(26,58,42,0.04)); border: 1px solid rgba(244,162,97,0.2); }
+    .phase-3 { background: linear-gradient(135deg, rgba(255,209,102,0.07), rgba(26,58,42,0.04)); border: 1px solid rgba(255,209,102,0.2); }
+    .phase-num {
+      font-size: 0.7rem; font-weight: 800; letter-spacing: 0.12em;
+      text-transform: uppercase; margin-bottom: 0.5rem;
+    }
+    .phase-1 .phase-num { color: var(--sage); }
+    .phase-2 .phase-num { color: var(--dawn); }
+    .phase-3 .phase-num { color: var(--gold); }
+    .phase h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .phase .amount {
+      font-size: 1.8rem; font-weight: 900; letter-spacing: -0.02em;
+      margin: 0.5rem 0;
+    }
+    .phase-1 .amount { color: var(--sage); }
+    .phase-2 .amount { color: var(--dawn); }
+    .phase-3 .amount { color: var(--gold); }
+    .phase p { font-size: 0.85rem; color: #475569; line-height: 1.6; }
+    .phase ul { list-style: none; margin-top: 0.8rem; display: flex; flex-direction: column; gap: 0.4rem; }
+    .phase ul li { font-size: 0.83rem; color: #475569; padding-left: 1.2rem; position: relative; }
+    .phase ul li::before { content: '▸'; position: absolute; left: 0; color: inherit; }
+    .phase-1 ul li::before { color: var(--sage); }
+    .phase-2 ul li::before { color: var(--dawn); }
+    .phase-3 ul li::before { color: var(--gold); }
+
+    /* ─── LIVELIHOODS ────────────────────────────── */
+    #livelihoods { background: #f1f5f9; }
+    .livelihood-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 3rem; align-items: center; margin-top: 3rem;
+    }
+    @media(max-width:768px){ .livelihood-grid { grid-template-columns: 1fr; } }
+    .livelihood-img {
+      border-radius: 1.5rem; overflow: hidden;
+      box-shadow: 0 20px 60px rgba(15,23,42,0.12);
+      border: 1px solid rgba(116,198,157,0.2);
+      position: relative;
+    }
+    .livelihood-img img { width: 100%; display: block; }
+    .livelihood-img .img-caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 1.5rem;
+      background: linear-gradient(0deg, rgba(255,255,255,0.92), transparent);
+      font-size: 0.82rem; color: #1b3a2b; font-style: italic;
+    }
+    .salary-stack { display: flex; flex-direction: column; gap: 1.2rem; }
+    .salary-item {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 1rem; padding: 1.4rem 1.8rem;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: border-color 0.3s;
+    }
+    .salary-item:hover { border-color: rgba(64,145,108,0.4); box-shadow: 0 4px 16px rgba(15,23,42,0.06); }
+    .salary-item .role { font-size: 0.92rem; font-weight: 600; }
+    .salary-item .monthly { font-size: 1.2rem; font-weight: 800; color: var(--sage); }
+    .salary-item .note { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem; }
+    .referral-box {
+      margin-top: 2rem;
+      background: linear-gradient(135deg, rgba(244,162,97,0.12), rgba(231,111,81,0.08));
+      border: 1px solid rgba(244,162,97,0.3);
+      border-radius: 1rem; padding: 1.5rem 2rem;
+    }
+    .referral-box h4 { font-size: 1rem; font-weight: 700; color: var(--dawn); margin-bottom: 0.5rem; }
+    .referral-box p { font-size: 0.88rem; color: #475569; line-height: 1.6; }
+    .referral-box .highlight {
+      display: inline-block; font-size: 1.5rem; font-weight: 900;
+      color: var(--gold); margin-top: 0.5rem;
+    }
+
+    /* ─── NARRATIVE ──────────────────────────────── */
+    #narrative { background: linear-gradient(180deg, #edf7f2, #f1f5f9); }
+    .lore-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    @media(max-width:600px){ .lore-grid { grid-template-columns: 1fr; } }
+    .lore-card {
+      border-radius: 1.2rem; padding: 2rem;
+      position: relative; overflow: hidden;
+      cursor: default;
+      transition: transform 0.3s;
+    }
+    .lore-card:hover { transform: translateY(-5px); }
+    .lore-card::before {
+      content: ''; position: absolute; inset: 0;
+      opacity: 0.08; border-radius: inherit;
+    }
+    .lore-1 { background: #ffffff; border: 1px solid rgba(64,145,108,0.25); }
+    .lore-2 { background: #ffffff; border: 1px solid rgba(244,162,97,0.35); }
+    .lore-3 { background: #ffffff; border: 1px solid rgba(14,165,233,0.3); }
+    .lore-4 { background: #ffffff; border: 1px solid rgba(180,143,9,0.3); }
+    .lore-card .lore-num {
+      font-size: 2.8rem; font-weight: 900; opacity: 0.15;
+      position: absolute; top: 1rem; right: 1.5rem;
+      font-family: 'Outfit', sans-serif; line-height: 1;
+    }
+    .lore-card .lore-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+    .lore-card h3 {
+      font-family: 'Lora', serif; font-size: 1.1rem; font-weight: 600;
+      margin-bottom: 0.5rem; font-style: italic;
+    }
+    .lore-1 h3 { color: var(--emerald); }
+    .lore-2 h3 { color: #c2410c; }
+    .lore-3 h3 { color: #0369a1; }
+    .lore-4 h3 { color: #92400e; }
+    .lore-card p { font-size: 0.88rem; color: #475569; line-height: 1.65; }
+
+    .qr-hub {
+      margin-top: 2.5rem;
+      background: #f0f9ff;
+      border: 1px solid rgba(14,165,233,0.25);
+      border-radius: 1.2rem; padding: 2rem;
+      display: flex; align-items: center; gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .qr-icon-wrap {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--sky), var(--emerald));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; flex-shrink: 0;
+    }
+    .qr-hub h4 { font-size: 1rem; font-weight: 700; color: #0369a1; margin-bottom: 0.4rem; }
+    .qr-hub p { font-size: 0.88rem; color: #475569; line-height: 1.6; }
+
+    /* ─── COMPLIANCE & SAFETY ────────────────────── */
+    #compliance { background: #f8fafc; }
+    .safety-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .safety-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 1.2rem; padding: 1.8rem;
+      box-shadow: 0 2px 12px rgba(15,23,42,0.05);
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+    .safety-card:hover { border-color: rgba(64,145,108,0.35); transform: translateY(-4px); box-shadow: 0 8px 28px rgba(15,23,42,0.08); }
+    .safety-card .badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 48px; height: 48px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--jade), var(--emerald));
+      font-size: 1.4rem; margin-bottom: 1rem;
+    }
+    .safety-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem; color: #0f172a; }
+    .safety-card p { font-size: 0.85rem; color: #475569; line-height: 1.6; }
+
+    /* ─── CTA ────────────────────────────────────── */
+    #cta {
+      background: linear-gradient(160deg, #1a3a2a 0%, #0f172a 100%);
+      text-align: center; padding: 7rem 2rem;
+      position: relative; overflow: hidden;
+    }
+    #cta::before {
+      content: '';
+      position: absolute; top: -50%; left: 50%; transform: translateX(-50%);
+      width: 800px; height: 800px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(64,145,108,0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #cta .cta-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sage); margin-bottom: 1rem; }
+    #cta h2 {
+      font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900;
+      line-height: 1.1; letter-spacing: -0.025em;
+      margin-bottom: 1.5rem; color: #ffffff;
+    }
+    #cta h2 em { font-style: normal; color: var(--sage); }
+    #cta p { font-size: 1.1rem; color: rgba(255,255,255,0.8); max-width: 600px; margin: 0 auto 3rem; line-height: 1.7; }
+    .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: linear-gradient(135deg, var(--jade), var(--emerald));
+      color: white; padding: 1rem 2.2rem; border-radius: 999px;
+      font-size: 0.95rem; font-weight: 700; letter-spacing: 0.03em;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: all 0.3s; box-shadow: 0 4px 24px rgba(64,145,108,0.35);
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 40px rgba(64,145,108,0.5); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: transparent; color: white;
+      padding: 1rem 2.2rem; border-radius: 999px;
+      font-size: 0.95rem; font-weight: 600;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.25);
+      transition: all 0.3s;
+    }
+    .btn-secondary:hover { border-color: rgba(116,198,157,0.6); color: var(--sage); transform: translateY(-3px); }
+
+    /* ─── FOOTER ─────────────────────────────────── */
+    footer {
+      background: #0f172a;
+      border-top: 1px solid rgba(64,145,108,0.2);
+      padding: 2rem; text-align: center;
+      font-size: 0.78rem; color: rgba(255,255,255,0.55);
+    }
+    footer strong { color: rgba(255,255,255,0.88); }
+
+    /* ─── PROGRESS BAR ───────────────────────────── */
+    .progress-bar {
+      position: fixed; top: 0; left: 0; height: 3px; z-index: 200;
+      background: linear-gradient(90deg, var(--jade), var(--sage), var(--gold));
+      transition: width 0.1s linear;
+    }
+
+    /* ─── SCROLL ANIMATIONS ──────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── TICKER ─────────────────────────────────── */
+    .ticker-wrap {
+      background: linear-gradient(90deg, var(--emerald), var(--jade));
+      padding: 0.65rem 0; overflow: hidden;
+      border-top: 1px solid rgba(116,198,157,0.3);
+      border-bottom: 1px solid rgba(116,198,157,0.3);
+    }
+    .ticker {
+      display: flex; gap: 4rem;
+      animation: ticker 30s linear infinite;
+      white-space: nowrap;
+    }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .ticker span {
+      font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: rgba(255,255,255,0.9);
+    }
+    .ticker span::before { content: '◆ '; opacity: 0.6; }
+
+    /* ─── QUOTE ──────────────────────────────────── */
+    .quote-block {
+      margin: 3rem 0;
+      border-left: 3px solid var(--jade);
+      padding: 1.5rem 2rem;
+      background: rgba(64,145,108,0.07);
+      border-radius: 0 1rem 1rem 0;
+    }
+    .quote-block blockquote {
+      font-family: 'Lora', serif; font-style: italic;
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem); line-height: 1.65;
+      color: var(--text-light);
+    }
+    .quote-block cite {
+      display: block; margin-top: 0.8rem;
+      font-size: 0.82rem; color: var(--sage); font-style: normal; font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div class="progress-bar" id="progressBar" style="width:0%"></div>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-brand"><span class="wheel">🚵</span> Sattal Hybrid XC</div>
+  <div class="nav-links">
+    <a href="#opportunity">Opportunity</a>
+    <a href="#route">Routes</a>
+    <a href="#fleet">Fleet</a>
+    <a href="#financials">Financials</a>
+    <a href="#narrative">Experience</a>
+  </div>
+  <a href="#cta" class="nav-cta">Join the Mission</a>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      A Pitch to Interact Club of Naukuchiatal &amp; Rotary Nainital
+    </div>
+    <h1>
+      <span class="accent">Sattal</span> Hybrid<br/>
+      <span class="accent2">Eco-Adventure</span>
+    </h1>
+    <p class="hero-subtitle">
+      Transforming a cross-country trail model into a premium lore-driven<br/>
+      touring enterprise — while putting local Kumaoni youth at its heart.
+    </p>
+    <div class="hero-orgs">
+      <span class="org-chip">🌀 Interact Club, Naukuchiatal</span>
+      <span class="org-divider">×</span>
+      <span class="org-chip">⚙️ Rotary Club, Nainital</span>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 5v14M5 12l7 7 7-7"/>
+    </svg>
+    Scroll to explore
+  </div>
+</div>
+
+<!-- Ticker -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span>Sattal Ridge Loops</span>
+    <span>Youth-Led Guides</span>
+    <span>DFO Nainital Permitted</span>
+    <span>UTDB Registered</span>
+    <span>₹3,500 Ticket Price</span>
+    <span>Shimano CUES Drivetrain</span>
+    <span>Hydraulic Disc Brakes</span>
+    <span>Kumaoni Lore Framework</span>
+    <span>QR Story Hubs</span>
+    <span>Sattal Ridge Loops</span>
+    <span>Youth-Led Guides</span>
+    <span>DFO Nainital Permitted</span>
+    <span>UTDB Registered</span>
+    <span>₹3,500 Ticket Price</span>
+    <span>Shimano CUES Drivetrain</span>
+    <span>Hydraulic Disc Brakes</span>
+    <span>Kumaoni Lore Framework</span>
+    <span>QR Story Hubs</span>
+  </div>
+</div>
+
+<!-- Opportunity -->
+<section id="opportunity">
+  <div class="reveal">
+    <div class="section-label">The Opportunity</div>
+    <h2 class="section-title">Why a Hybrid Tour Model<br/>Wins in the Kumaon Hills</h2>
+    <p class="section-desc">
+      The Sattal-Naukuchiatal corridor is one of Uttarakhand's most scenic but under-monetised adventure corridors.
+      A pivot from pure XC cross-country riding to a hybrid road-and-trail model unlocks a far wider tourist base
+      while dramatically reducing operational and regulatory friction.
+    </p>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card reveal">
+      <div class="card-icon">🏔️</div>
+      <h3>Wider Tourist Appeal</h3>
+      <p>Paved ridge and lake circuits open the experience to leisure tourists who would never sign up for aggressive mountain biking — massively expanding the addressable market.</p>
+      <span class="tag">Market Expansion</span>
+    </div>
+    <div class="card reveal">
+      <div class="card-icon">🌿</div>
+      <h3>Lower Environmental Footprint</h3>
+      <p>Limiting unpaved riding to pre-approved singletracks keeps the Trail Impact Score low, protecting sensitive Kumaoni flora like Buransh and Chirata while keeping the DFO satisfied.</p>
+      <span class="tag">Eco-Compliance</span>
+    </div>
+    <div class="card reveal">
+      <div class="card-icon">👨‍💼</div>
+      <h3>Youth Livelihood First</h3>
+      <p>₹4,56,000 annually in direct guide and coordinator salaries. Local youth become the authentic face of the region's heritage — not an afterthought.</p>
+      <span class="tag">Social Impact</span>
+    </div>
+    <div class="card reveal">
+      <div class="card-icon">⚙️</div>
+      <h3>Reduced Mechanical Risk</h3>
+      <p>Hybrid geometry, gravel tires, and hydraulic brakes perform excellently on tarmac while handling light forest dirt — eliminating the frequent mechanical failures of aggressive XC setups.</p>
+      <span class="tag">Operational Efficiency</span>
+    </div>
+    <div class="card reveal">
+      <div class="card-icon">📖</div>
+      <h3>Premium Lore Identity</h3>
+      <p>The four-tier narrative framework — Sapt Rishi Gatha, Van Seva, Jungle Aushadhi, Van Pranis — transforms every ride into a living cultural classroom that commands a premium price point.</p>
+      <span class="tag">Differentiation</span>
+    </div>
+    <div class="card reveal">
+      <div class="card-icon">🤝</div>
+      <h3>Homestay Ecosystem</h3>
+      <p>A 20% flat referral fee (₹700 per ticket) for local homestay partners creates a self-sustaining booking flywheel — aligning every accommodation host in the valley as a sales agent.</p>
+      <span class="tag">Revenue Multiplier</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Route -->
+<section id="route">
+  <div class="reveal">
+    <div class="section-label">Route Architecture</div>
+    <h2 class="section-title">Smart Terrain Design for<br/>Maximum Safety &amp; Revenue</h2>
+    <p class="section-desc">
+      The hybrid route matrix strategically blends tarmac efficiency with carefully-gated forest access.
+      Every kilometre of the route has been designed to minimise risk while maximising scenic and narrative value.
+    </p>
+  </div>
+
+  <div class="route-grid reveal">
+    <div class="route-card paved">
+      <div class="pct-badge">~75%</div>
+      <h3>🛣️ Paved Municipal &amp; Ridge Roads</h3>
+      <p>The backbone of every commercial tour runs on existing asphalt along the Sattal ridge and interconnected lake circuits.</p>
+      <ul class="route-features">
+        <li><span class="check">✓</span> Open to all fitness levels — no prior mountain biking experience needed</li>
+        <li><span class="check">✓</span> Predictable road conditions enable accurate safety briefings</li>
+        <li><span class="check">✓</span> Eliminates need for heavy XC mechanical support on-trail</li>
+        <li><span class="check">✓</span> Scenic lake-level and ridge panoramas accessible at every rest stop</li>
+      </ul>
+    </div>
+    <div class="route-card forest">
+      <div class="pct-badge">~25%</div>
+      <h3>🌲 Controlled Forest Singletracks</h3>
+      <p>Short, curated forays into canopy zones deliver the adventure quotient while staying within DFO-approved pathways.</p>
+      <ul class="route-features">
+        <li><span class="warn">▲</span> Strictly confined to pre-approved DFO Nainital permitted pathways</li>
+        <li><span class="warn">▲</span> Minimal soil displacement — trail width restricted, no switchback creation</li>
+        <li><span class="warn">▲</span> Timed to avoid sensitive wildlife activity windows</li>
+        <li><span class="check">✓</span> Narrative anchor points: Jungle Aushadhi and Van Pranis storytelling zones</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="compliance-box reveal">
+    <div class="icon">🛡️</div>
+    <div>
+      <h4>Regulatory Compliance Framework</h4>
+      <p>Every forest detour operates under dual clearance — <strong>Forest Department (DFO Nainital) permits</strong> for trail access
+        and <strong>UTDB registration</strong> for commercial adventure tourism. Operations are protected by comprehensive liability insurance
+        aligned with Ministry of Tourism guidelines and mandatory pre-ride digital waivers. At least one
+        <strong>Wilderness First Responder (WFR) certified guide</strong> leads every excursion.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Fleet -->
+<section id="fleet">
+  <div class="reveal">
+    <div class="section-label">Fleet Specification</div>
+    <h2 class="section-title">Hardware Optimised for the<br/>Himalayan Hybrid Terrain</h2>
+    <p class="section-desc">
+      The transition from an aggressive XC footprint to a hybrid touring framework necessitates
+      precise mechanical choices — each one balancing durability, rider safety, and total cost of ownership.
+    </p>
+  </div>
+
+  <div class="table-wrap reveal">
+    <table>
+      <thead>
+        <tr>
+          <th>Component</th>
+          <th>Original XC Specification</th>
+          <th>Adapted Hybrid Touring Spec</th>
+          <th>Rationale</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>🖼️ Frame &amp; Fork</td>
+          <td><span class="td-old">Hardtail XC with heavy suspension forks</span></td>
+          <td><span class="td-new">Rigid 6061 Alloy Hybrid<span>Suspension-free design</span></span></td>
+          <td>Eliminating a cheap suspension fork saves ~2.5 kg of unsprung weight, reducing rider fatigue on long tarmac climbs significantly.</td>
+        </tr>
+        <tr>
+          <td>⚙️ Drivetrain</td>
+          <td><span class="td-old">Shimano CUES standard</span></td>
+          <td><span class="td-new">Shimano CUES 1×9 or 2×9<span>LinkGlide retained</span></span></td>
+          <td>LinkGlide is non-negotiable — its high-torque durability is essential when inexperienced riders shift under load on steep Himalayan ascents.</td>
+        </tr>
+        <tr>
+          <td>🛑 Braking</td>
+          <td><span class="td-old">Generic multi-piece setups</span></td>
+          <td><span class="td-new">Shimano Hydraulic Disc Brakes<span>Thermal fade resistant</span></span></td>
+          <td>Essential for consistent braking leverage and resisting thermal fade during prolonged downhill runs back to lake level — a key safety non-negotiable.</td>
+        </tr>
+        <tr>
+          <td>🔵 Tire Profile</td>
+          <td><span class="td-old">Aggressive wide knobby XC tires</span></td>
+          <td><span class="td-new">700×38c / 40c Gravel Tires<span>Low rolling resistance</span></span></td>
+          <td>Minimal rolling resistance on paved sections with sufficient side-knob traction to safely navigate light forest dirt detours.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="quote-block reveal">
+    <blockquote>
+      "Gravel geometry provides the efficiency of a road bike with just enough compliance and ground clearance to handle the Sattal forest trails confidently — this is the sweet spot for a premium guided tour."
+    </blockquote>
+    <cite>— Hybrid Fleet Design Rationale, Sattal XC Eco-Adventure Business Plan</cite>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Financials -->
+<section id="financials">
+  <div class="reveal">
+    <div class="section-label">Financial Architecture</div>
+    <h2 class="section-title">A Lean, Phased Model<br/>Built for Real Himalayan Realities</h2>
+    <p class="section-desc">
+      The economic skeleton of the original XC plan scales cleanly when adapted for hybrid touring —
+      with lower depreciation, longer tire life, and a proven referral engine driving bookings.
+    </p>
+  </div>
+
+  <div class="fin-hero reveal">
+    <div class="fin-stat">
+      <div class="val">₹3,500</div>
+      <div class="lbl">Per Ticket (All-inclusive)</div>
+      <div class="sub">Premium pricing anchored in experience</div>
+    </div>
+    <div class="fin-stat">
+      <div class="val">20%</div>
+      <div class="lbl">Flat Referral Fee</div>
+      <div class="sub">₹700 per ticket to homestay partners</div>
+    </div>
+    <div class="fin-stat">
+      <div class="val">₹4.56L</div>
+      <div class="lbl">Annual Youth Salaries</div>
+      <div class="sub">2 guides + 1 coordinator</div>
+    </div>
+    <div class="fin-stat">
+      <div class="val">₹1.57L</div>
+      <div class="lbl">Annual Maintenance Reserve</div>
+      <div class="sub">Brakes, drivetrains, hydraulics</div>
+    </div>
+    <div class="fin-stat">
+      <div class="val">10</div>
+      <div class="lbl">Bikes at Full Fleet</div>
+      <div class="sub">Scaled over Year 1–2 phases</div>
+    </div>
+  </div>
+
+  <div class="phases reveal">
+    <div class="phase phase-1">
+      <div class="phase-num">Phase 1 · Pilot</div>
+      <h3>Lean Launch</h3>
+      <div class="amount">₹2,00,000</div>
+      <p>Deploy a 4-bike hybrid/XC mix on Sattal's most popular ridge loop. Test local road dynamics, refine guide protocols, and validate ticket pricing.</p>
+      <ul>
+        <li>4 hybrid bikes deployed</li>
+        <li>2 guides trained &amp; certified</li>
+        <li>3 homestay referral partners</li>
+        <li>DFO permit secured for 2 forest detours</li>
+      </ul>
+    </div>
+    <div class="phase phase-2">
+      <div class="phase-num">Phase 2 · Scale</div>
+      <h3>Fleet Expansion</h3>
+      <div class="amount">₹1,68,000</div>
+      <p>Once Phase 1 breaks even, add 4 more hybrid bikes, expand to second ridge circuit, and onboard 2 additional homestay partners.</p>
+      <ul>
+        <li>+4 bikes (8 total)</li>
+        <li>Second route corridor opened</li>
+        <li>QR Story Hub infrastructure deployed</li>
+        <li>Administrative coordinator hired</li>
+      </ul>
+    </div>
+    <div class="phase phase-3">
+      <div class="phase-num">Phase 3 · Year 2</div>
+      <h3>Complete Fleet</h3>
+      <div class="amount">Full 10-Bike Fleet</div>
+      <p>Complete the fleet, introduce premium sunrise and sunset circuit variants, and explore partnerships with Nainital schools for educational day-tours.</p>
+      <ul>
+        <li>10-bike full fleet operational</li>
+        <li>Premium sunrise / sunset circuits</li>
+        <li>School educational partnerships</li>
+        <li>Seasonal maintenance cycle optimised</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Livelihoods -->
+<section id="livelihoods">
+  <div class="reveal">
+    <div class="section-label">Youth Livelihoods</div>
+    <h2 class="section-title">Local Youth as the<br/>Custodians of Kumaoni Heritage</h2>
+    <p class="section-desc">
+      This model places Naukuchiatal's young people at its economic centre — not as supporting cast,
+      but as the primary earners, storytellers, and long-term stewards of the Sattal ecosystem.
+    </p>
+  </div>
+
+  <div class="livelihood-grid reveal">
+    <div class="livelihood-img">
+      <img src="youth_guides.png" alt="Local youth guides leading a group on a forested Himalayan road" />
+      <div class="img-caption">Local youth guides lead tourists through the Sattal forest corridor</div>
+    </div>
+    <div>
+      <div class="salary-stack">
+        <div class="salary-item">
+          <div>
+            <div class="role">🚵 Lead Trail Guide (×1)</div>
+            <div class="note">WFR certified · Lore-trained · Route lead</div>
+          </div>
+          <div>
+            <div class="monthly">₹15,000 <span style="font-size:0.75rem;font-weight:400;color:var(--text-muted)">/mo</span></div>
+          </div>
+        </div>
+        <div class="salary-item">
+          <div>
+            <div class="role">🚵 Sweep Guide (×1)</div>
+            <div class="note">First aid trained · Mechanical support · Tail rider</div>
+          </div>
+          <div>
+            <div class="monthly">₹13,000 <span style="font-size:0.75rem;font-weight:400;color:var(--text-muted)">/mo</span></div>
+          </div>
+        </div>
+        <div class="salary-item">
+          <div>
+            <div class="role">📋 Operations Coordinator (×1)</div>
+            <div class="note">Bookings · Referral network · Equipment management</div>
+          </div>
+          <div>
+            <div class="monthly">₹10,000 <span style="font-size:0.75rem;font-weight:400;color:var(--text-muted)">/mo</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="referral-box">
+        <h4>🏠 Homestay Referral Engine</h4>
+        <p>Every participating homestay in the Sattal-Naukuchiatal valley earns a flat
+          <strong>20% commission on each ticket</strong> they refer. This aligns every accommodation
+          host as an active sales partner — creating a self-sustaining booking flywheel that
+          costs nothing to maintain.</p>
+        <div class="highlight">₹700 / ticket</div>
+        <p style="margin-top:0.4rem; font-size:0.82rem; color:var(--text-muted)">paid directly to referring homestay at point-of-booking</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Narrative -->
+<section id="narrative">
+  <div class="reveal">
+    <div class="section-label">Experience Design</div>
+    <h2 class="section-title">The Lore &amp; Legend<br/>Narrative Framework</h2>
+    <p class="section-desc">
+      What separates a ₹3,500 ride from a ₹500 cycle rental is the depth of experience.
+      The four-tier narrative framework transforms every kilometre of trail into a living act of Kumaoni storytelling.
+    </p>
+  </div>
+
+  <div class="lore-grid reveal">
+    <div class="lore-card lore-1">
+      <div class="lore-num">01</div>
+      <div class="lore-icon">🔱</div>
+      <h3>Sapt Rishi Gatha</h3>
+      <p>The Seven Sages of Sattal — riders learn the mythological and Vedic origins of the seven lakes,
+        understanding why this geography was considered sacred in ancient Kumaoni traditions.</p>
+    </div>
+    <div class="lore-card lore-2">
+      <div class="lore-num">02</div>
+      <div class="lore-icon">🌳</div>
+      <h3>Van Seva</h3>
+      <p>Forest Service &amp; Stewardship — guides demonstrate how local communities have practiced
+        sustainable forest management for generations, connecting conservation practice to living tradition.</p>
+    </div>
+    <div class="lore-card lore-3">
+      <div class="lore-num">03</div>
+      <div class="lore-icon">🌿</div>
+      <h3>Jungle Aushadhi</h3>
+      <p>Forest Medicine — at designated canopy waypoints, guides identify medicinal plants including
+        Chirata and Buransh, explaining their traditional Kumaoni pharmacological uses and collection ethics.</p>
+    </div>
+    <div class="lore-card lore-4">
+      <div class="lore-num">04</div>
+      <div class="lore-icon">🦅</div>
+      <h3>Van Pranis</h3>
+      <p>Forest Creatures — the biodiversity chapter: Sattal's endemic birds, mammals, and insects
+        come alive through guided observation and audio identification at carefully chosen ecological waypoints.</p>
+    </div>
+  </div>
+
+  <div class="qr-hub reveal">
+    <div class="qr-icon-wrap">📱</div>
+    <div>
+      <h4>QR-Coded Digital Story Hubs</h4>
+      <p>Roadside signage at every narrative waypoint carries scannable QR codes linking to immersive, multilingual Kumaoni storytelling content.
+        <strong>Offline mobile fallbacks</strong> are pre-loaded at tour start — ensuring zero connectivity gaps
+        even in dense forest zones. Tourists carry the experience home: a digital postcard of their lore journey.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Compliance & Safety -->
+<section id="compliance">
+  <div class="reveal">
+    <div class="section-label">Safety &amp; Compliance</div>
+    <h2 class="section-title">Built Safe, Built Legal,<br/>Built to Last</h2>
+    <p class="section-desc">
+      Mountain descents on even paved Himalayan roads present real risks. Every operational layer
+      of this venture is designed to mitigate those risks while maintaining full regulatory standing.
+    </p>
+  </div>
+
+  <div class="safety-grid reveal">
+    <div class="safety-card">
+      <div class="badge">🏥</div>
+      <h3>WFR Certified Guide Mandate</h3>
+      <p>Every excursion is led by at least one Wilderness First Responder certified guide.
+        This is a hard operational requirement, not a recommendation — no exceptions.</p>
+    </div>
+    <div class="safety-card">
+      <div class="badge">📋</div>
+      <h3>DFO Nainital Forest Permits</h3>
+      <p>All forest singletrack access operates under formal Forest Department clearance.
+        Permits define approved pathways, seasonal restrictions, and group-size limits.</p>
+    </div>
+    <div class="safety-card">
+      <div class="badge">🏛️</div>
+      <h3>UTDB Registration</h3>
+      <p>The venture is registered as a commercial adventure tourism operator with
+        Uttarakhand Tourism Development Board — a legal prerequisite for group guided tours.</p>
+    </div>
+    <div class="safety-card">
+      <div class="badge">🛡️</div>
+      <h3>Comprehensive Liability Insurance</h3>
+      <p>Full liability coverage aligned with Ministry of Tourism adventure tourism guidelines,
+        protecting both riders and the operating entity across all commercial tour operations.</p>
+    </div>
+    <div class="safety-card">
+      <div class="badge">✍️</div>
+      <h3>Digital Pre-Ride Waivers</h3>
+      <p>Every participant completes a digitally-signed informed consent waiver before the ride.
+        Waivers are timestamped and cloud-stored for legal reference and dispute resolution.</p>
+    </div>
+    <div class="safety-card">
+      <div class="badge">🔧</div>
+      <h3>₹1,57,600 Maintenance Reserve</h3>
+      <p>Himalayan terrain continuously strains braking systems and drivetrains.
+        The dedicated annual maintenance fund covers hydraulic pad swaps, fluid bleeds, and drivetrain overhauls.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div id="cta">
+  <div class="cta-label">The Ask</div>
+  <h2>Back the Venture.<br/><em>Empower Youth.</em></h2>
+  <p>
+    The Interact Club of Naukuchiatal and Rotary Nainital are uniquely positioned to champion
+    this hybrid eco-adventure model — providing the community trust, institutional credibility,
+    and seed support that unlocks Phase 1 deployment.
+  </p>
+  <div class="cta-buttons">
+    <a href="mailto:vasundharashiksha@gmail.com" class="btn-primary">
+      ✉️ Reach Out to Interact Club
+    </a>
+    <a href="mailto:shahshivangi13@gmail.com" class="btn-secondary">
+      ⚙️ Contact President Shivangi Shah
+    </a>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <p>
+    <strong>Sattal Hybrid Eco-Adventure</strong> &nbsp;·&nbsp;
+    Presented to the Interact Club of Naukuchiatal &amp; Rotary Club of Nainital &nbsp;·&nbsp;
+    Sattal, Bhimtal Sub-Tehsil, Nainital District, Uttarakhand, India &nbsp;·&nbsp;
+    May 2026
+  </p>
+  <p style="margin-top:0.5rem; font-size:0.72rem; opacity:0.5;">
+    All financial projections are indicative. Subject to DFO permit availability and UTDB registration approval.
+  </p>
+</footer>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const scrolled = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+    document.getElementById('progressBar').style.width = scrolled + '%';
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Staggered card animation
+  document.querySelectorAll('.cards-grid .card').forEach((card, i) => {
+    card.style.transitionDelay = (i * 0.1) + 's';
+  });
+  document.querySelectorAll('.lore-grid .lore-card').forEach((card, i) => {
+    card.style.transitionDelay = (i * 0.1) + 's';
+  });
+  document.querySelectorAll('.safety-grid .safety-card').forEach((card, i) => {
+    card.style.transitionDelay = (i * 0.08) + 's';
+  });
+</script>
+</body>
+</html>

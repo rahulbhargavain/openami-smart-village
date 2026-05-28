@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prepaid Metering &amp; STS Legacy Algorithm Request — Sub-Saharan Africa</title>
+  <meta name="description" content="Formal correspondence and technical reference from the SSA Mini-Grid Coalition regarding STS prepaid metering standards and legacy fleet key management permissions.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #f1f5f9;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f8fafc;
+      --accent-teal: #0891b2;
+      --accent-blue: #3b82f6;
+      --accent-amber: #d97706;
+      --accent-rose: #e11d48;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --border-accent: #cbd5e1;
+      --gradient-hero: linear-gradient(135deg, #f8fafc 0%, #e2f4f1 55%, #f1f5f9 100%);
+      --gradient-teal: linear-gradient(135deg, #0891b2, #06b6d4);
+      --gradient-blue: linear-gradient(135deg, #3b82f6, #6366f1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    /* HERO */
+    .hero {
+      background: var(--gradient-hero);
+      border-bottom: 1px solid var(--border-accent);
+      padding: 64px 40px 52px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 420px; height: 420px;
+      background: radial-gradient(circle, rgba(8,145,178,0.06) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      margin-bottom: 28px;
+      transition: color 0.2s;
+    }
+    .back-link:hover {
+      color: var(--accent-teal);
+    }
+    .eyebrow {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 13px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+    .tag-teal {
+      background: rgba(20,184,166,0.12);
+      border: 1px solid rgba(20,184,166,0.35);
+      color: var(--accent-teal);
+    }
+    .tag-blue {
+      background: rgba(59,130,246,0.12);
+      border: 1px solid rgba(59,130,246,0.35);
+      color: var(--accent-blue);
+    }
+    .tag-amber {
+      background: rgba(245,158,11,0.12);
+      border: 1px solid rgba(245,158,11,0.35);
+      color: var(--accent-amber);
+    }
+    
+    h1 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 16px;
+    }
+    h1 em {
+      font-style: normal;
+      background: var(--gradient-teal);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      color: var(--text-secondary);
+      font-size: 1.02rem;
+      max-width: 800px;
+      margin-bottom: 32px;
+      line-height: 1.8;
+    }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+      margin-top: 20px;
+    }
+    .meta-item {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .meta-item strong {
+      color: var(--text-secondary);
+    }
+
+    /* STICKY NAV */
+    nav {
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+    .nav-inner {
+      display: flex;
+      overflow-x: auto;
+    }
+    .nav-inner a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 14px 16px;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .nav-inner a:hover {
+      color: var(--accent-teal);
+      border-bottom-color: var(--accent-teal);
+    }
+
+    /* MAIN CONTAINER */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+    
+    .section-anchor {
+      padding: 60px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .sec-title {
+      font-size: clamp(1.3rem, 3vw, 1.8rem);
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: var(--accent-teal);
+      border-left: 3px solid var(--accent-teal);
+      padding-left: 14px;
+    }
+
+    h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-top: 32px;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+
+    h4 {
+      font-size: 0.98rem;
+      font-weight: 700;
+      margin-top: 24px;
+      margin-bottom: 8px;
+      color: var(--accent-blue);
+    }
+
+    p {
+      margin-bottom: 16px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      font-size: 0.92rem;
+    }
+    
+    /* LISTS */
+    ul {
+      margin-bottom: 20px;
+      padding-left: 20px;
+      list-style-type: square;
+    }
+    li {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+      line-height: 1.7;
+    }
+    ol {
+      margin-bottom: 20px;
+      padding-left: 20px;
+    }
+    ol li {
+      margin-bottom: 10px;
+    }
+    li strong {
+      color: var(--text-primary);
+    }
+
+    /* TABLES */
+    .table-wrapper {
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid var(--border-accent);
+      margin: 24px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+    }
+    thead tr {
+      background: rgba(20, 184, 166, 0.08);
+    }
+    th {
+      padding: 13px 15px;
+      text-align: left;
+      font-weight: 700;
+      color: var(--accent-teal);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    td {
+      padding: 11px 15px;
+      border-top: 1px solid var(--border);
+      color: var(--text-secondary);
+      vertical-align: top;
+    }
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.015);
+    }
+    td strong {
+      color: var(--text-primary);
+    }
+    td code {
+      font-family: 'JetBrains Mono', monospace;
+      background: rgba(20, 184, 166, 0.1);
+      color: var(--accent-teal);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.76rem;
+    }
+
+    /* ALERTS */
+    .alert {
+      padding: 18px 22px;
+      border-radius: 10px;
+      margin: 22px 0;
+      display: flex;
+      gap: 14px;
+    }
+    .alert-teal {
+      background: rgba(20, 184, 166, 0.07);
+      border-left: 3px solid var(--accent-teal);
+    }
+    .alert-amber {
+      background: rgba(245, 158, 11, 0.07);
+      border-left: 3px solid var(--accent-amber);
+    }
+    .alert-info {
+      background: rgba(59, 130, 246, 0.07);
+      border-left: 3px solid var(--accent-blue);
+    }
+    .alert-icon {
+      font-size: 1.25rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .alert-content {
+      flex: 1;
+    }
+    .alert-title {
+      font-weight: 700;
+      font-size: 0.88rem;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .alert-text {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+    .alert-text strong {
+      color: var(--text-primary);
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      padding: 48px 40px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+    footer strong {
+      color: var(--accent-teal);
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid var(--border);
+      margin: 24px 0;
+    }
+
+    @media(max-width: 768px) {
+      .hero { padding: 40px 20px; }
+      .container { padding: 0 20px; }
+      nav { padding: 0 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="hero">
+  <a href="/reports" class="back-link">← Reports Index</a>
+  <div class="eyebrow">
+    <span class="tag tag-teal">✉️ Industry Letter</span>
+    <span class="tag tag-blue">🌐 STS Association</span>
+    <span class="tag tag-amber">⚡ Legacy Key Management</span>
+  </div>
+  <h1>Prepaid Metering &amp; STS Standard:<br><em>Legacy Key Management</em> in SSA</h1>
+  <p class="hero-sub">A formal industry correspondence from the Coalition of Sub-Saharan Africa Mini-Grid Developers and System Integrators to the STS Association (STSA), IEC working groups, and meter manufacturers — validating operating contexts, enumerating legacy algorithms, and requesting indefinite self-management permissions.</p>
+  <div class="hero-meta">
+    <div class="meta-item">Ref: <strong>SSA-STS-LEGACY-2026-001</strong></div>
+    <div class="meta-item">Date: <strong>18 May 2026</strong></div>
+    <div class="meta-item">Installed Base: <strong>>2.5M STS Meters</strong></div>
+    <div class="meta-item">Target Horizon: <strong>Indefinite / 10-Year committed support</strong></div>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#purpose">Purpose</a>
+    <a href="#context">Operating Context</a>
+    <a href="#algorithms">Algorithm Reference</a>
+    <a href="#request">Self-Management Request</a>
+    <a href="#oems">OEM Summary</a>
+    <a href="#recipients">Recipient List</a>
+    <a href="#glossary">Technical Glossary</a>
+  </div>
+</nav>
+
+<main class="container">
+  
+
+
+
+
+<hr />
+<p><strong>Date:</strong> 18 May 2026</p>
+<p><strong>Reference:</strong> SSA-STS-LEGACY-2026-001</p>
+<hr />
+<h2 id="to-recipients-see-annex-a-full-recipient-list">TO: Recipients
+(See Annex A — Full Recipient List)</h2>
+<p><strong>Primary Addressees:</strong> - The Executive Director, STS
+Association (STSA), Johannesburg, South Africa - The Chairman, IEC TC13
+WG14 (IEC 62055 Series Working Group) - The Africa Regional Director,
+STS Association</p>
+<p><strong>For Information:</strong> - All meter manufacturers in Annex
+A - Regional energy regulators — East, West, and Southern Africa</p>
+<hr />
+<h2 id="from">FROM:</h2>
+<p><strong>Coalition of Mini-Grid Developers and System Integrators —
+Sub-Saharan Africa</strong></p>
+<p><em>Submitted on behalf of mini-grid operators, rural electrification
+programme developers, and off-grid energy system integrators operating
+across Sub-Saharan Africa (SSA), representing an estimated installed
+base exceeding <strong>2.5 million STS-compliant prepayment
+meters</strong> across Kenya, Tanzania, Uganda, Rwanda, Ethiopia, Ghana,
+Nigeria, Senegal, Zambia, Zimbabwe, Mozambique, and Madagascar.</em></p>
+<hr />
+<section id="purpose" class="section-anchor"><h2 class="sec-title">1. Purpose and Background</h2>
+<p>This letter is submitted to the STS Association (STSA) and to the
+prepaid meter manufacturing community to:</p>
+<ol type="1">
+<li><strong>Formally validate</strong> the specific operational context
+of mini-grid and off-grid deployments in Sub-Saharan Africa as distinct
+from utility-scale grid deployments;</li>
+<li><strong>Formally enumerate</strong> all STS encryption algorithm
+versions and key management parameters encountered in deployed legacy
+meter fleets across SSA, for the purposes of creating an authoritative
+reference for STS correspondence, technical compliance, and field
+operations;</li>
+<li><strong>Request formal recognition</strong> from the STSA and from
+meter OEMs of the right of mini-grid developers and operators with large
+legacy meter fleets to <strong>self-manage and continue operating their
+existing meters indefinitely</strong>, without being compelled to
+undertake full fleet replacement due to algorithm or TID lifecycle
+changes.</li>
+</ol>
+
+            <div class="alert alert-teal">
+              <div class="alert-icon">⚡</div>
+              <div class="alert-content">
+                <div class="alert-title">IMPORTANT</div>
+                <div class="alert-text">This letter does not advocate circumventing the STS
+standard’s security model. It advocates for <strong>structured legacy
+key management access</strong> — specifically, formal permission for
+qualified mini-grid operators to retain and manage their vending keys
+and Security Modules for STS-compliant meters already in their fleet,
+for the operational life of those meters.</div>
+              </div>
+            </div>
+            
+<hr />
+<h2 id="sub-saharan-africa-validation-of-the-operating-context">2.
+Sub-Saharan Africa — Validation of the Operating Context</h2>
+<h3 id="why-ssa-mini-grid-deployments-are-structurally-different">2.1
+Why SSA Mini-Grid Deployments Are Structurally Different</h3>
+<p>Mini-grid and off-grid deployments in Sub-Saharan Africa differ
+materially from the urban utility environments for which the STS
+standard was originally designed and in which it is most typically
+administered. The following characteristics define the SSA mini-grid
+context:</p>
+<div class="table-wrapper"><table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Urban Utility Context</th>
+<th>SSA Mini-Grid Context</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Grid connectivity</strong></td>
+<td>Permanent national grid</td>
+<td>Off-grid; solar/diesel/hybrid generation</td>
+</tr>
+<tr>
+<td><strong>Operator type</strong></td>
+<td>Licensed utility (e.g. KPLC, ZESCO, ECG)</td>
+<td>Private IPP, NGO, cooperative, community enterprise</td>
+</tr>
+<tr>
+<td><strong>Meter fleet size per operator</strong></td>
+<td>Hundreds of thousands</td>
+<td>200 – 20,000 per operator</td>
+</tr>
+<tr>
+<td><strong>Revenue model</strong></td>
+<td>Government-subsidised tariffs</td>
+<td>Commercial cost-reflective tariffs; revenue survival-critical</td>
+</tr>
+<tr>
+<td><strong>Key Management Centre access</strong></td>
+<td>Direct institutional STSA member access</td>
+<td>Often via third-party vending partners; indirect KMC access</td>
+</tr>
+<tr>
+<td><strong>Replacement capex tolerance</strong></td>
+<td>Cost borne by national tariff base</td>
+<td>Cost borne by project developer; existential to project
+economics</td>
+</tr>
+<tr>
+<td><strong>Field service access</strong></td>
+<td>Urban technician density</td>
+<td>Remote; technician travel costs can exceed meter unit cost</td>
+</tr>
+<tr>
+<td><strong>Customer literacy</strong></td>
+<td>Mixed</td>
+<td>Low numeracy common; 20-digit token entry is end-user skill</td>
+</tr>
+<tr>
+<td><strong>Connectivity</strong></td>
+<td>Reliable GSM</td>
+<td>GSM intermittent or absent; offline token generation mandatory</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="the-mini-grid-energy-access-imperative">2.2 The Mini-Grid Energy
+Access Imperative</h3>
+<p>Approximately <strong>600 million people</strong> in Sub-Saharan
+Africa lack access to electricity. Mini-grids powered by solar and
+hybrid generation are one of the most cost-effective pathways to energy
+access for populations beyond the reach of the national grid. The IEA
+and SE4All estimate that <strong>&gt;35% of new electricity
+connections</strong> needed to reach universal energy access in Africa
+by 2030 must come from mini-grids and off-grid solutions.</p>
+<p>STS prepaid metering is uniquely suited to this environment because:
+- It functions <strong>entirely offline</strong> — no internet or GSM
+required for token generation or meter operation - It is
+<strong>vendor-interoperable</strong> — utilities can procure from
+multiple manufacturers - It is <strong>tamper-evident and
+fraud-resistant</strong> — critical for remote revenue collection - It
+uses a <strong>20-digit keypad interface</strong> — accessible without
+smartphones or connectivity</p>
+<p>The STS standard is, for practical purposes, the <strong>de facto
+mandatory standard</strong> for mini-grid metering across SSA.
+Regulatory agencies in Kenya (EPRA), Tanzania (EWURA), Uganda (ERA),
+Ghana (PURC), and South Africa (NERSA/SANEDI) either formally mandate or
+strongly prefer STS-compliant meters for off-grid licensees.</p>
+<h3 id="the-legacy-fleet-problem">2.3 The Legacy Fleet Problem</h3>
+<p>Mini-grid projects in SSA typically have a <strong>25-year project
+life</strong>, financed by a combination of development finance
+institution (DFI) loans, climate finance, and equity. Meters are
+procured at project commissioning and are expected to last the full
+project term.</p>
+<p>The installed legacy fleet across SSA includes meters manufactured
+between <strong>2010 and 2022</strong>, spanning multiple STS algorithm
+generations. The <strong>TID (Token Identifier) Rollover event of 24
+November 2024</strong> exposed a systemic vulnerability: a significant
+subset of mini-grid operators discovered they lacked the authorised
+access to Security Modules or vending keys required to generate TID
+rollover tokens for their own fleets, because those keys were held by
+the meter OEM or the original vending platform provider — not by the
+mini-grid developer.</p>
+<p>This situation is commercially and operationally unacceptable.
+Mini-grid developers must have <strong>documented, authorised, and
+long-term access</strong> to the cryptographic material and
+STSA-compliant processes needed to service the meters they have procured
+and deployed.</p>
+<hr />
+<h2
+id="enumeration-of-sts-algorithm-versions-and-key-parameters-legacy-reference">3.
+Enumeration of STS Algorithm Versions and Key Parameters — Legacy
+Reference</h2>
+<p><em>This section constitutes a formal enumeration of all STS
+cryptographic algorithm versions and key management parameters relevant
+to SSA-deployed legacy meter fleets, for use in STS correspondence,
+compliance documentation, field operations, and authorised key
+management requests.</em></p>
+
+            <div class="alert alert-info">
+              <div class="alert-icon">ℹ️</div>
+              <div class="alert-content">
+                <div class="alert-title">NOTE</div>
+                <div class="alert-text">All technical parameters below are drawn from the IEC
+62055-41 standard (Editions 1 and 2), and from STSA published materials.
+This enumeration is submitted to the STSA for verification and, if
+accurate, for formal endorsement as a reference document for mini-grid
+operators in SSA.</div>
+              </div>
+            </div>
+            
+<hr />
+<h3 id="sts-encryption-algorithms-ea">3.1 STS Encryption Algorithms
+(EA)</h3>
+<p>The STS standard defines Encryption Algorithms that are applied to
+tokens to secure token data in transit and prevent unauthorised token
+generation. The following EA versions are known to be present in
+deployed SSA meter fleets:</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th>Algorithm</th>
+<th>Designation</th>
+<th>Cipher</th>
+<th>Key Length</th>
+<th>Status</th>
+<th>Deployed Era</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>EA07</strong></td>
+<td>Legacy Standard</td>
+<td>DES (Data Encryption Standard)</td>
+<td>64-bit</td>
+<td>Deprecated — still in widespread SSA field use</td>
+<td>1993 – 2018 (approx.)</td>
+</tr>
+<tr>
+<td><strong>EA11</strong></td>
+<td>Current Standard</td>
+<td>MISTY1</td>
+<td>128-bit</td>
+<td>Current — mandatory for new STS certifications</td>
+<td>2015 onwards</td>
+</tr>
+</tbody>
+</table>
+<h4 id="ea07-legacy-64-bit-des">3.1.1 EA07 — Legacy 64-bit DES</h4>
+<ul>
+<li><strong>Cipher:</strong> DES (Data Encryption Standard), 64-bit
+block cipher</li>
+<li><strong>Key effective length:</strong> 56 bits (8 parity bits
+discarded)</li>
+<li><strong>IEC 62055-41 reference:</strong> Edition 1, Annex A</li>
+<li><strong>Security status:</strong> Cryptographically weak by modern
+standards. NIST formally deprecated DES in 2005. However, the STS token
+format provides additional security layers (Supply Group Code, Meter
+Primary Account Number, Token Class) that partially compensate.</li>
+<li><strong>SSA field prevalence:</strong> Estimated to represent
+<strong>40–60%</strong> of the current SSA installed base, concentrated
+in meter generations manufactured between 2005 and 2016.</li>
+<li><strong>Legacy management requirement:</strong> Operators managing
+EA07 fleets must retain access to EA07-capable Security Modules and
+DKGA02-compliant vending key material. Transition to EA11 requires
+physical key-change tokens or meter replacement.</li>
+</ul>
+<h4 id="ea11-current-128-bit-misty1">3.1.2 EA11 — Current 128-bit
+MISTY1</h4>
+<ul>
+<li><strong>Cipher:</strong> MISTY1 (Mitsubishi Improved Security
+Technology 1), 128-bit key, 64-bit payload</li>
+<li><strong>IEC 62055-41 reference:</strong> Edition 2 (introduced in
+2014 revision, formally adopted)</li>
+<li><strong>Security status:</strong> Current; recommended for all new
+deployments</li>
+<li><strong>SSA field prevalence:</strong> Predominant in meters
+manufactured from 2016 onwards; rapidly becoming standard in new SSA
+mini-grid tenders</li>
+<li><strong>Key management:</strong> Requires DKGA04-compatible Security
+Modules and STSA KMC registration</li>
+</ul>
+<hr />
+<h3 id="decoder-key-generation-algorithms-dkga">3.2 Decoder Key
+Generation Algorithms (DKGA)</h3>
+<p>The DKGA defines how the meter’s unique Decoder Key (DeKu) is derived
+from its credentials (PAN, SGC, VK). Different DKGA versions are tied to
+different encryption algorithm eras.</p>
+<div class="table-wrapper"><table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>DKGA</th>
+<th>Description</th>
+<th>Key Derivation Method</th>
+<th>Compatible EA</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DKGA01</strong></td>
+<td>First-generation derivation</td>
+<td>DES ECB</td>
+<td>EA07</td>
+<td>Retired/deprecated — not to be used for new key generation</td>
+</tr>
+<tr>
+<td><strong>DKGA02</strong></td>
+<td>Standard legacy derivation</td>
+<td>DES CBC</td>
+<td>EA07</td>
+<td>Still in use for legacy fleet maintenance</td>
+</tr>
+<tr>
+<td><strong>DKGA03</strong></td>
+<td>Triple-DES derivation</td>
+<td>3DES</td>
+<td>EA07/hybrid</td>
+<td>Not recommended; effectively superseded</td>
+</tr>
+<tr>
+<td><strong>DKGA04</strong></td>
+<td>Modern HMAC-SHA256 derivation</td>
+<td>HMAC-SHA256</td>
+<td>EA11</td>
+<td>Current — required for all EA11 deployments</td>
+</tr>
+</tbody>
+</table></div>
+
+            <div class="alert alert-teal">
+              <div class="alert-icon">⚡</div>
+              <div class="alert-content">
+                <div class="alert-title">IMPORTANT</div>
+                <div class="alert-text">Mini-grid operators managing legacy EA07 fleets must
+retain operational access to <strong>DKGA02-capable Security
+Modules</strong> to continue servicing those meters. The STSA is
+requested to formally confirm that operators with existing DKGA02
+Security Modules are entitled to continued use of those modules for
+existing meter fleet management, without mandatory upgrade timelines,
+provided the meters remain within their STS-certified operational
+parameters.</div>
+              </div>
+            </div>
+            
+<hr />
+<h3 id="token-identifier-tid-and-key-revision-number-krn">3.3 Token
+Identifier (TID) and Key Revision Number (KRN)</h3>
+<h4 id="tid-token-identifier">3.3.1 TID — Token Identifier</h4>
+<p>The TID is a 24-bit field encoding elapsed time in minutes from the
+STS Epoch (1 January 1993, 00:00:00 UTC). It serves as an anti-replay
+mechanism — meters reject tokens with a TID equal to or less than the
+last accepted token’s TID.</p>
+<div class="table-wrapper"><table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bit length</strong></td>
+<td>24 bits</td>
+</tr>
+<tr>
+<td><strong>Counter unit</strong></td>
+<td>Minutes</td>
+</tr>
+<tr>
+<td><strong>Epoch (KRN=1)</strong></td>
+<td>1 January 1993, 00:00:00 UTC</td>
+</tr>
+<tr>
+<td><strong>Epoch (KRN=2)</strong></td>
+<td>1 January 2014, 00:00:00 UTC</td>
+</tr>
+<tr>
+<td><strong>TID Rollover Date (KRN=1)</strong></td>
+<td><strong>24 November 2024</strong> (counter exhaustion)</td>
+</tr>
+<tr>
+<td><strong>TID Rollover Date (KRN=2, projected)</strong></td>
+<td><strong>Approximately 2045</strong></td>
+</tr>
+<tr>
+<td><strong>Maximum TID value</strong></td>
+<td>16,777,215 minutes (~31.97 years)</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Rollover event (November 2024):</strong> Meters operating
+with KRN=1 exhausted their 24-bit TID counter on 24 November 2024.
+Meters not updated via two-token Key Change process prior to this date
+began rejecting new credit tokens.</p>
+<h4 id="krn-key-revision-number">3.3.2 KRN — Key Revision Number</h4>
+<p>The KRN indicates which TID epoch and associated vending keys a meter
+is operating under. A “Key Change” (two-token process) increments the
+KRN and resets the TID stack.</p>
+<div class="table-wrapper"><table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>KRN</th>
+<th>TID Epoch</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>KRN = 1</strong></td>
+<td>1 Jan 1993</td>
+<td>Exhausted as of 24 Nov 2024. Meters still on KRN=1 are inoperable
+without key change.</td>
+</tr>
+<tr>
+<td><strong>KRN = 2</strong></td>
+<td>1 Jan 2014</td>
+<td>Current. Meters successfully upgraded to KRN=2 operate normally
+until ~2045.</td>
+</tr>
+<tr>
+<td><strong>KRN = 3</strong></td>
+<td>Reserved for future use</td>
+<td>Not yet deployed; projected to extend meter life beyond 2045.</td>
+</tr>
+</tbody>
+</table></div>
+
+            <div class="alert alert-amber">
+              <div class="alert-icon">⚠️</div>
+              <div class="alert-content">
+                <div class="alert-title">WARNING</div>
+                <div class="alert-text">A significant number of SSA mini-grid operators reported
+in Q4 2024 that meters in their fleets had not been successfully rolled
+over to KRN=2 prior to 24 November 2024. In some cases this was due to
+the operator lacking authorised access to Security Modules capable of
+generating valid Key Change token pairs. This letter formally requests
+the STSA to establish a <strong>remediation pathway</strong> for
+operators whose meters remain on KRN=1, including a mechanism for
+operators to obtain key change token generation capability through the
+STSA KMC without requiring full membership or institutional utility
+status.</div>
+              </div>
+            </div>
+            
+<hr />
+<h3 id="key-types-summary-ssa-legacy-reference-table">3.4 Key Types
+Summary — SSA Legacy Reference Table</h3>
+<p>The following table consolidates the key management framework
+relevant to SSA legacy fleet operators:</p>
+<div class="table-wrapper"><table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Key Parameter</th>
+<th>Type</th>
+<th>Description</th>
+<th>SSA Relevance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>VK — Vending Key</strong></td>
+<td>Symmetric secret key</td>
+<td>Master key held by KMC and distributed to authorised vending
+operators</td>
+<td>Must be held by mini-grid operator or their authorised agent</td>
+</tr>
+<tr>
+<td><strong>SGC — Supply Group Code</strong></td>
+<td>10-bit identifier</td>
+<td>Groups meters by region/utility for key isolation</td>
+<td>Unique per mini-grid project (ideally); shared SGCs create
+cross-operator risk</td>
+</tr>
+<tr>
+<td><strong>TI — Tariff Index</strong></td>
+<td>4-bit field</td>
+<td>Identifies applicable tariff schedule</td>
+<td>Used for tariff updates without meter replacement</td>
+</tr>
+<tr>
+<td><strong>KRN — Key Revision Number</strong></td>
+<td>2-bit counter</td>
+<td>Identifies vending key epoch</td>
+<td>Critical for TID rollover management</td>
+</tr>
+<tr>
+<td><strong>DeKu — Decoder Key</strong></td>
+<td>Meter-unique derived key</td>
+<td>Derived from VK + SGC + PAN; programmed into meter at
+manufacture</td>
+<td>Must be uniquely generated per meter; shared/common keys are a
+critical vulnerability</td>
+</tr>
+<tr>
+<td><strong>DKGA — Decoder Key Gen. Algorithm</strong></td>
+<td>Algorithm identifier</td>
+<td>Specifies how DeKu is derived</td>
+<td>Operators must match DKGA version to their fleet’s meter
+generation</td>
+</tr>
+<tr>
+<td><strong>MFG Code — Manufacturer Code</strong></td>
+<td>2 or 4-digit STSA code</td>
+<td>Unique code assigned to each certified manufacturer</td>
+<td>Required for DRN construction and token generation</td>
+</tr>
+<tr>
+<td><strong>PAN — Primary Account Number</strong></td>
+<td>11-digit meter identifier</td>
+<td>Unique meter identity used in key derivation</td>
+<td>Must be recorded per meter; loss of PAN records is a legacy
+management crisis</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h3 id="manufacturer-codes-known-ssa-deployed-oems">3.5 Manufacturer
+Codes — Known SSA-Deployed OEMs</h3>
+<p>The following manufacturer codes (as published or verifiable via the
+STSA member register) are associated with OEMs whose meters are commonly
+encountered in SSA mini-grid fleets. Recipients of this letter are
+requested to <strong>confirm or correct their manufacturer code(s) as
+applicable</strong> and to provide a complete list of all STS-certified
+product model numbers active in SSA.</p>
+<div class="table-wrapper"><table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Manufacturer</th>
+<th>STSA Manufacturer Code(s)</th>
+<th>SSA Markets</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hexing Electrical Co., Ltd.</strong></td>
+<td>0014 (published)</td>
+<td>South Africa, Kenya, Tanzania, Zambia</td>
+<td>Confirmed STSA member; local SA manufacturing</td>
+</tr>
+<tr>
+<td><strong>Zhejiang CHINT Instrument &amp; Meter Co.,
+Ltd.</strong></td>
+<td>Confirmed STSA member</td>
+<td>Nigeria, Ghana, Ethiopia, East Africa</td>
+<td>Full product range from single-phase keypad to AMI</td>
+</tr>
+<tr>
+<td><strong>Inhemeter Co., Ltd. (Inhe)</strong></td>
+<td>Confirmed STSA member</td>
+<td>East Africa, West Africa</td>
+<td>Long-standing STSA participant</td>
+</tr>
+<tr>
+<td><strong>Calin Technology Co., Ltd. (Calinmeter)</strong></td>
+<td>Verify with STSA</td>
+<td>East and West Africa</td>
+<td>Widely deployed in DFI-financed mini-grid projects</td>
+</tr>
+<tr>
+<td><strong>Shenzhen Donsun Technology Co., Ltd.</strong> (now operating
+as <strong>Synergy</strong> in some SSA markets)</td>
+<td>Verify with STSA</td>
+<td>Ghana, Togo, Benin, Uganda, Zimbabwe, Kenya</td>
+<td>DS1000/DS3000 series; STS Ed. 2.0 compliant</td>
+</tr>
+<tr>
+<td><strong>CNBM (China National Building Material Group)</strong> —
+Metering/Smart Energy division</td>
+<td>Verify with STSA</td>
+<td>South Africa (Hisense CNBM-SA partnership)</td>
+<td>Primarily smart energy integrator; STS metering via
+partnerships</td>
+</tr>
+<tr>
+<td><strong>Genus Power Infrastructures Ltd.</strong></td>
+<td>Verify with STSA</td>
+<td>East Africa, West Africa, Southern Africa</td>
+<td>India-headquartered; 26M+ smart meter deployments globally</td>
+</tr>
+<tr>
+<td><strong>Larsen &amp; Toubro Ltd. (L&amp;T Smart World)</strong></td>
+<td>Verify with STSA</td>
+<td>India-primary; SSA via AMI infrastructure</td>
+<td>EESL-scale AMI deployments; STS integration capability</td>
+</tr>
+<tr>
+<td><strong>Schneider Electric SE</strong></td>
+<td>Verify with STSA</td>
+<td>South Africa, pan-Africa</td>
+<td>EcoStruxure GMO platform; vendor-neutral STS meter integration</td>
+</tr>
+</tbody>
+</table></div>
+
+            <div class="alert alert-info">
+              <div class="alert-icon">ℹ️</div>
+              <div class="alert-content">
+                <div class="alert-title">NOTE</div>
+                <div class="alert-text">All STSA manufacturer codes should be verified against the
+current STSA member register at <a
+href="https://sts.org.za">sts.org.za</a>. Codes listed as “Verify with
+STSA” have not been independently confirmed at the time of this
+correspondence and recipients are requested to supply their current
+code(s) for inclusion in the official record.</div>
+              </div>
+            </div>
+            
+<hr />
+<h2 id="formal-request-indefinite-legacy-fleet-management-permission">4.
+Formal Request — Indefinite Legacy Fleet Management Permission</h2>
+<h3 id="the-request">4.1 The Request</h3>
+<p>The undersigned coalition formally requests that the <strong>STS
+Association</strong>, in consultation with recipient OEMs, establish and
+publish a <strong>Formal Legacy Fleet Management Framework</strong>
+(hereafter “the Framework”) that grants mini-grid developers and
+operators the following rights:</p>
+<p><strong>4.1.1 Right to Retain and Operate Legacy Security
+Modules</strong></p>
+<p>Mini-grid operators who have procured STS-compliant Security Modules
+(hardware security modules or licensed software equivalents) compliant
+with DKGA02 and/or DKGA04 standards shall be entitled to continue
+operating those modules for the purpose of generating tokens for their
+registered meter fleet, indefinitely, without mandatory upgrade
+timelines, for as long as: - The Security Modules themselves remain
+cryptographically functional; - The meters in the fleet were lawfully
+procured from an STSA-certified manufacturer; and - The operator
+maintains accurate records (PAN, SGC, MFG Code, DKGA version, EA
+version) for each meter under management.</p>
+<p><strong>4.1.2 Right to Access the STSA Key Management Centre
+(KMC)</strong></p>
+<p>Mini-grid operators who do not hold full STSA membership shall be
+entitled to access the STSA KMC through a designated <strong>Mini-Grid
+Operator Fast-Track pathway</strong> for the purpose of: - Obtaining
+vending keys (VK) for their registered SGC; - Generating Key Change
+token pairs for TID rollover remediation (KRN=1 → KRN=2); - Registering
+new meters acquired from STSA-certified manufacturers.</p>
+<p>This access shall not require full institutional utility membership,
+but shall require: - Registration of the mini-grid project with relevant
+national energy regulator; - Submission of a meter fleet manifest (PAN,
+SGC, MFG Code, DKGA, EA version per meter); - Agreement to STSA data
+protection and security protocols.</p>
+<p><strong>4.1.3 Right to Continued EA07/DKGA02 Key Material for Legacy
+Fleets</strong></p>
+<p>The STSA and OEM recipients are requested to formally commit that: -
+EA07/DKGA02 key material and Security Modules will <strong>not be
+forcibly retired</strong> from service with a hard cutoff date for
+operators managing lawfully-procured existing fleets; - If EA07 Security
+Modules must be deprecated for new issuance, a <strong>grace period of
+no less than 10 years</strong> from the date of this letter shall be
+provided for operators to transition at their own project-appropriate
+pace; - OEMs shall make available, on request, all technical
+documentation (PAN records, DKGA version, EA version, SGC assignments)
+for meters they have supplied to SSA mini-grid operators, to enable
+those operators to conduct independent fleet management.</p>
+<p><strong>4.1.4 Right to OEM-Independent Meter Management</strong></p>
+<p>No STS-certified OEM shall impose contractual or technical
+restrictions that prevent a mini-grid operator from: - Obtaining their
+meter’s PAN, SGC, MFG Code, and DeKu derivation parameters from an
+alternative authorised source; - Migrating their vending infrastructure
+from one STSA-compliant vending platform to another; - Retaining the
+vending keys for their SGC independently of any OEM service
+agreement.</p>
+<p>This is consistent with the fundamental STS design principle of
+<strong>vendor interoperability</strong> and <strong>utility
+independence</strong> in token generation.</p>
+<h3 id="rationale">4.2 Rationale</h3>
+<p>The STS standard’s greatest contribution to energy access in Africa
+has been its open architecture — no utility, developer, or operator
+should be permanently dependent on a single OEM or vending platform to
+service their meters. This principle is undermined when: - OEMs retain
+sole custody of vending keys for meters they have sold; - Security
+Modules are deprecated on OEM-determined timelines regardless of project
+lifecycle needs; - KMC access is restricted to institutional utility
+members, excluding the mini-grid sector; - Legacy algorithm support is
+sunset without adequate transition mechanisms for remote, off-grid
+fleets.</p>
+<p>The Framework requested herein is the minimum necessary to align STS
+administration with the realities of the Sub-Saharan Africa mini-grid
+sector, and to protect the energy access investments of development
+finance institutions, governments, and private developers who have
+deployed this technology in good faith.</p>
+<hr />
+<h2 id="summary-of-requests-to-recipient-oems">5. Summary of Requests to
+Recipient OEMs</h2>
+<p>Each OEM recipient of this letter is specifically requested to:</p>
+<ol type="1">
+<li><strong>Confirm</strong> their STSA Manufacturer Code(s) and list
+all STS-certified product models currently deployed or supported in
+SSA</li>
+<li><strong>Provide</strong> the EA version, DKGA version, and KRN/TID
+parameters applicable to each product generation deployed in SSA</li>
+<li><strong>Commit</strong> to providing PAN records, SGC assignments,
+and DeKu derivation parameters to lawful mini-grid operator purchasers
+of their meters upon request</li>
+<li><strong>Confirm</strong> a minimum legacy key support commitment
+(EA07/DKGA02 or EA11/DKGA04 as applicable) for existing SSA-deployed
+meter fleets, with a minimum 10-year committed support horizon from date
+of last supply</li>
+<li><strong>Support</strong> the STSA in establishing the Mini-Grid
+Operator Fast-Track KMC access pathway described in Section 4.1.2</li>
+</ol>
+<hr />
+</section><section id="response" class="section-anchor"><h2 class="sec-title">6. Requested Response</h2>
+<p>Recipients are respectfully requested to provide a written response
+within <strong>60 days</strong> of the date of this letter, addressing
+the specific requests in Section 5.</p>
+<p>Responses should be directed to:</p>
+<p><strong>SSA Mini-Grid Coalition Secretariat</strong> <em>c/o
+[Coalition Lead Organisation]</em> Email:
+[contact@coalition-address.org] Reference: SSA-STS-LEGACY-2026-001</p>
+<hr />
+</section><section id="recipients" class="section-anchor"><h2 class="sec-title">ANNEX A — Full Recipient List</h2>
+<h3 id="a.1-primary-addressees-sts-association-and-standards-bodies">A.1
+Primary Addressees — STS Association and Standards Bodies</h3>
+<div class="table-wrapper"><table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Organisation</th>
+<th>Department / Role</th>
+<th>Country</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>STS Association (STSA)</td>
+<td>Executive Director</td>
+<td>South Africa</td>
+</tr>
+<tr>
+<td>STS Association (STSA)</td>
+<td>Africa Regional Director</td>
+<td>South Africa</td>
+</tr>
+<tr>
+<td>IEC TC13 WG14</td>
+<td>Chairman, IEC 62055 Working Group</td>
+<td>International</td>
+</tr>
+<tr>
+<td>African Development Bank (AfDB)</td>
+<td>Energy Access Division</td>
+<td>Côte d’Ivoire</td>
+</tr>
+<tr>
+<td>IRENA</td>
+<td>Innovation and Technology Centre</td>
+<td>Germany/UAE</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="a.2-chinese-meter-oems-mid-tier-strong-ssa-presence">A.2 Chinese
+Meter OEMs — Mid-Tier, Strong SSA Presence</h3>
+<div class="table-wrapper"><table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Organisation</th>
+<th>Full Legal Name</th>
+<th>Headquarters</th>
+<th>SSA Presence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Donsun / Synergy</strong></td>
+<td>Shenzhen Donsun Technology Co., Ltd.</td>
+<td>Shenzhen, China</td>
+<td>Ghana, Togo, Benin, Uganda, Zimbabwe, Kenya, Malawi, Niger</td>
+</tr>
+<tr>
+<td><strong>Inhe</strong></td>
+<td>Inhemeter Co., Ltd.</td>
+<td>Hangzhou, China</td>
+<td>East Africa, West Africa; STSA confirmed member</td>
+</tr>
+<tr>
+<td><strong>Calin</strong></td>
+<td>Calin Technology Co., Ltd. (Calinmeter)</td>
+<td>Shenzhen, China</td>
+<td>Nigeria, Kenya, Tanzania, DFI-financed mini-grids across SSA</td>
+</tr>
+<tr>
+<td><strong>CHINT</strong></td>
+<td>Zhejiang Chint Instrument &amp; Meter Co., Ltd.</td>
+<td>Hangzhou, China</td>
+<td>Nigeria, Ghana, Ethiopia, East Africa; STSA confirmed member</td>
+</tr>
+<tr>
+<td><strong>Hexing</strong></td>
+<td>Hexing Electrical Co., Ltd.</td>
+<td>Hangzhou, China</td>
+<td>South Africa (local mfg.), Kenya, Tanzania, Zambia; STSA confirmed
+member</td>
+</tr>
+<tr>
+<td><strong>CNBM</strong></td>
+<td>China National Building Material Group — Smart Energy Division</td>
+<td>Beijing, China</td>
+<td>South Africa (CNBM-SA/Hisense partnership)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="a.3-indian-oem">A.3 Indian OEM</h3>
+<div class="table-wrapper"><table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Organisation</th>
+<th>Full Legal Name</th>
+<th>Headquarters</th>
+<th>SSA Presence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Genus Power</strong></td>
+<td>Genus Power Infrastructures Ltd.</td>
+<td>Jaipur, India</td>
+<td>East Africa, West Africa, Southern Africa; 26M+ global
+deployments</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="a.4-global-integrators">A.4 Global Integrators</h3>
+<div class="table-wrapper"><table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Organisation</th>
+<th>Full Legal Name</th>
+<th>Headquarters</th>
+<th>SSA Presence / Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Larsen &amp; Toubro (L&amp;T)</strong></td>
+<td>Larsen &amp; Toubro Ltd. — Smart World &amp; Communication</td>
+<td>Mumbai, India</td>
+<td>Large-scale AMI infrastructure; SSA expansion via Smart World
+division</td>
+</tr>
+<tr>
+<td><strong>Schneider Electric</strong></td>
+<td>Schneider Electric SE — EcoStruxure Grid</td>
+<td>Rueil-Malmaison, France</td>
+<td>South Africa, pan-Africa; EcoStruxure GMO — vendor-neutral STS meter
+integration platform</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="a.5-regional-regulators-for-information">A.5 Regional Regulators
+— For Information</h3>
+<div class="table-wrapper"><table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Organisation</th>
+<th>Country</th>
+<th>Scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Energy &amp; Petroleum Regulatory Authority (EPRA)</td>
+<td>Kenya</td>
+<td>National energy regulation</td>
+</tr>
+<tr>
+<td>Energy and Water Utilities Regulatory Authority (EWURA)</td>
+<td>Tanzania</td>
+<td>National energy regulation</td>
+</tr>
+<tr>
+<td>Electricity Regulatory Authority (ERA)</td>
+<td>Uganda</td>
+<td>National energy regulation</td>
+</tr>
+<tr>
+<td>Rwanda Utilities Regulatory Authority (RURA)</td>
+<td>Rwanda</td>
+<td>National energy regulation</td>
+</tr>
+<tr>
+<td>Public Utilities Regulatory Commission (PURC)</td>
+<td>Ghana</td>
+<td>National energy regulation</td>
+</tr>
+<tr>
+<td>Nigerian Electricity Regulatory Commission (NERC)</td>
+<td>Nigeria</td>
+<td>National energy regulation</td>
+</tr>
+<tr>
+<td>Zambia Energy Regulation Board (ERB)</td>
+<td>Zambia</td>
+<td>National energy regulation</td>
+</tr>
+<tr>
+<td>NERSA / SANEDI</td>
+<td>South Africa</td>
+<td>National energy regulation / standards</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+</section><section id="glossary" class="section-anchor"><h2 class="sec-title">ANNEX B — Technical Glossary</h2>
+<div class="table-wrapper"><table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Term</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>STS</strong></td>
+<td>Standard Transfer Specification — IEC 62055-41 — the global open
+standard for secure prepaid electricity metering</td>
+</tr>
+<tr>
+<td><strong>STSA</strong></td>
+<td>STS Association — the international body that maintains and
+administers the STS standard</td>
+</tr>
+<tr>
+<td><strong>IEC 62055</strong></td>
+<td>International Electrotechnical Commission standard series for
+electricity metering; -41 is the STS Application Layer
+specification</td>
+</tr>
+<tr>
+<td><strong>EA07</strong></td>
+<td>STS Encryption Algorithm 07 — legacy 64-bit DES; deprecated but
+still in widespread SSA field use</td>
+</tr>
+<tr>
+<td><strong>EA11</strong></td>
+<td>STS Encryption Algorithm 11 — current 128-bit MISTY1; mandatory for
+new STS certifications</td>
+</tr>
+<tr>
+<td><strong>DKGA</strong></td>
+<td>Decoder Key Generation Algorithm — specifies how the meter’s unique
+DeKu is derived</td>
+</tr>
+<tr>
+<td><strong>DKGA02</strong></td>
+<td>Legacy DES CBC key derivation; associated with EA07 fleets</td>
+</tr>
+<tr>
+<td><strong>DKGA04</strong></td>
+<td>Modern HMAC-SHA256 key derivation; associated with EA11 fleets</td>
+</tr>
+<tr>
+<td><strong>DeKu</strong></td>
+<td>Decoder Key — the meter-unique secret key derived from VK + SGC +
+PAN</td>
+</tr>
+<tr>
+<td><strong>VK</strong></td>
+<td>Vending Key — the master symmetric key held by the KMC and
+authorised vending operators</td>
+</tr>
+<tr>
+<td><strong>SGC</strong></td>
+<td>Supply Group Code — 10-bit code grouping meters by operator/region
+for key isolation</td>
+</tr>
+<tr>
+<td><strong>PAN</strong></td>
+<td>Primary Account Number — the 11-digit unique identifier of an
+individual meter</td>
+</tr>
+<tr>
+<td><strong>TID</strong></td>
+<td>Token Identifier — 24-bit time-based anti-replay counter embedded in
+every STS token</td>
+</tr>
+<tr>
+<td><strong>KRN</strong></td>
+<td>Key Revision Number — 2-bit counter indicating which vending key
+epoch the meter is operating under</td>
+</tr>
+<tr>
+<td><strong>TID Rollover</strong></td>
+<td>The event (24 Nov 2024) when KRN=1 TID counters exhausted; meters
+required Key Change to KRN=2</td>
+</tr>
+<tr>
+<td><strong>Key Change</strong></td>
+<td>A two-token process that increments a meter’s KRN and resets the TID
+stack to a new epoch</td>
+</tr>
+<tr>
+<td><strong>KMC</strong></td>
+<td>Key Management Centre — the STSA-operated central authority for VK
+allocation and key generation</td>
+</tr>
+<tr>
+<td><strong>DRN</strong></td>
+<td>Decoder Reference Number — the compound identifier (MFG Code + PAN +
+SGC) used to uniquely identify and address an individual STS meter</td>
+</tr>
+<tr>
+<td><strong>MFG Code</strong></td>
+<td>Manufacturer Code — the 2 or 4-digit STSA-issued code unique to each
+certified meter manufacturer</td>
+</tr>
+<tr>
+<td><strong>AMI</strong></td>
+<td>Advanced Metering Infrastructure — smart grid metering systems
+enabling remote communication</td>
+</tr>
+<tr>
+<td><strong>DLMS/COSEM</strong></td>
+<td>Device Language Message Specification / Companion Specification for
+Energy Metering — the international standard for smart meter
+communication, increasingly used alongside STS</td>
+</tr>
+<tr>
+<td><strong>IPP</strong></td>
+<td>Independent Power Producer — private entity generating electricity,
+common in SSA mini-grid sector</td>
+</tr>
+<tr>
+<td><strong>DFI</strong></td>
+<td>Development Finance Institution — e.g. World Bank IFC, AfDB,
+OPIC/DFC, FMO, Proparco</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<p><em>This letter has been prepared in good faith by practitioners
+operating in the Sub-Saharan Africa off-grid and mini-grid energy
+sector. It is submitted for formal consideration by the STS Association
+and the named recipients. Technical parameters are cited from IEC
+62055-41 (Editions 1 and 2) and STSA published materials. Recipients are
+invited to submit corrections to any technical parameters stated
+herein.</em></p>
+<hr />
+<p><strong>End of Document — SSA-STS-LEGACY-2026-001</strong></p>
+</section>
+</main>
+
+<footer>
+  <p>© 2026 <strong>Coalition of SSA Mini-Grid Developers</strong> · <strong>sattal.cottonspace.com</strong> · Reference: SSA-STS-LEGACY-2026-001</p>
+  <p style="margin-top:6px;"><a href="/reports" style="color:var(--accent-teal);text-decoration:none;">← Back to Reports Index</a></p>
+</footer>
+
+</body>
+</html>

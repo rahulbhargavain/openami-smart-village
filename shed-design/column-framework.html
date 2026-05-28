@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AERO-SHED | Column Formwork Framework Planner</title>
+  <!-- Google Fonts Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f1f5f9;
+      --border-color: #e2e8f0;
+      --border-color-active: #0891b2;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --primary: #0891b2; /* Cyan-600 */
+      --primary-glow: rgba(8, 145, 178, 0.1);
+      --secondary: #059669; /* Emerald-600 */
+      --secondary-glow: rgba(5, 150, 105, 0.05);
+      --warning: #d97706; /* Amber-600 */
+      --warning-glow: rgba(217, 119, 6, 0.05);
+      --danger: #dc2626; /* Red-600 */
+      --danger-glow: rgba(220, 38, 38, 0.05);
+      --gradient-accent: linear-gradient(135deg, #0891b2 0%, #0284c7 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.5;
+      padding: 24px;
+      overflow-x: hidden;
+    }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-dark);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    /* Container */
+    .app-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .app-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Header styling */
+    header {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 20px 28px;
+      border-radius: 16px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 4px 30px rgba(15, 23, 42, 0.06);
+    }
+
+    .brand-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-badge {
+      background: var(--gradient-accent);
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: #000;
+      font-size: 1.2rem;
+      box-shadow: 0 0 15px rgba(8, 145, 178, 0.4);
+    }
+
+    .brand-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: var(--gradient-accent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-subtitle {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: -2px;
+    }
+
+    .btn {
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid transparent;
+      text-decoration: none;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--border-color);
+      color: var(--text-main);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(0, 0, 0, 0.02);
+      border-color: var(--text-muted);
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(15, 23, 42, 0.06);
+      margin-bottom: 24px;
+      transition: border-color 0.3s ease;
+    }
+
+    .card:hover {
+      border-color: rgba(8, 145, 178, 0.2);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
+    }
+
+    /* Input controls */
+    .input-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .input-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+    }
+
+    .input-field {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+
+    .input-field:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 10px var(--primary-glow);
+    }
+
+    /* Lists and Text */
+    p {
+      font-size: 0.92rem;
+      color: var(--text-main);
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+
+    ul, ol {
+      margin-left: 20px;
+      margin-bottom: 16px;
+    }
+
+    li {
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    li strong {
+      color: var(--text-main);
+    }
+
+    /* Tables */
+    table.bom-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 0.85rem;
+      text-align: left;
+    }
+
+    table.bom-table th {
+      background: rgba(0, 0, 0, 0.02);
+      color: var(--primary);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      padding: 12px 16px;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    table.bom-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-muted);
+    }
+
+    table.bom-table tr:hover td {
+      color: var(--text-main);
+      background: rgba(0, 0, 0, 0.01);
+    }
+
+    table.bom-table td.numeric {
+      text-align: right;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    table.bom-table th.numeric {
+      text-align: right;
+    }
+
+    /* Callouts */
+    .callout {
+      padding: 16px 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      border-left: 4px solid transparent;
+    }
+
+    .callout-success {
+      background: var(--secondary-glow);
+      border-color: var(--secondary);
+    }
+
+    .callout-warning {
+      background: var(--warning-glow);
+      border-color: var(--warning);
+    }
+
+    .callout-danger {
+      background: var(--danger-glow);
+      border-color: var(--danger);
+    }
+
+    .callout h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .callout-success h4 { color: #059669; }
+    .callout-warning h4 { color: #d97706; }
+    .callout-danger h4 { color: #dc2626; }
+
+    /* SVG Canvas Visualizer */
+    .canvas-container {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      height: 600px;
+      position: sticky;
+      top: 24px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+    }
+
+    .canvas-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 12px;
+      text-align: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
+    }
+
+    .formula-box {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 12px;
+      border-radius: 8px;
+      margin: 12px 0;
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- HEADER -->
+    <header>
+      <div class="brand-container">
+        <div class="logo-badge">C</div>
+        <div>
+          <h1 class="brand-title">AERO-SHED</h1>
+          <div class="brand-subtitle">Concrete Column Formwork Framework Planner</div>
+        </div>
+      </div>
+      <a class="btn btn-secondary" href="index.html">
+        ← Back to Shed Planner
+      </a>
+    </header>
+
+    <!-- LEFT COLUMN: Calculations & Document Details -->
+    <main>
+      
+      <!-- INTERACTIVE PLANNER CARD -->
+      <div class="card">
+        <h2 class="card-title">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path d="M12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h8zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z"/><path d="M4 2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z"/></svg>
+          Dynamic Formwork Dimension Calculator
+        </h2>
+        <p>This interactive planner is designed to calculate precise outer dimensions and yoke member cutting lists based on concrete cross-sections and formwork plywood thicknesses. Select dimensions below to watch the framework adapt in real-time.</p>
+        
+        <div class="input-row">
+          <div class="input-group">
+            <span class="input-label">Concrete Column Width</span>
+            <input type="number" class="input-field" id="concrete-width" value="450" onchange="calculateDimensions()">
+          </div>
+          <div class="input-group">
+            <span class="input-label">Concrete Column Depth</span>
+            <input type="number" class="input-field" id="concrete-depth" value="300" onchange="calculateDimensions()">
+          </div>
+          <div class="input-group">
+            <span class="input-label">Plywood Sheet Thickness</span>
+            <input type="number" class="input-field" id="ply-thickness" value="12" onchange="calculateDimensions()">
+          </div>
+          <div class="input-group">
+            <span class="input-label">MS Angle Frame Width</span>
+            <input type="number" class="input-field" id="angle-width" value="35" onchange="calculateDimensions()">
+          </div>
+        </div>
+
+        <div class="formula-box">
+          <strong>Geometric Outer Dimensions Formulas:</strong><br>
+          • Long Span Outer Dimension (OD): <span id="formula-long">450mm + 2×12mm = 474mm</span><br>
+          • Short Span Outer Dimension (OD): <span id="formula-short">300mm + 2×12mm = 324mm</span><br>
+          • Yoke Long Side: OD + 2×Angle Width + Overlap/Tolerance ≈ <span id="formula-yoke-long">550mm</span><br>
+          • Yoke Short Side: OD + 2×Angle Width + Overlap/Tolerance ≈ <span id="formula-yoke-short">400mm</span>
+        </div>
+      </div>
+
+      <!-- SECTION 1: MS ANGLE CUTTING LIST -->
+      <div class="card">
+        <h2 class="card-title">1. MS Angle Cutting List (Per Column)</h2>
+        <p>Assuming you are using <strong>18-foot (5486mm)</strong> stock lengths of <strong>35mm x 5mm MS angles</strong>, you will need <strong>6 lengths</strong> per column to account for the proper four-sided yoke assemblies and the double-angle base reinforcement. This completely fixes the previous loop-count deficit.</p>
+        <p style="font-size:0.8rem; color:var(--text-muted);">*Lengths include a 35-40mm overlap at each end for bolting.</p>
+        
+        <table class="bom-table" id="cutting-table">
+          <thead>
+            <tr>
+              <th>Component</th>
+              <th class="numeric">Length per Piece</th>
+              <th class="numeric">Qty</th>
+              <th class="numeric">Total Length</th>
+              <th>Cutting Strategy (per 18' Bar)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Vertical Corners</strong></td>
+              <td class="numeric" id="len-vert">2440mm (8')</td>
+              <td class="numeric">4</td>
+              <td class="numeric">9760mm</td>
+              <td>2 per bar (Bar 1 & Bar 2)</td>
+            </tr>
+            <tr>
+              <td><strong>Yoke (Long Side)</strong></td>
+              <td class="numeric" id="len-yoke-long">550mm*</td>
+              <td class="numeric">22</td>
+              <td class="numeric" id="len-yoke-long-total">12100mm</td>
+              <td>9 per bar (Bar 3 & Bar 4), 4 on Bar 5</td>
+            </tr>
+            <tr>
+              <td><strong>Yoke (Short Side)</strong></td>
+              <td class="numeric" id="len-yoke-short">400mm*</td>
+              <td class="numeric">22</td>
+              <td class="numeric" id="len-yoke-short-total">8800mm</td>
+              <td>1 on Bar 3 & 4, 8 on Bar 5, 12 on Bar 6</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="margin-top: 16px;">
+          <h4 style="font-size: 0.9rem; font-weight: 700; margin-bottom: 8px;">Total Structural Requirement (Per Column):</h4>
+          <ul style="margin-left: 20px; list-style-type: disc;">
+            <li><strong>MS Angles:</strong> <strong>6 Bars</strong> of 18' MS Angle (35mm x 35mm x 5mm).</li>
+            <li><strong>Assembly Bolts:</strong> <strong>50 Sets</strong> of Bolts (accounts for standard corners, double-angle stitching, and on-site spares).</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- SECTION 2: CORRECTED FABRICATION DIMENSIONS -->
+      <div class="card">
+        <h2 class="card-title">2. Corrected Fabrication Dimensions</h2>
+        <p>To achieve the <span id="span-target-width">450</span>mm x <span id="span-target-depth">300</span>mm concrete finish with <span id="span-target-ply">12</span>mm plywood, use these Outer Dimensions (OD) for your steel frames:</p>
+        
+        <ul style="list-style-type: square; margin-left: 20px; margin-bottom: 16px;">
+          <li><strong>Long Span (OD):</strong> <strong><span id="span-od-long">474</span>mm</strong></li>
+          <li><strong>Short Span (OD):</strong> <strong><span id="span-od-short">324</span>mm</strong></li>
+        </ul>
+
+        <div class="callout callout-danger">
+          <h4>[!IMPORTANT] Double Angle Base</h4>
+          <p>At the 150mm and 325mm levels, bolt two MS angles back-to-back or side-by-side to act as a single reinforced beam. This prevents the steel from yielding under the <strong>58.6 kN/m²</strong> of extreme hydrostatic pressure exerted by the wet concrete at the bottom of the formwork.</p>
+        </div>
+      </div>
+
+      <!-- SECTION 3: YOKE SPACING SCHEDULE -->
+      <div class="card">
+        <h2 class="card-title">3. Corrected Yoke Spacing Schedule (Max 300mm Gaps)</h2>
+        <p>Follow this updated measurement guide from the ground up. The upper gaps have been compressed to a maximum of 300mm to ensure your <strong>12mm plywood does not deflect or pillow</strong> under extreme concrete pressure:</p>
+        
+        <ol style="display: flex; flex-direction: column; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--text-muted);">
+          <li><strong style="color: var(--warning);">Yoke 1 (Double Base):</strong> 150mm from base</li>
+          <li><strong style="color: var(--warning);">Yoke 2 (Double Base):</strong> 325mm from base <em style="font-style: normal; color: var(--secondary);"> (175mm gap)</em></li>
+          <li><strong>Yoke 3 (Single):</strong> 550mm from base <em style="font-style: normal; color: var(--secondary);"> (225mm gap)</em></li>
+          <li><strong>Yoke 4 (Single):</strong> 800mm from base <em style="font-style: normal; color: var(--secondary);"> (250mm gap)</em></li>
+          <li><strong>Yoke 5 (Single):</strong> 1100mm from base <em style="font-style: normal; color: var(--secondary);"> (300mm gap)</em></li>
+          <li><strong>Yoke 6 (Single):</strong> 1400mm from base <em style="font-style: normal; color: var(--secondary);"> (300mm gap)</em></li>
+          <li><strong>Yoke 7 (Single):</strong> 1700mm from base <em style="font-style: normal; color: var(--secondary);"> (300mm gap)</em></li>
+          <li><strong>Yoke 8 (Single):</strong> 2000mm from base <em style="font-style: normal; color: var(--secondary);"> (300mm gap)</em></li>
+          <li><strong>Yoke 9 (Single):</strong> 2300mm from base <em style="font-style: normal; color: var(--secondary);"> (Near top / 300mm gap)</em></li>
+        </ol>
+      </div>
+
+      <!-- SECTION 4: BAR-BY-BAR CUTTING STRATEGY -->
+      <div class="card">
+        <h2 class="card-title">4. Bar-by-Bar Cutting Strategy (Minimal Waste Optimization)</h2>
+        <p>Follow this layout to pre-cut your 18-foot MS angles with absolute minimal metal wastage:</p>
+        <ul style="display: flex; flex-direction: column; gap: 10px; font-size: 0.9rem; list-style-type: circle; margin-left: 20px;">
+          <li><strong>Bar 1:</strong> Cut two Vertical Corners ($2 \times 2440\text{mm}$). <span style="font-family:'JetBrains Mono'; font-size:0.8rem; color:var(--danger);">Waste: 606mm</span>.</li>
+          <li><strong>Bar 2:</strong> Cut two Vertical Corners ($2 \times 2440\text{mm}$). <span style="font-family:'JetBrains Mono'; font-size:0.8rem; color:var(--danger);">Waste: 606mm</span>.</li>
+          <li><strong>Bar 3:</strong> Cut 9 Long Yokes ($550\text{mm}$) + 1 Short Yoke ($400\text{mm}$). <span style="font-family:'JetBrains Mono'; font-size:0.8rem; color:var(--danger);">Waste: 136mm</span>.</li>
+          <li><strong>Bar 4:</strong> Cut 9 Long Yokes ($550\text{mm}$) + 1 Short Yoke ($400\text{mm}$). <span style="font-family:'JetBrains Mono'; font-size:0.8rem; color:var(--danger);">Waste: 136mm</span>.</li>
+          <li><strong>Bar 5:</strong> Cut 4 Long Yokes ($550\text{mm}$) + 8 Short Yokes ($400\text{mm}$). <span style="font-family:'JetBrains Mono'; font-size:0.8rem; color:var(--danger);">Waste: 86mm</span>.</li>
+          <li><strong>Bar 6:</strong> Cut 12 Remaining Short Yokes ($400\text{mm}$). <span style="font-family:'JetBrains Mono'; font-size:0.8rem; color:var(--secondary);">Waste: 686mm (Save this clean remnant to use for structural ground kickers)</span>.</li>
+        </ul>
+      </div>
+
+      <!-- SECTION 5: ASSEMBLY NOTES -->
+      <div class="card">
+        <h2 class="card-title">5. Assembly & Fabrication Notes</h2>
+        <ul style="display: flex; flex-direction: column; gap: 10px;">
+          <li><strong>Bolt Grade & Toughness:</strong> Use <strong>M12 Grade 8.8 high-tensile bolts</strong> for the bottom three yokes (where hydrostatic pressure is maximum). Standard M10 bolts are sufficient for the upper sections from Yoke 4 and above. Ensure the bolts used at the double-angle levels are long enough to securely bind both structural flanges together.</li>
+          <li><strong>Plumb & Alignment Check:</strong> Use your remaining angle pieces from Bar 6 as diagonal <strong>"kickers" (braces)</strong> anchored to the ground on all four sides to keep the 8-foot frame perfectly vertical and plumb during the concrete pour.</li>
+          <li><strong>Form Slurry Sealant:</strong> Since you are using relatively thin 12mm plywood, ensure the corners where the 324mm panels meet the 474mm panels are tightly clamped and bolted to the vertical angles to prevent grout slurry leakage, which causes aggregate honeycombing in the concrete.</li>
+        </ul>
+      </div>
+
+    </main>
+
+    <!-- RIGHT COLUMN: Yoke Spacing Elevation SVG Visualizer -->
+    <aside>
+      <div class="canvas-container">
+        <div class="canvas-label">Yoke Spacing Elevation (Scale View)</div>
+        <svg id="column-svg" width="100%" height="520px" viewBox="0 0 300 520" style="background:transparent;"></svg>
+      </div>
+    </aside>
+
+  </div>
+
+  <script>
+    function calculateDimensions() {
+      const W = parseFloat(document.getElementById('concrete-width').value);
+      const D = parseFloat(document.getElementById('concrete-depth').value);
+      const ply = parseFloat(document.getElementById('ply-thickness').value);
+      const angle = parseFloat(document.getElementById('angle-width').value);
+
+      // Calculations
+      const odLong = W + 2 * ply;
+      const odShort = D + 2 * ply;
+      
+      // Formwork yoke spans (including bolt holes overlap: OD + 2*Angle width + overlap (~6-10mm))
+      const yokeLong = odLong + 2 * angle + 6;
+      const yokeShort = odShort + 2 * angle + 6;
+
+      const totalLenLong = 22 * yokeLong;
+      const totalLenShort = 22 * yokeShort;
+
+      // Update text spans
+      document.getElementById('span-target-width').innerText = W;
+      document.getElementById('span-target-depth').innerText = D;
+      document.getElementById('span-target-ply').innerText = ply;
+      
+      document.getElementById('span-od-long').innerText = odLong;
+      document.getElementById('span-od-short').innerText = odShort;
+
+      // Update formulas card text
+      document.getElementById('formula-long').innerText = `${W}mm + 2×${ply}mm = ${odLong}mm`;
+      document.getElementById('formula-short').innerText = `${D}mm + 2×${ply}mm = ${odShort}mm`;
+      document.getElementById('formula-yoke-long').innerText = `${yokeLong}mm`;
+      document.getElementById('formula-yoke-short').innerText = `${yokeShort}mm`;
+
+      // Update table lengths
+      document.getElementById('len-yoke-long').innerText = `${yokeLong}mm*`;
+      document.getElementById('len-yoke-short').innerText = `${yokeShort}mm*`;
+      document.getElementById('len-yoke-long-total').innerText = `${totalLenLong}mm`;
+      document.getElementById('len-yoke-short-total').innerText = `${totalLenShort}mm`;
+
+      // Redraw Column SVG elevation
+      drawColumnSVG();
+    }
+
+    function drawColumnSVG() {
+      const svg = document.getElementById('column-svg');
+      svg.innerHTML = ''; // clear
+
+      // Base line is at y=485 (bottom of column)
+      // Top line is at y=45 (top of column)
+      // Column length is 2440mm, mapped to 440px height scale (1px ≈ 5.54mm)
+      const baseVal = 485;
+      const scale = 440 / 2440; // scale factor pixels/mm
+
+      function getPy(y_mm) {
+        return baseVal - (y_mm * scale);
+      }
+
+      // Draw Main Concrete column body (semi-transparent gray)
+      const colWidth = 40;
+      const xLeft = 110;
+      const xRight = 110 + colWidth;
+
+      const rectConcrete = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      rectConcrete.setAttribute("x", xLeft);
+      rectConcrete.setAttribute("y", getPy(2440));
+      rectConcrete.setAttribute("width", colWidth);
+      rectConcrete.setAttribute("height", 2440 * scale);
+      rectConcrete.setAttribute("fill", "rgba(15, 23, 42, 0.04)");
+      rectConcrete.setAttribute("stroke", "rgba(15, 23, 42, 0.12)");
+      rectConcrete.setAttribute("stroke-width", "1");
+      svg.appendChild(rectConcrete);
+
+      // Draw vertical MS angle bars (cyan lines on left and right)
+      const lineLeft = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      lineLeft.setAttribute("x1", xLeft - 2);
+      lineLeft.setAttribute("y1", getPy(0));
+      lineLeft.setAttribute("x2", xLeft - 2);
+      lineLeft.setAttribute("y2", getPy(2440));
+      lineLeft.setAttribute("stroke", "#0891b2");
+      lineLeft.setAttribute("stroke-width", "3");
+      svg.appendChild(lineLeft);
+
+      const lineRight = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      lineRight.setAttribute("x1", xRight + 2);
+      lineRight.setAttribute("y1", getPy(0));
+      lineRight.setAttribute("x2", xRight + 2);
+      lineRight.setAttribute("y2", getPy(2440));
+      lineRight.setAttribute("stroke", "#0891b2");
+      lineRight.setAttribute("stroke-width", "3");
+      svg.appendChild(lineRight);
+
+      // Spacing schedule in mm from ground
+      const yokes = [
+        {h: 150, double: true, name: "Yoke 1 (Double)"},
+        {h: 325, double: true, name: "Yoke 2 (Double)"},
+        {h: 550, double: false, name: "Yoke 3"},
+        {h: 800, double: false, name: "Yoke 4"},
+        {h: 1100, double: false, name: "Yoke 5"},
+        {h: 1400, double: false, name: "Yoke 6"},
+        {h: 1700, double: false, name: "Yoke 7"},
+        {h: 2000, double: false, name: "Yoke 8"},
+        {h: 2300, double: false, name: "Yoke 9"}
+      ];
+
+      // Draw ground line
+      const lineGround = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      lineGround.setAttribute("x1", 20);
+      lineGround.setAttribute("y1", baseVal);
+      lineGround.setAttribute("x2", 280);
+      lineGround.setAttribute("y2", baseVal);
+      lineGround.setAttribute("stroke", "#334155");
+      lineGround.setAttribute("stroke-width", "2");
+      svg.appendChild(lineGround);
+
+      // Draw yokes
+      yokes.forEach((y, idx) => {
+        const py = getPy(y.h);
+        
+        // Draw yoke horizontal beam (orange)
+        const lineYoke = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        lineYoke.setAttribute("x1", xLeft - 18);
+        lineYoke.setAttribute("y1", py);
+        lineYoke.setAttribute("x2", xRight + 18);
+        lineYoke.setAttribute("y2", py);
+        lineYoke.setAttribute("stroke", y.double ? "#d97706" : "#64748b");
+        lineYoke.setAttribute("stroke-width", y.double ? "7" : "4");
+        svg.appendChild(lineYoke);
+
+        // If double, draw another adjacent line representing the back-to-back angle
+        if (y.double) {
+          const lineYoke2 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+          lineYoke2.setAttribute("x1", xLeft - 18);
+          lineYoke2.setAttribute("y1", py + (idx === 0 ? 6 : -6));
+          lineYoke2.setAttribute("x2", xRight + 18);
+          lineYoke2.setAttribute("y2", py + (idx === 0 ? 6 : -6));
+          lineYoke2.setAttribute("stroke", "#d97706");
+          lineYoke2.setAttribute("stroke-width", "3");
+          svg.appendChild(lineYoke2);
+        }
+
+        // Draw labeling text
+        const textH = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        textH.setAttribute("x", xRight + 26);
+        textH.setAttribute("y", py + 3);
+        textH.setAttribute("fill", y.double ? "#d97706" : "#64748b");
+        textH.setAttribute("font-family", "JetBrains Mono, monospace");
+        textH.setAttribute("font-size", "10px");
+        textH.setAttribute("font-weight", "500");
+        textH.textContent = `${y.h}mm`;
+        svg.appendChild(textH);
+
+        // Draw indicator lines & labels for gaps
+        if (idx > 0) {
+          const prevPy = getPy(yokes[idx - 1].h);
+          const gap = y.h - yokes[idx - 1].h;
+          
+          const textGap = document.createElementNS("http://www.w3.org/2000/svg", "text");
+          textGap.setAttribute("x", xLeft - 72);
+          textGap.setAttribute("y", (py + prevPy)/2 + 3);
+          textGap.setAttribute("fill", "#059669");
+          textGap.setAttribute("font-family", "JetBrains Mono, monospace");
+          textGap.setAttribute("font-size", "9px");
+          textGap.textContent = `Gap: ${gap}mm`;
+          svg.appendChild(textGap);
+
+          // Draw dashed gap line
+          const lineGap = document.createElementNS("http://www.w3.org/2000/svg", "line");
+          lineGap.setAttribute("x1", xLeft - 25);
+          lineGap.setAttribute("y1", (py + prevPy)/2);
+          lineGap.setAttribute("x2", xLeft - 10);
+          lineGap.setAttribute("y2", (py + prevPy)/2);
+          lineGap.setAttribute("stroke", "rgba(5, 150, 105, 0.4)");
+          lineGap.setAttribute("stroke-width", "1");
+          lineGap.setAttribute("stroke-dasharray", "2,2");
+          svg.appendChild(lineGap);
+        }
+      });
+
+      // Dimension lines for column height
+      const textHt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      textHt.setAttribute("x", xLeft + 6);
+      textHt.setAttribute("y", getPy(2440) - 10);
+      textHt.setAttribute("fill", "#0891b2");
+      textHt.setAttribute("font-family", "JetBrains Mono, monospace");
+      textHt.setAttribute("font-size", "11px");
+      textHt.setAttribute("font-weight", "700");
+      textHt.textContent = "Height: 2440mm (8 ft)";
+      svg.appendChild(textHt);
+    }
+
+    // Initialize Page
+    calculateDimensions();
+  </script>
+</body>
+</html>

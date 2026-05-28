@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Research Reports — sattal.cottonspace.com</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --muted: #64748b;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px 24px; }
+    .back-link { position:fixed; top:20px; left:24px; font-size:0.8rem; color:var(--muted); text-decoration:none; display:flex; align-items:center; gap:6px; transition:color 0.2s; }
+    .back-link:hover { color:#14b8a6; }
+    h1 { font-size:1.6rem; font-weight:800; margin-bottom:8px; background:linear-gradient(135deg,#14b8a6,#3b82f6); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .sub { color:var(--muted); font-size:0.9rem; margin-bottom:40px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:20px; max-width:800px; width:100%; }
+    .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:28px; text-decoration:none; color:inherit; transition:all 0.3s; display:block; }
+    .card:hover { border-color:rgba(8,145,178,0.4); transform:translateY(-4px); box-shadow:0 12px 40px rgba(15,23,42,0.06); }
+    .card-tag { font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:12px; }
+    .card-title { font-size:1.1rem; font-weight:700; line-height:1.35; margin-bottom:10px; }
+    .card-desc { font-size:0.82rem; color:var(--muted); line-height:1.6; margin-bottom:16px; }
+    .card-meta { font-size:0.75rem; color:var(--muted); display:flex; gap:12px; flex-wrap:wrap; }
+    .tag1 { color:#f97316; }
+    .tag2 { color:#3b82f6; }
+    .tag3 { color:#14b8a6; }
+    .tag4 { color:#eab308; }
+    footer { margin-top:48px; font-size:0.75rem; color:var(--muted); text-align:center; }
+  </style>
+</head>
+<body>
+  <a href="/" class="back-link">← Back to sattal.cottonspace.com</a>
+  <h1>Dev Labs Research Reports</h1>
+  <p class="sub">Engineering & Emerging Market Mobility · May 2026</p>
+  <div class="grid">
+    <a href="/reports/openami-funding-pitch.html" class="card">
+      <div class="card-tag tag2">🌍 Funding Pitch · EMG-PITCH-007</div>
+      <div class="card-title">OpenAMI &amp; IEEE Smart Village:<br>Pan-African Capital Raising &amp; Strategic Pitch Blueprint</div>
+      <div class="card-desc">Comprehensive fundraising prospectus applying H.R. Moody's 22 Laws of Fund-Raising to the OpenAMI smart-metering and ISV off-grid mini-grid expansion. Details target donor mapping, a 4-stage execution roadmap, value propositions, and emotional narrative positioning.</div>
+      <div class="card-meta"><span>💰 Capital Pitch</span><span>⚡ IEEE Smart Village</span><span>🔑 OpenAMI / STS</span></div>
+    </a>
+    <a href="/reports/unece-interoperability-guidelines.html" class="card">
+      <div class="card-tag tag3">🌍 Policy Framework · EMG-REG-006</div>
+      <div class="card-title">UN ECE Interoperability Guidelines:<br>Open-Source &amp; Hybrid Models in Mini-Grid Context</div>
+      <div class="card-desc">Comprehensive synthesis of the 2025 UNECE guidelines on energy system digitalization. Analyzes GridWise interoperability dimensions, SGAM layers, open-source PAYG tokens, hybrid software models, and edge registries.</div>
+      <div class="card-meta"><span>🌍 UNECE 2025</span><span>🔑 OpenPAYGO</span><span>🔄 Hybrid Systems</span></div>
+    </a>
+    <a href="/reports/openami-smart-metering-spec.html" class="card">
+      <div class="card-tag tag3">🌍 Technical Reference · EMG-TRD-005</div>
+      <div class="card-title">OpenAMI Technical Reference Design:<br>Interoperable Smart Metering, Wi-SUN Mesh, &amp; Grid Code Audits</div>
+      <div class="card-desc">Detailed technical reference design for OpenAMI, synthesizing the IHM-4000 hardware architecture, Wi-SUN mesh topology, 7 core use cases, 7-layer OSI &amp; 5-layer SGAM mappings, and Earth Leakage life-safety limits.</div>
+      <div class="card-meta"><span>🌍 OpenAMI TRD</span><span>📶 Wi-SUN Mesh</span><span>🏭 IHM-4000 / 5000</span></div>
+    </a>
+    <a href="/reports/cse-minigrid-biofuels-synthesis.html" class="card">
+      <div class="card-tag tag3">🌍 Strategic Synthesis · EMG-NEX-004</div>
+      <div class="card-title">The Decentralized Energy Nexus:<br>Solar Mini-Grids &amp; Bioenergy Policies</div>
+      <div class="card-desc">Comprehensive policy synthesis of the CSE 2026 Bioenergy Report and Mini-Grid Monetisation Framework. Explores the CapEx-OpEx imbalance, JREDA beneficiary data, and the circular solar-biomass-eATV nexus.</div>
+      <div class="card-meta"><span>🌱 CSE 2026 Bioenergy</span><span>☀️ Solar Mini-Grids</span><span>🔄 Solar-Biomass Nexus</span></div>
+    </a>
+    <a href="/reports/nerc-afur-minigrid-tariffs.html" class="card">
+      <div class="card-tag tag3">🌍 Regulatory Analysis · EMG-REG-003</div>
+      <div class="card-title">Prepaid Metering &amp; NERC Regulations:<br>Auditing Equity &amp; Grid Arrival in SSA</div>
+      <div class="card-desc">Analysis of NERC 2023 Regulations and the AFUR Tariff Tool mandate standardizing loss caps and grid arrival exit strategies—and why OpenAMI prepaid metering is the critical audit link to prevent exploitation.</div>
+      <div class="card-meta"><span>⚡ AFUR Tariff Tool</span><span>🇳🇬 NERC 2023</span><span>🔑 OpenAMI Prepaid</span></div>
+    </a>
+    <a href="/reports/trikexplor-etruck-critique.html" class="card">
+      <div class="card-tag tag1">⚙️ Engineering Critique · TXE-CR-001</div>
+      <div class="card-title">Motrike TrikeXplor E-Truck<br>Design Analysis & Upgrade Roadmap</div>
+      <div class="card-desc">Roll cage structural deficiencies, traction loss analysis, A-arm suspension upgrade path (Gabriel, Uno Minda), UTV-grade hydraulic braking, and full Bill of Materials for safety & durability improvements.</div>
+      <div class="card-meta"><span>📐 8 Sections</span><span>🔧 BoM ~₹2,10,000</span><span>🏗️ UTV-grade upgrades</span></div>
+    </a>
+    <a href="/reports/eatv-minigrid-pitch.html" class="card">
+      <div class="card-tag tag2">🌍 Investment Pitch · EMG-PITCH-002</div>
+      <div class="card-title">eATV MiniGrid Nexus<br>SSA + South Asia Expansion Pitch</div>
+      <div class="card-desc">Integrated eATV + solar MiniGrid model for rural last-mile logistics and energy access across Sub-Saharan Africa and South Asia (India, Bangladesh, Nepal, Sri Lanka). Includes V2G architecture, PAYG finance, and 5-year financial projections.</div>
+      <div class="card-meta"><span>📊 9 Sections</span><span>💰 IRR 16–22%</span><span>🌱 1.5M people by 2030</span></div>
+    </a>
+    <a href="/reports/eATV-minigrid-ssa-vehicles.html" class="card">
+      <div class="card-tag tag3">⚡ Vehicle Assessment · EMG-SSA-V001</div>
+      <div class="card-title">Electric Cargo Vehicles as<br>Productive-Use Anchors for SSA</div>
+      <div class="card-desc">Scored comparison of 7 electric cargo vehicles evaluated specifically for off-grid mini-grid programs across Sub-Saharan Africa. Includes fleet stack model, performance scoring, and procurement checklist.</div>
+      <div class="card-meta"><span>⚡ 7 Vehicles Scored</span><span>🌍 Sub-Saharan Africa</span><span>☀️ Mini-Grid Fitness</span></div>
+    </a>
+    <a href="/reports/STS-SubSaharanAfrica_Industry_Letter.html" class="card">
+      <div class="card-tag tag4">✉️ Industry Letter · SSA-STS-LEGACY-2026-001</div>
+      <div class="card-title">Prepaid Metering &amp; STS Standard:<br>Legacy Key Management in SSA</div>
+      <div class="card-desc">Formal correspondence to the STS Association (STSA), IEC working groups, and meter manufacturers requesting legacy algorithm recognition, self-management rights, and dedicated KMC access pathways.</div>
+      <div class="card-meta"><span>✉️ STSA correspondence</span><span>🔑 Legacy DES/MISTY1</span><span>📶 Offline token access</span></div>
+    </a>
+  </div>
+  <footer>© 2026 Cottonspace / Dev Labs · sattal.cottonspace.com</footer>
+</body>
+</html>

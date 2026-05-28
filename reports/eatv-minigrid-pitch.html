@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>eATV MiniGrid Investment Pitch — Sub-Saharan Africa & South Asia</title>
+  <meta name="description" content="Investment pitch for integrated eATV electric utility vehicles and solar MiniGrid systems for rural electrification and last-mile logistics across Sub-Saharan Africa and South Asia.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #f1f5f9;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f8fafc;
+      --accent-teal: #0891b2;
+      --accent-emerald: #059669;
+      --accent-amber: #d97706;
+      --accent-blue: #2563eb;
+      --accent-purple: #7c3aed;
+      --accent-rose: #e11d48;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --border-accent: #cbd5e1;
+      --gradient-hero: linear-gradient(135deg, #f8fafc 0%, #e2f4f1 40%, #f1f5f9 100%);
+      --gradient-teal: linear-gradient(135deg, #0891b2, #06b6d4);
+      --gradient-green: linear-gradient(135deg, #059669, #047857);
+      --gradient-amber: linear-gradient(135deg, #d97706, #b45309);
+      --gradient-multi: linear-gradient(135deg, #0891b2 0%, #2563eb 50%, #7c3aed 100%);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* HERO */
+    .hero {
+      background: var(--gradient-hero);
+      border-bottom: 1px solid var(--border);
+      padding: 70px 40px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -120px; right: -120px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(8,145,178,0.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: 10%;
+      width: 400px; height: 300px;
+      background: radial-gradient(ellipse, rgba(37,99,235,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      margin-bottom: 24px;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(8,145,178,0.08);
+      border: 1px solid rgba(8,145,178,0.3);
+      color: var(--accent-teal);
+      font-size: 0.72rem; font-weight: 700;
+      padding: 5px 14px; border-radius: 20px;
+      text-transform: uppercase; letter-spacing: 1.5px;
+    }
+    .hero-tag.amber {
+      background: rgba(217,119,6,0.08);
+      border-color: rgba(217,119,6,0.3);
+      color: var(--accent-amber);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+      font-weight: 800; line-height: 1.15;
+      max-width: 900px;
+      margin-bottom: 20px;
+    }
+    .hero h1 span {
+      background: var(--gradient-multi);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      max-width: 780px;
+      margin-bottom: 36px;
+      line-height: 1.8;
+    }
+    .hero-kpis {
+      display: flex; flex-wrap: wrap; gap: 20px;
+    }
+    .hero-kpi {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border-accent);
+      border-radius: 10px;
+      padding: 14px 22px;
+      min-width: 130px;
+    }
+    .hero-kpi-value {
+      font-size: 1.8rem; font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--gradient-teal);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-kpi-label {
+      font-size: 0.72rem; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.8px;
+      margin-top: 3px;
+    }
+
+    /* NAV */
+    nav {
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px;
+      position: sticky; top: 0; z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+    .nav-inner {
+      display: flex; gap: 0; overflow-x: auto;
+    }
+    .nav-inner a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.8rem; font-weight: 500;
+      padding: 14px 15px;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .nav-inner a:hover {
+      color: var(--accent-teal);
+      border-bottom-color: var(--accent-teal);
+    }
+
+    /* LAYOUT */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+    .section { padding: 70px 0; border-bottom: 1px solid var(--border); }
+
+    /* SECTION HEADERS */
+    .section-header { margin-bottom: 44px; }
+    .section-number {
+      font-size: 0.7rem; font-weight: 700;
+      color: var(--accent-teal); letter-spacing: 2px;
+      text-transform: uppercase; margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.3rem);
+      font-weight: 700; line-height: 1.2;
+      margin-bottom: 14px;
+    }
+    .section-desc {
+      color: var(--text-secondary);
+      font-size: 0.95rem; max-width: 780px;
+      line-height: 1.8;
+    }
+
+    /* CARDS */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-accent);
+      border-radius: 14px;
+      padding: 28px;
+      transition: all 0.3s;
+    }
+    .card:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(20,184,166,0.25);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(20,184,166,0.06);
+    }
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px; }
+    .card-title {
+      font-size: 1rem; font-weight: 700;
+      margin-bottom: 14px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .card-icon {
+      width: 38px; height: 38px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+
+    ul.styled-list { list-style: none; padding: 0; }
+    ul.styled-list li {
+      padding: 6px 0 6px 22px;
+      position: relative;
+      font-size: 0.87rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+    ul.styled-list li:last-child { border-bottom: none; }
+    ul.styled-list li::before {
+      content: '▸';
+      position: absolute; left: 0;
+      color: var(--accent-teal);
+      font-size: 0.75rem; top: 8px;
+    }
+
+    /* BADGES */
+    .badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 3px 10px; border-radius: 20px;
+      font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .badge-teal { background: rgba(20,184,166,0.15); color: #2dd4bf; border: 1px solid rgba(20,184,166,0.3); }
+    .badge-amber { background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3); }
+    .badge-green { background: rgba(16,185,129,0.15); color: #34d399; border: 1px solid rgba(16,185,129,0.3); }
+    .badge-blue { background: rgba(59,130,246,0.15); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3); }
+    .badge-purple { background: rgba(139,92,246,0.15); color: #a78bfa; border: 1px solid rgba(139,92,246,0.3); }
+    .badge-rose { background: rgba(244,63,94,0.15); color: #fb7185; border: 1px solid rgba(244,63,94,0.3); }
+
+    /* ALERTS */
+    .alert {
+      padding: 18px 22px;
+      border-radius: 12px;
+      margin: 22px 0;
+      display: flex; gap: 16px;
+      align-items: flex-start;
+    }
+    .alert-teal { background: rgba(20,184,166,0.07); border-left: 3px solid #14b8a6; }
+    .alert-amber { background: rgba(245,158,11,0.07); border-left: 3px solid #f59e0b; }
+    .alert-green { background: rgba(16,185,129,0.07); border-left: 3px solid #10b981; }
+    .alert-rose { background: rgba(244,63,94,0.07); border-left: 3px solid #f43f5e; }
+    .alert-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 1px; }
+    .alert-content { flex: 1; }
+    .alert-title { font-weight: 700; font-size: 0.92rem; margin-bottom: 6px; }
+    .alert-text { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.65; }
+
+    /* TABLES */
+    .table-wrapper { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border-accent); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+    thead tr { background: rgba(20,184,166,0.08); }
+    th {
+      padding: 14px 16px; text-align: left;
+      font-weight: 700; color: var(--accent-teal);
+      font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.8px;
+    }
+    td {
+      padding: 12px 16px; border-top: 1px solid var(--border);
+      color: var(--text-secondary); vertical-align: top;
+    }
+    tr:hover td { background: rgba(255,255,255,0.015); }
+    td:first-child { color: var(--text-primary); font-weight: 600; }
+    td code {
+      font-family: 'JetBrains Mono', monospace;
+      background: rgba(20,184,166,0.1);
+      color: var(--accent-teal);
+      padding: 2px 6px; border-radius: 4px;
+      font-size: 0.78rem;
+    }
+
+    /* DIAGRAM BOX */
+    .diagram-box {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-accent);
+      border-radius: 14px;
+      padding: 32px;
+      margin: 32px 0;
+    }
+    .diagram-title {
+      font-size: 0.85rem; font-weight: 600;
+      color: var(--accent-teal); text-transform: uppercase;
+      letter-spacing: 1px; margin-bottom: 26px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border-accent);
+    }
+
+    /* REGION CARDS */
+    .region-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 24px; margin: 28px 0;
+    }
+    .region-card {
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border-accent);
+    }
+    .region-header {
+      padding: 18px 24px;
+      display: flex; align-items: center; gap: 12px;
+      font-weight: 700; font-size: 1.05rem;
+    }
+    .region-header.ssa { background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(20,184,166,0.1)); border-bottom: 1px solid rgba(16,185,129,0.2); color: #34d399; }
+    .region-header.sa { background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(234,179,8,0.1)); border-bottom: 1px solid rgba(245,158,11,0.2); color: #fbbf24; }
+    .region-body { background: var(--bg-card); padding: 20px 24px; }
+
+    /* FINANCIAL TABLE */
+    .fin-row {
+      display: flex; justify-content: space-between;
+      align-items: center; padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.87rem;
+    }
+    .fin-row:last-child { border-bottom: none; }
+    .fin-label { color: var(--text-secondary); }
+    .fin-value { font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+    .fin-total {
+      display: flex; justify-content: space-between;
+      padding: 16px 0; border-top: 2px solid var(--accent-teal);
+      margin-top: 8px; font-weight: 800;
+      color: var(--accent-teal); font-size: 1rem;
+    }
+
+    /* PILLAR BLOCKS */
+    .pillar-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px; margin: 28px 0;
+    }
+    .pillar {
+      background: var(--bg-card);
+      border: 1px solid var(--border-accent);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .pillar:hover {
+      border-color: rgba(20,184,166,0.3);
+      transform: translateY(-3px);
+    }
+    .pillar-icon { font-size: 2rem; margin-bottom: 10px; }
+    .pillar-title { font-size: 0.9rem; font-weight: 700; margin-bottom: 6px; }
+    .pillar-desc { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; }
+
+    /* HIGHLIGHT BOX */
+    .highlight-box {
+      background: linear-gradient(135deg, rgba(20,184,166,0.05), rgba(20,184,166,0.02));
+      border: 1px solid rgba(20,184,166,0.2);
+      border-radius: 14px; padding: 26px;
+      margin: 22px 0;
+    }
+    .highlight-box h4 { color: var(--accent-teal); margin-bottom: 14px; font-size: 1rem; }
+
+    /* ROADMAP */
+    .roadmap-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px; margin: 28px 0;
+    }
+    .phase-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-accent);
+      border-radius: 14px; overflow: hidden;
+    }
+    .phase-header {
+      padding: 16px 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .phase-num {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: var(--gradient-teal);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+    .phase-body { padding: 16px 20px; }
+
+    /* PARTNER LOGOS PLACEHOLDER */
+    .partner-row {
+      display: flex; flex-wrap: wrap; gap: 16px;
+      margin: 24px 0;
+    }
+    .partner-chip {
+      background: var(--bg-card);
+      border: 1px solid var(--border-accent);
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-size: 0.82rem; font-weight: 600;
+      color: var(--text-secondary);
+      display: flex; align-items: center; gap: 7px;
+    }
+    .partner-chip:hover {
+      border-color: rgba(20,184,166,0.3);
+      color: var(--accent-teal);
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      padding: 48px 40px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer strong { color: var(--accent-teal); }
+
+    /* SDG TAGS */
+    .sdg-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0; }
+    .sdg-tag {
+      padding: 6px 14px; border-radius: 6px;
+      font-size: 0.75rem; font-weight: 700;
+      border: 1px solid;
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 40px 24px; }
+      .container { padding: 0 20px; }
+      nav { padding: 0 20px; }
+      .region-grid { grid-template-columns: 1fr; }
+      .section { padding: 44px 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-eyebrow">
+    <div class="hero-tag">🌍 Investment Pitch</div>
+    <div class="hero-tag amber">⚡ Dual-Market Report</div>
+    <div class="hero-tag" style="background:rgba(139,92,246,0.12);border-color:rgba(139,92,246,0.35);color:#a78bfa;">🛺 eATV + MiniGrid Nexus</div>
+  </div>
+  <h1>Electric ATV + Solar MiniGrid<br><span>Rural Mobility & Energy Access</span><br>for SSA and South Asia</h1>
+  <p class="hero-subtitle">A comprehensive investment and deployment pitch for the eATV MiniGrid model — integrating electric utility vehicles as productive-use anchors for off-grid solar systems in Sub-Saharan Africa and the newly expanded South Asian markets of India, Bangladesh, Nepal, and Sri Lanka.</p>
+  <div class="hero-kpis">
+    <div class="hero-kpi">
+      <div class="hero-kpi-value">789M</div>
+      <div class="hero-kpi-label">People off-grid globally</div>
+    </div>
+    <div class="hero-kpi">
+      <div class="hero-kpi-value">$67B</div>
+      <div class="hero-kpi-label">MiniGrid market by 2030</div>
+    </div>
+    <div class="hero-kpi">
+      <div class="hero-kpi-value">28%</div>
+      <div class="hero-kpi-label">CAGR rural EV (India)</div>
+    </div>
+    <div class="hero-kpi">
+      <div class="hero-kpi-value">3.2x</div>
+      <div class="hero-kpi-label">Income uplift w/ eATV</div>
+    </div>
+    <div class="hero-kpi">
+      <div class="hero-kpi-value">$240</div>
+      <div class="hero-kpi-label">Avg. monthly OPEX saving</div>
+    </div>
+  </div>
+</header>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="nav-inner">
+    <a href="#problem">Problem</a>
+    <a href="#solution">Solution</a>
+    <a href="#ssa">SSA Market</a>
+    <a href="#southasia">South Asia</a>
+    <a href="#technical">Technical Specs</a>
+    <a href="#business">Business Model</a>
+    <a href="#financial">Financials</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#partners">Partners</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- SECTION 1: PROBLEM -->
+<section id="problem" class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number">Section 01</div>
+      <h2 class="section-title">The Dual Crisis: Energy Poverty + Mobility Poverty</h2>
+      <p class="section-desc">The 789 million people still without electricity and the 1.2 billion in rural areas without reliable transport are not separate problems — they are the same population, experiencing compounding disadvantage. Solving energy without solving mobility leaves agricultural value chains broken. Solving mobility without clean energy perpetuates fuel dependence.</p>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:rgba(244,63,94,0.15);">⚡</div>
+          <span>Energy Access Gap</span>
+        </div>
+        <ul class="styled-list">
+          <li>789M people have no electricity access (IEA 2023)</li>
+          <li>570M are in Sub-Saharan Africa — 43% of SSA population</li>
+          <li>South Asia: 30M still unconnected (India/BD/Nepal/SL gap)</li>
+          <li>Grid extension: $2,000–5,000 per rural household; uneconomic beyond 5km</li>
+          <li>Diesel genset alternative: $0.40–0.80/kWh — 8× solar MiniGrid cost</li>
+          <li>MiniGrid solar: $0.05–0.12/kWh once operational — but requires load anchor</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:rgba(245,158,11,0.15);">🛣️</div>
+          <span>Last-Mile Mobility Gap</span>
+        </div>
+        <ul class="styled-list">
+          <li>1 billion rural farmers lack reliable farm-to-market transport</li>
+          <li>Post-harvest losses: 20–40% due to transport failure (IFAD)</li>
+          <li>Petrol motorbike/tuk-tuk OPEX: $80–140/month in SSA</li>
+          <li>ICE three-wheeler in India: ₹8,000–12,000/month fuel cost</li>
+          <li>Rural roads: 60–70% unpaved — standard EVs fail in wet conditions</li>
+          <li>Women-led small businesses: disproportionately affected by transport cost</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:rgba(139,92,246,0.15);">🔄</div>
+          <span>The MiniGrid Profitability Trap</span>
+        </div>
+        <ul class="styled-list">
+          <li>MiniGrid load factor: often &lt;25% (night-time household lighting only)</li>
+          <li>Surplus solar power wasted 8am–5pm — grid operators lose revenue</li>
+          <li>Low load factor = higher per-kWh tariff = reduced affordability = lower uptake</li>
+          <li>Chicken-and-egg: won't invest in MiniGrid without customers; no customers without grid</li>
+          <li>eATV charging as daytime anchor load solves this — 2–4 kWh/vehicle/day absorbed</li>
+          <li>Productive use anchors increase MiniGrid IRR from 8% to 18–24% (ESMAP studies)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:rgba(20,184,166,0.15);">💡</div>
+          <span>Why Now? The Convergence Moment</span>
+        </div>
+        <ul class="styled-list">
+          <li>LiFePO4 cell cost: $80/kWh in 2024 — 85% reduction since 2012</li>
+          <li>Solar PV module cost: $0.18/W in 2024 — below $0.10/W by 2027</li>
+          <li>India EV policy: FAME-II, PM E-Drive — ₹10,900 crore deployment</li>
+          <li>Africa: AfDB $25B energy access commitment; ECREEE MiniGrid scale-up</li>
+          <li>Bangladesh: National EV Policy 2023 — target 30% EV penetration by 2030</li>
+          <li>Digital payment rails: M-PESA, UPI, bKash enabling PAYG models at village scale</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2: SOLUTION -->
+<section id="solution" class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number">Section 02</div>
+      <h2 class="section-title">The eATV MiniGrid Nexus Model</h2>
+      <p class="section-desc">Our model deploys electric utility ATVs (eATVs) as both the productive-use anchor load for solar MiniGrids and the last-mile logistics vehicle for rural agricultural supply chains. Each eATV is a revenue-generating asset that simultaneously increases MiniGrid viability and replaces diesel mobility costs.</p>
+    </div>
+
+    <!-- System architecture diagram -->
+    <div class="diagram-box">
+      <div class="diagram-title">⚡ eATV MiniGrid System Architecture — Energy & Value Flow</div>
+      <svg viewBox="0 0 780 380" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:780px;display:block;margin:0 auto;">
+        <rect width="780" height="380" fill="#0d1117" rx="8"/>
+        <defs>
+          <linearGradient id="tealGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#14b8a6"/>
+            <stop offset="100%" style="stop-color:#06b6d4"/>
+          </linearGradient>
+          <linearGradient id="amberGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#f59e0b"/>
+            <stop offset="100%" style="stop-color:#d97706"/>
+          </linearGradient>
+          <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#10b981"/>
+            <stop offset="100%" style="stop-color:#059669"/>
+          </linearGradient>
+          <marker id="arrTeal" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#14b8a6"/>
+          </marker>
+          <marker id="arrAmber" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#f59e0b"/>
+          </marker>
+          <marker id="arrGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#10b981"/>
+          </marker>
+        </defs>
+
+        <!-- Solar Panel (top-left) -->
+        <rect x="30" y="40" width="120" height="70" rx="6" fill="rgba(245,158,11,0.12)" stroke="#f59e0b" stroke-width="1.5"/>
+        <text x="90" y="72" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="700">☀️ Solar Array</text>
+        <text x="90" y="88" text-anchor="middle" fill="#94a3b8" font-size="10">5–50 kWp</text>
+        <text x="90" y="100" text-anchor="middle" fill="#94a3b8" font-size="10">per MiniGrid node</text>
+
+        <!-- Arrow solar → controller -->
+        <line x1="150" y1="75" x2="210" y2="75" stroke="#f59e0b" stroke-width="2" marker-end="url(#arrAmber)"/>
+
+        <!-- MiniGrid controller -->
+        <rect x="210" y="40" width="130" height="70" rx="6" fill="rgba(59,130,246,0.12)" stroke="#3b82f6" stroke-width="1.5"/>
+        <text x="275" y="67" text-anchor="middle" fill="#60a5fa" font-size="11" font-weight="700">🔋 MiniGrid Hub</text>
+        <text x="275" y="81" text-anchor="middle" fill="#94a3b8" font-size="10">BESS + Inverter</text>
+        <text x="275" y="95" text-anchor="middle" fill="#94a3b8" font-size="10">Smart meter / IoT</text>
+
+        <!-- Arrow controller → charging station -->
+        <line x1="340" y1="75" x2="400" y2="75" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrTeal)"/>
+
+        <!-- Charging station -->
+        <rect x="400" y="40" width="130" height="70" rx="6" fill="rgba(20,184,166,0.12)" stroke="#14b8a6" stroke-width="1.5"/>
+        <text x="465" y="67" text-anchor="middle" fill="#2dd4bf" font-size="11" font-weight="700">⚡ Charge Hub</text>
+        <text x="465" y="81" text-anchor="middle" fill="#94a3b8" font-size="10">4× DC fast ports</text>
+        <text x="465" y="95" text-anchor="middle" fill="#94a3b8" font-size="10">PAYG / M-PESA / UPI</text>
+
+        <!-- Arrow charging → eATV fleet -->
+        <line x1="530" y1="75" x2="590" y2="75" stroke="#14b8a6" stroke-width="2" marker-end="url(#arrTeal)"/>
+
+        <!-- eATV Fleet -->
+        <rect x="590" y="30" width="150" height="90" rx="6" fill="rgba(20,184,166,0.1)" stroke="#14b8a6" stroke-width="1.5"/>
+        <text x="665" y="58" text-anchor="middle" fill="#2dd4bf" font-size="11" font-weight="700">🚙 eATV Fleet</text>
+        <text x="665" y="72" text-anchor="middle" fill="#94a3b8" font-size="10">3–10 vehicles</text>
+        <text x="665" y="84" text-anchor="middle" fill="#94a3b8" font-size="10">per MiniGrid node</text>
+        <text x="665" y="96" text-anchor="middle" fill="#94a3b8" font-size="10">GPS + telematics</text>
+        <text x="665" y="108" text-anchor="middle" fill="#94a3b8" font-size="10">Solar roof panel</text>
+
+        <!-- REVENUE FLOWS (bottom half) -->
+        <!-- eATV → Farm market -->
+        <rect x="550" y="210" width="170" height="60" rx="6" fill="rgba(16,185,129,0.1)" stroke="#10b981" stroke-width="1.5"/>
+        <text x="635" y="237" text-anchor="middle" fill="#34d399" font-size="11" font-weight="700">🌾 Farm-to-Market</text>
+        <text x="635" y="253" text-anchor="middle" fill="#94a3b8" font-size="10">Logistics revenue</text>
+        <text x="635" y="265" text-anchor="middle" fill="#94a3b8" font-size="10">Post-harvest loss ↓ 30%</text>
+        <line x1="665" y1="120" x2="635" y2="210" stroke="#10b981" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrGreen)"/>
+
+        <!-- eATV → Passenger -->
+        <rect x="350" y="210" width="170" height="60" rx="6" fill="rgba(139,92,246,0.1)" stroke="#8b5cf6" stroke-width="1.5"/>
+        <text x="435" y="237" text-anchor="middle" fill="#a78bfa" font-size="11" font-weight="700">👥 Transport-as-Service</text>
+        <text x="435" y="253" text-anchor="middle" fill="#94a3b8" font-size="10">Passenger + cargo rides</text>
+        <text x="435" y="265" text-anchor="middle" fill="#94a3b8" font-size="10">$0.08–0.15/km</text>
+
+        <!-- Arrow eATV → TaaS -->
+        <line x1="600" y1="100" x2="510" y2="210" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="5,3"/>
+
+        <!-- Revenue flow back to MiniGrid -->
+        <rect x="160" y="210" width="160" height="60" rx="6" fill="rgba(245,158,11,0.1)" stroke="#f59e0b" stroke-width="1.5"/>
+        <text x="240" y="235" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="700">💰 Charging Revenue</text>
+        <text x="240" y="251" text-anchor="middle" fill="#94a3b8" font-size="10">$0.10–0.18/kWh</text>
+        <text x="240" y="263" text-anchor="middle" fill="#94a3b8" font-size="10">to MiniGrid operator</text>
+        <!-- Arrow from farm → charging revenue -->
+        <line x1="350" y1="240" x2="320" y2="240" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arrAmber)"/>
+        <!-- Arrow charging revenue → MiniGrid hub -->
+        <line x1="240" y1="210" x2="275" y2="110" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrAmber)"/>
+
+        <!-- Household loads -->
+        <rect x="30" y="210" width="110" height="60" rx="6" fill="rgba(99,102,241,0.1)" stroke="#6366f1" stroke-width="1.5"/>
+        <text x="85" y="236" text-anchor="middle" fill="#818cf8" font-size="11" font-weight="700">🏠 Households</text>
+        <text x="85" y="252" text-anchor="middle" fill="#94a3b8" font-size="10">Lighting, fans,</text>
+        <text x="85" y="264" text-anchor="middle" fill="#94a3b8" font-size="10">phone charging</text>
+        <line x1="210" y1="85" x2="140" y2="210" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+        <!-- Legend -->
+        <rect x="30" y="310" width="720" height="55" rx="6" fill="rgba(241,245,249,0.9)" stroke="#cbd5e1"/>
+        <text x="50" y="336" fill="#94a3b8" font-size="11" font-weight="700">LEGEND:</text>
+        <line x1="110" y1="332" x2="140" y2="332" stroke="#f59e0b" stroke-width="2"/>
+        <text x="146" y="336" fill="#94a3b8" font-size="10">Energy flow</text>
+        <line x1="220" y1="332" x2="250" y2="332" stroke="#14b8a6" stroke-width="2"/>
+        <text x="256" y="336" fill="#94a3b8" font-size="10">Charging flow</text>
+        <line x1="340" y1="332" x2="370" y2="332" stroke="#10b981" stroke-width="2" stroke-dasharray="4,2"/>
+        <text x="376" y="336" fill="#94a3b8" font-size="10">Revenue flow</text>
+        <text x="50" y="355" fill="#2dd4bf" font-size="10">🌞 Peak solar hours (8am–5pm): eATV charging absorbs surplus → improves MiniGrid load factor to 60–75% → lower LCOE → sustainable tariffs</text>
+      </svg>
+      <p style="font-size:0.78rem;color:var(--text-muted);text-align:center;margin-top:14px;">Fig. 1 — eATV MiniGrid Nexus system architecture showing bidirectional energy, charging, and revenue flows between solar generation, battery storage, charging infrastructure, eATV fleet, and productive-use applications.</p>
+    </div>
+
+    <div class="pillar-grid">
+      <div class="pillar">
+        <div class="pillar-icon">☀️</div>
+        <div class="pillar-title">Solar MiniGrid</div>
+        <div class="pillar-desc">5–50 kWp per node; BESS 20–150 kWh; smart metering; IoT-connected</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">⚡</div>
+        <div class="pillar-title">Charging Hub</div>
+        <div class="pillar-desc">4× DC fast-charge ports; PAYG via M-PESA/UPI; battery swap option</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">🚙</div>
+        <div class="pillar-title">eATV Fleet</div>
+        <div class="pillar-desc">3–10 vehicles per node; cargo + passenger; GPS-tracked; solar-assisted</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">📱</div>
+        <div class="pillar-title">Digital Platform</div>
+        <div class="pillar-desc">Ride-booking; fleet management; PAYG energy; IoT telematics dashboard</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">🌾</div>
+        <div class="pillar-title">AgriLogistics</div>
+        <div class="pillar-desc">Farm-to-market last-mile; cold-chain capable; post-harvest loss reduction</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">💰</div>
+        <div class="pillar-title">PAYG Finance</div>
+        <div class="pillar-desc">Asset-backed lending; mobile money collateral; graduated ownership</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: SSA MARKET -->
+<section id="ssa" class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number">Section 03</div>
+      <h2 class="section-title">Sub-Saharan Africa — Market Analysis</h2>
+      <p class="section-desc">SSA remains the world's largest energy-access gap, with 570 million people unconnected. The region's vast agricultural economy and rapid mobile-money adoption create ideal conditions for the eATV MiniGrid model. Priority markets: Kenya, Tanzania, Uganda, Ethiopia, Nigeria, Ghana, Senegal.</p>
+    </div>
+
+    <div class="card-grid" style="margin-bottom:28px;">
+      <div class="card">
+        <div class="card-title"><div class="card-icon" style="background:rgba(16,185,129,0.15);">🌍</div><span>Market Opportunity — SSA</span></div>
+        <ul class="styled-list">
+          <li><strong>Addressable market:</strong> 10,000+ MiniGrid sites needed across SSA (IRENA)</li>
+          <li><strong>eATV fleet potential:</strong> 50,000–100,000 vehicles (10 per site average) by 2030</li>
+          <li><strong>Market size:</strong> $3.2B combined MiniGrid + eATV charging revenue TAM</li>
+          <li><strong>Kenya:</strong> 12,000 off-grid villages; 400+ MiniGrid sites operational (KPLC data)</li>
+          <li><strong>Tanzania:</strong> 56% rural electrification gap; REA MiniGrid program — 2,000 sites target</li>
+          <li><strong>Nigeria:</strong> 100M without power; REA NBET Grid program — significant eATV opportunity</li>
+          <li><strong>Ethiopia:</strong> 65% off-grid; 3,000 MiniGrid target under UEAP</li>
+          <li><strong>Ghana:</strong> PURC MiniGrid regulatory framework — most investor-friendly SSA regulator</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon" style="background:rgba(20,184,166,0.15);">🚗</div><span>eATV Vehicle — SSA Specification</span></div>
+        <ul class="styled-list">
+          <li><strong>Priority form factor:</strong> 3-wheel electric cargo trike (Bajaj RE-style) — locally understood</li>
+          <li><strong>Payload:</strong> 300–500 kg cargo (maize, cassava, market goods)</li>
+          <li><strong>Drive:</strong> 1.5–3 kW rear hub motor; 48V/40Ah LiFePO4 (swappable)</li>
+          <li><strong>Range:</strong> 60–80 km loaded; 100 km unloaded</li>
+          <li><strong>Terrain:</strong> All-season laterite, gravel, and dirt — 150mm ground clearance min.</li>
+          <li><strong>Charging:</strong> 4–6 hours from MiniGrid DC fast charge; solar-assisted top-up</li>
+          <li><strong>Price target:</strong> $2,500–4,000 FOB (upgrades from Section 1 included)</li>
+          <li><strong>PAYG terms:</strong> $35–50/month lease (own in 48 months)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Country</th>
+            <th>Off-Grid Population</th>
+            <th>MiniGrid Policy</th>
+            <th>EV Regulation</th>
+            <th>Mobile Money</th>
+            <th>Priority Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Kenya</td>
+            <td>12M (25%)</td>
+            <td>Strong — EPRA MiniGrid Regs 2018</td>
+            <td>EV Roadmap 2022; zero duty on EVs</td>
+            <td>M-PESA 86% penetration</td>
+            <td><span class="badge badge-green">★★★★★ Tier 1</span></td>
+          </tr>
+          <tr>
+            <td>Tanzania</td>
+            <td>35M (56%)</td>
+            <td>REA MiniGrid program; tariff support</td>
+            <td>Draft EV Policy 2023</td>
+            <td>Vodacom M-Pesa, Tigo Pesa</td>
+            <td><span class="badge badge-green">★★★★☆ Tier 1</span></td>
+          </tr>
+          <tr>
+            <td>Nigeria</td>
+            <td>100M (50%)</td>
+            <td>REA Rural Electrification Fund</td>
+            <td>National EV Policy 2022</td>
+            <td>Opay, Flutterwave USSD</td>
+            <td><span class="badge badge-teal">★★★★☆ Tier 1</span></td>
+          </tr>
+          <tr>
+            <td>Ethiopia</td>
+            <td>70M (65%)</td>
+            <td>UEAP MiniGrid — 3,000 target</td>
+            <td>No formal EV policy yet</td>
+            <td>Telebirr (state telecom)</td>
+            <td><span class="badge badge-amber">★★★☆☆ Tier 2</span></td>
+          </tr>
+          <tr>
+            <td>Ghana</td>
+            <td>8M (25%)</td>
+            <td>PURC MiniGrid Regs — investor-friendly</td>
+            <td>EV policy draft in progress</td>
+            <td>MTN Mobile Money 70%</td>
+            <td><span class="badge badge-green">★★★★☆ Tier 1</span></td>
+          </tr>
+          <tr>
+            <td>Senegal / ECOWAS</td>
+            <td>10M (63% rural)</td>
+            <td>ECREEE MiniGrid framework</td>
+            <td>ECOWAS EV roadmap 2025</td>
+            <td>Orange Money, Wave</td>
+            <td><span class="badge badge-teal">★★★☆☆ Tier 2</span></td>
+          </tr>
+          <tr>
+            <td>Uganda</td>
+            <td>36M (83%)</td>
+            <td>ERA licensing; GET FiT program</td>
+            <td>EV tax waiver (Finance Act 2023)</td>
+            <td>MTN MoMo, Airtel Money</td>
+            <td><span class="badge badge-teal">★★★★☆ Tier 1</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert alert-green" style="margin-top:24px;">
+      <div class="alert-icon">🌱</div>
+      <div class="alert-content">
+        <div class="alert-title">SSA Competitive Moat: The Local Assembly Advantage</div>
+        <div class="alert-text">Kenya (Nairobi), Tanzania (Dar es Salaam), and Nigeria (Lagos/Ogun) all have nascent EV assembly ecosystems (BasiGo, Roam, Ampersand, Spiro). Our model targets assembly partnerships with these local players — importing semi-knocked-down (SKD) kits and assembling locally. This avoids import duties of 25–35% on fully-built vehicles, creates local jobs, enables community ownership co-operatives, and creates a servicing network essential for rural fleet uptime.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: SOUTH ASIA -->
+<section id="southasia" class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number">Section 04 — EXPANDED</div>
+      <h2 class="section-title">South Asia — Market Analysis & Expansion Strategy</h2>
+      <p class="section-desc">South Asia presents a qualitatively different opportunity from SSA: larger industrial base, more advanced regulatory frameworks (especially India), higher population density, and a massive existing three-wheeler / cargo vehicle market ripe for electrification. The challenge is more about navigating regulatory complexity and competitive incumbents than building from scratch.</p>
+    </div>
+
+    <div class="region-grid">
+      <div class="region-card">
+        <div class="region-header sa">🇮🇳 India — Anchor Market</div>
+        <div class="region-body">
+          <ul class="styled-list">
+            <li><strong>Off-grid population:</strong> 15–30M (remote Northeast, islands, tribal areas)</li>
+            <li><strong>Rural three-wheeler market:</strong> 800,000 units/year — fastest-growing EV segment</li>
+            <li><strong>FAME-II subsidy:</strong> ₹10,000–15,000 per EV (three-wheeler cargo)</li>
+            <li><strong>PM E-DRIVE:</strong> ₹10,900 crore 2024 — ₹2,000 crore for e3W cargo</li>
+            <li><strong>State subsidies:</strong> Maharashtra, Rajasthan, Karnataka — additional ₹30,000–50,000</li>
+            <li><strong>MiniGrid policy:</strong> No dedicated MiniGrid policy — solar-diesel hybrid farms via RE programs</li>
+            <li><strong>Target geography:</strong> Jharkhand, Odisha, Chhattisgarh tribal districts; Northeast (Assam, Manipur, Meghalaya); Sundarbans; Lakshadweep</li>
+            <li><strong>Key partners:</strong> EESL, RESCO operators, Husk Power, OMC Power, SELCO</li>
+            <li><strong>Vehicle candidates:</strong> Mahindra Treo, Piaggio Ape E-City, Euler HiLoad — or TrikeXplor upgraded variant</li>
+          </ul>
+        </div>
+      </div>
+      <div class="region-card">
+        <div class="region-header sa" style="background:linear-gradient(135deg,rgba(20,184,166,0.15),rgba(20,184,166,0.08));border-color:rgba(20,184,166,0.2);color:#2dd4bf;">🇧🇩 Bangladesh — High Priority</div>
+        <div class="region-body">
+          <ul class="styled-list">
+            <li><strong>Off-grid:</strong> 30M (Chars, Haors, coastal islands — Chittagong Hill Tracts)</li>
+            <li><strong>Existing EV culture:</strong> 3M+ battery-powered electric rickshaws (ERVs) already operating</li>
+            <li><strong>Charging:</strong> 90% informal grid-charging — MiniGrid solar upgrade is urgent need</li>
+            <li><strong>National EV Policy 2023:</strong> 30% EV target by 2030; import duty exemption for EV components</li>
+            <li><strong>IDCOL MiniGrid:</strong> 227 solar MiniGrid sites operational (2024) — scaling to 500+</li>
+            <li><strong>bKash penetration:</strong> 70M+ registered users — PAYG vehicle financing highly feasible</li>
+            <li><strong>Key risk:</strong> Cyclone/flood terrain requires IP67+ vehicle sealing and high ground clearance</li>
+            <li><strong>Opportunity:</strong> Replace diesel Nosimon/Leguna tractors on Chars with solar-charged eATVs — direct economic impact for 5M+ farmers</li>
+          </ul>
+        </div>
+      </div>
+      <div class="region-card">
+        <div class="region-header sa" style="background:linear-gradient(135deg,rgba(139,92,246,0.15),rgba(139,92,246,0.08));border-color:rgba(139,92,246,0.2);color:#a78bfa;">🇳🇵 Nepal — Mountainous Niche</div>
+        <div class="region-body">
+          <ul class="styled-list">
+            <li><strong>Geography:</strong> 75% mountainous — requires high ground clearance (200mm+), four-wheel traction</li>
+            <li><strong>Existing market:</strong> 55% EV penetration in new three-wheeler sales (2024) — highest in South Asia</li>
+            <li><strong>Hydropower base:</strong> Abundant low-cost electricity (₹4–6/kWh) — no solar needed for urban</li>
+            <li><strong>Rural gap:</strong> High-altitude villages (above 2,500m) — solar + battery storage essential</li>
+            <li><strong>Fit:</strong> eATV specifically suited to steep tracks inaccessible to standard three-wheelers</li>
+            <li><strong>Policy:</strong> NEA (Nepal Electricity Authority) supportive; import duty 10% on EV kits</li>
+          </ul>
+        </div>
+      </div>
+      <div class="region-card">
+        <div class="region-header sa" style="background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(59,130,246,0.08));border-color:rgba(59,130,246,0.2);color:#60a5fa;">🇱🇰 Sri Lanka — Emerging Market</div>
+        <div class="region-body">
+          <ul class="styled-list">
+            <li><strong>Post-crisis recovery:</strong> 2022 fuel crisis accelerated EV adoption — 140% YoY increase</li>
+            <li><strong>Off-grid:</strong> Northern and Eastern provinces — 8% without reliable grid</li>
+            <li><strong>Agricultural belt:</strong> Dry Zone (Anuradhapura, Polonnaruwa) — paddy and vegetable logistics need</li>
+            <li><strong>EV policy:</strong> Import tax exemption for EVs under Rs. 6M; CEFPF green financing available</li>
+            <li><strong>MiniGrid:</strong> CEB rural electrification program — 150+ off-grid communities</li>
+            <li><strong>Opportunity:</strong> Plug into existing SLSEA solar program — add eATV charging as productive-use layer</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- South Asia specific technical recommendations -->
+    <h3 style="font-size:1.2rem;font-weight:700;margin:36px 0 20px;color:var(--text-primary);">South Asia — Technical Specifications & Adaptations</h3>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>India (Plains)</th>
+            <th>India (NE/Islands)</th>
+            <th>Bangladesh (Chars)</th>
+            <th>Nepal (Mountain)</th>
+            <th>Sri Lanka (Dry Zone)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Powertrain</td>
+            <td>48V/1.5kW rear hub</td>
+            <td>72V/3kW mid-drive 4WD</td>
+            <td>48V/1.5kW + solar roof</td>
+            <td>72V/3kW 4WD + regen</td>
+            <td>48V/1.5kW rear hub</td>
+          </tr>
+          <tr>
+            <td>Battery</td>
+            <td>48V/40Ah LiFePO4</td>
+            <td>72V/60Ah (swappable)</td>
+            <td>48V/40Ah IP68 sealed</td>
+            <td>72V/60Ah heated pack</td>
+            <td>48V/30Ah LiFePO4</td>
+          </tr>
+          <tr>
+            <td>Ground clearance</td>
+            <td>150mm min.</td>
+            <td>180mm (forested tracks)</td>
+            <td>200mm (monsoon floods)</td>
+            <td>220mm+ (boulder paths)</td>
+            <td>150mm standard</td>
+          </tr>
+          <tr>
+            <td>Suspension</td>
+            <td>A-arm + Gabriel coilover</td>
+            <td>A-arm 200mm travel</td>
+            <td>High-travel trailing arm</td>
+            <td>Long-travel A-arm 4WD</td>
+            <td>Standard A-arm</td>
+          </tr>
+          <tr>
+            <td>Waterproofing</td>
+            <td>IP54 (dry season)</td>
+            <td>IP65 (monsoon)</td>
+            <td>IP67 (char flooding)</td>
+            <td>IP65 (snowmelt)</td>
+            <td>IP54 standard</td>
+          </tr>
+          <tr>
+            <td>Payload</td>
+            <td>300–400 kg</td>
+            <td>200–300 kg</td>
+            <td>300–500 kg (paddy)</td>
+            <td>150–250 kg (steep)</td>
+            <td>300–400 kg</td>
+          </tr>
+          <tr>
+            <td>MiniGrid size</td>
+            <td>10–30 kWp per node</td>
+            <td>5–15 kWp (island)</td>
+            <td>5–20 kWp</td>
+            <td>5–10 kWp + hydro</td>
+            <td>10–25 kWp</td>
+          </tr>
+          <tr>
+            <td>PAYG platform</td>
+            <td>UPI / Aadhaar ID</td>
+            <td>UPI + offline fallback</td>
+            <td>bKash / Nagad</td>
+            <td>eSewa / FonePay</td>
+            <td>LankaQR / bank transfer</td>
+          </tr>
+          <tr>
+            <td>Local assembly partner</td>
+            <td>Euler, Piaggio Ape, OSM EV</td>
+            <td>DRDO / THDC collab</td>
+            <td>Runner Automobiles, Walton</td>
+            <td>Safa Tempo Association</td>
+            <td>LAUGFS, MAS Holdings EV</td>
+          </tr>
+          <tr>
+            <td>Key regulatory ref.</td>
+            <td>CMVR, AIS-138, FAME-II</td>
+            <td>Northeast EV Mission</td>
+            <td>BRTA EV Category 2023</td>
+            <td>NEA EV Technical Spec</td>
+            <td>SLV Act + SLSEA Solar</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert alert-amber" style="margin-top:24px;">
+      <div class="alert-icon">🇧🇩</div>
+      <div class="alert-content">
+        <div class="alert-title">Bangladesh — The Char/Haor Opportunity: A Priority Case</div>
+        <div class="alert-text">Bangladesh's 100+ riverine char islands and haor wetlands house 5–8 million people who farm paddy, lentils, and mustard but lose 25–40% of their harvest due to transport failure at water-level fluctuation. Current diesel-powered Nosimon tractors (locally-built bamboo and metal vehicles) cost $0.80–1.20/km to operate. An IP67-sealed eATV charged from a 10 kWp floating solar MiniGrid (already pioneered by Grameen Shakti and IDCOL) operating at $0.12–0.15/km would generate $300–400/year net saving per farmer household — equivalent to 15–20% income increase. PAYG financing at $35/month (48-month term) is within reach for char farmers earning $150–250/month. Runner Automobiles (Bangladesh's largest EV manufacturer) and Walton Hi-Tech Industries are immediate local assembly partnership targets.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5: TECHNICAL SPECS -->
+<section id="technical" class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number">Section 05</div>
+      <h2 class="section-title">Technical Specifications — eATV Platform</h2>
+      <p class="section-desc">The eATV platform is designed as a modular, upgradeable utility vehicle that combines lessons from the TrikeXplor critique (Section 1 report) with SSA/South Asia terrain requirements. Three variants address different market segments.</p>
+    </div>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Specification</th>
+            <th>eATV Lite<br><small style="font-weight:400;color:var(--text-muted);">Plains / paved-plus</small></th>
+            <th>eATV Pro<br><small style="font-weight:400;color:var(--text-muted);">Rural all-terrain</small></th>
+            <th>eATV 4×4<br><small style="font-weight:400;color:var(--text-muted);">Mountain / offroad</small></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Base platform</td><td>Upgraded trike / e3W</td><td>Custom tubular spaceframe</td><td>Custom 4-wheel UTV frame</td></tr>
+          <tr><td>Frame material</td><td>ERW steel (upgraded)</td><td>DOM/4130 Cr-Mo spaceframe</td><td>DOM 4130 Cr-Mo full cage</td></tr>
+          <tr><td>Roll cage</td><td>1.75" DOM triangulated</td><td>1.75" DOM UTV-spec ROPS</td><td>2" DOM certified ROPS + harness</td></tr>
+          <tr><td>Motor(s)</td><td>1× 48V/1.5kW hub</td><td>2× 48V/1.5kW rear hubs</td><td>4× 72V/1.5kW in-wheel 4WD</td></tr>
+          <tr><td>Max power</td><td>1.5 kW</td><td>3 kW</td><td>6 kW (peak 10 kW)</td></tr>
+          <tr><td>Battery</td><td>48V/40Ah LiFePO4</td><td>48V/60Ah LiFePO4 swappable</td><td>72V/80Ah LiFePO4 swappable</td></tr>
+          <tr><td>BMS</td><td>Daly passive 48V/30A</td><td>JBD active balance 48V/60A</td><td>CAN bus active, regen capable</td></tr>
+          <tr><td>Range (loaded)</td><td>60 km</td><td>80 km</td><td>100 km (regen boost)</td></tr>
+          <tr><td>Suspension (front)</td><td>Gabriel 3W strut A-arm</td><td>Custom A-arm + coilover 150mm</td><td>A-arm 200mm travel + ARB</td></tr>
+          <tr><td>Suspension (rear)</td><td>Trailing arm + coilover</td><td>Trailing A-arm + coilover</td><td>Independent rear A-arm 200mm</td></tr>
+          <tr><td>Brakes</td><td>Uno Minda 3W caliper 190mm</td><td>Hayes ATV 2-piston 220mm</td><td>Brembo UTV 4-piston 240mm</td></tr>
+          <tr><td>Ground clearance</td><td>150mm</td><td>180mm</td><td>220mm (adjustable lift kit)</td></tr>
+          <tr><td>Waterproofing</td><td>IP54</td><td>IP65</td><td>IP67 (full submersion 1m/30min)</td></tr>
+          <tr><td>Payload capacity</td><td>300 kg</td><td>400 kg</td><td>250 kg (terrain trade-off)</td></tr>
+          <tr><td>Solar panel (roof)</td><td>Optional 100W</td><td>Standard 200W foldable</td><td>Standard 300W fixed roof</td></tr>
+          <tr><td>Telematics</td><td>GPS + SIM (basic)</td><td>GPS + IMU + regen monitor</td><td>Full IoT: GPS, IMU, V2G, CAN</td></tr>
+          <tr><td>Estimated FOB cost</td><td>$2,800–3,500</td><td>$4,500–6,000</td><td>$7,500–10,000</td></tr>
+          <tr><td>PAYG (48 months)</td><td>$45–55/month</td><td>$75–95/month</td><td>$130–160/month</td></tr>
+          <tr><td>Target markets</td><td>India plains, Bangladesh, SL</td><td>India NE, SSA priority, Nepal valley</td><td>Nepal mountain, SSA highland, India tribal</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="highlight-box" style="margin-top:32px;">
+      <h4>⚡ Battery Swap as MiniGrid V2G (Vehicle-to-Grid) Architecture</h4>
+      <p style="font-size:0.85rem;color:var(--text-secondary);line-height:1.75;">The swappable 48V/60Ah LiFePO4 pack (eATV Pro) is designed to double as a mobile energy storage unit. When the eATV is parked at the MiniGrid charging hub overnight, the battery pack connects via a bidirectional DC-DC interface, allowing the MiniGrid operator to use vehicle batteries as additional distributed storage during peak evening load (6pm–10pm). This <strong>V2G architecture</strong> increases effective BESS capacity by 40–80% without capital investment in fixed battery banks — a critical economic improvement for MiniGrid operators facing 4pm–8pm evening peak demand from households. Each eATV fleet of 5 vehicles adds 300 kWh of distributed storage per node. Fleet operators receive a grid-balancing payment from the MiniGrid operator (₹0.50–1.00/kWh discharged into grid) — creating an additional revenue stream.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 6: BUSINESS MODEL -->
+<section id="business" class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number">Section 06</div>
+      <h2 class="section-title">Business Model — Revenue Streams & Unit Economics</h2>
+      <p class="section-desc">The eATV MiniGrid Nexus generates revenue across four interlocking streams. No single stream depends on the others, but all four together create a defensible, multi-layered business that improves with scale.</p>
+    </div>
+
+    <div class="card-grid" style="margin-bottom:32px;">
+      <div class="card">
+        <div class="card-title"><div class="card-icon" style="background:rgba(245,158,11,0.15);">⚡</div><span>Stream 1: EV Charging Revenue</span></div>
+        <div class="fin-row"><div class="fin-label">Tariff per kWh</div><div class="fin-value" style="color:var(--accent-amber);">$0.12–0.18</div></div>
+        <div class="fin-row"><div class="fin-label">Avg. kWh/vehicle/day</div><div class="fin-value" style="color:var(--text-primary);">2.5 kWh</div></div>
+        <div class="fin-row"><div class="fin-label">Vehicles per node (avg.)</div><div class="fin-value" style="color:var(--text-primary);">6 vehicles</div></div>
+        <div class="fin-row"><div class="fin-label">Daily charging revenue</div><div class="fin-value" style="color:var(--accent-teal);">$1.80–2.70</div></div>
+        <div class="fin-total"><div>Annual (per node)</div><div>$650–990</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon" style="background:rgba(139,92,246,0.15);">🚗</div><span>Stream 2: PAYG Vehicle Lease</span></div>
+        <div class="fin-row"><div class="fin-label">Lease per vehicle/month</div><div class="fin-value" style="color:var(--accent-amber);">$45–95</div></div>
+        <div class="fin-row"><div class="fin-label">Vehicles per node</div><div class="fin-value" style="color:var(--text-primary);">6 vehicles</div></div>
+        <div class="fin-row"><div class="fin-label">Default rate (PAYG model)</div><div class="fin-value" style="color:var(--text-primary);">8–12%</div></div>
+        <div class="fin-row"><div class="fin-label">Monthly gross revenue</div><div class="fin-value" style="color:var(--accent-teal);">$270–570</div></div>
+        <div class="fin-total"><div>Annual (per node)</div><div>$3,240–6,840</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon" style="background:rgba(16,185,129,0.15);">🌾</div><span>Stream 3: AgriLogistics Fees</span></div>
+        <div class="fin-row"><div class="fin-label">Platform fee per trip</div><div class="fin-value" style="color:var(--accent-amber);">$0.50–1.20</div></div>
+        <div class="fin-row"><div class="fin-label">Trips per vehicle/day</div><div class="fin-value" style="color:var(--text-primary);">3–5 trips</div></div>
+        <div class="fin-row"><div class="fin-label">Platform share</div><div class="fin-value" style="color:var(--text-primary);">15% of trip fee</div></div>
+        <div class="fin-row"><div class="fin-label">Daily platform revenue</div><div class="fin-value" style="color:var(--accent-teal);">$1.35–5.40</div></div>
+        <div class="fin-total"><div>Annual (per node)</div><div>$2,950–11,800</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon" style="background:rgba(20,184,166,0.15);">🔋</div><span>Stream 4: V2G Grid Balancing</span></div>
+        <div class="fin-row"><div class="fin-label">V2G discharge per vehicle/day</div><div class="fin-value" style="color:var(--accent-amber);">3–5 kWh</div></div>
+        <div class="fin-row"><div class="fin-label">Grid balancing payment</div><div class="fin-value" style="color:var(--text-primary);">$0.05–0.08/kWh</div></div>
+        <div class="fin-row"><div class="fin-label">Eligible vehicles per node</div><div class="fin-value" style="color:var(--text-primary);">4 vehicles</div></div>
+        <div class="fin-row"><div class="fin-label">Daily V2G revenue</div><div class="fin-value" style="color:var(--accent-teal);">$0.60–1.60</div></div>
+        <div class="fin-total"><div>Annual (per node)</div><div>$220–580</div></div>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <h4>💰 Combined Unit Economics — Single MiniGrid Node (6 eATVs, 15 kWp Solar)</h4>
+      <div class="fin-row"><div class="fin-label">CAPEX: MiniGrid (15 kWp + BESS 30 kWh + Charging hub)</div><div class="fin-value" style="color:var(--text-primary);">$28,000–38,000</div></div>
+      <div class="fin-row"><div class="fin-label">CAPEX: 6× eATV Pro (FOB + upgrades + local assembly)</div><div class="fin-value" style="color:var(--text-primary);">$27,000–36,000</div></div>
+      <div class="fin-row"><div class="fin-label">CAPEX: Platform / IoT / PAYG system</div><div class="fin-value" style="color:var(--text-primary);">$3,000–5,000</div></div>
+      <div class="fin-row"><div class="fin-label">Total CAPEX per node</div><div class="fin-value" style="color:var(--accent-amber);">$58,000–79,000</div></div>
+      <div class="fin-row"><div class="fin-label">Annual Revenue (Streams 1–4 combined)</div><div class="fin-value" style="color:var(--accent-teal);">$7,060–20,210</div></div>
+      <div class="fin-row"><div class="fin-label">OPEX (maintenance, data, support) — 18% of revenue</div><div class="fin-value" style="color:var(--text-primary);">(1,270–3,640)</div></div>
+      <div class="fin-row"><div class="fin-label">Net Operating Income per node</div><div class="fin-value" style="color:var(--accent-teal);">$5,790–16,570</div></div>
+      <div class="fin-row"><div class="fin-label">Payback period (blended scenario)</div><div class="fin-value" style="color:var(--text-primary);">5.5–7.5 years</div></div>
+      <div class="fin-total"><div>Project IRR (25-year life, blended)</div><div>16–22%</div></div>
+    </div>
+
+    <div class="alert alert-teal">
+      <div class="alert-icon">💡</div>
+      <div class="alert-content">
+        <div class="alert-title">Carbon Credit Uplift — Voluntary Carbon Market Revenue</div>
+        <div class="alert-text">Each eATV displacing a diesel tuk-tuk saves approximately 1.8–2.4 tCO₂e/year. At current voluntary carbon market prices ($8–15/tCO₂ for Verified Carbon Standard cookstove/clean energy projects), a fleet of 6 eATVs generates $86–216/year in carbon credits — not transformative but meaningful additional upside. At Scale (100 nodes = 600 vehicles), carbon revenue reaches $86,000–216,000/year. AFOLU (Agriculture, Forestry, Land Use) stacking methodology (post-harvest waste reduction → methane avoidance) can further uplift this. Verified by Gold Standard or Verra VCS for institutional buyers.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 7: FINANCIAL PROJECTIONS -->
+<section id="financial" class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number">Section 07</div>
+      <h2 class="section-title">Financial Projections — 5-Year Scale Plan</h2>
+      <p class="section-desc">Projections based on a combined SSA + South Asia deployment starting with 3 pilot nodes in Year 1, scaling to 100 nodes by Year 3, and 500 nodes by Year 5. Node economics above used as baseline.</p>
+    </div>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Year 1 (Pilot)</th>
+            <th>Year 2 (Early Scale)</th>
+            <th>Year 3 (Growth)</th>
+            <th>Year 4 (Scale)</th>
+            <th>Year 5 (Mature)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Nodes operational</td>
+            <td>3</td>
+            <td>15</td>
+            <td>65</td>
+            <td>200</td>
+            <td>500</td>
+          </tr>
+          <tr>
+            <td>eATVs deployed</td>
+            <td>18</td>
+            <td>90</td>
+            <td>390</td>
+            <td>1,200</td>
+            <td>3,000</td>
+          </tr>
+          <tr>
+            <td>Total CAPEX deployed</td>
+            <td>$240K</td>
+            <td>$1.2M</td>
+            <td>$5.2M</td>
+            <td>$16M</td>
+            <td>$40M</td>
+          </tr>
+          <tr>
+            <td>Annual gross revenue</td>
+            <td>$45K</td>
+            <td>$290K</td>
+            <td>$1.4M</td>
+            <td>$5.5M</td>
+            <td>$15M</td>
+          </tr>
+          <tr>
+            <td>EBITDA margin</td>
+            <td>(loss)</td>
+            <td>12%</td>
+            <td>28%</td>
+            <td>38%</td>
+            <td>44%</td>
+          </tr>
+          <tr>
+            <td>Carbon credits revenue</td>
+            <td>$3.5K</td>
+            <td>$18K</td>
+            <td>$84K</td>
+            <td>$270K</td>
+            <td>$650K</td>
+          </tr>
+          <tr>
+            <td>People gaining energy access</td>
+            <td>9,000</td>
+            <td>45,000</td>
+            <td>195,000</td>
+            <td>600,000</td>
+            <td>1.5M</td>
+          </tr>
+          <tr>
+            <td>Farmer households benefitting</td>
+            <td>1,800</td>
+            <td>9,000</td>
+            <td>39,000</td>
+            <td>120,000</td>
+            <td>300,000</td>
+          </tr>
+          <tr>
+            <td>Cumulative CO₂ avoided (tCO₂e)</td>
+            <td>40</td>
+            <td>240</td>
+            <td>1,200</td>
+            <td>5,000</td>
+            <td>18,000+</td>
+          </tr>
+          <tr>
+            <td><strong>Funding requirement</strong></td>
+            <td><strong>$350K (seed)</strong></td>
+            <td><strong>$1.5M (Series A)</strong></td>
+            <td><strong>$6M (Series B)</strong></td>
+            <td><strong>$20M (Project fin.)</strong></td>
+            <td><strong>Green bonds / DFI</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- SDG alignment -->
+    <h3 style="font-size:1.1rem;font-weight:700;margin:36px 0 16px;">SDG Impact Alignment</h3>
+    <div class="sdg-row">
+      <div class="sdg-tag" style="background:rgba(255,165,0,0.12);border-color:rgba(255,165,0,0.4);color:#ffa500;">SDG 1: No Poverty</div>
+      <div class="sdg-tag" style="background:rgba(221,100,18,0.12);border-color:rgba(221,100,18,0.4);color:#dd6412;">SDG 2: Zero Hunger</div>
+      <div class="sdg-tag" style="background:rgba(76,159,56,0.12);border-color:rgba(76,159,56,0.4);color:#4c9f38;">SDG 7: Clean Energy</div>
+      <div class="sdg-tag" style="background:rgba(166,42,1,0.12);border-color:rgba(166,42,1,0.4);color:#a62a01;">SDG 8: Decent Work</div>
+      <div class="sdg-tag" style="background:rgba(253,157,0,0.12);border-color:rgba(253,157,0,0.4);color:#fd9d00;">SDG 9: Industry &amp; Innovation</div>
+      <div class="sdg-tag" style="background:rgba(63,125,162,0.12);border-color:rgba(63,125,162,0.4);color:#3f7da2;">SDG 11: Sustainable Cities</div>
+      <div class="sdg-tag" style="background:rgba(63,126,68,0.12);border-color:rgba(63,126,68,0.4);color:#3f7e44;">SDG 13: Climate Action</div>
+      <div class="sdg-tag" style="background:rgba(0,100,166,0.12);border-color:rgba(0,100,166,0.4);color:#0064a6;">SDG 17: Partnerships</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 8: ROADMAP -->
+<section id="roadmap" class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number">Section 08</div>
+      <h2 class="section-title">Deployment Roadmap — Phased Expansion</h2>
+      <p class="section-desc">A disciplined phased rollout prioritizes learning from pilots, regulatory engagement, and local partner development before capital-intensive scale-up.</p>
+    </div>
+
+    <div class="roadmap-grid">
+      <div class="phase-card">
+        <div class="phase-header" style="background:rgba(20,184,166,0.08);border-bottom:1px solid rgba(20,184,166,0.15);">
+          <div class="phase-num">1</div>
+          <div>
+            <div style="font-weight:700;font-size:0.95rem;">Pilot Phase</div>
+            <div style="font-size:0.78rem;color:var(--text-muted);">Year 1 · 3 nodes</div>
+          </div>
+          <span class="badge badge-teal" style="margin-left:auto;">Q1–Q4 2026</span>
+        </div>
+        <div class="phase-body">
+          <ul class="styled-list">
+            <li>Node 1: Kenya (Kisumu rural — KPLC-adjacent grid)</li>
+            <li>Node 2: Bangladesh (IDCOL MiniGrid partnership — Char district)</li>
+            <li>Node 3: India (Husk Power site — Jharkhand tribal belt)</li>
+            <li>6 eATV Pro per node — local assembly in Nairobi/Dhaka/Patna</li>
+            <li>Open-source IoT platform deployment (Traccar + custom BMS)</li>
+            <li>18-month data collection: charging utilisation, trip economics, default rates</li>
+            <li>Funding: $350K seed + $100K impact grant (IKEA Foundation / Shell Foundation)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-header" style="background:rgba(245,158,11,0.08);border-bottom:1px solid rgba(245,158,11,0.15);">
+          <div class="phase-num" style="background:var(--gradient-amber);">2</div>
+          <div>
+            <div style="font-weight:700;font-size:0.95rem;">Early Scale</div>
+            <div style="font-size:0.78rem;color:var(--text-muted);">Year 2 · 15 nodes</div>
+          </div>
+          <span class="badge badge-amber" style="margin-left:auto;">Q1–Q4 2027</span>
+        </div>
+        <div class="phase-body">
+          <ul class="styled-list">
+            <li>Expand Kenya +4 nodes (Homa Bay, Siaya, Migori)</li>
+            <li>Tanzania pilot node (Mwanza lakeside agricultural belt)</li>
+            <li>India +4 nodes (Assam, Manipur, Odisha coastal)</li>
+            <li>Nepal +1 (Pokhara valley agri-logistics pilot)</li>
+            <li>Introduce battery-swap service (4-station hub per node)</li>
+            <li>V2G pilot: 2 nodes → grid balancing revenue validation</li>
+            <li>PAYG platform: integrate bKash + UPI + M-PESA into single SDK</li>
+            <li>Series A: $1.5M (Acumen Fund, Energy Access Ventures)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-header" style="background:rgba(16,185,129,0.08);border-bottom:1px solid rgba(16,185,129,0.15);">
+          <div class="phase-num" style="background:var(--gradient-green);">3</div>
+          <div>
+            <div style="font-weight:700;font-size:0.95rem;">Growth Phase</div>
+            <div style="font-size:0.78rem;color:var(--text-muted);">Year 3 · 65 nodes</div>
+          </div>
+          <span class="badge badge-green" style="margin-left:auto;">2028</span>
+        </div>
+        <div class="phase-body">
+          <ul class="styled-list">
+            <li>Nigeria launch: 8 nodes (Kano, Benue, Enugu agricultural zones)</li>
+            <li>Ghana launch: 5 nodes (Northern Region MiniGrid program integration)</li>
+            <li>Bangladesh scale: 12 nodes (IDCOL MiniGrid partnership formalised)</li>
+            <li>Sri Lanka entry: 3 nodes (SLSEA + LAUGFS partnership)</li>
+            <li>Introduce eATV Lite for India plains (mass-market PAYG)</li>
+            <li>Cold-chain cargo module (insulated flatbed) for perishables</li>
+            <li>Series B: $6M (ADB Ventures, FMO, Norfund)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-header" style="background:rgba(139,92,246,0.08);border-bottom:1px solid rgba(139,92,246,0.15);">
+          <div class="phase-num" style="background:var(--gradient-multi);">4</div>
+          <div>
+            <div style="font-weight:700;font-size:0.95rem;">Scale & DFI</div>
+            <div style="font-size:0.78rem;color:var(--text-muted);">Year 4–5 · 500 nodes</div>
+          </div>
+          <span class="badge badge-purple" style="margin-left:auto;">2029–2030</span>
+        </div>
+        <div class="phase-body">
+          <ul class="styled-list">
+            <li>Project finance model: each 20-node cluster as bankable asset</li>
+            <li>Green bond issuance backed by eATV PAYG receivables</li>
+            <li>Blended finance: AfDB, World Bank IFC, ADB co-invest in project SPVs</li>
+            <li>Platform independence: white-label IoT/PAYG sold to MiniGrid operators</li>
+            <li>eATV 4×4 launch: Nepal, Northeastern India, Eastern Africa highlands</li>
+            <li>Agronomic data service: trip + yield data sold (anonymised) to CIMMYT, IFPRI</li>
+            <li>Target: 1.5M people with energy access; 300,000 farmer households served</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 9: PARTNERS -->
+<section id="partners" class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number">Section 09</div>
+      <h2 class="section-title">Partnership Ecosystem</h2>
+      <p class="section-desc">Success requires a layered ecosystem of energy operators, vehicle assemblers, financial institutions, digital platforms, and development finance institutions. Below are primary targets for partnership discussions.</p>
+    </div>
+
+    <h3 style="font-size:0.95rem;font-weight:700;color:var(--accent-teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;">🔋 MiniGrid Operators</h3>
+    <div class="partner-row">
+      <div class="partner-chip">🏭 Husk Power Systems (India/Tanzania)</div>
+      <div class="partner-chip">⚡ IDCOL (Bangladesh)</div>
+      <div class="partner-chip">☀️ OMC Power (India tribal)</div>
+      <div class="partner-chip">🌍 PowerGen (Kenya/Tanzania)</div>
+      <div class="partner-chip">🔆 SolarNow (Uganda/Rwanda)</div>
+      <div class="partner-chip">🏗️ Nuru (DRC/Mozambique)</div>
+      <div class="partner-chip">🌱 SELCO India (Karnataka)</div>
+    </div>
+
+    <h3 style="font-size:0.95rem;font-weight:700;color:var(--accent-amber);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;margin-top:24px;">🚗 Vehicle Assembly Partners</h3>
+    <div class="partner-row">
+      <div class="partner-chip">🇮🇳 Piaggio Ape / Mahindra Treo (India)</div>
+      <div class="partner-chip">🇧🇩 Runner Automobiles (Bangladesh)</div>
+      <div class="partner-chip">🇰🇪 BasiGo / Roam (Kenya)</div>
+      <div class="partner-chip">🇳🇬 Spiro (Nigeria/Benin)</div>
+      <div class="partner-chip">🇺🇬 Ampersand (Uganda)</div>
+      <div class="partner-chip">🇳🇵 Safa Tempo (Nepal)</div>
+    </div>
+
+    <h3 style="font-size:0.95rem;font-weight:700;color:var(--accent-blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;margin-top:24px;">💰 Finance & PAYG Partners</h3>
+    <div class="partner-row">
+      <div class="partner-chip">📱 M-PESA / Safaricom (Kenya)</div>
+      <div class="partner-chip">💳 bKash (Bangladesh)</div>
+      <div class="partner-chip">🏦 SIDBI (India SME finance)</div>
+      <div class="partner-chip">🌱 Acumen Fund (impact)</div>
+      <div class="partner-chip">🌍 Energy Access Ventures</div>
+      <div class="partner-chip">🏛️ ADB Ventures</div>
+      <div class="partner-chip">🤝 FMO / Norfund (DFI)</div>
+    </div>
+
+    <h3 style="font-size:0.95rem;font-weight:700;color:var(--accent-purple);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;margin-top:24px;">🛠️ Component & Technology Partners</h3>
+    <div class="partner-row">
+      <div class="partner-chip">⚙️ Gabriel India (suspension)</div>
+      <div class="partner-chip">🔩 Uno Minda (brakes/components)</div>
+      <div class="partner-chip">🔋 Daly / JBD BMS</div>
+      <div class="partner-chip">🌞 Victron Energy (MPPT)</div>
+      <div class="partner-chip">📡 Jimi IoT (telematics)</div>
+      <div class="partner-chip">⚡ Kelly Controllers (motor)</div>
+      <div class="partner-chip">🔵 Waaree Solar (panels)</div>
+    </div>
+
+    <div class="alert alert-rose" style="margin-top:32px;">
+      <div class="alert-icon">🚀</div>
+      <div class="alert-content">
+        <div class="alert-title">Call to Action — Pilot Site Partnership</div>
+        <div class="alert-text">We are seeking 3 pilot-site partners for Q3–Q4 2026 deployment: one MiniGrid operator in Kenya or Tanzania, one in Bangladesh (ideally IDCOL-affiliated), and one in rural India (Jharkhand, Odisha, or Northeast). Each partner provides the MiniGrid infrastructure and community access. We provide the eATV fleet (6 vehicles), charging hub integration, PAYG platform, IoT telematics, and 18-month operational support. Revenue sharing: 60% to MiniGrid operator / fleet riders, 25% to vehicle financing pool, 15% platform fee. Contact: <strong>sattal.cottonspace.com/eatv-minigrid</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>© 2026 <strong>Cottonspace / Dev Labs</strong> · eATV MiniGrid Program · <strong>sattal.cottonspace.com</strong></p>
+  <p style="margin-top:10px;font-size:0.78rem;">Document: EMG-PITCH-002 · Revision 2.0 · May 2026 (Expanded South Asia Edition)</p>
+  <p style="margin-top:8px;font-size:0.76rem;color:var(--text-muted);">This document contains forward-looking projections based on market research and pilot assumptions. Actual results will vary. Not for public distribution without attribution.</p>
+</footer>
+
+</body>
+</html>
