@@ -54,7 +54,7 @@
 
     <p>
       The evolution of the Okra Solar Beacon—a specialized edge DCU and solar controller gateway—illustrates a classic engineering pivot from standard vendor-locked radio architectures to modular, open-source-driven hardware combinations.
-      Evaluating the transition from the **Beacon V1** to the **Beacon V2** highlights crucial lessons in scaling sub-GHz mesh networks in challenging field conditions.
+      Evaluating the transition from the <strong>Beacon V1</strong> to the <strong>Beacon V2</strong> highlights crucial lessons in scaling sub-GHz mesh networks in challenging field conditions.
     </p>
 
     <div class="tw">
@@ -118,7 +118,7 @@
           <span>The Silicon Labs Pivot</span>
         </div>
         <p>
-          Beacon V2 utilizes the **Silicon Labs EFR32FG28**, acting as a Radio Co-Processor (RCP) connected via UART to the Allwinner H3 host. By offloading the complex Wi-SUN FAN routing engine to the Linux host userspace (running the Silicon Labs <code>wsbrd</code> daemon), the system easily scales to **200+ Cicada clients** in Porto staging trials.
+          Beacon V2 utilizes the <strong>Silicon Labs EFR32FG28</strong>, acting as a Radio Co-Processor (RCP) connected via UART to the Allwinner H3 host. By offloading the complex Wi-SUN FAN routing engine to the Linux host userspace (running the Silicon Labs <code>wsbrd</code> daemon), the system easily scales to <strong>200+ Cicada clients</strong> in Porto staging trials.
         </p>
       </div>
       <div class="card">
@@ -127,7 +127,7 @@
           <span>Uplink Driver Stability</span>
         </div>
         <p>
-          Beacon V1 suffered from cell drops caused by poor USB bus reset logic on cheap MCUZone boards. Beacon V2's shift to the **Quectel EG21-G** Mini-PCIe module, combined with hardware reset lines directly wired to the host CPU's GPIO, allows the DCU to hard-reboot frozen modems without power-cycling the entire system.
+          Beacon V1 suffered from cell drops caused by poor USB bus reset logic on cheap MCUZone boards. Beacon V2's shift to the <strong>Quectel EG21-G</strong> Mini-PCIe module, combined with hardware reset lines directly wired to the host CPU's GPIO, allows the DCU to hard-reboot frozen modems without power-cycling the entire system.
         </p>
       </div>
     </div>
@@ -153,7 +153,7 @@
 
     <p>
       Selecting the host processor requires balancing structural durability, power budgets, procurement supply-chain reliability, and localized low-latency protocol processing.
-      Below, we compare the **Allwinner H3 (NanoPi Neo Core)**, **Texas Instruments AM3358 (BeagleBone Black Industrial)**, and **Broadcom BCM2711 (Raspberry Pi Compute Module 4)**.
+      Below, we compare the <strong>Allwinner H3 (NanoPi Neo Core)</strong>, <strong>Texas Instruments AM3358 (BeagleBone Black Industrial)</strong>, and <strong>Broadcom BCM2711 (Raspberry Pi Compute Module 4)</strong>.
     </p>
 
     <div class="tw">
@@ -220,7 +220,7 @@
           <span>The BeagleBone PRU Advantage</span>
         </div>
         <p>
-          The **TI AM3358** features dual 200MHz 32-bit PRUs. These microcontrollers share memory with the main Linux ARM core, allowing developers to offload legacy, timing-critical microsecond bit-banging tasks (e.g., RS-485 HDLC/DLMS serial frames, or fast analog sampling of grid voltage waveforms) without introducing Linux kernel scheduler latency.
+          The <strong>TI AM3358</strong> features dual 200MHz 32-bit PRUs. These microcontrollers share memory with the main Linux ARM core, allowing developers to offload legacy, timing-critical microsecond bit-banging tasks (e.g., RS-485 HDLC/DLMS serial frames, or fast analog sampling of grid voltage waveforms) without introducing Linux kernel scheduler latency.
         </p>
       </div>
       <div class="card">
@@ -229,7 +229,7 @@
           <span>Thermal &amp; Power Constraints</span>
         </div>
         <p>
-          The **Raspberry Pi CM4** provides massive processing power but at a severe thermal cost. It draws up to 6.5W under load, demanding large heat-sinks that block airflow in compact, sealed IP67 enclosures. The **NanoPi Neo Core** and **BeagleBone Black** operate safely inside sealed enclosures up to 55°C ambient without active cooling.
+          The <strong>Raspberry Pi CM4</strong> provides massive processing power but at a severe thermal cost. It draws up to 6.5W under load, demanding large heat-sinks that block airflow in compact, sealed IP67 enclosures. The <strong>NanoPi Neo Core</strong> and <strong>BeagleBone Black</strong> operate safely inside sealed enclosures up to 55°C ambient without active cooling.
         </p>
       </div>
       <div class="card">
@@ -253,7 +253,7 @@
     </div>
 
     <p>
-      Commercial meters deployed across Sub-Saharan Africa must comply with the **STS (Standard Transfer Specification)** for token prepayment and the **DLMS/COSEM (IEC 62056)** protocol for data models.
+      Commercial meters deployed across Sub-Saharan Africa must comply with the <strong>STS (Standard Transfer Specification)</strong> for token prepayment and the <strong>DLMS/COSEM (IEC 62056)</strong> protocol for data models.
       However, the physical communication layer is highly fragmented.
     </p>
 
@@ -276,7 +276,7 @@
             <td>Sub-GHz RF (868/915 MHz), G3-PLC, NB-IoT / GSM</td>
             <td>STS Standard (20-digit token), virtual keypad via WAN</td>
             <td>Fully Compliant (DLMS/COSEM HDLC, TCP/UDP profiles)</td>
-            <td>**High** (via standard Silicon Labs EFR32FG25 modules)</td>
+            <td><strong>High</strong> (via standard Silicon Labs EFR32FG25 modules)</td>
           </tr>
           <tr>
             <td><strong>Calin Metering</strong></td>
@@ -284,7 +284,7 @@
             <td>Sub-GHz RF FSK (868 MHz), LoRaWAN, NB-IoT</td>
             <td>STS Standard (keypad on Split-type UIU)</td>
             <td>Compliant (mostly HDLC serial wrapping over RF tunnel)</td>
-            <td>**Medium** (requires custom firmware or module swap to EFR32)</td>
+            <td><strong>Medium</strong> (requires custom firmware or module swap to EFR32)</td>
           </tr>
           <tr>
             <td><strong>Synergy Smart</strong></td>
@@ -292,7 +292,7 @@
             <td>PRIME PLC, ZigBee (2.4 GHz), GPRS / LTE-M</td>
             <td>STS Standard (online &amp; offline keypad modes)</td>
             <td>Fully Compliant (supports standard COSEM OBIS registers)</td>
-            <td>**Low** (uses proprietary 2.4 GHz ZigBee or PRIME PLC stacks)</td>
+            <td><strong>Low</strong> (uses proprietary 2.4 GHz ZigBee or PRIME PLC stacks)</td>
           </tr>
         </tbody>
       </table>
@@ -305,7 +305,7 @@
           <span>Silicon Labs FG25 Dominance</span>
         </div>
         <p>
-          Modern **Hexing** meters utilize the **Silicon Labs EFR32FG25** chip for sub-GHz mesh. This chip has a built-in Orthogonal Frequency Division Multiplexing (OFDM) accelerator, allowing high data rates (up to 3.6 Mbps) while complying with the strict Wi-SUN FAN 1.0/1.1 specifications.
+          Modern <strong>Hexing</strong> meters utilize the <strong>Silicon Labs EFR32FG25</strong> chip for sub-GHz mesh. This chip has a built-in Orthogonal Frequency Division Multiplexing (OFDM) accelerator, allowing high data rates (up to 3.6 Mbps) while complying with the strict Wi-SUN FAN 1.0/1.1 specifications.
         </p>
       </div>
       <div class="card">
@@ -314,7 +314,7 @@
           <span>Calin's Hybrid LoRa/FSK Stack</span>
         </div>
         <p>
-          **Calin** meters traditionally use Semtech LoRa or simple Sub-GHz FSK (via CC1310). While LoRa provides exceptional single-hop distances (up to 3km in rural settings), it is legally limited by duty-cycle constraints (typically 1% in EU/Africa bands), preventing high-frequency interval logging and firmware upgrades over the air.
+          <strong>Calin</strong> meters traditionally use Semtech LoRa or simple Sub-GHz FSK (via CC1310). While LoRa provides exceptional single-hop distances (up to 3km in rural settings), it is legally limited by duty-cycle constraints (typically 1% in EU/Africa bands), preventing high-frequency interval logging and firmware upgrades over the air.
         </p>
       </div>
       <div class="card">
@@ -323,7 +323,7 @@
           <span>PLC vs. RF Hybrid Reality</span>
         </div>
         <p>
-          In high-density urban areas, **ST8500-based G3-PLC** or **Microchip ATPL250A-based PRIME PLC** modules utilize the existing power cables for communications. However, on rural grids with fluctuating voltages, high harmonic noise from low-cost solar inverters degrades PLC signals, making Sub-GHz RF mesh (Wi-SUN) the vastly superior physical layer for remote micro-grids.
+          In high-density urban areas, <strong>ST8500-based G3-PLC</strong> or <strong>Microchip ATPL250A-based PRIME PLC</strong> modules utilize the existing power cables for communications. However, on rural grids with fluctuating voltages, high harmonic noise from low-cost solar inverters degrades PLC signals, making Sub-GHz RF mesh (Wi-SUN) the vastly superior physical layer for remote micro-grids.
         </p>
       </div>
     </div>
@@ -344,7 +344,7 @@
           <span>No Upstream Kernel Drivers</span>
         </div>
         <p>
-          **Critical Fact:** The Linux kernel does *not* contain upstream drivers for industrial G3-PLC (like ST8500) or PRIME PLC transceivers. Integrating these chips requires compiling vendor-supplied software development kits (SDKs) and wrapping raw physical registers in custom serial interfaces.
+          <strong>Critical Fact:</strong> The Linux kernel does *not* contain upstream drivers for industrial G3-PLC (like ST8500) or PRIME PLC transceivers. Integrating these chips requires compiling vendor-supplied software development kits (SDKs) and wrapping raw physical registers in custom serial interfaces.
         </p>
       </div>
       <div class="card">
@@ -353,7 +353,7 @@
           <span>G3-PLC (ST8500) Architecture</span>
         </div>
         <p>
-          The **ST8500** runs proprietary firmware loaded at boot time. The host ARM CPU communicates with it via a high-speed UART or SPI interface using the **STSW-ST8500 SDK**. A userspace service maps this serial stream to a standard SLIP (Serial Line Internet Protocol) or custom character device (<code>/dev/st8500</code>), allowing network applications to push IPv6 frames over the powerline.
+          The <strong>ST8500</strong> runs proprietary firmware loaded at boot time. The host ARM CPU communicates with it via a high-speed UART or SPI interface using the <strong>STSW-ST8500 SDK</strong>. A userspace service maps this serial stream to a standard SLIP (Serial Line Internet Protocol) or custom character device (<code>/dev/st8500</code>), allowing network applications to push IPv6 frames over the powerline.
         </p>
       </div>
       <div class="card">
@@ -362,7 +362,7 @@
           <span>Wi-SUN RCP &amp; wsbrd Integration</span>
         </div>
         <p>
-          For the **EFR32FG28** radio co-processor, no custom kernel driver is needed. Instead, it acts as a standard Radio Co-Processor (RCP) exchanging raw HDLC frames over a high-speed UART (up to 921,600 bps) with the host. The Silicon Labs **<code>wsbrd</code> userspace daemon** handles this traffic, managing the complex Wi-SUN FAN layer and exposing a virtual IPv6 network interface (<code>tun0</code>) directly to the OS kernel.
+          For the <strong>EFR32FG28</strong> radio co-processor, no custom kernel driver is needed. Instead, it acts as a standard Radio Co-Processor (RCP) exchanging raw HDLC frames over a high-speed UART (up to 921,600 bps) with the host. The Silicon Labs <strong><code>wsbrd</code> userspace daemon</strong> handles this traffic, managing the complex Wi-SUN FAN layer and exposing a virtual IPv6 network interface (<code>tun0</code>) directly to the OS kernel.
         </p>
       </div>
     </div>
@@ -374,17 +374,17 @@
         <div class="alert-text">
           When procuring custom PLC or RF transceiver boards for ARM Linux hosts, engineers must run the following verification sequence:
           <ol style="margin-top:8px; padding-left:20px;">
-            <li>**Device Tree Alignment:** Verify that GPIO pin mappings for chip resets, UART RTS/CTS hardware flow control, and SPI Chip Select lines are properly defined in the custom Linux Device Tree Source (<code>.dts</code>) file and compiled to <code>.dtb</code>.</li>
-            <li>**Physical Link Verification:** Check physical communications using low-level serial tools:
+            <li><strong>Device Tree Alignment:</strong> Verify that GPIO pin mappings for chip resets, UART RTS/CTS hardware flow control, and SPI Chip Select lines are properly defined in the custom Linux Device Tree Source (<code>.dts</code>) file and compiled to <code>.dtb</code>.</li>
+            <li><strong>Physical Link Verification:</strong> Check physical communications using low-level serial tools:
               <code style="display:block; margin:6px 0; background:#0f172a; color:#38bdf8; padding:8px; border-radius:4px; font-family:var(--font-mono);">stty -F /dev/ttyS1 speed 115200 cs8 -cstopb -parenb hwclocal crtscts</code>
             </li>
-            <li>**RCP Daemon Handshake:** Launch the <code>wsbrd</code> daemon in verbose mode to confirm successful RCP registration and firmware checksum validation:
+            <li><strong>RCP Daemon Handshake:</strong> Launch the <code>wsbrd</code> daemon in verbose mode to confirm successful RCP registration and firmware checksum validation:
               <code style="display:block; margin:6px 0; background:#0f172a; color:#38bdf8; padding:8px; border-radius:4px; font-family:var(--font-mono);">wsbrd -F /etc/wsbrd.conf -u /dev/ttyS1 -v</code>
             </li>
-            <li>**Interface Initialization:** Confirm that the <code>tun0</code> interface is dynamically created, assigned a link-local IPv6 address (<code>fe80::/64</code>), and active in the routing table:
+            <li><strong>Interface Initialization:</strong> Confirm that the <code>tun0</code> interface is dynamically created, assigned a link-local IPv6 address (<code>fe80::/64</code>), and active in the routing table:
               <code style="display:block; margin:6px 0; background:#0f172a; color:#38bdf8; padding:8px; border-radius:4px; font-family:var(--font-mono);">ip -6 addr show dev tun0 &amp;&amp; ip -6 route show</code>
             </li>
-            <li>**PHY/MAC Layer Integrity Audits:** Check the link quality of downstream nodes using physical ICMPv6 echo pings to registered smart meter IPv6 addresses over the <code>tun0</code> interface:
+            <li><strong>PHY/MAC Layer Integrity Audits:</strong> Check the link quality of downstream nodes using physical ICMPv6 echo pings to registered smart meter IPv6 addresses over the <code>tun0</code> interface:
               <code style="display:block; margin:6px 0; background:#0f172a; color:#38bdf8; padding:8px; border-radius:4px; font-family:var(--font-mono);">ping6 -I tun0 fd00:db8::204:25ff:fe1a:3b2c</code>
             </li>
           </ol>
@@ -422,34 +422,34 @@
           <tr>
             <td><strong>Message Broker</strong></td>
             <td>High-throughput DCU telemetry ingestion and command routing.</td>
-            <td>**EMQX (OSS Edition)** / Eclipse Mosquitto</td>
+            <td><strong>EMQX (OSS Edition)</strong> / Eclipse Mosquitto</td>
             <td>Itron DINA Communication Bus / IBM MQ</td>
             <td>Massive scalability (handles 100M+ simultaneous MQTT connections), built-in rule engine for real-time data routing.</td>
-            <td>**9.8 / 10**</td>
+            <td><strong>9.8 / 10</strong></td>
           </tr>
           <tr>
             <td><strong>DLMS/COSEM Engine</strong></td>
             <td>Translates raw byte payloads (A-XDR) to clean JSON/REST objects.</td>
-            <td>**Gurux.DLMS.Client (Java/Python/.NET)**</td>
+            <td><strong>Gurux.DLMS.Client (Java/Python/.NET)</strong></td>
             <td>Landis+Gyr UtilityIQ Translation Engine</td>
             <td>Comprehensive standard coverage (OBIS, HDLC, TCP, Wrapper), actively maintained, free of per-device license fees.</td>
-            <td>**9.5 / 10**</td>
+            <td><strong>9.5 / 10</strong></td>
           </tr>
           <tr>
             <td><strong>Device Management</strong></td>
             <td>Handles OTA firmware deployments, device inventory, and alarm triggers.</td>
-            <td>**ThingsBoard Community Edition (CE)**</td>
+            <td><strong>ThingsBoard Community Edition (CE)</strong></td>
             <td>Itron Enterprise Active Control (EAC)</td>
             <td>Outstanding customizable dashboards, advanced rule-engine for alert triggers, secure credential storage.</td>
-            <td>**9.0 / 10**</td>
+            <td><strong>9.0 / 10</strong></td>
           </tr>
           <tr>
             <td><strong>Prepayment Billing</strong></td>
             <td>Manages tariffs, consumer accounts, and STS-compliant token generations.</td>
-            <td>**MicroPowerManager (MPM)** + OpenPAYGO</td>
+            <td><strong>MicroPowerManager (MPM)</strong> + OpenPAYGO</td>
             <td>Proprietary Utility Billing Systems / SAP IS-U</td>
             <td>Designed specifically for mini-grids, fully integrates offline STS and OpenPAYGO token standards.</td>
-            <td>**8.8 / 10**</td>
+            <td><strong>8.8 / 10</strong></td>
           </tr>
         </tbody>
       </table>
@@ -462,7 +462,7 @@
           <span>EMQX: The Telemetry Ingestion Core</span>
         </div>
         <p>
-          Unlike basic MQTT brokers (like Mosquitto) which lack native clustering, **EMQX (Open Source)** supports distributed cluster deployments out-of-the-box. It can ingest hundreds of thousands of concurrent smart meter messages per second while routing specific alarms (e.g. bypass tamper events) to high-priority alert queues.
+          Unlike basic MQTT brokers (like Mosquitto) which lack native clustering, <strong>EMQX (Open Source)</strong> supports distributed cluster deployments out-of-the-box. It can ingest hundreds of thousands of concurrent smart meter messages per second while routing specific alarms (e.g. bypass tamper events) to high-priority alert queues.
         </p>
       </div>
       <div class="card">
@@ -471,7 +471,7 @@
           <span>Gurux DLMS: Decoupling Translation</span>
         </div>
         <p>
-          Proprietary HES platforms deliberately lock translation tables inside licensed databases. **Gurux DLMS** provides an open-source, extremely thorough SDK library in Python and Java. This allows engineers to build modular, containerized translation microservices that receive raw hex streams from EMQX and output structured JSON.
+          Proprietary HES platforms deliberately lock translation tables inside licensed databases. <strong>Gurux DLMS</strong> provides an open-source, extremely thorough SDK library in Python and Java. This allows engineers to build modular, containerized translation microservices that receive raw hex streams from EMQX and output structured JSON.
         </p>
       </div>
       <div class="card">
@@ -495,7 +495,7 @@
     </div>
 
     <p>
-      Because Wi-SUN FAN utilizes sub-GHz frequencies (typically 868 MHz in Europe/Africa, 915 MHz in the Americas), bandwidth is severely limited. While the network layers support standard IPv6 via **6LoWPAN** compression, the choice of the application protocol directly dictates field performance, especially when traversing multiple mesh hops.
+      Because Wi-SUN FAN utilizes sub-GHz frequencies (typically 868 MHz in Europe/Africa, 915 MHz in the Americas), bandwidth is severely limited. While the network layers support standard IPv6 via <strong>6LoWPAN</strong> compression, the choice of the application protocol directly dictates field performance, especially when traversing multiple mesh hops.
     </p>
 
     <div class="tw">
@@ -559,7 +559,7 @@
           <span>The MQTT-SN Alternative</span>
         </div>
         <p>
-          **MQTT-SN** resolves this by operating over connectionless UDP. It offloads connection states to an **MQTT-SN Gateway** running on the DCU host. This gateway translates incoming UDP payloads from edge meters into standard TCP MQTT frames before forwarding them to the central HES broker.
+          <strong>MQTT-SN</strong> resolves this by operating over connectionless UDP. It offloads connection states to an <strong>MQTT-SN Gateway</strong> running on the DCU host. This gateway translates incoming UDP payloads from edge meters into standard TCP MQTT frames before forwarding them to the central HES broker.
         </p>
       </div>
       <div class="card">
@@ -568,7 +568,7 @@
           <span>CoAP: The Academic Gold Standard</span>
         </div>
         <p>
-          **CoAP** provides the absolute lowest communication overhead. Formatted to mimic HTTP REST models (using GET, POST, PUT, DELETE), it utilizes compact binary codes rather than text strings. When combined with DTLS (Datagram Transport Layer Security), it offers secure, sub-millisecond command execution.
+          <strong>CoAP</strong> provides the absolute lowest communication overhead. Formatted to mimic HTTP REST models (using GET, POST, PUT, DELETE), it utilizes compact binary codes rather than text strings. When combined with DTLS (Datagram Transport Layer Security), it offers secure, sub-millisecond command execution.
         </p>
       </div>
     </div>
@@ -580,9 +580,9 @@
         <div class="alert-text">
           To maximize reliability and minimize WAN usage:
           <ul style="margin-top:5px; padding-left:20px;">
-            <li>Deploy **MQTT-SN** for autonomous, periodic telemetry pushes from smart meters to the DCU (e.g. hourly load profile reporting).</li>
-            <li>Utilize **CoAP** for on-demand command execution (e.g., immediate contactor isolation, remote credit token delivery).</li>
-            <li>Maintain standard **MQTT over TLS 1.3** exclusively for the robust, high-bandwidth DCU-to-HES central backhaul link.</li>
+            <li>Deploy <strong>MQTT-SN</strong> for autonomous, periodic telemetry pushes from smart meters to the DCU (e.g. hourly load profile reporting).</li>
+            <li>Utilize <strong>CoAP</strong> for on-demand command execution (e.g., immediate contactor isolation, remote credit token delivery).</li>
+            <li>Maintain standard <strong>MQTT over TLS 1.3</strong> exclusively for the robust, high-bandwidth DCU-to-HES central backhaul link.</li>
           </ul>
         </div>
       </div>
@@ -604,7 +604,7 @@
           <span>Deconstructing DINA middleware</span>
         </div>
         <p>
-          **Itron DINA** acts as an edge broker and local routing bus. We completely replace it by running a lightweight **local Python edge agent** on the DCU combined with **EMQX's local broker**. This agent interfaces directly with the userspace <code>wsbrd</code>, captures telemetry, and applies edge-filtering rules to reduce satellite backhaul data consumption.
+          <strong>Itron DINA</strong> acts as an edge broker and local routing bus. We completely replace it by running a lightweight <strong>local Python edge agent</strong> on the DCU combined with <strong>EMQX's local broker</strong>. This agent interfaces directly with the userspace <code>wsbrd</code>, captures telemetry, and applies edge-filtering rules to reduce satellite backhaul data consumption.
         </p>
       </div>
       <div class="card">
@@ -613,7 +613,7 @@
           <span>Replacing EAC Security &amp; Control</span>
         </div>
         <p>
-          **Itron EAC (Enterprise Active Control)** acts as the orchestrator for OTA firmware distribution and device configurations. We replace this by combining **ThingsBoard CE's robust OTA orchestrator** with the **Gurux DLMS library**. Firmware files are split into standard COSEM image transfer blocks and systematically pushed across the mesh.
+          <strong>Itron EAC (Enterprise Active Control)</strong> acts as the orchestrator for OTA firmware distribution and device configurations. We replace this by combining <strong>ThingsBoard CE's robust OTA orchestrator</strong> with the <strong>Gurux DLMS library</strong>. Firmware files are split into standard COSEM image transfer blocks and systematically pushed across the mesh.
         </p>
       </div>
       <div class="card">
@@ -622,7 +622,7 @@
           <span>MicroPowerManager for Prepayment</span>
         </div>
         <p>
-          Billing and prepayment logic is completely offloaded to **MicroPowerManager (MPM)**. MPM acts as our open-source Customer Information System (CIS) and billing engine. By integrating the open-source **OpenPAYGO token library**, MPM easily generates secure prepayment tokens that are delivered via MQTT/CoAP.
+          Billing and prepayment logic is completely offloaded to <strong>MicroPowerManager (MPM)</strong>. MPM acts as our open-source Customer Information System (CIS) and billing engine. By integrating the open-source <strong>OpenPAYGO token library</strong>, MPM easily generates secure prepayment tokens that are delivered via MQTT/CoAP.
         </p>
       </div>
     </div>
@@ -639,22 +639,22 @@
         </thead>
         <tbody>
           <tr>
-            <td>**Itron DINA Edge Bus**</td>
+            <td><strong>Itron DINA Edge Bus</strong></td>
             <td>Local routing, edge caching, and serial interfacing on the physical DCU box.</td>
-            <td>**Edge Agent (Python) + EMQX local broker + SQLite**</td>
-            <td>**Medium:** Write a python daemon to capture <code>wsbrd</code> frames, buffer them in SQLite if cellular/satellite link is down, and push JSON once online.</td>
+            <td><strong>Edge Agent (Python) + EMQX local broker + SQLite</strong></td>
+            <td><strong>Medium:</strong> Write a python daemon to capture <code>wsbrd</code> frames, buffer them in SQLite if cellular/satellite link is down, and push JSON once online.</td>
           </tr>
           <tr>
-            <td>**Itron EAC Core**</td>
+            <td><strong>Itron EAC Core</strong></td>
             <td>OTA image distribution, multicast staging, and device configuration validation.</td>
-            <td>**ThingsBoard CE (OTA Orchestration) + Gurux DLMS**</td>
-            <td>**High:** Requires configuring ThingsBoard's rule chain to split binary files, schedule upgrades, and parse DLMS Image Transfer Class objects.</td>
+            <td><strong>ThingsBoard CE (OTA Orchestration) + Gurux DLMS</strong></td>
+            <td><strong>High:</strong> Requires configuring ThingsBoard's rule chain to split binary files, schedule upgrades, and parse DLMS Image Transfer Class objects.</td>
           </tr>
           <tr>
-            <td>**Proprietary CIS / Billing**</td>
+            <td><strong>Proprietary CIS / Billing</strong></td>
             <td>Account creation, tariff calculations, credit tracking, and billing database.</td>
-            <td>**MicroPowerManager (MPM) + OpenPAYGO Library**</td>
-            <td>**Low:** Highly mature stack. MPM provides clean REST APIs that link payment systems (e.g. M-Pesa, Orange Money) directly to token generation.</td>
+            <td><strong>MicroPowerManager (MPM) + OpenPAYGO Library</strong></td>
+            <td><strong>Low:</strong> Highly mature stack. MPM provides clean REST APIs that link payment systems (e.g. M-Pesa, Orange Money) directly to token generation.</td>
           </tr>
         </tbody>
       </table>
@@ -665,7 +665,7 @@
       <div class="alert-content">
         <div class="alert-title">Edge Telemetry Optimizations: Reducing Satellite Data Costs</div>
         <div class="alert-text">
-          Because rural DCUs frequently communicate via metered, high-cost satellite uplinks (e.g. Iridium or VSAT metered at $5.00/MB), the DCU host must apply extreme data compression. Instead of streaming raw JSON payloads for every event, the edge agent logs standard metrics to an onboard **SQLite** database, compresses the logs hourly using **Brotli** or **Gzip**, and uploads the compressed packet, slashing telemetry data consumption by **up to 85%**.
+          Because rural DCUs frequently communicate via metered, high-cost satellite uplinks (e.g. Iridium or VSAT metered at $5.00/MB), the DCU host must apply extreme data compression. Instead of streaming raw JSON payloads for every event, the edge agent logs standard metrics to an onboard <strong>SQLite</strong> database, compresses the logs hourly using <strong>Brotli</strong> or <strong>Gzip</strong>, and uploads the compressed packet, slashing telemetry data consumption by <strong>up to 85%</strong>.
         </div>
       </div>
     </div>
@@ -787,24 +787,24 @@ def compress_and_upload_batch():
           Our technical integration is governed by two vital operational flow sequences:
           <h4 style="margin-top:8px; color:var(--text-primary);">A. Downlink Operation Flow: Remote Token Delivery (Use Case V)</h4>
           <ol style="padding-left:20px; margin-top:4px;">
-            <li>A consumer purchases credit via mobile money (M-Pesa). The payment gateway notifies **MicroPowerManager (MPM)**.</li>
-            <li>MPM utilizes the **OpenPAYGO library** to generate a secure, STS-compliant 20-digit prepayment token.</li>
-            <li>MPM formats this token into a clean JSON payload and calls the **ThingsBoard CE REST API**.</li>
-            <li>ThingsBoard wraps the token payload in a standard **DLMS/COSEM Write-Request OBIS object** and publishes it to the central **EMQX** broker on the topic <code>dcu/write/token</code>.</li>
-            <li>The **DCU Edge Agent** receives the payload from EMQX, extracts the raw bytes, translates them into a binary **A-XDR encoded packet**, and streams it to the virtual <code>tun0</code> interface.</li>
-            <li>The <code>wsbrd</code> daemon captures this frame, formats it into an **802.15.4g MAC packet**, and streams it over the UART connection to the **EFR32FG28 RCP** silicon.</li>
-            <li>The RCP radio transmits the packet over the sub-GHz channel. Smart meters in the mesh relay the packet hop-by-hop until it reaches the target meter's **EFR32FG25 radio**.</li>
+            <li>A consumer purchases credit via mobile money (M-Pesa). The payment gateway notifies <strong>MicroPowerManager (MPM)</strong>.</li>
+            <li>MPM utilizes the <strong>OpenPAYGO library</strong> to generate a secure, STS-compliant 20-digit prepayment token.</li>
+            <li>MPM formats this token into a clean JSON payload and calls the <strong>ThingsBoard CE REST API</strong>.</li>
+            <li>ThingsBoard wraps the token payload in a standard <strong>DLMS/COSEM Write-Request OBIS object</strong> and publishes it to the central <strong>EMQX</strong> broker on the topic <code>dcu/write/token</code>.</li>
+            <li>The <strong>DCU Edge Agent</strong> receives the payload from EMQX, extracts the raw bytes, translates them into a binary <strong>A-XDR encoded packet</strong>, and streams it to the virtual <code>tun0</code> interface.</li>
+            <li>The <code>wsbrd</code> daemon captures this frame, formats it into an <strong>802.15.4g MAC packet</strong>, and streams it over the UART connection to the <strong>EFR32FG28 RCP</strong> silicon.</li>
+            <li>The RCP radio transmits the packet over the sub-GHz channel. Smart meters in the mesh relay the packet hop-by-hop until it reaches the target meter's <strong>EFR32FG25 radio</strong>.</li>
             <li>The meter's onboard micro-controller decodes the DLMS write-request, validates the cryptographic token, updates the internal credit register, and opens its internal Solid-State Relay (SSR) contactor to restore power to the household.</li>
           </ol>
           
           <h4 style="margin-top:12px; color:var(--text-primary);">B. Uplink Operation Flow: Real-Time Outage Alert Reporting</h4>
           <ol style="padding-left:20px; margin-top:4px;">
             <li>A physical cable cut cuts grid power to a household. The smart meter's power supply detects immediate loss of line voltage.</li>
-            <li>Utilizing physical **super-capacitors** for "last-gasp" power-backup (operating for 10-15 seconds), the meter immediately creates a high-priority DLMS Event Log entry (OBIS code <code>0.0.96.11.0.255</code>).</li>
-            <li>The meter's radio bypasses periodic queues and immediately broadcasts a high-priority **CoAP Outage Notification packet** over the Wi-SUN mesh.</li>
-            <li>The physical **EFR32FG28 RCP** on the DCU captures the radio frame, passes it to the `wsbrd` daemon, which maps the UDP packet to the virtual <code>tun0</code> interface.</li>
-            <li>The **DCU Edge Agent** reads the high-priority packet, bypasses the periodic SQLite logging buffer, and immediately publishes a critical telemetry message to EMQX on the topic <code>dcu/alarms/outage</code>.</li>
-            <li>EMQX's rule engine processes this alert, writes the timestamped event to **InfluxDB**, and instantly pushes a push-notification to utility maintenance operators via **ThingsBoard CE**.</li>
+            <li>Utilizing physical <strong>super-capacitors</strong> for "last-gasp" power-backup (operating for 10-15 seconds), the meter immediately creates a high-priority DLMS Event Log entry (OBIS code <code>0.0.96.11.0.255</code>).</li>
+            <li>The meter's radio bypasses periodic queues and immediately broadcasts a high-priority <strong>CoAP Outage Notification packet</strong> over the Wi-SUN mesh.</li>
+            <li>The physical <strong>EFR32FG28 RCP</strong> on the DCU captures the radio frame, passes it to the `wsbrd` daemon, which maps the UDP packet to the virtual <code>tun0</code> interface.</li>
+            <li>The <strong>DCU Edge Agent</strong> reads the high-priority packet, bypasses the periodic SQLite logging buffer, and immediately publishes a critical telemetry message to EMQX on the topic <code>dcu/alarms/outage</code>.</li>
+            <li>EMQX's rule engine processes this alert, writes the timestamped event to <strong>InfluxDB</strong>, and instantly pushes a push-notification to utility maintenance operators via <strong>ThingsBoard CE</strong>.</li>
           </ol>
         </div>
       </div>
@@ -832,21 +832,21 @@ def compress_and_upload_batch():
         </thead>
         <tbody>
           <tr>
-            <td>**Nigeria (West Africa)**</td>
+            <td><strong>Nigeria (West Africa)</strong></td>
             <td>868.0 MHz to 868.6 MHz (EU Harmonized)</td>
             <td>NERC 2023 Mini-Grid Regulations, MYTO Tariff matrices</td>
             <td>Strong MTN/Airtel 4G LTE coverage in hubs; 2G fallback in rural areas</td>
             <td>Extreme protection against fine dust storms (Harmattan) via IP68 sealed joints.</td>
           </tr>
           <tr>
-            <td>**Kenya (East Africa)**</td>
+            <td><strong>Kenya (East Africa)</strong></td>
             <td>868.0 MHz to 868.6 MHz</td>
             <td>Kenya Grid Code, EPRA guidelines</td>
             <td>Safcom LTE coverage outstanding; excellent M-Pesa API integrations</td>
             <td>High-humidity coastal regions demand conformal PCB coating against salt oxidation.</td>
           </tr>
           <tr>
-            <td>**South Africa (SADC)**</td>
+            <td><strong>South Africa (SADC)</strong></td>
             <td>868 MHz / 915 MHz to 921 MHz</td>
             <td>NERSA Grid Code, Eskom distribution guidelines</td>
             <td>Mature Vodacom/MTN 4G LTE-M networks</td>
@@ -864,10 +864,10 @@ def compress_and_upload_batch():
         </div>
         <p>
           To maintain mesh stability, the telemetry agent reports these metrics:
-          <br>1. **RPL Parent Switches:** Rapid switches indicate radio path instability.
-          <br>2. **Hop Count Distribution:** Deep chains (>5 hops) increase latency.
-          <br>3. **RSSI/LQI Values:** RSSI below -95dBm triggers automated local re-routing.
-          <br>4. **Packet Success Rate (PSR):** Monitored to detect noisy channels.
+          <br>1. <strong>RPL Parent Switches:</strong> Rapid switches indicate radio path instability.
+          <br>2. <strong>Hop Count Distribution:</strong> Deep chains (>5 hops) increase latency.
+          <br>3. <strong>RSSI/LQI Values:</strong> RSSI below -95dBm triggers automated local re-routing.
+          <br>4. <strong>Packet Success Rate (PSR):</strong> Monitored to detect noisy channels.
         </p>
       </div>
       <div class="card">
@@ -876,7 +876,7 @@ def compress_and_upload_batch():
           <span>BOM Comparison: NanoPi vs. BeagleBone</span>
         </div>
         <p>
-          Building a DCU utilizing the Allwinner H3 host processor costs approximately **$97 USD** in 1k production batches (including Carrier PCB, EFR32FG28, Quectel EG21-G, and enclosure). A similar BeagleBone Industrial configuration runs higher at **$149 USD** but provides true industrial thermal tolerance and real-time PRUs.
+          Building a DCU utilizing the Allwinner H3 host processor costs approximately <strong>$97 USD</strong> in 1k production batches (including Carrier PCB, EFR32FG28, Quectel EG21-G, and enclosure). A similar BeagleBone Industrial configuration runs higher at <strong>$149 USD</strong> but provides true industrial thermal tolerance and real-time PRUs.
         </p>
       </div>
       <div class="card">
@@ -886,9 +886,9 @@ def compress_and_upload_batch():
         </div>
         <p>
           DCU deployment requires:
-          <br>1. **Conformal PCB Coating:** Acrylic coating protecting against humidity and dust.
-          <br>2. **Gas Discharge Tubes (GDT):** Fast lightning protection on external SMA antennas.
-          <br>3. **NAND Write Buffering:** Temporal files stored in RAM to protect flash.
+          <br>1. <strong>Conformal PCB Coating:</strong> Acrylic coating protecting against humidity and dust.
+          <br>2. <strong>Gas Discharge Tubes (GDT):</strong> Fast lightning protection on external SMA antennas.
+          <br>3. <strong>NAND Write Buffering:</strong> Temporal files stored in RAM to protect flash.
         </p>
       </div>
     </div>
@@ -903,20 +903,20 @@ def compress_and_upload_batch():
     </div>
 
     <ul class="styled">
-      <li>**UNECE (2025):** *Guidelines on Interoperability and Digitalization of Decentralized Energy Systems*, United Nations Economic Commission for Europe, Geneva.</li>
-      <li>**IEEE 1547-2018:** *Standard for Interconnection and Interoperability of Distributed Energy Resources with Associated Transmission and Distribution Systems Interfaces*.</li>
-      <li>**IEC 62056:** *Electricity metering data exchange - The DLMS/COSEM suite*, International Electrotechnical Commission.</li>
-      <li>**Okra Solar (2026):** *Okra Solar Beacon V2 Industrial Field Deployment Report*, Abababubu Pilot Audits, Nigeria.</li>
-      <li>**Silicon Laboratories (2025):** *EFR32FG28 Dual-Band Sub-GHz Wireless SoC Technical Reference Manual*, Version 1.2.</li>
-      <li>**Silicon Laboratories (2026):** *Silicon Labs Wi-SUN Border Router (wsbrd) Github Repository and Integration Guide*.</li>
-      <li>**STS Association (2025):** *STS-101-1: Standard Transfer Specification - Physical Layer Protocol for One-Way Numeric Token Transfer*, STS Association, South Africa.</li>
-      <li>**STMicroelectronics (2025):** *ST8500 Programmable System-on-Chip for Smart Metering and Powerline Communications Datasheet*, Rev 4.</li>
-      <li>**Microchip Technology (2025):** *ATPL250A PRIME Power Line Communications Transceiver Technical Reference Design*.</li>
-      <li>**Allwinner Technology (2022):** *H3 Quad-Core Cortex-A7 System-on-Chip Datasheet*, Rev 1.4.</li>
-      <li>**NERC Nigeria (2023):** *Regulations for Mini-Grids*, Nigerian Electricity Regulatory Commission, Abuja.</li>
-      <li>**EPRA Kenya (2024):** *The Energy (Electricity Grid Code) Regulations*, Energy and Petroleum Regulatory Authority, Nairobi.</li>
-      <li>**ThingsBoard (2026):** *ThingsBoard Community Edition (CE) v3.9 Core IoT Platform Documentation*.</li>
-      <li>**MicroPowerManager (2025):** *MicroPowerManager Billing &amp; Prepayment Core Software Architecture Reference Manual*.</li>
+      <li><strong>UNECE (2025):</strong> *Guidelines on Interoperability and Digitalization of Decentralized Energy Systems*, United Nations Economic Commission for Europe, Geneva.</li>
+      <li><strong>IEEE 1547-2018:</strong> *Standard for Interconnection and Interoperability of Distributed Energy Resources with Associated Transmission and Distribution Systems Interfaces*.</li>
+      <li><strong>IEC 62056:</strong> *Electricity metering data exchange - The DLMS/COSEM suite*, International Electrotechnical Commission.</li>
+      <li><strong>Okra Solar (2026):</strong> *Okra Solar Beacon V2 Industrial Field Deployment Report*, Abababubu Pilot Audits, Nigeria.</li>
+      <li><strong>Silicon Laboratories (2025):</strong> *EFR32FG28 Dual-Band Sub-GHz Wireless SoC Technical Reference Manual*, Version 1.2.</li>
+      <li><strong>Silicon Laboratories (2026):</strong> *Silicon Labs Wi-SUN Border Router (wsbrd) Github Repository and Integration Guide*.</li>
+      <li><strong>STS Association (2025):</strong> *STS-101-1: Standard Transfer Specification - Physical Layer Protocol for One-Way Numeric Token Transfer*, STS Association, South Africa.</li>
+      <li><strong>STMicroelectronics (2025):</strong> *ST8500 Programmable System-on-Chip for Smart Metering and Powerline Communications Datasheet*, Rev 4.</li>
+      <li><strong>Microchip Technology (2025):</strong> *ATPL250A PRIME Power Line Communications Transceiver Technical Reference Design*.</li>
+      <li><strong>Allwinner Technology (2022):</strong> *H3 Quad-Core Cortex-A7 System-on-Chip Datasheet*, Rev 1.4.</li>
+      <li><strong>NERC Nigeria (2023):</strong> *Regulations for Mini-Grids*, Nigerian Electricity Regulatory Commission, Abuja.</li>
+      <li><strong>EPRA Kenya (2024):</strong> *The Energy (Electricity Grid Code) Regulations*, Energy and Petroleum Regulatory Authority, Nairobi.</li>
+      <li><strong>ThingsBoard (2026):</strong> *ThingsBoard Community Edition (CE) v3.9 Core IoT Platform Documentation*.</li>
+      <li><strong>MicroPowerManager (2025):</strong> *MicroPowerManager Billing &amp; Prepayment Core Software Architecture Reference Manual*.</li>
     </ul>
   </section>
 
