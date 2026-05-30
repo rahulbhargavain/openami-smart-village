@@ -62,6 +62,7 @@
     <a href="#replacement">EAC &amp; DINA Alternatives</a>
     <a href="#architecture">Canonical Stack</a>
     <a href="#monitoring">Operations &amp; Cost</a>
+    <a href="#technical-note">Technical Note</a>
   </div>
 </nav>
 
@@ -1008,9 +1009,121 @@ def compress_and_upload_batch():
   </section>
 
   <!-- SECTION 10: REFERENCES -->
-  <section id="references" class="section">
+    <!-- SECTION 10: TECHNICAL NOTE -->
+  <section id="technical-note" class="section">
     <div class="section-header">
       <div class="sec-num">Section 10</div>
+      <h2 class="sec-title">Technical Note: Open-Source Protocol Integration, EPRI Simulation, &amp; Grid Coexistence</h2>
+      <p class="sec-desc">A deep-dive synthesis of physical hardware costs, last-gasp outage notifications on InHe meters, ARM Linux driver strategies for G3-PLC/RF, and simulated Wi-SUN network compliance utilizing EPRI's Open-Wi-SUN stack.</p>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--accent-orange-glow);color:var(--accent-orange);">💰</div>
+          <span>DCU Host BOM &amp; Cost Analysis</span>
+        </div>
+        <p>
+          Building a production-ready edge Data Concentrator Unit (DCU) utilizing the <strong>Allwinner H3</strong> host processor costs approximately <strong>$97 USD</strong> in 1k production batches. This bill of materials includes the carrier PCB, EFR32FG28 radio module, Quectel EG21-G cellular modem, and an IP67-rated weatherized enclosure. 
+          <br><br>
+          In contrast, a similar configuration utilizing a true <strong>BeagleBone Black Industrial</strong> processor runs higher at <strong>$149 USD</strong> but provides outstanding industrial-grade thermal tolerance (-40°C to 85°C) and real-time PRUs for timing-critical execution tasks.
+        </p>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--color-red-glow);color:var(--color-red);">⚡</div>
+          <span>InHe Last-Gasp Outage Logic</span>
+        </div>
+        <p>
+          When a physical cable cut isolates grid power to a household, the <strong>InHe smart meter's</strong> internal power supply registers an immediate loss of line voltage. 
+          <br><br>
+          Utilizing physical <strong>super-capacitors</strong> for last-gasp backup power (operating for <strong>10-15 seconds</strong> of total loss), the meter immediately generates a high-priority DLMS Event Log entry under OBIS code <code>0.0.96.11.0.255</code> and transmits a critical last-gasp package over the mesh before shutting down.
+        </p>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--accent-teal-glow);color:var(--accent-teal);">🔑</div>
+          <span>The Canonical Open Stack</span>
+        </div>
+        <p>
+          To maintain full grid independence and avoid licensing locking, the canonical OpenAMI stack integrates:
+          <br>1. <strong>EMQX (OSS Edition):</strong> The message ingestion core.
+          <br>2. <strong>Gurux.DLMS.Client:</strong> Multi-language protocol engine.
+          <br>3. <strong>ThingsBoard CE:</strong> Operational manager and OTA coordinator.
+          <br>4. <strong>MicroPowerManager (MPM):</strong> Billing engine.
+          <br>5. <strong>OpenPAYGO:</strong> Standardized credit token validation.
+        </p>
+      </div>
+    </div>
+
+    <h3>ARM Linux Driver Architecture for G3-PLC &amp; Wi-SUN RF</h3>
+    <p>
+      The Linux kernel does not contain upstream drivers for industrial G3-PLC (like the STMicroelectronics <strong>ST8500</strong>) or PRIME PLC transceivers. Integrating these chips requires compiling vendor-supplied software development kits (SDKs) and wrapping raw physical registers in custom serial interfaces:
+    </p>
+    <ul>
+      <li><strong>G3-PLC (ST8500) Architecture:</strong> The ST8500 runs proprietary firmware loaded at boot time. The host ARM CPU communicates with it via a high-speed UART or SPI interface using the <strong>STSW-ST8500 SDK</strong>. A userspace service maps this serial stream to a standard SLIP (Serial Line Internet Protocol) or custom character device (<code>/dev/st8500</code>), allowing network applications to push IPv6 frames over the powerline.</li>
+      <li><strong>Wi-SUN FAN (EFR32FG28) Interface:</strong> No custom kernel driver is needed. Instead, it acts as a standard Radio Co-Processor (RCP) exchanging raw HDLC frames over a high-speed UART (up to 921,600 bps) with the host. The Silicon Labs <strong><code>wsbrd</code> userspace daemon</strong> handles this traffic, managing the complex Wi-SUN FAN layer and exposing a virtual IPv6 network interface (<code>tun0</code>) directly to the OS kernel [as seen on the InHe smart meters].</li>
+    </ul>
+
+    <div class="alert alert-blue">
+      <div class="alert-icon">📡</div>
+      <div class="alert-content">
+        <div class="alert-title">Wi-SUN Physical Layer Upgrades (IEEE 802.15.4g Smart Utility Networks)</div>
+        <div class="alert-text">
+          The transition to <strong>IEEE 802.15.4g (Smart Utility Networks - SUN)</strong> upgraded the physical layer to sub-GHz license-free bands (<strong>868 MHz / 915 MHz</strong>). Crucially, it introduced Orthogonal Frequency Division Multiplexing (OFDM) and Multi-Rate Frequency Shift Keying (MR-FSK) modulations, pushing data rates up to a massive <strong>2.4 Mbps</strong> while maintaining reliable, kilometer-range links across rural environments.
+          <br><br>
+          Academic and semi-production open-source projects like <strong>OpenWSN</strong> and <strong>Contiki-NG</strong> contain complete, free implementations of these exact sub-GHz TSCH (Time-Slotted Channel Hopping) layers.
+        </div>
+      </div>
+    </div>
+
+    <h3>Silicon Labs vs. EPRI: Open-Source Border Router Deployments</h3>
+    <p>
+      For production edge DCU gateways, Silicon Labs provides a production-grade, open-source reference implementation of the border router on GitHub under the <a href="https://github.com/SiliconLabs/wisun-br-linux" target="_blank"><strong>wisun-br-linux</strong></a> repository. 
+      This setup revolves around the <code>wsbrd</code> daemon interfacing with a dedicated sub-GHz MCU (such as the EFR32FG25 or EFR32FG28) flashed with a lean radio firmware. The RCP handles time-critical low-level radio execution (IEEE 802.15.4g PHY and 802.15.4e TSCH slot synchronization), while the host Linux handles routing:
+    </p>
+
+    <div class="math-block">
+      <span class="math-label">Wi-SUN Native Linux Command Path</span>
+      ping6 -I tun0 fd00:db8::204:25ff:fe1a:3b2c &amp;&amp; iperf3 -c fd00:db8::204:25ff:fe1a:3b2c -u -b 1M
+      <div class="math-explanation">
+        Because Wi-SUN is fully IP-bearing, you can open a standard Linux terminal and use native network utilities directly. Packets are automatically encapsulated into 6LoWPAN frames, passed to the RCP over the serial link, and transmitted across the sub-GHz mesh.
+      </div>
+    </div>
+
+    <div class="alert alert-purple">
+      <div class="alert-icon">⚖️</div>
+      <div class="alert-content">
+        <div class="alert-title">The EPRI Open-Wi-SUN (wisund) Alternative</div>
+        <div class="alert-text">
+          To prevent chip vendor lock-in, the <strong>Electric Power Research Institute (EPRI)</strong> developed its own completely independent open-source reference implementation of the Wi-SUN stack: the <a href="https://github.com/epri-dev/wisund" target="_blank"><strong>wisund</strong></a> repository.
+          Its core mission is to provide utilities and electrical cooperatives with a neutral, vendor-agnostic foundation to test smart grid interoperability without getting locked into a specific chip vendor's closed binary libraries.
+          <br><br>
+          The <code>wisund</code> daemon is a native Linux application written in C++ using the <strong>Boost</strong> and <strong>Asio</strong> asynchronous I/O frameworks. 
+          While Silicon Labs' <code>wsbrd</code> is engineered for deployment on their own specialized silicon, EPRI's Open-Wi-SUN framework is built for deep grid ecosystem simulation. It interfaces cleanly with other open utility frameworks in the EPRI portfolio:
+          <ul style="margin-top:6px; padding-left:20px;">
+            <li><strong>OpenDER (Distributed Energy Resources):</strong> Modeling for solar and battery storage grid compliance under IEEE 1547.</li>
+            <li><strong>OpenDSS (Distribution System Simulator):</strong> Standard structural grid power flow simulations.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <h3>Setting Up a Wi-SUN Grid Simulator for Hardware-in-the-Loop Evaluations</h3>
+    <p>
+      Pending the availability of physical hardware prototypes (such as custom carrier boards with EFR32 radios), utilities and research labs can evaluate mesh stability, routing latencies, and transaction times using simulated environments:
+    </p>
+    <ol>
+      <li><strong>Contiki-NG Cooja Simulator:</strong> The standard simulator for low-power IEEE 802.15.4 meshes. Cooja executes compiled, binary DCU edge agents and smart meter Contiki-NG code on simulated MSP430 or ARM Cortex-M nodes, allowing developers to test 200+ node topologies in real-time, mapping RSSI degradation and packet loss:
+        <code style="display:block; margin:6px 0; background:var(--bg-secondary); color:var(--accent-indigo); padding:8px; border-radius:4px; font-family:var(--font-mono); border:1px solid var(--border);">docker run -it --name cooja -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix contikidocker/cooja</code>
+      </li>
+      <li><strong>EPRI Simulation Integration:</strong> Developers can compile the EPRI <code>wisund</code> daemon on standard virtual machines, interfacing it with simulated edge sockets. By connecting <code>wisund</code> virtual endpoints to <strong>OpenDSS (Distribution System Simulator)</strong>, you can simulate grid-balancing scenarios (such as dynamic voltage ride-through commands across 1,000 households) and audit network latency limits before physical deployment.</li>
+    </ol>
+  </section>
+
+<section id="references" class="section">
+    <div class="section-header">
+      <div class="sec-num">Section 11</div>
       <h2 class="sec-title">Academic &amp; Industrial References</h2>
       <p class="sec-desc">A comprehensive bibliography of standards, official guidelines, and engineering datasheets utilized in the synthesis of this technical report.</p>
     </div>
