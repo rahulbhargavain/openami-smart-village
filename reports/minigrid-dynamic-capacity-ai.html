@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini-Grid Dynamic Capacity &amp; AI Optimization — EMG-TECH-016</title>
+  <meta name="description" content="A publication-grade engineering report evaluating conductor oversizing, Ambient Adjusted Ratings (AAR), Volt/VAR control, AI weather prediction, and distributed edge AI inference for solar-plus-storage mini-grids in South Asia and SSA.">
+  <link rel="stylesheet" href="/reports/report-style.css">
+  <style>
+    /* ─── Tab layout ─────────────────────────────── */
+    .tab-nav { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 2rem; border-bottom: 2px solid var(--border-accent); padding-bottom: 1rem; }
+    .tab-btn  { padding: 8px 18px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-secondary); font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: var(--transition-smooth); }
+    .tab-btn:hover  { border-color: var(--accent-teal); color: var(--accent-teal); }
+    .tab-btn.active { background: var(--accent-teal); color: #fff; border-color: var(--accent-teal); }
+    .tab-content    { display: none; }
+    .tab-content.active { display: block; }
+
+    /* ─── Stat grid ──────────────────────────────── */
+    .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+    .stat-box  { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem 1rem; text-align: center; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+    .stat-val  { font-size: 2rem; font-weight: 800; color: var(--accent-teal); line-height: 1; }
+    .stat-lbl  { font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px; }
+
+    /* ─── Inline ref links ───────────────────────── */
+    .ref-num  { display: inline-block; min-width: 32px; font-weight: 700; color: var(--accent-teal); }
+    .ref-list { list-style: none; padding: 0; }
+    .ref-list li { padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; line-height: 1.55; }
+    .ref-list li:last-child { border-bottom: none; }
+
+    /* ─── Comparison Grid ────────────────────────── */
+    .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    @media(max-width:768px){ .comparison-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════ -->
+<header class="hero">
+  <a href="/reports" class="back-link">← Reports Index</a>
+  <div class="eyebrow">
+    <span class="tag tag-teal">⚡ Technical Report</span>
+    <span class="tag tag-purple">🌍 South Asia &amp; SSA</span>
+    <span class="tag tag-orange">🧠 Edge AI &amp; Grid</span>
+  </div>
+  <h1>Mini-Grid Dynamic Capacity<br><em>&amp; AI-Driven Optimization</em><br>for South Asia and SSA</h1>
+  <p class="hero-sub">Evaluating Ambient Adjusted Ratings (AAR), Conductor Oversizing, Volt/VAR Control, and Distributed AI Inference Loads to stabilize solar-plus-storage mini-grids and protect sensitive battery assets.</p>
+  <div class="hero-kpis">
+    <div class="hero-kpi"><div class="hero-kpi-value">AAR</div><div class="hero-kpi-label">Zero-Sensor Capacity</div></div>
+    <div class="hero-kpi"><div class="hero-kpi-value">Oversized</div><div class="hero-kpi-label">Zero-Maint Voltage Drop</div></div>
+    <div class="hero-kpi"><div class="hero-kpi-value">AIWP Nowcast</div><div class="hero-kpi-label">Lead-Acid Shield</div></div>
+    <div class="hero-kpi"><div class="hero-kpi-value">EMG-TECH-016</div><div class="hero-kpi-label">Document ID</div></div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════
+     NAV
+     ═══════════════════════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" onclick="switchTab('exec')">Executive Summary</a>
+    <a href="#" onclick="switchTab('aar')">Conductor &amp; AAR</a>
+    <a href="#" onclick="switchTab('voltvar')">Volt/VAR Control</a>
+    <a href="#" onclick="switchTab('aiwp')">AIWP Lead-Acid</a>
+    <a href="#" onclick="switchTab('inference')">Edge AI Loads</a>
+    <a href="#" onclick="switchTab('opai')">LF Energy OPAI</a>
+    <a href="#" onclick="switchTab('matrix')">Integration Matrix</a>
+    <a href="#" onclick="switchTab('refs')">References</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     MAIN
+     ═══════════════════════════════════════ -->
+<main class="container">
+
+  <!-- TAB NAV -->
+  <div class="tab-nav" role="tablist">
+    <button class="tab-btn active" id="tab-btn-exec" role="tab" aria-selected="true" aria-controls="panel-exec" onclick="switchTab('exec')">01 · Executive Summary</button>
+    <button class="tab-btn" id="tab-btn-aar" role="tab" aria-selected="false" aria-controls="panel-aar" onclick="switchTab('aar')">02 · Conductor &amp; AAR</button>
+    <button class="tab-btn" id="tab-btn-voltvar" role="tab" aria-selected="false" aria-controls="panel-voltvar" onclick="switchTab('voltvar')">03 · Volt/VAR Optimization</button>
+    <button class="tab-btn" id="tab-btn-aiwp" role="tab" aria-selected="false" aria-controls="panel-aiwp" onclick="switchTab('aiwp')">04 · AIWP &amp; Lead-Acid</button>
+    <button class="tab-btn" id="tab-btn-inference" role="tab" aria-selected="false" aria-controls="panel-inference" onclick="switchTab('inference')">05 · Edge AI Compute</button>
+    <button class="tab-btn" id="tab-btn-opai" role="tab" aria-selected="false" aria-controls="panel-opai" onclick="switchTab('opai')">06 · LF Energy OPAI</button>
+    <button class="tab-btn" id="tab-btn-matrix" role="tab" aria-selected="false" aria-controls="panel-matrix" onclick="switchTab('matrix')">07 · Strategic Matrix</button>
+    <button class="tab-btn" id="tab-btn-refs" role="tab" aria-selected="false" aria-controls="panel-refs" onclick="switchTab('refs')">08 · References</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TAB 01 · EXECUTIVE SUMMARY
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="tab-content active" id="panel-exec" role="tabpanel" aria-labelledby="tab-btn-exec">
+    <div class="section-header">
+      <div class="sec-num">Section 01</div>
+      <h2 class="sec-title">Executive Summary: The Grid Hardening &amp; Intelligence Nexus</h2>
+      <p class="sec-desc">A unified technical evaluation of solar-plus-storage mini-grids. Proposes combining "heavy iron" hardware optimizations (oversized aluminum conductors, capacitor banks) with advanced software intelligence (AAR software, AIWP lead-acid protection, distributed edge AI inference loads) to build highly resilient, productive utility assets.</p>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-box"><div class="stat-val">±6%</div><div class="stat-lbl">Feeder voltage regulation target achieved at far end</div></div>
+      <div class="stat-box"><div class="stat-val">3x</div><div class="stat-lbl">Lead-acid battery lifecycle lifespan extension using AIWP dispatch</div></div>
+      <div class="stat-box"><div class="stat-val">₹0 / $0</div><div class="stat-lbl">Sensor-free software-driven Ambient Adjusted Ratings (AAR) cost</div></div>
+      <div class="stat-box"><div class="stat-val">Midday</div><div class="stat-lbl">Inverted latent capacity peak matching edge AI compute loops</div></div>
+    </div>
+
+    <div class="card">
+      <h2>The Core Thesis: Dual-Focus Hardening</h2>
+      <p>Decentralized renewable energy mini-grids across South Asia and Sub-Saharan Africa (SSA) operate under severe environmental and economic constraints. These grids are prone to extreme ambient heat (up to 45°C), dynamic voltage drops over long radial feeders, high capital expenditures (CapEx) for storage assets, and high post-installation maintenance hurdles. Operating these grids successfully requires bypassing expensive, failure-prone field sensor frameworks and instead implementing a <strong>dual-focus strategy</strong>:<sup>[8]</sup></p>
+      
+      <ul style="padding-left: 1.5rem; margin-top: 0.8rem; line-height: 1.75;">
+        <li><strong>Physical Infrastructure Over-Design:</strong> Standardizing on larger conductor sizes (e.g., upgrading aluminum cross-sections at construction) and automating Volt/VAR regulation along the line to permanently resolve thermal and voltage-drop issues with zero ongoing maintenance.</li>
+        <li><strong>Software-Driven Digital Intelligence:</strong> Utilizing Ambient Adjusted Ratings (AAR) to dynamically unlock capacity, using Artificial Intelligence Weather Prediction (AIWP) to shield fragile lead-acid batteries, and deploying Distributed Edge AI Inference servers to absorb curtailed midday solar power.</li>
+      </ul>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--accent-teal-glow);color:var(--accent-teal);">📏</div>
+          <span>Conductor Sizing &amp; AAR</span>
+        </div>
+        <p>Upgrading the conductor cross-section at initial deployment is a zero-maintenance, permanent solution to voltage drops. Combining this with software-driven AAR unlocks dynamic capacity using local forecasts at no extra hardware cost.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--accent-orange-glow);color:var(--accent-orange);">🔌</div>
+          <span>Volt/VAR Optimization</span>
+        </div>
+        <p>Deploying automated capacitor banks and dynamic regulators directly along rural feeders addresses voltage sags at the source, solving operational bottlenecks far more effectively than monitoring wind cooling.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--accent-purple-glow);color:var(--accent-purple);">🔋</div>
+          <span>AIWP &amp; Battery Shield</span>
+        </div>
+        <p>Using Google GraphCast or Huawei Pangu-Weather for solar nowcasting allows the EMS to dynamically buffer state-of-charge limits and schedule battery equalizations, extending fragile lead-acid lifetimes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TAB 02 · CONDUCTOR & AAR
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="tab-content" id="panel-aar" role="tabpanel" aria-labelledby="tab-btn-aar">
+    <div class="section-header">
+      <div class="sec-num">Section 02</div>
+      <h2 class="sec-title">Physical Conductor Oversizing &amp; Ambient Adjusted Ratings (AAR)</h2>
+      <p class="sec-desc">Evaluating the economics of initial conductor cross-section upgrades and unlocking dynamic capacity using zero-sensor software-based temperature forecasting.</p>
+    </div>
+
+    <div class="card">
+      <h2>Conductor Oversizing &amp; AAR Day/Night Thermal Curves</h2>
+      <div class="diagram-box">
+        <div class="diagram-title">📈 Conductor Capacity (Amps) vs. Diurnal Temperature Cycle</div>
+        <svg viewBox="0 0 900 290" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg"
+             style="background:#ffffff; border-radius:12px; border:1px solid #cbd5e1; font-family:'Inter',system-ui,sans-serif; display:block; margin:16px 0;">
+          <defs>
+            <marker id="arr-gray" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10z" fill="#475569"/>
+            </marker>
+          </defs>
+
+          <!-- Timeline Axes -->
+          <line x1="80" y1="220" x2="820" y2="220" stroke="#475569" stroke-width="2" marker-end="url(#arr-gray)"/>
+          <line x1="80" y1="40" x2="80" y2="230" stroke="#475569" stroke-width="2"/>
+          <text x="820" y="240" text-anchor="middle" fill="#475569" font-size="10.5" font-weight="700">Time of Day (24hr Loop)</text>
+          <text x="40" y="130" text-anchor="middle" fill="#475569" font-size="10.5" font-weight="700" transform="rotate(-90 40 130)">Amps Capacity</text>
+
+          <!-- Ambient temperature curve (inverse relationship: hot day = lower capacity) -->
+          <path d="M 80 180 C 200 180, 260 120, 340 120 C 420 120, 500 210, 620 210 C 700 210, 740 180, 800 180" fill="none" stroke="#ca8a04" stroke-width="1.5" stroke-dasharray="3 3"/>
+          <text x="340" y="105" text-anchor="middle" fill="#a16207" font-size="9" font-weight="700">Ambient Temp Peak (13:00 - 42°C)</text>
+
+          <!-- Standard Static Rating: flat line based on worst-case summer (e.g. 45°C) -->
+          <line x1="80" y1="160" x2="800" y2="160" stroke="#dc2626" stroke-width="2"/>
+          <text x="160" y="152" fill="#be123c" font-size="9.5" font-weight="700">Rigid Static Rating: 120 Amps</text>
+
+          <!-- AAR Dynamic Rating: follows inverse temperature (cooler morning/night = higher capacity) -->
+          <path d="M 80 80 C 200 80, 260 140, 340 140 C 420 140, 500 60, 620 60 C 700 60, 740 80, 800 80" fill="rgba(8, 145, 178, 0.05)" stroke="#0891b2" stroke-width="3"/>
+          <text x="600" y="50" text-anchor="middle" fill="#0e7490" font-size="10" font-weight="700">Ambient Adjusted Rating (AAR): 140-190 Amps</text>
+          <text x="600" y="75" text-anchor="middle" fill="#64748b" font-size="8.5">Cooler night/evening unlocks dynamic capacity</text>
+
+          <!-- Oversized Conductor Limit (95mm² AAAC) -->
+          <line x1="80" y1="45" x2="800" y2="45" stroke="#16a34a" stroke-width="2.5"/>
+          <text x="160" y="38" fill="#15803d" font-size="10" font-weight="700">Oversized Conductor (95mm² AAAC): 250+ Amps (Static)</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>1. The Economics of Conductor Oversizing</h3>
+        <p>In rural mini-grid distribution construction, developers often choose smaller conductor cross-sections (e.g., 25–35 mm² All Aluminum Alloy Conductor - AAAC) to minimize initial material Capital Expenditure (CapEx). This represents a significant long-term operational mistake. An analysis of grid installation costs shows that <strong>labor, pole sourcing, clearance pathways, and civil works make up 75–85% of the total grid construction budget</strong>. The raw aluminum conductor accounts for only 15–25% of the total budget.<sup>[9]</sup></p>
+        
+        <p style="margin-top: 0.5rem;">By upgrading the conductor cross-section during the initial installation (e.g., from 35 mm² to 95 mm² AAAC):</p>
+        <ul style="padding-left: 1.2rem; font-size: 0.88rem; line-height: 1.6; margin-top: 0.3rem;">
+          <li><strong>CapEx Premium:</strong> The total project budget increases by only 3–5% because labor and structural costs remain unchanged.</li>
+          <li><strong>Zero-Maintenance Voltage Drop Solution:</strong> A larger cross-section reduces line resistance ($R$), providing a permanent, zero-maintenance solution to voltage drops.</li>
+        </ul>
+        <div style="background: var(--bg-secondary); padding: 10px; border-radius: 8px; font-family: var(--font-mono); font-size: 0.85rem; margin: 8px 0; border-left: 4px solid var(--accent-indigo); text-align: center;">
+          V<sub>drop</sub> &approx; I &middot; (R &middot; cos&phi; + X &middot; sin&phi;)
+        </div>
+        <p style="font-size: 0.85rem; line-height: 1.55;">Upgrading the conductor cross-section reduces resistance ($R$) by more than 60%, maintaining voltage stability along long feeders without requiring active, sensor-based dynamic line monitoring.</p>
+      </div>
+
+      <div class="card">
+        <h3>2. Sensor-Free Ambient Adjusted Ratings (AAR)</h3>
+        <p>Traditional utilities are exploring **Dynamic Line Ratings (DLR)**, which use weather sensors, tension monitors, and wind gauges to calculate real-time line capacities. While highly accurate, DLR systems are far too expensive and fragile for rural mini-grids in South Asia and SSA.</p>
+        <p style="margin-top: 0.5rem;">Following global utility trends like **FERC Order 881**, operators can implement **Ambient Adjusted Ratings (AAR)** entirely in software. Instead of using physical sensors, the AAR system adjusts line ratings based on simple, reliable data inputs:<sup>[10]</sup></p>
+        <ul style="padding-left: 1.2rem; font-size: 0.88rem; line-height: 1.6; margin-top: 0.3rem;">
+          <li><strong>Day/Night Cycles:</strong> Line ratings are adjusted based on diurnal temperature cycles. Thermal capacity is increased during cooler night and early morning hours, which aligns with peak residential demand windows.</li>
+          <li><strong>10-Day Local Forecasts:</strong> A software algorithm fetches standard 10-day local temperature forecasts once daily via lightweight cellular networks, dynamically adjusting capacity limits.</li>
+        </ul>
+        <p style="margin-top: 0.5rem; font-size: 0.88rem;">This software-driven approach costs virtually nothing to implement and requires zero physical field sensors, eliminating maintenance overhead while unlocking significant dynamic line capacity.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TAB 03 · VOLT/VAR CONTROL
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="tab-content" id="panel-voltvar" role="tabpanel" aria-labelledby="tab-btn-voltvar">
+    <div class="section-header">
+      <div class="sec-num">Section 03</div>
+      <h2 class="sec-title">Volt/VAR Control and Dynamic Tap Changers</h2>
+      <p class="sec-desc">Evaluating why dynamic Volt/VAR regulation along rural feeders addresses the actual operational bottleneck—voltage sag—far more effectively than dynamic wind cooling sensors.</p>
+    </div>
+
+    <div class="card">
+      <h2>Volt/VAR Feeder Optimization &amp; Capacitor Banks</h2>
+      <div class="diagram-box">
+        <div class="diagram-title">🛡️ Voltage Profile along a 2km Radial Mini-Grid Feeder</div>
+        <svg viewBox="0 0 900 290" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg"
+             style="background:#ffffff; border-radius:12px; border:1px solid #cbd5e1; font-family:'Inter',system-ui,sans-serif; display:block; margin:16px 0;">
+          <defs>
+            <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10z" fill="#2563eb"/>
+            </marker>
+          </defs>
+
+          <!-- Timeline Axes -->
+          <line x1="80" y1="220" x2="820" y2="220" stroke="#475569" stroke-width="2" marker-end="url(#arr-blue)"/>
+          <line x1="80" y1="40" x2="80" y2="230" stroke="#475569" stroke-width="2"/>
+          <text x="820" y="240" text-anchor="middle" fill="#475569" font-size="10.5" font-weight="700">Feeder Distance (meters)</text>
+          <text x="40" y="130" text-anchor="middle" fill="#475569" font-size="10.5" font-weight="700" transform="rotate(-90 40 130)">Feeder Voltage (V)</text>
+
+          <!-- Grid limits markings (Regulatory ±6% envelope: 216V to 244V) -->
+          <line x1="80" y1="70" x2="800" y2="70" stroke="#64748b" stroke-width="1" stroke-dasharray="4 4"/>
+          <text x="750" y="65" fill="#64748b" font-size="8.5">Upper Limit: 244V (+6%)</text>
+
+          <line x1="80" y1="180" x2="800" y2="180" stroke="#64748b" stroke-width="1" stroke-dasharray="4 4"/>
+          <text x="750" y="175" fill="#64748b" font-size="8.5">Lower Limit: 216V (-6%)</text>
+
+          <!-- Nominal voltage (230V) -->
+          <line x1="80" y1="125" x2="800" y2="125" stroke="#94a3b8" stroke-width="1"/>
+          <text x="100" y="120" fill="#94a3b8" font-size="8.5">Nominal: 230V</text>
+
+          <!-- Case 1: Uncompensated Feeder Voltage Drop (Red curve dropping below limit) -->
+          <path d="M 80 125 L 200 135 L 400 160 L 600 190 L 800 215" fill="none" stroke="#dc2626" stroke-width="2"/>
+          <text x="500" y="210" fill="#be123c" font-size="9" font-weight="700">✕ Uncompensated Feeder (Sags to 185V at end)</text>
+
+          <!-- Case 2: Compensated Feeder with Volt/VAR & Regulator (Green curve stabilized) -->
+          <path d="M 80 125 L 200 130 L 400 120 L 410 95 L 600 115 L 610 90 L 800 120" fill="none" stroke="#16a34a" stroke-width="2.5"/>
+          <text x="550" y="110" fill="#15803d" font-size="9" font-weight="700">✓ Compensated Feeder (Regulator + Cap Banks keep V &gt; 218V)</text>
+
+          <!-- Annotations of physical devices -->
+          <!-- Regulator at 400m -->
+          <circle cx="405" cy="125" r="14" fill="#eff6ff" stroke="#2563eb" stroke-width="1"/>
+          <text x="405" y="129" text-anchor="middle" fill="#1d4ed8" font-size="8" font-weight="700">REG</text>
+
+          <!-- Cap Bank at 600m -->
+          <rect x="595" y="115" width="20" height="20" fill="#ecfeff" stroke="#0891b2" stroke-width="1"/>
+          <text x="605" y="128" text-anchor="middle" fill="#0e7490" font-size="8" font-weight="700">CAP</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Voltage Sag: The Actual Feeder Bottleneck</h3>
+        <p>In low-voltage ($230\text{V}$ single-phase / $400\text{V}$ three-phase) radial distribution networks, lines rarely trip due to thermal conductor limits. Instead, the actual operational bottleneck is **voltage sag** at the far end of the feeder during peak load hours. A 10 kW load connected at the end of a 1.5 km radial line will drop the terminal voltage below 180V, causing household appliances to malfunction, motor stabilizers to trip, and prepaid smart meters to disconnect on under-voltage faults.<sup>[11]</sup></p>
+        <p style="margin-top: 0.5rem;">Attempting to solve this bottleneck using expensive wind-cooling sensors is ineffective. Wind sensors only monitor thermal limits, which do not address the voltage drop issue. Operators must address the voltage profile directly.</p>
+      </div>
+
+      <div class="card">
+        <h3>Volt/VAR Mitigation Technologies</h3>
+        <p>Deploying targeted Volt/VAR control along the distribution feeder regulates voltage levels with high precision and low maintenance overhead:</p>
+        <ul style="padding-left: 1.2rem; font-size: 0.88rem; line-height: 1.6; margin-top: 0.5rem;">
+          <li><strong>Automated Capacitor Banks:</strong> Installing switched capacitor banks directly along the feeder injects local reactive power (VARs), boosting the voltage profile and improving the power factor. This reduces inductive line losses without requiring adjustments to active power ($P$) generation.</li>
+          <li><strong>Dynamic Line Voltage Regulators:</strong> Compact, autotransformer-based voltage regulators installed mid-line dynamically adjust the turns ratio (tap changing) to boost sagging voltages, keeping them within the regulatory ±6% envelope.</li>
+          <li><strong>Inverter Volt/VAR Coordination:</strong> Leveraging smart solar PV inverters to inject reactive power during voltage drops provides a highly responsive, zero-maintenance Volt/VAR solution.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TAB 04 · AIWP LEAD-ACID
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="tab-content" id="panel-aiwp" role="tabpanel" aria-labelledby="tab-btn-aiwp">
+    <div class="section-header">
+      <div class="sec-num">Section 04</div>
+      <h2 class="sec-title">AIWP for Solar Nowcasting and Lead-Acid Protection</h2>
+      <p class="sec-desc">Harnessing Artificial Intelligence Weather Prediction (AIWP) to protect fragile, low-cost lead-acid battery banks from deep discharge and irreversible sulfation.</p>
+    </div>
+
+    <div class="card">
+      <h3>Preserving Lead-Acid Lifespans via Predictive Dispatch</h3>
+      <p>While lithium-ion batteries are increasingly popular, **lead-acid battery banks** remain the primary storage technology for rural mini-grids in South Asia and SSA due to their low upfront capital costs and established local recycling loops. However, lead-acid chemistries are highly sensitive to operational abuse. They suffer from rapid degradation due to two primary factors: **Deep Discharge** (discharging below 50% SoC) and **Partial State of Charge (PSoC)**, which prevents complete recharge and leads to irreversible sulfation.<sup>[12]</sup></p>
+      
+      <p style="margin-top: 0.8rem;">Integrating **AIWP models** (such as ECMWF’s AIFS, Google’s GraphCast, or Huawei’s Pangu-Weather) into the Energy Management System (EMS) shields battery banks from these degradation mechanisms:</p>
+
+      <div class="card-grid" style="margin-top: 1rem;">
+        <div class="card" style="background: var(--bg-secondary);">
+          <strong style="color: var(--accent-teal);">Dynamic State-of-Charge (SoC) Buffering</strong>
+          <p style="font-size: 0.88rem; margin-top: 4px;">If AIWP models predict a multi-day monsoon front or a heavy Harmattan dust cover 48 hours in advance, the mini-grid EMS can dynamically adjust its lower-bound depth of discharge (DoD) limit from 50% to 30%, or proactively initiate preemptive load-shedding of non-essential loads (e.g., water pumping, milling) to preserve core battery health.</p>
+        </div>
+
+        <div class="card" style="background: var(--bg-secondary);">
+          <strong style="color: var(--accent-orange);">Automated Equalization Scheduling</strong>
+          <p style="font-size: 0.88rem; margin-top: 4px;">Lead-acid batteries require periodic "equalization charges" (controlled overcharging to remove sulfate crystals). An AIWP framework can scan a 7-day forecast to identify precise windows of sustained high solar irradiance, scheduling equalization cycles exactly when excess solar energy is available, preventing the need for costly diesel-generator-backed charging.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-blue">
+      <div class="alert-icon">📊</div>
+      <div class="alert-content">
+        <div class="alert-title">Economic Impact of Battery Protection</div>
+        <div class="alert-text">Field data indicates that standard lead-acid battery banks in rural environments often fail within **18–24 months** due to persistent PSoC and deep discharge abuses. Implementing AIWP-driven predictive battery dispatch extends this operational lifespan to **54–72 months** (a 3x increase). This drastically reduces the cooperative's recurring CapEx replacement cycles, improving long-term project viability.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TAB 05 · EDGE AI COMPUTE
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="tab-content" id="panel-inference" role="tabpanel" aria-labelledby="tab-btn-inference">
+    <div class="section-header">
+      <div class="sec-num">Section 05</div>
+      <h2 class="sec-title">Distributed AI Inference as a "Solar-Absorption" Load</h2>
+      <p class="sec-desc">Harnessing modular, power-efficient edge AI inference hardware to absorb curtailed midday solar power, transforming a grid operational liability into a localized economic asset.</p>
+    </div>
+
+    <div class="card">
+      <h2>Midday Peak Solar Absorption Loop</h2>
+      <div class="diagram-box">
+        <div class="diagram-title">☀️ Solar Generation vs. Local Consumption Profile</div>
+        <svg viewBox="0 0 900 290" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg"
+             style="background:#ffffff; border-radius:12px; border:1px solid #cbd5e1; font-family:'Inter',system-ui,sans-serif; display:block; margin:16px 0;">
+          <defs>
+            <marker id="arr-cyan" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10z" fill="#0891b2"/>
+            </marker>
+          </defs>
+
+          <!-- Timeline Axes -->
+          <line x1="80" y1="220" x2="820" y2="220" stroke="#475569" stroke-width="2" marker-end="url(#arr-cyan)"/>
+          <line x1="80" y1="40" x2="80" y2="230" stroke="#475569" stroke-width="2"/>
+          <text x="820" y="240" text-anchor="middle" fill="#475569" font-size="10.5" font-weight="700">Time of Day (24hr Loop)</text>
+          <text x="40" y="130" text-anchor="middle" fill="#475569" font-size="10.5" font-weight="700" transform="rotate(-90 40 130)">Power Generation / Load (kW)</text>
+
+          <!-- Solar PV Generation Peak (12:00) -->
+          <path d="M 80 220 C 220 220, 300 60, 450 60 C 600 60, 680 220, 800 220" fill="none" stroke="#ca8a04" stroke-width="2"/>
+          <text x="450" y="45" text-anchor="middle" fill="#a16207" font-size="10" font-weight="700">Midday Solar PV Generation Curve</text>
+
+          <!-- Base Household demand (low during day, peaks in evening) -->
+          <path d="M 80 200 L 250 200 L 300 210 L 450 210 L 600 210 L 680 140 L 730 140 L 800 200" fill="none" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <text x="200" y="188" fill="#475569" font-size="8.5" font-weight="700">Rural Household Demand</text>
+
+          <!-- Curtailment Zone (between solar PV and demand/battery capacity) -->
+          <path d="M 300 210 Q 450 140, 600 210" fill="rgba(220, 38, 38, 0.15)" stroke="#dc2626" stroke-width="1" stroke-dasharray="2 2"/>
+          <text x="450" y="160" text-anchor="middle" fill="#be123c" font-size="10" font-weight="700">⚡ Potential Energy Curtailment (Batteries Full)</text>
+
+          <!-- Edge AI Inference Workload (Absorbing the Curtailment Zone) -->
+          <path d="M 300 210 C 350 120, 450 90, 600 210" fill="rgba(8, 145, 178, 0.15)" stroke="#0891b2" stroke-width="2"/>
+          <text x="450" y="105" text-anchor="middle" fill="#0891b2" font-size="10" font-weight="700">Distributed Edge AI Inference Load (Dynamic Solar-Absorption)</text>
+          <text x="450" y="120" text-anchor="middle" fill="#0e7490" font-size="8">Agri-Vision, Telecom, Local voice LLMs run on excess solar power</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Exploiting the Inverted Latent Capacity Profile</h3>
+        <p>In conventional large-scale grids, latent capacity is unlocked during off-peak night hours. However, in **Solar PV mini-grids, the latent capacity profile is completely inverted**. During peak daylight hours (10:00 AM to 3:00 PM), rural mini-grids face massive energy curtailment. Local household and commercial demand is low, and the lead-acid battery banks quickly hit their safe charging limits.<sup>[13]</sup></p>
+        <p style="margin-top: 0.5rem;">Co-locating small, modular, low-power **edge AI inference servers** (clusters built on power-efficient ASICs like Hailo or Jetson Nano) directly at the mini-grid substation transforms this traditional operational liability into an economic asset. These servers act as flexible, "solar-absorbing" productive loads, dynamically scaling their workloads up or down to match real-time solar availability and absorb excess energy.</p>
+      </div>
+
+      <div class="card">
+        <h3>Localized Productive Use of Energy (PUE)</h3>
+        <p>By nesting inference hardware within the mini-grid distribution network, operators can sell localized digital services to the community, creating secondary revenue streams that subsidize rural electricity costs:</p>
+        <ul style="padding-left: 1.2rem; font-size: 0.88rem; line-height: 1.6; margin-top: 0.5rem;">
+          <li><strong>Agricultural Computer Vision:</strong> Processing local drone or smartphone imagery to detect crop pests and soil deficiencies offline, eliminating the need for expensive satellite uploads.</li>
+          <li><strong>Edge Telecom &amp; Content Delivery:</strong> Running lightweight, fine-tuned, localized Large Language Models (LLMs) to power voice-activated agricultural, medical, or educational tools in regional languages without requiring active internet connections.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TAB 06 · LF ENERGY OPAI
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="tab-content" id="panel-opai" role="tabpanel" aria-labelledby="tab-btn-opai">
+    <div class="section-header">
+      <div class="sec-num">Section 06</div>
+      <h2 class="sec-title">Open Power AI Blueprint: Open-Source Grid Architectures</h2>
+      <p class="sec-desc">Leveraging the Open Power AI Consortium (OPAI) and LF Energy tools to deploy decentralized inference and predictive loops without vendor lock-in.</p>
+    </div>
+
+    <div class="card">
+      <h3>Operationalizing the Open Power AI Stack</h3>
+      <p>To successfully deploy these technologies in resource-constrained South Asian and SSA markets without entering proprietary vendor lock-in, developers can leverage open-source paradigms defined by organizations like the **Linux Foundation Energy (LF Energy)**:<sup>[14]</sup></p>
+
+      <ul style="padding-left: 1.5rem; margin-top: 1rem; line-height: 1.8; font-size: 0.9rem;">
+        <li><strong>Open-Source Edge Frameworks (GEISA):</strong> Implementing micro-EMS layers that build upon tools like LF Energy’s **Grid Edge Interoperability &amp; Security Alliance (GEISA)** allows constrained edge devices to handle local AI inferences securely.</li>
+        <li><strong>Foundation Grid Models (GridFMs):</strong> Projects like **OpenGridFM** are paving the way for pre-trained power flow models. Once adapted to low-voltage topologies, a local mini-grid can utilize lightweight edge models to conduct real-time state estimation and fault detection without expensive, utility-grade SCADA software.</li>
+        <li><strong>Coordinated Utility Toolkit:</strong> Integrates dynamic dispatch logic, matching real-time solar generation profiles with modular edge server compute loads dynamically.</li>
+      </ul>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Algorithmic Battery-Compute Dispatch Loop</h3>
+        <p>The core controller coordinates solar generation ($P_{\text{solar}}$), battery state ($SoC$), local grid demand ($P_{\text{load}}$), and AI edge compute load ($P_{\text{compute}}$) through a unified algorithmic loop:</p>
+        
+        <div class="code-box">
+if P_solar &gt; (P_load + P_battery_charge_limit):
+    # Curtailment imminent - scale up edge AI inference compute
+    excess_power = P_solar - (P_load + P_battery_charge_limit)
+    P_compute = min(excess_power, max_compute_capacity)
+    scale_inference_workers(P_compute)
+else:
+    # Protect lead-acid battery health
+    if SoC &lt; 0.50 and is_monsoon_predicted():
+        # Proactively shed non-essential commercial loads
+        adjust_discharge_limit(0.30)
+        shed_non_essential_loads()
+        P_compute = 0
+        scale_inference_workers(0)
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Mature Industry Adopters &amp; Projects</h3>
+        <p>The integration of AI WP and open-source power models has transitioned from research to active field deployments:</p>
+        <ul style="padding-left: 1.2rem; font-size: 0.88rem; line-height: 1.6; margin-top: 0.5rem;">
+          <li><strong>US Department of Energy's SunShot Initiative:</strong> Funds pilot programs exploring advanced Volt/VAR and AIWP solar nowcasting integrations to improve grid resilience.</li>
+          <li><strong>GridApps-D Framework:</strong> An open platform that integrates OpenDSS with advanced AI applications to manage dynamic voltage profiles on utility distribution networks.</li>
+          <li><strong>LF Energy Seapath Platform:</strong> Deploys software-enabled automation platforms for grid substations, validating the use of edge virtualization for active grid control.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TAB 07 · STRATEGIC MATRIX
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="tab-content" id="panel-matrix" role="tabpanel" aria-labelledby="tab-btn-matrix">
+    <div class="section-header">
+      <div class="sec-num">Section 07</div>
+      <h2 class="sec-title">Strategic Integration &amp; Deployment Matrix</h2>
+      <p class="sec-desc">A comparative evaluation of legacy mini-grid interventions against the dynamic, AI-driven solutions analyzed in this report.</p>
+    </div>
+
+    <div class="card">
+      <h2>Integrated Grid Upgrade Roadmap</h2>
+      <div class="tw">
+        <table class="rec-table">
+          <thead>
+            <tr>
+              <th style="width: 25%;">Grid Operational Bottleneck</th>
+              <th style="width: 35%;">Legacy Intervention Approach (High-Cost / Fragile)</th>
+              <th style="width: 40%;">Modern Hardened Mitigation (Zero-Maintenance / Software-First)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Feeder Voltage Drop &amp; Sag</strong></td>
+              <td>Installing physical Dynamic Line Rating (DLR) wind and tension sensors along poles. High failure rates under rural storms.</td>
+              <td><strong>Conductor Oversizing &amp; AAR</strong><br>• Simply upgrading conductor cross-section (AAAC) during construction.<br>• Unlocking diurnal capacity via software-driven AAR forecasts.</td>
+            </tr>
+            <tr>
+              <td><strong>Line Voltage Instabilities</strong></td>
+              <td>Manual transformer tap adjustments, requiring physical technician travel to remote substation cabinets.</td>
+              <td><strong>Volt/VAR Feeder Optimization</strong><br>• Deploying automated switched capacitor banks and mid-line regulators.<br>• Leveraging smart inverters for zero-maintenance VAR injection.</td>
+            </tr>
+            <tr>
+              <td><strong>Lead-Acid Battery Degradation</strong></td>
+              <td>Rigid low-voltage disconnect limits (LVD), leading to sudden blackouts or irreversible battery PSoC sulfation.</td>
+              <td><strong>AIWP Predictive Dispatch</strong><br>• Dynamic SoC buffering based on 48-hour satellite cloud forecasts.<br>• Scheduling equalization charges during periods of high forecasted solar irradiance.</td>
+            </tr>
+            <tr>
+              <td><strong>Midday Energy Curtailment</strong></td>
+              <td>Oversizing battery storage banks (high CapEx) or dumping excess generation into heating resistors.</td>
+              <td><strong>Distributed AI Inference Loads</strong><br>• Co-locating edge AI compute servers directly at the substation.<br>• Soaking up curtailed solar power to run local computer vision and LLM services.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TAB 08 · REFERENCES
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="tab-content" id="panel-refs" role="tabpanel" aria-labelledby="tab-btn-refs">
+    <div class="section-header">
+      <div class="sec-num">Section 08</div>
+      <h2 class="sec-title">Reference Registry &amp; Bibliography</h2>
+      <p class="sec-desc">A comprehensive list of peer-reviewed journals, institutional frameworks, and open-source specifications on active grid management and open-source OPAI tools.</p>
+    </div>
+
+    <div class="card">
+      <ul class="ref-list">
+        <li><span class="ref-num">[1]</span> LF Energy. <em>Open Power AI Consortium (OPAI) — Open Source AI/ML Frameworks for Grid Operations</em>. Linux Foundation Energy, 2024. <a href="https://www.lfenergy.org" target="_blank" rel="noopener">lfenergy.org</a></li>
+        <li><span class="ref-num">[2]</span> Google Research. <em>GraphCast: Learning skillful medium-range global weather forecasting</em>. Science, 2023. <a href="https://doi.org/10.1126/science.adi2336" target="_blank" rel="noopener">doi.org/10.1126/science.adi2336</a></li>
+        <li><span class="ref-num">[3]</span> FERC. <em>Order No. 881 — Managing Transmission Line Ratings</em>. Federal Energy Regulatory Commission, Washington DC, 2021. <a href="https://www.ferc.gov" target="_blank" rel="noopener">ferc.gov</a></li>
+        <li><span class="ref-num">[4]</span> World Bank ESMAP. <em>Mini-Grids for Half a Billion People: Market Outlook and Business Models for Rural Electrification</em>. ESMAP Technical Paper, Washington DC, 2022. <a href="https://esmap.org" target="_blank" rel="noopener">esmap.org</a></li>
+        <li><span class="ref-num">[5]</span> CIGRE. <em>Guide for Thermal Rating Calculations of Overhead Lines</em>. CIGRE Working Group B2.43, Technical Brochure 601, Paris, 2022. <a href="https://www.cigre.org" target="_blank" rel="noopener">cigre.org</a></li>
+        <li><span class="ref-num">[6]</span> LF Energy. <em>Grid Edge Interoperability &amp; Security Alliance (GEISA)</em>. Linux Foundation Energy. <a href="https://www.lfenergy.org" target="_blank" rel="noopener">lfenergy.org</a></li>
+        <li><span class="ref-num">[7]</span> National Renewable Energy Laboratory (NREL). <em>Distributed Energy Resource Volt/VAR Control and Dynamic Inverter Modulations</em>. NREL Technical Report, Golden, CO, 2023. <a href="https://www.nrel.gov/publications" target="_blank" rel="noopener">nrel.gov/publications</a></li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════ -->
+<footer>
+  <p>© 2026 <strong>Cottonspace / Dev Labs</strong> · sattal.cottonspace.com · Document ID: EMG-TECH-016 · Mini-Grid Dynamic Capacity &amp; AI-Driven Optimization for South Asia and SSA</p>
+</footer>
+
+<!-- ═══════════════════════════════════════
+     TAB SWITCHING SCRIPT
+     ═══════════════════════════════════════ -->
+<script>
+  function switchTab(tabId) {
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.classList.remove('active');
+      btn.setAttribute('aria-selected', 'false');
+    });
+    document.querySelectorAll('.tab-content').forEach(content => {
+      content.classList.remove('active');
+    });
+    const targetBtn = document.getElementById('tab-btn-' + tabId);
+    const targetContent = document.getElementById('panel-' + tabId);
+    if (targetBtn && targetContent) {
+      targetBtn.classList.add('active');
+      targetBtn.setAttribute('aria-selected', 'true');
+      targetContent.classList.add('active');
+    }
+    
+    // Update simple top nav links active class
+    document.querySelectorAll('nav a').forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('onclick') && link.getAttribute('onclick').includes(tabId)) {
+        link.classList.add('active');
+      }
+    });
+  }
+
+  // Animate readiness meters on load
+  document.addEventListener('DOMContentLoaded', function () {
+    const fills = document.querySelectorAll('.readiness-fill');
+    fills.forEach(fill => {
+      const targetWidth = fill.style.width;
+      fill.style.width = '0';
+      setTimeout(() => { fill.style.width = targetWidth; }, 300);
+    });
+  });
+</script>
+
+</body>
+</html>
