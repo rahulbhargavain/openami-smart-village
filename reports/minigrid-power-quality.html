@@ -202,8 +202,7 @@
       <h3>The Code-Level Workflow</h3>
       <p>Using the `dss_python` or `OpenDSSDirect.py` libraries, operators can map out their mini-grid topology, fetch real-time unbalanced load files via smart meters, and run iterative optimization loops. This routine can be run weekly to optimize physical connections or automated to command smart static phase-swapping switches:<sup>[9]</sup></p>
 
-      <div class="code-box">
-import dss
+      <pre class="code-box">import dss
 import numpy as np
 
 # Initialize the OpenDSS Engine
@@ -246,8 +245,7 @@ def heuristic_phase_swap_optimizer():
     
     # 4. Check if max VUF dropped below the 2% regulatory standard
     optimized_vuf = calculate_vuf()
-    return optimized_vuf
-      </div>
+    return optimized_vuf</pre>
     </div>
 
     <div class="card-grid">
@@ -487,8 +485,8 @@ def heuristic_phase_swap_optimizer():
           <tbody>
             <tr>
               <td><strong>Phase Unbalance Strategy</strong></td>
-              <td>Use an **OpenDSS Python Greedy Heuristic** to balance physical residential drop-lines. Focus on reducing neutral line loading to preserve lead-acid/lithium battery bank lifespans.</td>
-              <td>Deploy **Active Asymmetric Inverter Control** at the distribution level to regulate phase voltages during high midday solar export windows.</td>
+              <td>Use an <strong>OpenDSS Python Greedy Heuristic</strong> to balance physical residential drop-lines. Focus on reducing neutral line loading to preserve lead-acid/lithium battery bank lifespans.</td>
+              <td>Deploy <strong>Active Asymmetric Inverter Control</strong> at the distribution level to regulate phase voltages during high midday solar export windows.</td>
             </tr>
             <tr>
               <td><strong>Harmonic Distortion Strategy</strong></td>
