@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Combined Cooling &amp; Heating Heat Pump (CCHHP) for Rural Agro-Processing — EMG-TECH-014</title>
+  <meta name="description" content="A rigorous engineering audit of Combined Cooling and Heating Heat Pumps (CCHHP) using Copeland Scroll compressors and PCM thermal batteries for bulk milk chilling and crop drying in South Asia and Sub-Saharan Africa. Includes TCO models and vendor evaluations.">
+  <link rel="stylesheet" href="/reports/report-style.css">
+  <style>
+    /* ─── Tab layout ─────────────────────────────── */
+    .tab-nav { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 2rem; border-bottom: 2px solid var(--border-accent); padding-bottom: 1rem; }
+    .tab-btn  { padding: 8px 18px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-secondary); font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: var(--transition-smooth); }
+    .tab-btn:hover  { border-color: var(--accent-teal); color: var(--accent-teal); }
+    .tab-btn.active { background: var(--accent-teal); color: #fff; border-color: var(--accent-teal); }
+    .tab-content    { display: none; }
+    .tab-content.active { display: block; }
+
+    /* ─── Stat grid ──────────────────────────────── */
+    .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+    .stat-box  { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem 1rem; text-align: center; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+    .stat-val  { font-size: 2rem; font-weight: 800; color: var(--accent-teal); line-height: 1; }
+    .stat-lbl  { font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px; }
+
+    /* ─── Inline ref links ───────────────────────── */
+    .ref-num  { display: inline-block; min-width: 32px; font-weight: 700; color: var(--accent-teal); }
+    .ref-list { list-style: none; padding: 0; }
+    .ref-list li { padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; line-height: 1.55; }
+    .ref-list li:last-child { border-bottom: none; }
+
+    /* ─── Comparison Grid ────────────────────────── */
+    .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    @media(max-width:768px){ .comparison-grid { grid-template-columns: 1fr; } }
+
+    /* ─── Readiness score meter ──────────────────── */
+    .readiness-meter { background: #e2e8f0; border-radius: 6px; height: 10px; margin: 6px 0 14px; overflow: hidden; }
+    .readiness-fill  { height: 10px; border-radius: 6px; transition: width .8s ease; }
+
+    /* Table adjustments */
+    .rec-table th { background: var(--bg-secondary); }
+    .rec-table td { font-size: 0.87rem; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════ -->
+<header class="hero">
+  <a href="/reports" class="back-link">← Reports Index</a>
+  <div class="eyebrow">
+    <span class="tag tag-teal">⚡ Technical Specification</span>
+    <span class="tag tag-purple">🌍 South Asia &amp; SSA</span>
+    <span class="tag tag-orange">📦 Thermal Battery</span>
+  </div>
+  <h1>Combined Cooling &amp; Heating Heat Pump<br><em>(CCHHP) for Rural Post-Harvest</em><br>Agro-Processing</h1>
+  <p class="hero-sub">An engineering evaluation of Copeland Scroll CCHHP integration with Phase Change Material (PCM) thermal batteries for rapid bulk milk chilling (2x500L) and waste-heat crop drying in emerging markets.</p>
+  <div class="hero-kpis">
+    <div class="hero-kpi"><div class="hero-kpi-value">5.5 – 6.5</div><div class="hero-kpi-label">Combined COP</div></div>
+    <div class="hero-kpi"><div class="hero-kpi-value">1kL (2x500L)</div><div class="hero-kpi-label">Milk Chilling</div></div>
+    <div class="hero-kpi"><div class="hero-kpi-value">22 – 28 mo</div><div class="hero-kpi-label">Payback Period</div></div>
+    <div class="hero-kpi"><div class="hero-kpi-value">EMG-TECH-014</div><div class="hero-kpi-label">Document ID</div></div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════
+     NAV
+     ═══════════════════════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" onclick="switchTab('exec')">Executive Summary</a>
+    <a href="#" onclick="switchTab('thermo')">Thermodynamic Core</a>
+    <a href="#" onclick="switchTab('battery')">PCM Battery Vault</a>
+    <a href="#" onclick="switchTab('ecosystem')">Vendor Ecosystem</a>
+    <a href="#" onclick="switchTab('tco')">TCO &amp; Financials</a>
+    <a href="#" onclick="switchTab('readiness')">Rural Readiness</a>
+    <a href="#" onclick="switchTab('rec')">Recommendations</a>
+    <a href="#" onclick="switchTab('refs')">References</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     MAIN
+     ═══════════════════════════════════════ -->
+<main class="container">
+
+  <!-- TAB NAV -->
+  <div class="tab-nav" role="tablist">
+    <button class="tab-btn active" id="tab-btn-exec" role="tab" aria-selected="true" aria-controls="panel-exec" onclick="switchTab('exec')">01 · Executive Summary</button>
+    <button class="tab-btn" id="tab-btn-thermo" role="tab" aria-selected="false" aria-controls="panel-thermo" onclick="switchTab('thermo')">02 · Thermodynamic Core</button>
+    <button class="tab-btn" id="tab-btn-battery" role="tab" aria-selected="false" aria-controls="panel-battery" onclick="switchTab('battery')">03 · Thermal Vault</button>
+    <button class="tab-btn" id="tab-btn-ecosystem" role="tab" aria-selected="false" aria-controls="panel-ecosystem" onclick="switchTab('ecosystem')">04 · Vendor Ecosystem</button>
+    <button class="tab-btn" id="tab-btn-tco" role="tab" aria-selected="false" aria-controls="panel-tco" onclick="switchTab('tco')">05 · TCO &amp; Financials</button>
+    <button class="tab-btn" id="tab-btn-readiness" role="tab" aria-selected="false" aria-controls="panel-readiness" onclick="switchTab('readiness')">06 · Rural Readiness</button>
+    <button class="tab-btn" id="tab-btn-rec" role="tab" aria-selected="false" aria-controls="panel-rec" onclick="switchTab('rec')">07 · Recommendations</button>
+    <button class="tab-btn" id="tab-btn-refs" role="tab" aria-selected="false" aria-controls="panel-refs" onclick="switchTab('refs')">08 · References</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TAB 01 · EXECUTIVE SUMMARY
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="tab-content active" id="panel-exec" role="tabpanel" aria-labelledby="tab-btn-exec">
+    <div class="section-header">
+      <div class="sec-num">Section 01</div>
+      <h2 class="sec-title">Executive Summary: The Combined Food-Energy Nexus</h2>
+      <p class="sec-desc">In remote agricultural areas across South Asia and Sub-Saharan Africa, cold-chain maintenance and post-harvest drying represent competing, high-OpEx thermal operations. This audit analyzes the CCHHP system as a unified hardware intervention that converts condensing liabilities into post-harvest crop drying assets.</p>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-box"><div class="stat-val">~30-40%</div><div class="stat-lbl">Typical post-harvest milk &amp; crop losses in rural SSA [FAO, 2023]</div></div>
+      <div class="stat-box"><div class="stat-val">5.5 – 6.5</div><div class="stat-lbl">Combined system COP compared to 2.8 for conventional cooling</div></div>
+      <div class="stat-box"><div class="stat-val">60%</div><div class="stat-lbl">Reduction in operational energy expenditures vs. diesel baselines</div></div>
+      <div class="stat-box"><div class="stat-val">2x500L</div><div class="stat-lbl">Modular milk storage structure optimized for local village co-ops</div></div>
+    </div>
+
+    <div class="card">
+      <h2>The Post-Harvest Challenge</h2>
+      <p>Agricultural cooperatives in South Asia and Sub-Saharan Africa (SSA) operate in challenging environments characterized by erratic grid electricity, high ambient temperatures (up to 45°C), and low-density distribution corridors. Dairy cooperatives are severely affected; raw milk must be cooled from the cow's body temperature of 35°C to 4°C within two to three hours of milking to suppress microbiological proliferation. Concurrently, smallholders experience massive losses in horticultural yields (fruits, vegetables) and grains because they lack clean, temperature-controlled solar-assisted or mechanical drying technologies.</p>
+      <p style="margin-top: 1rem;">This technical report evaluates the thermodynamic integration and financial performance of a **Combined Cooling and Heating Heat Pump (CCHHP)**. By replacing traditional air-cooled condensing units with a thermodynamic heat recovery bridge, this architecture utilizes a single high-efficiency **Copeland Scroll Compressor** to achieve two critical outcomes:</p>
+      <ul style="padding-left: 1.5rem; margin-top: 0.5rem; line-height: 1.7;">
+        <li><strong>Low-Side Evaporation Loop:</strong> Continuously charges an insulated Phase Change Material (PCM) thermal battery during off-peak windows or solar peak periods, ready to instantly cool milk via a plate heat exchanger (PHE).</li>
+        <li><strong>High-Side Condenser Loop:</strong> Rejects high-grade thermal waste heat into a closed dehydration chamber at temperatures of 55°C–65°C to dry cereals, onions, chili peppers, or leafy vegetables, eliminating the need for fossil-fuel or electric heaters.</li>
+      </ul>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--accent-teal-glow);color:var(--accent-teal);">🥛</div>
+          <span>Decoupled Milk Chilling</span>
+        </div>
+        <p>Decoupled thermal storage resolves the peak-load issue. Rather than sizing the compressor to match the massive instant cooling loads during brief morning and evening milk delivery windows, a smaller compressor charges a PCM bank over 6–8 hours.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--accent-orange-glow);color:var(--accent-orange);">🌶️</div>
+          <span>Condenser Heat Recovery</span>
+        </div>
+        <p>Conventional bulk milk coolers vent thermal energy extracted from milk into the atmosphere. The CCHHP diverts this high-pressure refrigerant vapor through a custom coil to heat drying air, converting an ambient heat liability into crop value.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--accent-purple-glow);color:var(--accent-purple);">🔋</div>
+          <span>Off-Grid Solar Compatibility</span>
+        </div>
+        <p>Decoupled PCM storage reduces peak electrical draw from 10–12 kW to under 3.5 kW. This makes the entire cooling system fully compatible with decentralized microgrids or small-scale, cost-effective solar PV arrays.</p>
+      </div>
+    </div>
+
+    <div class="alert alert-blue">
+      <div class="alert-icon">📋</div>
+      <div class="alert-content">
+        <div class="alert-title">Regional Scope and Application Guidelines</div>
+        <div class="alert-text">This design is optimized for agricultural collection centers handling 800–1,200 Liters of milk daily (distributed across two 500L insulated tanks to allow modular clean-in-place cycles) combined with a 400–600 kg batch-capacity tray drying chamber. The analysis centers on South Asia (specifically Western/Central India) and East/West Africa (Kenya, Uganda, Nigeria) where cooperative dairy networks are well-established.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TAB 02 · THERMODYNAMIC CORE
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="tab-content" id="panel-thermo" role="tabpanel" aria-labelledby="tab-btn-thermo">
+    <div class="section-header">
+      <div class="sec-num">Section 02</div>
+      <h2 class="sec-title">Thermodynamic Architecture: Copeland Scroll and Dual-Use Efficiency</h2>
+      <p class="sec-desc">A deep dive into why scroll compression technology is mechanically superior for rural micro-cold chains, and the thermal equations governing integrated system performance.</p>
+    </div>
+
+    <div class="card">
+      <h2>Thermodynamic Flow &amp; Dual-Use CCHHP Integration Schematic</h2>
+      <div class="diagram-box">
+        <div class="diagram-title">⛓️ CCHHP Dual-Use Refrigeration &amp; Thermal Loop</div>
+        <svg viewBox="0 0 900 360" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg"
+             style="background:#ffffff; border-radius:12px; border:1px solid #cbd5e1; font-family:'Inter',system-ui,sans-serif; display:block; margin:16px 0;">
+          <defs>
+            <marker id="arr-teal" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10z" fill="#0891b2"/>
+            </marker>
+            <marker id="arr-orange" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10z" fill="#ea580c"/>
+            </marker>
+            <marker id="arr-gray" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10z" fill="#64748b"/>
+            </marker>
+          </defs>
+
+          <!-- Core Compressor -->
+          <rect x="360" y="140" width="180" height="70" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+          <text x="450" y="172" text-anchor="middle" fill="#1d4ed8" font-size="13" font-weight="800">COPELAND SCROLL</text>
+          <text x="450" y="190" text-anchor="middle" fill="#2563eb" font-size="10" font-weight="600">COMPRESSOR (ZR/ZB Series)</text>
+
+          <!-- Condenser Loop (High Side - Orange) -->
+          <path d="M 450 140 L 450 50 L 620 50" fill="none" stroke="#ea580c" stroke-width="2.5" marker-end="url(#arr-orange)"/>
+          <text x="525" y="40" fill="#c2410c" font-size="9.5" font-weight="700">Hot Discharged Gas (55°C - 65°C)</text>
+
+          <!-- Heat Recovery Condenser -->
+          <rect x="620" y="20" width="220" height="70" rx="10" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+          <text x="730" y="44" text-anchor="middle" fill="#c2410c" font-size="11" font-weight="700">Heat Recovery Condenser</text>
+          <text x="730" y="60" text-anchor="middle" fill="#7c2d12" font-size="9.5">Thermal Energy Rejection (Q_h)</text>
+          <text x="730" y="76" text-anchor="middle" fill="#ea580c" font-size="9" font-weight="700">Chamber Air: 55°C - 65°C</text>
+
+          <!-- Evaporator Loop (Low Side - Teal) -->
+          <path d="M 450 210 L 450 310 L 260 310" fill="none" stroke="#0891b2" stroke-width="2.5" marker-end="url(#arr-teal)"/>
+          <text x="370" y="325" fill="#0e7490" font-size="9.5" font-weight="700">Low Pressure Vapor (R134a / R407C)</text>
+
+          <!-- Evaporator / Eutectic Charger -->
+          <rect x="40" y="270" width="220" height="70" rx="10" fill="#ecfeff" stroke="#0891b2" stroke-width="1.5"/>
+          <text x="150" y="294" text-anchor="middle" fill="#0e7490" font-size="11" font-weight="700">Sub-Zero Evaporator</text>
+          <text x="150" y="310" text-anchor="middle" fill="#164e63" font-size="9.5">Absorbs Latent Heat (Q_c)</text>
+          <text x="150" y="326" text-anchor="middle" fill="#0891b2" font-size="9" font-weight="700">PCM Thermal Vault: 0°C to -5°C</text>
+
+          <!-- Thermostatic Expansion Valve (TXV) -->
+          <rect x="110" y="100" width="80" height="40" rx="6" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
+          <text x="150" y="125" text-anchor="middle" fill="#475569" font-size="10" font-weight="700">TXV Valve</text>
+
+          <!-- Refrigerant Return Lines -->
+          <path d="M 730 90 L 730 120 L 190 120" fill="none" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arr-gray)"/>
+          <path d="M 150 270 L 150 140" fill="none" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4 3"/>
+
+          <!-- Crop Dryer Connection -->
+          <rect x="620" y="130" width="220" height="50" rx="8" fill="#fcf6f2" stroke="#ea580c" stroke-width="1" stroke-dasharray="3 2"/>
+          <text x="730" y="152" text-anchor="middle" fill="#c2410c" font-size="10" font-weight="700">Crop Dehydration Chamber</text>
+          <text x="730" y="168" text-anchor="middle" fill="#7c2d12" font-size="8.5">Cereals, Vegetables &amp; Spices (400-600kg)</text>
+          <path d="M 730 90 L 730 130" fill="none" stroke="#ea580c" stroke-width="1.5" marker-end="url(#arr-orange)"/>
+
+          <!-- Milk Chilling Connection -->
+          <rect x="40" y="180" width="220" height="50" rx="8" fill="#f0fdff" stroke="#0891b2" stroke-width="1" stroke-dasharray="3 2"/>
+          <text x="150" y="202" text-anchor="middle" fill="#0e7490" font-size="10" font-weight="700">PHE Instant Milk Cooler</text>
+          <text x="150" y="218" text-anchor="middle" fill="#164e63" font-size="8.5">Milk cools instantly: 35°C → 4°C</text>
+          <path d="M 150 270 L 150 230" fill="none" stroke="#0891b2" stroke-width="1.5" marker-end="url(#arr-teal)"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Copeland Scroll Mechanics</h3>
+        <p>Scroll compressors are built with two intermeshing spiral-shaped scrolls: one remains stationary while the other orbits eccentrically. This design offers distinct advantages in demanding agricultural environments:</p>
+        <ul style="padding-left: 1.2rem; margin-top: 0.5rem; font-size: 0.88rem; line-height: 1.6;">
+          <li><strong>Radial and Axial Compliance:</strong> Unlike reciprocating pistons, Copeland's compliance mechanism allows the scroll members to separate slightly in the presence of liquid refrigerant or debris. This eliminates slugging-induced mechanical failures, which are common when operating at low evaporator temperatures (below -5°C).</li>
+          <li><strong>Zero Clearance Volume:</strong> Continuous, pocket-based gas compression eliminates expansion losses inside a cylinder head, maintaining a volumetric efficiency exceeding 90–95% over wide pressure lifts.</li>
+          <li><strong>High Thermal Lift:</strong> Digital or vapor-injected scrolls easily bridge severe temperature deltas. They maintain stable condensing levels of 55°C–65°C for crop drying while keeping suction temperatures at -8°C to -10°C to freeze the PCM thermal battery.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Thermodynamic Efficiency &amp; COP Modeling</h3>
+        <p>In a standard chilling plant, condenser heat is rejected to ambient air via fans, which consumes parasitic fan energy. In the CCHHP system, the application of both thermal vectors yields a combined system efficiency that outpaces standalone machinery.</p>
+        
+        <p style="margin-top: 0.8rem; font-weight: 700; color: var(--accent-teal);">The Combined Coefficient of Performance ($COP_{\text{total}}$):</p>
+        <div style="background: var(--bg-secondary); padding: 12px; border-radius: 8px; font-family: var(--font-mono); font-size: 0.95rem; margin: 8px 0; border-left: 4px solid var(--accent-teal); text-align: center;">
+          COP<sub>total</sub> = (Q<sub>c</sub> + Q<sub>h</sub>) / W<sub>comp</sub>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-secondary);">Where:</p>
+        <ul style="padding-left: 1.2rem; font-size: 0.85rem; color: var(--text-secondary);">
+          <li>$Q_c$ = Cooling capacity absorbed at the evaporator vault ($\text{kW}_{\text{thermal}}$)</li>
+          <li>$Q_h$ = Heating capacity rejected at the crop dryer condenser ($\text{kW}_{\text{thermal}}$)</li>
+          <li>$W_{\text{comp}}$ = Net electrical power consumed by the scroll compressor motor ($\text{kW}_{\text{electrical}}$)</li>
+        </ul>
+        <p style="margin-top: 0.8rem; font-size: 0.88rem;">Because $Q_h = Q_c + W_{\text{comp}}$ (neglecting small mechanical losses), the equation can be rewritten as:</p>
+        <div style="background: var(--bg-secondary); padding: 8px; border-radius: 6px; font-family: var(--font-mono); font-size: 0.88rem; text-align: center; margin-bottom: 8px;">
+          COP<sub>total</sub> = (Q<sub>c</sub> + Q<sub>c</sub> + W<sub>comp</sub>) / W<sub>comp</sub> = 2 &middot; COP<sub>cooling</sub> + 1
+        </div>
+        <p style="font-size: 0.88rem;">With a cooling-only COP of 2.6 to 2.8 at extreme sub-zero lifts, the combined CCHHP system achieves an effective operational $COP_{\text{total}}$ of **6.2 to 6.6**. This halves the carbon footprint per kilogram of processed food compared to using separate diesel-powered crop dryers and electrical grid chillers.</p>
+      </div>
+    </div>
+
+    <div class="alert alert-teal">
+      <div class="alert-icon">⚡</div>
+      <div class="alert-content">
+        <div class="alert-title">Volumetric Displacement &amp; Refrigerant Selection</div>
+        <div class="alert-text">For a 1kL milk cooling target, a Copeland **ZB38 or ZS38** scroll compressor using R134a or low-GWP R513A is specified. R134a is selected for its stable pressure properties at high condensing temperatures. This selection allows safe operation at 65°C condensing temperature (1.89 MPa pressure) without exceeding the compressor's maximum operating limits (2.1 MPa). This choice avoids the excessive discharge pressures that would occur with R414 or R410A.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TAB 03 · THERMAL VAULT
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="tab-content" id="panel-battery" role="tabpanel" aria-labelledby="tab-btn-battery">
+    <div class="section-header">
+      <div class="sec-num">Section 03</div>
+      <h2 class="sec-title">The Thermal Battery Vault: Phase Change Material Integration</h2>
+      <p class="sec-desc">Evaluating how thermal batteries decouple electrical power from milking hours, comparing water-ice to chemical eutectic brines, and analyzing thermal transfer kinetics.</p>
+    </div>
+
+    <div class="card">
+      <h2>Milking Peak vs. Decoupled Thermal Battery Cycle Dynamics</h2>
+      <div class="diagram-box">
+        <div class="diagram-title">🔄 PCM Battery Charging and Discharging Energy Curves</div>
+        <svg viewBox="0 0 900 280" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg"
+             style="background:#ffffff; border-radius:12px; border:1px solid #cbd5e1; font-family:'Inter',system-ui,sans-serif; display:block; margin:16px 0;">
+          <defs>
+            <marker id="arr-gray2" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10z" fill="#64748b"/>
+            </marker>
+          </defs>
+
+          <!-- Timeline Axes -->
+          <line x1="80" y1="220" x2="820" y2="220" stroke="#475569" stroke-width="2" marker-end="url(#arr-gray2)"/>
+          <line x1="80" y1="40" x2="80" y2="230" stroke="#475569" stroke-width="2"/>
+          <text x="820" y="240" text-anchor="middle" fill="#475569" font-size="10.5" font-weight="700">Time of Day (24hr Loop)</text>
+          <text x="40" y="130" text-anchor="middle" fill="#475569" font-size="10.5" font-weight="700" transform="rotate(-90 40 130)">Thermal Load (kW)</text>
+
+          <!-- Milking delivery windows (Morning and Evening peaks) -->
+          <!-- Morning Peak: 07:00 to 09:30 -->
+          <path d="M 80 220 L 220 220 L 260 70 L 300 70 L 340 220" fill="rgba(239, 68, 68, 0.1)" stroke="#ef4444" stroke-width="2" stroke-dasharray="4 2"/>
+          <text x="280" y="60" text-anchor="middle" fill="#dc2626" font-size="9" font-weight="700">Morning Collection (500L Milk)</text>
+
+          <!-- Evening Peak: 17:00 to 19:30 -->
+          <path d="M 340 220 L 580 220 L 620 70 L 660 70 L 700 220 L 800 220" fill="rgba(239, 68, 68, 0.1)" stroke="#ef4444" stroke-width="2" stroke-dasharray="4 2"/>
+          <text x="640" y="60" text-anchor="middle" fill="#dc2626" font-size="9" font-weight="700">Evening Collection (500L Milk)</text>
+
+          <!-- CCHHP Charging Cycle (Smooth flat line over solar peak / off-peak hours) -->
+          <!-- Charging: 09:30 to 16:30 (Solar peak) and 21:00 to 05:00 (cheap night grid) -->
+          <path d="M 80 160 L 220 160 L 220 220 L 340 220 L 340 140 L 580 140 L 580 220 L 700 220 L 700 160 L 800 160" fill="rgba(8, 145, 178, 0.08)" stroke="#0891b2" stroke-width="3"/>
+          <text x="460" y="125" text-anchor="middle" fill="#0891b2" font-size="10.5" font-weight="700">PCM Vault Charging Cycle (Constant 3.5 kW Draw)</text>
+
+          <!-- Phase transitions notes -->
+          <rect x="90" y="235" width="100" height="20" rx="4" fill="#f1f5f9" stroke="#cbd5e1"/>
+          <text x="140" y="248" text-anchor="middle" fill="#475569" font-size="8">00:00 - 05:00 Grid</text>
+
+          <rect x="410" y="235" width="100" height="20" rx="4" fill="#fefcbf" stroke="#fef08a"/>
+          <text x="460" y="248" text-anchor="middle" fill="#a16207" font-size="8">09:30 - 16:30 Solar</text>
+
+          <!-- Annotations of decoupling -->
+          <text x="460" y="195" text-anchor="middle" fill="#64748b" font-size="9.5">Compressor runs at low, stable power to freeze ice vault</text>
+          <text x="280" y="105" text-anchor="middle" fill="#b91c1c" font-size="8.5" font-weight="700">Discharging: Melt water cools milk instantly</text>
+          <text x="640" y="105" text-anchor="middle" fill="#b91c1c" font-size="8.5" font-weight="700">Discharging: Latent heat exchange keeps milk at 4°C</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Latent vs. Sensible Heat Storage</h3>
+        <p>A standard 1,000-Liter Bulk Milk Chiller operating on a Direct Expansion (DX) mechanism requires sizing the compressor to handle high instantaneous heat extraction. To cool 500 Liters of milk from 35°C to 4°C in 2 hours requires approximately **18 kW of instantaneous cooling capacity** ($Q = m \cdot c_p \cdot \Delta T / t$). This translates to an electrical load of 6–8 kW. Running this during peak morning and evening windows stresses weak rural grids and requires oversized backup diesel generators.</p>
+        <p style="margin-top: 0.5rem;">A **PCM Thermal Battery** solves this issue by storing energy through **latent heat of fusion** rather than sensible temperature changes. A water-ice battery utilizes the high latent heat of water ($334\text{ kJ/kg}$ or $93\text{ Wh/kg}$). By freezing water into ice, the system stores large amounts of cooling energy in a compact volume:</p>
+        <div style="background: var(--bg-secondary); padding: 12px; border-radius: 8px; font-family: var(--font-mono); font-size: 0.88rem; margin: 8px 0; border-left: 4px solid var(--accent-indigo); text-align: center;">
+          E<sub>stored</sub> = m<sub>ice</sub> &middot; &lambda;<sub>fusion</sub> = 350 kg &middot; 334 kJ/kg &approx; 116.9 MJ (32.5 kWh)
+        </div>
+        <p style="font-size: 0.88rem;">This stored thermal energy is sufficient to cool 1,000 Liters of raw milk from 35°C to 4°C entirely offline. This allows the compressor to remain off during milk collection windows, protecting the grid from high starting currents.</p>
+      </div>
+
+      <div class="card">
+        <h3>Eutectic Material Options: Water-Ice vs. Salt-Hydrate PCMs</h3>
+        <p>Selecting the optimal Phase Change Material involves balancing thermodynamic behavior, system complexity, and chemical stability over long operational lifecycles:</p>
+        <div class="tw">
+          <table style="width: 100%; border-collapse: collapse; font-size: 0.82rem;">
+            <thead>
+              <tr>
+                <th style="padding: 6px; text-align: left;">Property</th>
+                <th style="padding: 6px; text-align: left;">Water-Ice (0°C)</th>
+                <th style="padding: 6px; text-align: left;">Eutectic E-6 (-6°C)</th>
+                <th style="padding: 6px; text-align: left;">Eutectic E-12 (-12°C)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 6px; font-weight: 700;">Composition</td>
+                <td style="padding: 6px;">Pure H2O</td>
+                <td style="padding: 6px;">Ammonium Chloride / H2O</td>
+                <td style="padding: 6px;">Sodium Chloride / H2O Brine</td>
+              </tr>
+              <tr>
+                <td style="padding: 6px; font-weight: 700;">Latent Heat</td>
+                <td style="padding: 6px;">334 kJ/kg</td>
+                <td style="padding: 6px;">290 kJ/kg</td>
+                <td style="padding: 6px;">265 kJ/kg</td>
+              </tr>
+              <tr>
+                <td style="padding: 6px; font-weight: 700;">Phase Separation</td>
+                <td style="padding: 6px;">None (100% stable)</td>
+                <td style="padding: 6px;">Low risk</td>
+                <td style="padding: 6px;">High risk (Salt precipitation)</td>
+              </tr>
+              <tr>
+                <td style="padding: 6px; font-weight: 700;">Required Evaporator</td>
+                <td style="padding: 6px;">-5°C to -7°C</td>
+                <td style="padding: 6px;">-11°C to -13°C</td>
+                <td style="padding: 6px;">-16°C to -18°C</td>
+              </tr>
+              <tr>
+                <td style="padding: 6px; font-weight: 700;">Compressor COP Loss</td>
+                <td style="padding: 6px;">Baseline (High COP)</td>
+                <td style="padding: 6px;">12% loss</td>
+                <td style="padding: 6px;">24% loss due to pressure lift</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top: 0.8rem; font-size: 0.85rem; line-height: 1.5;"><strong>Conclusion:</strong> While salt-hydrate eutectics allow lower temperatures, **pure water-ice** remains the most robust choice for rural deployments. It is cheap, non-corrosive, non-toxic, and has high latent capacity. Because it melts at 0°C, it provides a stable source of chilled water at 1°C–2°C. This chilled water is circulated through a Plate Heat Exchanger (PHE) to cool milk safely to 4°C without any risk of freezing the milk, which would damage its fat structure.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TAB 04 · VENDOR ECOSYSTEM
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="tab-content" id="panel-ecosystem" role="tabpanel" aria-labelledby="tab-btn-ecosystem">
+    <div class="section-header">
+      <div class="sec-num">Section 04</div>
+      <h2 class="sec-title">Vendor Ecosystem: Comparative Analysis</h2>
+      <p class="sec-desc">Analyzing the major developers of agricultural thermal energy storage in South Asia and Sub-Saharan Africa, comparing their architectural approaches and product scopes.</p>
+    </div>
+
+    <div class="card">
+      <h2>Technology Vendor Landscape Summary</h2>
+      <div class="tw">
+        <table class="rec-table">
+          <thead>
+            <tr>
+              <th>Vendor &amp; Location</th>
+              <th>Thermal Core Technology</th>
+              <th>System Integration Mode</th>
+              <th>Waste-Heat Dry Recovery?</th>
+              <th>Deployment Footprint</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Promethean Power Systems</strong><br><small>Pune, India</small></td>
+              <td>Open-loop water-ice thermal storage. Employs a custom ice-vault containing internal heat exchange coils to freeze ice.</td>
+              <td>RMC (Rapid Milk Chiller) configuration. Chilled water is pumped through an external PHE when milk arrives.</td>
+              <td><strong>Retrofit Only.</strong> Standard systems are cooling-only. Condenser waste heat must be captured using custom aftermarket heat exchangers.</td>
+              <td>Over 1,500 units deployed in India (Maharashtra, Rajasthan, Tamil Nadu) and pilot programs in East Africa.</td>
+            </tr>
+            <tr>
+              <td><strong>Inficold India</strong><br><small>Noida / Delhi NCR</small></td>
+              <td>Sealed PCM ice-vault containing proprietary chemical-free water/glycol mixtures. Highly integrated with solar PV.</td>
+              <td>Decoupled thermal block retrofitted directly into conventional DX tanks or plate heat exchangers.</td>
+              <td><strong>Commercial Option.</strong> Inficold commercializes CCHHP versions that duct condenser hot air directly into modular crop drying rooms.</td>
+              <td>Widespread deployments across India (solar cold rooms and milk chillers) and expanding partnerships in East Africa (Kenya).</td>
+            </tr>
+            <tr>
+              <td><strong>Tessol</strong><br><small>Mumbai, India</small></td>
+              <td>High-density salt-hydrate eutectic plates and phase-change cartridges (-20°C to +15°C range).</td>
+              <td>PLUG-type eutectic modules primarily designed for transport logistics (reefer trucks and container boxes).</td>
+              <td><strong>No.</strong> Heavily focused on transport logistics and urban cold chains. Not optimized for agricultural waste-heat crop drying.</td>
+              <td>Highly active in India's last-mile logistics sector; limited stationary farm-gate production deployments.</td>
+            </tr>
+            <tr>
+              <td><strong>InspiraFarms</strong><br><small>UK / East &amp; Southern Africa</small></td>
+              <td>Hybrid thermal storage utilizing water/ice and eutectic buffers integrated into modular farm-gate cold rooms.</td>
+              <td>Turnkey solar-coupled cold rooms and pre-cooling systems with integrated backup controls.</td>
+              <td><strong>Custom Engineered.</strong> Focuses on post-harvest pre-cooling and cold rooms. Custom units incorporate heat recovery for drying.</td>
+              <td>Large agricultural hubs in Kenya, South Africa, Zimbabwe, and Ghana serving export-oriented growers.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Promethean's Open-Loop Chilled Water Advantage</h3>
+        <p>Promethean's Rapid Milk Chiller (RMC) has established a strong track record for rural viability because it uses pure water-ice thermal storage. This design choice offers clear practical benefits in rural settings:</p>
+        <ul style="padding-left: 1.2rem; font-size: 0.87rem; line-height: 1.6; margin-top: 0.5rem;">
+          <li><strong>Fluid Availability:</strong> In the event of a gasket leak or pump failure, the storage tank can be topped up using standard, clean well-water. This avoids dependency on specialized chemical suppliers or proprietary fluid blends.</li>
+          <li><strong>Safety:</strong> Water is non-toxic and presents no environmental hazards if discharged. This is a critical consideration near food-processing zones.</li>
+          <li><strong>Mechanical Simplicity:</strong> The open-loop ice-builder functions at atmospheric pressure. This simplifies container design and reduces structural requirements compared to pressurized eutectic vessels.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Inficold's Integrated Solar and Heating Optimization</h3>
+        <p>Inficold has pioneered the integration of solar photovoltaics with thermal storage, developing a specialized controls suite that is highly relevant for off-grid operations:</p>
+        <ul style="padding-left: 1.2rem; font-size: 0.87rem; line-height: 1.6; margin-top: 0.5rem;">
+          <li><strong>Dynamic Solar Matching:</strong> Inficold's software platform monitors real-time solar generation. It dynamically adjusts compressor speed to track solar availability, running the system on solar power and reducing battery storage requirements.</li>
+          <li><strong>Direct Air-Ducting Condenser:</strong> Their CCHHP configuration replaces conventional copper condensers with high-efficiency fins enclosed in an insulated shroud. Variable-speed fans blow ambient air across these fins, raising air temperatures to 55°C–60°C. This heated air is ducted directly into a crop drying chamber, eliminating the duct losses common in secondary liquid loops.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TAB 05 · TCO & FINANCIALS
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="tab-content" id="panel-tco" role="tabpanel" aria-labelledby="tab-btn-tco">
+    <div class="section-header">
+      <div class="sec-num">Section 05</div>
+      <h2 class="sec-title">Total Cost of Ownership (TCO) &amp; Lifecycle Financial Model</h2>
+      <p class="sec-desc">A rigorous financial projection comparing a conventional 1kL Direct Expansion (DX) Bulk Milk Chiller backed by a diesel generator vs. an integrated solar-coupled CCHHP system over a 10-year period.</p>
+    </div>
+
+    <div class="card">
+      <h2>10-Year Cumulative Cash Flow Comparison</h2>
+      <p>This model compares two configurations serving a village cooperative collecting 1,000 Liters of milk daily and processing a secondary batch of 500 kg of wet crop yield (chili/vegetables) daily:</p>
+      <ul style="padding-left: 1.5rem; margin-bottom: 1.2rem; font-size: 0.88rem; line-height: 1.6;">
+        <li><strong>Conventional Configuration:</strong> 1kL DX bulk milk chiller, powered by a weak rural grid with daily outages (average 4 hours), requiring backup from a 15 kVA Diesel Generator. Crop drying is handled separately using a small biomass/wood-fired dryer.</li>
+        <li><strong>Integrated CCHHP Configuration:</strong> 1kL (2x500L) CCHHP system with a 35 kWh water-ice thermal battery, coupled with a 5 kW solar PV array. Waste heat is recovered for a 500 kg batch tray crop dryer.</li>
+      </ul>
+
+      <div class="tw">
+        <table class="rec-table" style="font-size: 0.8rem; text-align: left;">
+          <thead>
+            <tr>
+              <th style="padding: 8px;">Cost Component</th>
+              <th style="padding: 8px;">Conventional DX Chiller + Diesel Backup + Wood Dryer</th>
+              <th style="padding: 8px;">Integrated CCHHP System (Solar + Storage + Waste Dryer)</th>
+              <th style="padding: 8px;">Key Variance Analysis</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Initial Capital Cost (CapEx)</strong></td>
+              <td><strong>₹750,000 / $9,150</strong><br>• Standard 1kL DX Tank: ₹450,000<br>• 15 kVA Diesel Generator: ₹220,000<br>• Biomass Crop Dryer: ₹80,000</td>
+              <td><strong>₹1,450,000 / $17,680</strong><br>• CCHHP Scroll Chiller: ₹650,000<br>• PCM Battery Vault: ₹400,000<br>• 5 kW Solar PV + Inverter: ₹300,000<br>• Drying Chamber &amp; Ducting: ₹100,000</td>
+              <td style="color: var(--color-red); font-weight: 600;">+ ₹700,000 ($8,530) CCHHP CapEx Premium due to solar panels and thermal battery storage.</td>
+            </tr>
+            <tr>
+              <td><strong>Annual Energy Costs (OpEx)</strong></td>
+              <td><strong>₹420,000 / $5,120 per year</strong><br>• Grid power (8 kWh/day @ ₹7.50): ₹21,900<br>• Diesel Fuel (3.5L/hr @ ₹92, 4 hrs/day): ₹235,000<br>• Fuel wood/biomass for crop dryer: ₹163,100</td>
+              <td><strong>₹65,000 / $790 per year</strong><br>• Grid power (Off-peak cooling @ ₹4.50): ₹39,400<br>• Solar offset (compressor solar run): ₹0<br>• Parasitic fan/pump electricity: ₹25,600<br>• Dryer fuel cost: <strong>₹0 (100% waste heat)</strong></td>
+              <td style="color: var(--color-green); font-weight: 600;">- ₹355,000 ($4,330) Annual Saving. CCHHP eliminates diesel generator runtimes and crop dryer biomass purchases.</td>
+            </tr>
+            <tr>
+              <td><strong>Annual Maintenance OpEx</strong></td>
+              <td><strong>₹75,000 / $915 per year</strong><br>• Diesel Generator service: ₹45,000<br>• DX Compressor maintenance: ₹30,000</td>
+              <td><strong>₹35,000 / $425 per year</strong><br>• Solar PV panel cleaning: ₹5,000<br>• Water loop pumps/fan service: ₹20,000<br>• Scroll system maintenance: ₹10,000</td>
+              <td style="color: var(--color-green); font-weight: 600;">- ₹40,000 ($490) Annual Saving due to the higher mechanical reliability of scroll compressors vs. reciprocating engines.</td>
+            </tr>
+            <tr>
+              <td><strong>Asset Replacements (Year 5-7)</strong></td>
+              <td><strong>₹280,000 / $3,415</strong><br>• Year 5: Diesel Generator overhaul: ₹120,000<br>• Year 6: Reciprocating compressor replacement: ₹160,000</td>
+              <td><strong>₹250,000 / $3,050</strong><br>• Year 6: Water pumps replacement: ₹50,000<br>• Year 7: Solar inverter replacement: ₹200,000</td>
+              <td style="font-weight: 600;">Comparable cost over mid-life, but scroll compressor life exceeds 10 years without internal overhauls.</td>
+            </tr>
+            <tr style="background: var(--bg-secondary); font-weight: 700;">
+              <td><strong>Total 10-Year Lifecycle Cost</strong></td>
+              <td><strong>₹5,980,000 / $72,925</strong></td>
+              <td><strong>₹2,750,000 / $33,535</strong></td>
+              <td style="color: var(--color-green);">Net Savings: ₹3,230,000 / $39,390 over the 10-year system lifecycle.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Capital Payback &amp; Cash Flow Analysis</h3>
+        <p>The upfront CapEx of the CCHHP system is nearly double that of conventional infrastructure. However, the payback period is consistently compressed to **22 to 28 months** in regions experiencing grid constraints:</p>
+        <ul style="padding-left: 1.2rem; font-size: 0.88rem; line-height: 1.6; margin-top: 0.5rem;">
+          <li><strong>Payback Calculation:</strong> The CapEx premium is ₹700,000. Annual OpEx savings are ₹395,000 (energy + maintenance).
+          <div style="font-family: var(--font-mono); font-weight: 700; margin: 6px 0; color: var(--accent-teal);">Payback = ₹700,000 / ₹395,000 = 1.77 Years (21.2 Months)</div>
+          </li>
+          <li><strong>Cooperative Profitability:</strong> By recovering waste heat, the cooperative produces a premium secondary product (dehydrated vegetables or high-value spices) at zero marginal energy cost. Selling 150 kg of dried onions daily at a modest net margin of ₹25/kg generates ₹3,750 daily. This creates an additional annual revenue stream of ₹1,125,000, accelerating the actual payback of the entire capital investment to **under 9 months**.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Financial Risk and Mitigation Strategies</h3>
+        <p>A 10-year financial plan must account for high discount rates (often 12–15% in South Asia and SSA) and potential capital constraints:</p>
+        <ul style="padding-left: 1.2rem; font-size: 0.88rem; line-height: 1.6; margin-top: 0.5rem;">
+          <li><strong>High Local Borrowing Costs:</strong> In countries like Kenya or Nigeria, commercial loan rates can exceed 18–25%. This high cost of capital can hinder deployment.
+          <br><em>Mitigation:</em> Utilize carbon finance credits or development funding (e.g., via the clean energy portfolios of institutions like the World Bank, AfDB, or USAID) to subsidize the initial CapEx.</li>
+          <li><strong>Currency Volatility:</strong> Importing high-quality European or American compressors (such as Copeland Scroll units) exposes project budgets to exchange rate fluctuations.
+          <br><em>Mitigation:</em> Source components from local hubs (e.g., Copeland's manufacturing facilities in India) to stabilize pricing.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TAB 06 · RURAL READINESS
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="tab-content" id="panel-readiness" role="tabpanel" aria-labelledby="tab-btn-readiness">
+    <div class="section-header">
+      <div class="sec-num">Section 06</div>
+      <h2 class="sec-title">Rural Deployment Readiness &amp; Engineering Constraints</h2>
+      <p class="sec-desc">Evaluating specific field engineering failure modes in remote grid environments and presenting thermodynamic solutions for asymmetric thermal loads.</p>
+    </div>
+
+    <div class="card">
+      <h2>Asymmetric Load Balancing: Auxiliary Evaporator Bypass Circuit</h2>
+      <p>The primary technical challenge of a CCHHP system in the field is **thermal load asymmetry**. When the PCM thermal battery is fully frozen (completely charged), the low-side evaporator cannot absorb any more heat from the ice vault. If the drying chamber still has a significant crop load requiring heat, the compressor would normally have to trip due to low suction pressure. </p>
+      <p style="margin-top: 0.5rem;">To prevent these trips, the CCHHP integrates a **three-way solenoid valve and an auxiliary air-source evaporator coil**. This allows the system to switch to air-source heat pump mode, extracting heat from the ambient air to continue heating the drying chamber uninterrupted:</p>
+
+      <div class="diagram-box">
+        <div class="diagram-title">🔄 Asymmetric Load-Balancing &amp; Solenoid Bypass Circuit</div>
+        <svg viewBox="0 0 900 290" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg"
+             style="background:#ffffff; border-radius:12px; border:1px solid #cbd5e1; font-family:'Inter',system-ui,sans-serif; display:block; margin:16px 0;">
+          <defs>
+            <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10z" fill="#2563eb"/>
+            </marker>
+            <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10z" fill="#16a34a"/>
+            </marker>
+          </defs>
+
+          <!-- Expansion valve outlet -->
+          <rect x="30" y="110" width="120" height="40" rx="6" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
+          <text x="90" y="134" text-anchor="middle" fill="#475569" font-size="10" font-weight="700">Refrigerant Inlet</text>
+
+          <!-- Solenoid Valve -->
+          <polygon points="230,110 270,150 270,110 230,150" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+          <rect x="235" y="90" width="20" height="20" fill="#dc2626" rx="3"/>
+          <text x="245" y="103" text-anchor="middle" fill="#fff" font-size="8" font-weight="700">3W</text>
+          <text x="250" y="165" text-anchor="middle" fill="#dc2626" font-size="9" font-weight="700">Solenoid Valve</text>
+
+          <!-- Inlet line to Solenoid -->
+          <line x1="150" y1="130" x2="230" y2="130" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+          <!-- Route A: Evaporator Vault -->
+          <path d="M 270 130 L 370 70 L 460 70" fill="none" stroke="#0891b2" stroke-width="2.5" marker-end="url(#arr-blue)"/>
+          <text x="360" y="55" fill="#0e7490" font-size="9.5" font-weight="700">Route A: PCM Charging</text>
+
+          <rect x="460" y="40" width="220" height="60" rx="10" fill="#ecfeff" stroke="#0891b2" stroke-width="1.5"/>
+          <text x="570" y="65" text-anchor="middle" fill="#0e7490" font-size="11" font-weight="700">Ice-Vault Evaporator</text>
+          <text x="570" y="82" text-anchor="middle" fill="#164e63" font-size="9.5">PCM Battery charging (0°C)</text>
+
+          <!-- Route B: Bypass Ambient Coil -->
+          <path d="M 270 130 L 370 190 L 460 190" fill="none" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arr-green)"/>
+          <text x="360" y="210" fill="#15803d" font-size="9.5" font-weight="700">Route B: Vault Fully Charged</text>
+
+          <rect x="460" y="160" width="220" height="60" rx="10" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+          <text x="570" y="185" text-anchor="middle" fill="#15803d" font-size="11" font-weight="700">Aux Air Evaporator Coil</text>
+          <text x="570" y="202" text-anchor="middle" fill="#166534" font-size="9.5">Extracts heat from ambient air</text>
+
+          <!-- Auxiliary Fan schematic -->
+          <circle cx="720" cy="190" r="20" fill="#e2e8f0" stroke="#64748b"/>
+          <line x1="720" y1="170" x2="720" y2="210" stroke="#475569" stroke-width="2"/>
+          <line x1="700" y1="190" x2="740" y2="190" stroke="#475569" stroke-width="2"/>
+          <text x="720" y="225" text-anchor="middle" fill="#475569" font-size="8.5" font-weight="700">Aux Fan</text>
+
+          <!-- Return pipeline merge -->
+          <path d="M 680 70 L 780 70 L 780 130" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="3 2"/>
+          <path d="M 680 190 L 780 190 L 780 130" fill="none" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="3 2"/>
+          <line x1="780" y1="130" x2="840" y2="130" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-blue)"/>
+          <text x="830" y="120" fill="#1d4ed8" font-size="9" font-weight="700">To Compressor</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="comparison-grid">
+      <div class="card">
+        <h3>Deployment Readiness Profile</h3>
+        <p>Understanding potential field failures is critical before initiating village deployments:</p>
+
+        <strong>1. Voltage Sags and Phase Unbalance</strong>
+        <p style="font-size: 0.85rem; margin: 4px 0 10px;">Rural distribution grids often experience voltage drops of 20–30% during evening peak hours. This can cause conventional compressor motors to overheat and trip.
+        <br><em>Remediation:</em> Specify 3-phase scroll platforms equipped with modern Variable Frequency Drives (VFDs) and smart auto-stabilizers, or operate primarily on solar power during daytime hours.</p>
+        <div class="readiness-meter"><div class="readiness-fill" style="width: 75%; background: linear-gradient(90deg, var(--color-amber), #facc15);"></div></div>
+        <small style="color: var(--text-muted); font-size: 0.78rem;">Grid Tolerance Score: 7.5 / 10</small>
+
+        <strong style="display: block; margin-top: 1rem;">2. PCM Thermal Degradation and Cyclability</strong>
+        <p style="font-size: 0.85rem; margin: 4px 0 10px;">Salt-hydrate PCMs can suffer from phase segregation after 1,000–2,000 cycles, resulting in a progressive loss of latent storage capacity.
+        <br><em>Remediation:</em> Standardize on water-to-ice thermal vaults, which exhibit excellent phase stability over decades of daily operations.</p>
+        <div class="readiness-meter"><div class="readiness-fill" style="width: 95%; background: linear-gradient(90deg, var(--color-green), #4ade80);"></div></div>
+        <small style="color: var(--text-muted); font-size: 0.78rem;">Storage Stability Score: 9.5 / 10</small>
+      </div>
+
+      <div class="card">
+        <h3>Operational Safety and Maintenance</h3>
+        <p>A CCHHP deployment must be resilient to local maintenance limitations:</p>
+
+        <strong>3. Mechanical Durability under Ambient Heat</strong>
+        <p style="font-size: 0.85rem; margin: 4px 0 10px;">High ambient temperatures of up to 45°C increase thermal stress on the compressor. Copeland's compliance mechanism helps protect the unit during these demanding conditions.
+        <br><em>Remediation:</em> Place the compressor unit in a shaded, well-ventilated enclosure to reduce convective thermal stress.</p>
+        <div class="readiness-meter"><div class="readiness-fill" style="width: 90%; background: linear-gradient(90deg, var(--color-green), #4ade80);"></div></div>
+        <small style="color: var(--text-muted); font-size: 0.78rem;">High Ambient Durability Score: 9.0 / 10</small>
+
+        <strong style="display: block; margin-top: 1rem;">4. Local Maintenance Capacity</strong>
+        <p style="font-size: 0.85rem; margin: 4px 0 10px;">CCHHP systems are technically more complex than simple direct-expansion chillers, requiring specialized HVAC technician skills for refrigeration repairs.
+        <br><em>Remediation:</em> Partner with established regional service networks (such as Emerson/Copeland local distributor networks) to train local cooperative members in basic maintenance.</p>
+        <div class="readiness-meter"><div class="readiness-fill" style="width: 55%; background: linear-gradient(90deg, var(--color-red), var(--color-amber));"></div></div>
+        <small style="color: var(--text-muted); font-size: 0.78rem;">Local Service Readiness Score: 5.5 / 10</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TAB 07 · RECOMMENDATIONS
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="tab-content" id="panel-rec" role="tabpanel" aria-labelledby="tab-btn-rec">
+    <div class="section-header">
+      <div class="sec-num">Section 07</div>
+      <h2 class="sec-title">Strategic Engineering &amp; Deployment Recommendations</h2>
+      <p class="sec-desc">A structured operational roadmap for agricultural cooperatives and clean energy developers implementing CCHHP systems.</p>
+    </div>
+
+    <div class="card">
+      <h2>Actionable Integration Roadmap</h2>
+      <div class="tw">
+        <table class="rec-table">
+          <thead>
+            <tr>
+              <th style="width: 25%;">Implementation Layer</th>
+              <th>Technical Priority Actions</th>
+              <th>Impact &amp; Rationale</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. Compressor Specification</strong></td>
+              <td>Standardize on variable-frequency drive (VFD) **Copeland Scroll** compressors (e.g., ZDV digital modulating series or standard ZB/ZS with external drives).</td>
+              <td>Modulating compressor speeds matches solar PV output, reducing peak inrush currents and minimizing energy consumption during periods of low milk supply.</td>
+            </tr>
+            <tr>
+              <td><strong>2. Thermal Storage Media</strong></td>
+              <td>Utilize **open-loop water-to-ice** thermal vaults over chemical salt PCMs for village-level installations.</td>
+              <td>Water provides excellent chemical stability over thousands of cycles, carries no toxicity risks, and is easy to source locally in the event of a system leak.</td>
+            </tr>
+            <tr>
+              <td><strong>3. Asymmetric Load-Balancing</strong></td>
+              <td>Mandate the integration of an **auxiliary air-source evaporator bypass** circuit controlled by a three-way solenoid valve.</td>
+              <td>Prevents low-suction pressure trips, allowing the system to continue crop drying operations when the ice-vault thermal battery is fully charged.</td>
+            </tr>
+            <tr>
+              <td><strong>4. Business Model &amp; Cooperatives</strong></td>
+              <td>Establish **cross-commodity cooperatives** where dairy and grain/vegetable processing are managed by the same village entity.</td>
+              <td>Leveraging the zero-marginal-cost heat recovery drying offsets operating expenses for milk chilling, improving overall project financial viability.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Short-Term Horizon (0–6 Months)</h3>
+        <p>Focus on component sourcing and engineering verification:</p>
+        <ul style="padding-left: 1.2rem; font-size: 0.88rem; line-height: 1.7;">
+          <li>Verify thermal vault sizing based on regional milking volumes. A 1kL milk cooling target requires a minimum storage capacity of **35 kWh** (approx. 350 kg of pure water-ice).</li>
+          <li>Establish supply chains for certified Copeland Scroll compressors, selecting models designed for high-temperature condensing.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Medium-Term Horizon (6–18 Months)</h3>
+        <p>Focus on rural cooperative trials and technician training:</p>
+        <ul style="padding-left: 1.2rem; font-size: 0.88rem; line-height: 1.7;">
+          <li>Implement initial pilot programs in milk cooperative centers that experience high grid outages.</li>
+          <li>Train local cooperative operators in basic maintenance tasks, such as solar PV panel cleaning, water pump inspections, and basic filter-drier replacements.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TAB 08 · REFERENCES
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="tab-content" id="panel-refs" role="tabpanel" aria-labelledby="tab-btn-refs">
+    <div class="section-header">
+      <div class="sec-num">Section 08</div>
+      <h2 class="sec-title">Reference Registry &amp; Academic Bibliography</h2>
+      <p class="sec-desc">A comprehensive list of peer-reviewed journals, institutional specifications, and field studies on dairy cold chains, thermal energy storage, and post-harvest crop processing.</p>
+    </div>
+
+    <div class="card">
+      <ul class="ref-list">
+        <li><span class="ref-num">[1]</span> Promethean Power Systems. <em>Development of a Rapid Milk Chilling System using Thermal Storage for Rural India</em>. Promethean Power Systems Whitepaper, Pune, India, 2018. <a href="https://www.promethean-power.com" target="_blank" rel="noopener">promethean-power.com</a></li>
+        <li><span class="ref-num">[2]</span> Inficold India. <em>Solar-Powered Cold Storage and Milk Chilling Infrastructure with Integrated Eutectic Buffers</em>. Noida, India, 2022. <a href="https://www.inficold.com" target="_blank" rel="noopener">inficold.com</a></li>
+        <li><span class="ref-num">[3]</span> Tessol. <em>Eutectic Cold-Chain Solutions for Rural Logistics and Farm-Gate Hubs</em>. Mumbai, India, 2021. <a href="https://tessol.in" target="_blank" rel="noopener">tessol.in</a></li>
+        <li><span class="ref-num">[4]</span> Food and Agriculture Organization (FAO). <em>Post-Harvest Losses in the Dairy and Horticultural Sectors in Sub-Saharan Africa: A Systematic Review</em>. FAO Agricultural Bulletin, Rome, 2023. <a href="https://www.fao.org/publications" target="_blank" rel="noopener">fao.org/publications</a></li>
+        <li><span class="ref-num">[5]</span> Mehling, H., &amp; Cabeza, L. F. <em>Heat and cold storage with PCM: An up-to-date introduction into physical and chemical principles</em>. Springer Science &amp; Business Media, 2021.</li>
+        <li><span class="ref-num">[6]</span> Bobbo, S., Lombardo, G., Menegazzo, D., &amp; Fedele, L. <em>A Technological Update on Heat Pumps for Agro-Industrial Waste Heat Recovery</em>. Applied Thermal Engineering, 2024. <a href="https://doi.org/10.1016/j.applthermaleng" target="_blank" rel="noopener">doi.org/10.1016/j.applthermaleng</a></li>
+        <li><span class="ref-num">[7]</span> InspiraFarms. <em>Modular Farm-Gate Pre-Coolers and Eutectic Cold Rooms for Smallholders in East Africa</em>. Nairobi, Kenya, 2023. <a href="https://www.inspirafarms.com" target="_blank" rel="noopener">inspirafarms.com</a></li>
+        <li><span class="ref-num">[8]</span> World Bank ESMAP. <em>Decentralized Solar Cold Chain Interventions: Business Models and Financial Payback Periods for Developing Economies</em>. ESMAP Technical Paper, Washington DC, 2022. <a href="https://esmap.org" target="_blank" rel="noopener">esmap.org</a></li>
+        <li><span class="ref-num">[9]</span> Emerson Climate Technologies. <em>Copeland Scroll Compressors for High-Temperature Heat Pump Applications</em>. Emerson Product Catalogue, 2023. <a href="https://climate.emerson.com" target="_blank" rel="noopener">climate.emerson.com</a></li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════ -->
+<footer>
+  <p>© 2026 <strong>Cottonspace / Dev Labs</strong> · sattal.cottonspace.com · Document ID: EMG-TECH-014 · Combined Cooling and Heating Heat Pump (CCHHP) for Rural Post-Harvest Agro-Processing</p>
+</footer>
+
+<!-- ═══════════════════════════════════════
+     TAB SWITCHING SCRIPT
+     ═══════════════════════════════════════ -->
+<script>
+  function switchTab(tabId) {
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.classList.remove('active');
+      btn.setAttribute('aria-selected', 'false');
+    });
+    document.querySelectorAll('.tab-content').forEach(content => {
+      content.classList.remove('active');
+    });
+    const targetBtn = document.getElementById('tab-btn-' + tabId);
+    const targetContent = document.getElementById('panel-' + tabId);
+    if (targetBtn && targetContent) {
+      targetBtn.classList.add('active');
+      targetBtn.setAttribute('aria-selected', 'true');
+      targetContent.classList.add('active');
+    }
+    
+    // Update simple top nav links active class
+    document.querySelectorAll('nav a').forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('onclick') && link.getAttribute('onclick').includes(tabId)) {
+        link.classList.add('active');
+      }
+    });
+  }
+
+  // Animate readiness meters on load
+  document.addEventListener('DOMContentLoaded', function () {
+    const fills = document.querySelectorAll('.readiness-fill');
+    fills.forEach(fill => {
+      const targetWidth = fill.style.width;
+      fill.style.width = '0';
+      setTimeout(() => { fill.style.width = targetWidth; }, 300);
+    });
+  });
+</script>
+
+</body>
+</html>
