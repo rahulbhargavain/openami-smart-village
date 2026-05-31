@@ -400,16 +400,16 @@
           <ol style="margin-top:8px; padding-left:20px;">
             <li><strong>Device Tree Alignment:</strong> Verify that GPIO pin mappings for chip resets, UART RTS/CTS hardware flow control, and SPI Chip Select lines are properly defined in the custom Linux Device Tree Source (<code>.dts</code>) file and compiled to <code>.dtb</code>.</li>
             <li><strong>Physical Link Verification:</strong> Check physical communications using low-level serial tools:
-              <code style="display:block; margin:6px 0; background:#0f172a; color:#38bdf8; padding:8px; border-radius:4px; font-family:var(--font-mono);">stty -F /dev/ttyS1 speed 115200 cs8 -cstopb -parenb hwclocal crtscts</code>
+              <code style="display:block; margin:6px 0; background:#f1f5f9; color:#0e7490; padding:8px; border-radius:4px; font-family:var(--font-mono); border:1px solid #cbd5e1;">stty -F /dev/ttyS1 speed 115200 cs8 -cstopb -parenb hwclocal crtscts</code>
             </li>
             <li><strong>RCP Daemon Handshake:</strong> Launch the <code>wsbrd</code> daemon in verbose mode to confirm successful RCP registration and firmware checksum validation:
-              <code style="display:block; margin:6px 0; background:#0f172a; color:#38bdf8; padding:8px; border-radius:4px; font-family:var(--font-mono);">wsbrd -F /etc/wsbrd.conf -u /dev/ttyS1 -v</code>
+              <code style="display:block; margin:6px 0; background:#f1f5f9; color:#0e7490; padding:8px; border-radius:4px; font-family:var(--font-mono); border:1px solid #cbd5e1;">wsbrd -F /etc/wsbrd.conf -u /dev/ttyS1 -v</code>
             </li>
             <li><strong>Interface Initialization:</strong> Confirm that the <code>tun0</code> interface is dynamically created, assigned a link-local IPv6 address (<code>fe80::/64</code>), and active in the routing table:
-              <code style="display:block; margin:6px 0; background:#0f172a; color:#38bdf8; padding:8px; border-radius:4px; font-family:var(--font-mono);">ip -6 addr show dev tun0 &amp;&amp; ip -6 route show</code>
+              <code style="display:block; margin:6px 0; background:#f1f5f9; color:#0e7490; padding:8px; border-radius:4px; font-family:var(--font-mono); border:1px solid #cbd5e1;">ip -6 addr show dev tun0 &amp;&amp; ip -6 route show</code>
             </li>
             <li><strong>PHY/MAC Layer Integrity Audits:</strong> Check the link quality of downstream nodes using physical ICMPv6 echo pings to registered smart meter IPv6 addresses over the <code>tun0</code> interface:
-              <code style="display:block; margin:6px 0; background:#0f172a; color:#38bdf8; padding:8px; border-radius:4px; font-family:var(--font-mono);">ping6 -I tun0 fd00:db8::204:25ff:fe1a:3b2c</code>
+              <code style="display:block; margin:6px 0; background:#f1f5f9; color:#0e7490; padding:8px; border-radius:4px; font-family:var(--font-mono); border:1px solid #cbd5e1;">ping6 -I tun0 fd00:db8::204:25ff:fe1a:3b2c</code>
             </li>
           </ol>
         </div>
@@ -695,7 +695,7 @@
     </div>
 
     <h3>DCU Edge Agent Telemetry Logic (Python Pseudocode)</h3>
-    <pre>
+    <pre style="background:#f8fafc; color:#0e7490; border:1px solid #cbd5e1;">
 import sqlite3
 import json
 import gzip

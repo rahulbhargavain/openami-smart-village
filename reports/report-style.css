@@ -715,15 +715,15 @@ td code {
 
 pre {
   font-family: var(--font-mono);
-  background: #0f172a;
-  color: #38bdf8;
+  background: #f1f5f9;
+  color: #0e7490;
   padding: 20px;
   border-radius: 10px;
   overflow-x: auto;
   font-size: 0.82rem;
   line-height: 1.5;
   margin: 20px 0;
-  border: 1px solid #1e293b;
+  border: 1px solid #cbd5e1;
 }
 
 code {

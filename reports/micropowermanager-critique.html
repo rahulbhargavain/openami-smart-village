@@ -885,35 +885,85 @@
 
         <div class="diagram-box">
             <div class="diagram-title">🏗️ MPM + OSS Gap-Resolution Architecture</div>
-<pre style="font-size: 0.78rem; line-height: 1.6;">
-┌─────────────────────────────────────────────────────────────────────────┐
-│  OPERATOR VISIBILITY LAYER                                              │
-│  Grafana (dashboards) + ThingsBoard (rule alerts) + MPM (billing UI)    │
-└──────────────────────────┬──────────────────────────────────────────────┘
-                           │
-┌──────────────────────────▼──────────────────────────────────────────────┐
-│  DATA PERSISTENCE LAYER                                                 │
-│  InfluxDB (telemetry time-series) | EventStoreDB (audit ledger)         │
-│  PostgreSQL (MPM billing state)   | Trillian (cryptographic proofs)     │
-└──────────────────────────┬──────────────────────────────────────────────┘
-                           │
-┌──────────────────────────▼──────────────────────────────────────────────┐
-│  PROCESSING LAYER                                                       │
-│  Celery + Redis (durable task queue for payment → token pipeline)       │
-│  OpenPAYGO Token SDK (local token generation, no vendor cloud needed)   │
-└──────────────────────────┬──────────────────────────────────────────────┘
-                           │
-┌──────────────────────────▼──────────────────────────────────────────────┐
-│  CONNECTIVITY LAYER                                                     │
-│  EMQX MQTT Broker (edge device message bus)                             │
-│  Gurux DLMS Adapter (IEC 62056 protocol parser for standard meters)     │
-└──────────────────────────┬──────────────────────────────────────────────┘
-                           │
-┌──────────────────────────▼──────────────────────────────────────────────┐
-│  PHYSICAL EDGE LAYER                                                    │
-│  Calin / Hexing / Conlog Keypad Meters | OpenPAYGO Devices              │
-│  SparkMeter / SteamaCo (legacy, bridged via EMQX adapters)              │
-└─────────────────────────────────────────────────────────────────────────┘</pre>
+        <svg viewBox="0 0 900 560" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg"
+             style="background:#ffffff; border-radius:12px; border:1px solid #cbd5e1; font-family:'Inter',system-ui,sans-serif; display:block; margin:20px 0;">
+          <defs>
+            <linearGradient id="g-vis"   x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f0fdf4"/><stop offset="100%" stop-color="#ecfdf5"/></linearGradient>
+            <linearGradient id="g-data"  x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#eff6ff"/><stop offset="100%" stop-color="#f0f9ff"/></linearGradient>
+            <linearGradient id="g-proc"  x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#fff7ed"/><stop offset="100%" stop-color="#fefce8"/></linearGradient>
+            <linearGradient id="g-conn"  x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f5f3ff"/><stop offset="100%" stop-color="#eef2ff"/></linearGradient>
+            <linearGradient id="g-edge"  x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f8fafc"/><stop offset="100%" stop-color="#f1f5f9"/></linearGradient>
+            <marker id="arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10z" fill="#64748b"/>
+            </marker>
+          </defs>
+
+          <!-- Layer 1: Visibility -->
+          <rect x="20" y="20"  width="860" height="72" rx="10" fill="url(#g-vis)"  stroke="#86efac" stroke-width="1.5"/>
+          <text x="38" y="42"  fill="#16a34a" font-size="9" font-weight="700" letter-spacing="0.1em">OPERATOR VISIBILITY LAYER</text>
+          <rect x="38"  y="50" width="200" height="30" rx="6" fill="#fff" stroke="#16a34a" stroke-width="1"/>
+          <text x="138" y="70" text-anchor="middle" fill="#15803d" font-size="11" font-weight="700">Grafana</text>
+          <rect x="256" y="50" width="200" height="30" rx="6" fill="#fff" stroke="#16a34a" stroke-width="1"/>
+          <text x="356" y="70" text-anchor="middle" fill="#15803d" font-size="11" font-weight="700">ThingsBoard CE (alerts)</text>
+          <rect x="474" y="50" width="200" height="30" rx="6" fill="#fff" stroke="#16a34a" stroke-width="1"/>
+          <text x="574" y="70" text-anchor="middle" fill="#15803d" font-size="11" font-weight="700">MPM (billing UI)</text>
+
+          <!-- Arrow down 1→2 -->
+          <line x1="450" y1="92"  x2="450" y2="122" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)" stroke-dasharray="4 3"/>
+
+          <!-- Layer 2: Data Persistence -->
+          <rect x="20" y="122" width="860" height="72" rx="10" fill="url(#g-data)" stroke="#93c5fd" stroke-width="1.5"/>
+          <text x="38" y="144" fill="#1d4ed8" font-size="9" font-weight="700" letter-spacing="0.1em">DATA PERSISTENCE LAYER</text>
+          <rect x="38"  y="152" width="175" height="30" rx="6" fill="#fff" stroke="#2563eb" stroke-width="1"/>
+          <text x="125" y="172" text-anchor="middle" fill="#1d4ed8" font-size="10.5" font-weight="700">InfluxDB (telemetry)</text>
+          <rect x="226" y="152" width="175" height="30" rx="6" fill="#fff" stroke="#2563eb" stroke-width="1"/>
+          <text x="313" y="172" text-anchor="middle" fill="#1d4ed8" font-size="10.5" font-weight="700">EventStoreDB (audit)</text>
+          <rect x="414" y="152" width="175" height="30" rx="6" fill="#fff" stroke="#2563eb" stroke-width="1"/>
+          <text x="501" y="172" text-anchor="middle" fill="#1d4ed8" font-size="10.5" font-weight="700">PostgreSQL (MPM state)</text>
+          <rect x="602" y="152" width="175" height="30" rx="6" fill="#fff" stroke="#2563eb" stroke-width="1"/>
+          <text x="689" y="172" text-anchor="middle" fill="#1d4ed8" font-size="10.5" font-weight="700">Trillian (crypto proofs)</text>
+
+          <!-- Arrow down 2→3 -->
+          <line x1="450" y1="194" x2="450" y2="224" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)" stroke-dasharray="4 3"/>
+
+          <!-- Layer 3: Processing -->
+          <rect x="20" y="224" width="860" height="72" rx="10" fill="url(#g-proc)" stroke="#fed7aa" stroke-width="1.5"/>
+          <text x="38" y="246" fill="#c2410c" font-size="9" font-weight="700" letter-spacing="0.1em">PROCESSING LAYER</text>
+          <rect x="38"  y="254" width="380" height="30" rx="6" fill="#fff" stroke="#ea580c" stroke-width="1"/>
+          <text x="228" y="274" text-anchor="middle" fill="#c2410c" font-size="10.5" font-weight="700">Celery + Redis (durable payment → token queue)</text>
+          <rect x="434" y="254" width="380" height="30" rx="6" fill="#fff" stroke="#ea580c" stroke-width="1"/>
+          <text x="624" y="274" text-anchor="middle" fill="#c2410c" font-size="10.5" font-weight="700">OpenPAYGO Token SDK (local generation, no cloud)</text>
+
+          <!-- Arrow down 3→4 -->
+          <line x1="450" y1="296" x2="450" y2="326" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)" stroke-dasharray="4 3"/>
+
+          <!-- Layer 4: Connectivity -->
+          <rect x="20" y="326" width="860" height="72" rx="10" fill="url(#g-conn)" stroke="#c4b5fd" stroke-width="1.5"/>
+          <text x="38" y="348" fill="#7c3aed" font-size="9" font-weight="700" letter-spacing="0.1em">CONNECTIVITY LAYER</text>
+          <rect x="38"  y="356" width="400" height="30" rx="6" fill="#fff" stroke="#7c3aed" stroke-width="1"/>
+          <text x="238" y="376" text-anchor="middle" fill="#6d28d9" font-size="10.5" font-weight="700">EMQX MQTT Broker (edge device message bus)</text>
+          <rect x="452" y="356" width="400" height="30" rx="6" fill="#fff" stroke="#7c3aed" stroke-width="1"/>
+          <text x="652" y="376" text-anchor="middle" fill="#6d28d9" font-size="10.5" font-weight="700">Gurux DLMS Adapter (IEC 62056 protocol parser)</text>
+
+          <!-- Arrow down 4→5 -->
+          <line x1="450" y1="398" x2="450" y2="428" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)" stroke-dasharray="4 3"/>
+
+          <!-- Layer 5: Physical Edge -->
+          <rect x="20" y="428" width="860" height="112" rx="10" fill="url(#g-edge)" stroke="#cbd5e1" stroke-width="1.5"/>
+          <text x="38" y="450" fill="#475569" font-size="9" font-weight="700" letter-spacing="0.1em">PHYSICAL EDGE LAYER</text>
+          <rect x="38"  y="458" width="254" height="36" rx="8" fill="#fff" stroke="#0891b2" stroke-width="1.5"/>
+          <text x="165" y="478" text-anchor="middle" fill="#0e7490" font-size="11" font-weight="700">Calin / Hexing / Conlog</text>
+          <text x="165" y="492" text-anchor="middle" fill="#64748b" font-size="9.5">Keypad STS Meters</text>
+          <rect x="310" y="458" width="254" height="36" rx="8" fill="#fff" stroke="#16a34a" stroke-width="1.5"/>
+          <text x="437" y="478" text-anchor="middle" fill="#15803d" font-size="11" font-weight="700">OpenPAYGO Devices</text>
+          <text x="437" y="492" text-anchor="middle" fill="#64748b" font-size="9.5">Vendor-independent PAYG</text>
+          <rect x="582" y="458" width="280" height="36" rx="8" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+          <text x="722" y="478" text-anchor="middle" fill="#64748b" font-size="11" font-weight="700">SparkMeter / SteamaCo</text>
+          <text x="722" y="492" text-anchor="middle" fill="#94a3b8" font-size="9.5">Legacy — bridged via EMQX adapters</text>
+          <!-- Gaps resolved label -->
+          <rect x="38" y="504" width="824" height="26" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1"/>
+          <text x="450" y="521" text-anchor="middle" fill="#16a34a" font-size="10" font-weight="700">✓ Gaps Resolved: STS token generation · Audit ledger · PQ telemetry · Payment atomicity · DLMS protocol · Cryptographic proofs</text>
+        </svg>
         </div>
     </div>
 
