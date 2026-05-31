@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SSA Mini-Grid Downtime: Root Cause Analysis, Cloud Lock-In & Edge Topologies — EMG-TECH-013</title>
+  <meta name="description" content="A rigorous technical investigation into Sub-Saharan Africa mini-grid downtime: SMS/RF failure modes, the four-day offline phenomenon, STS key access, vendor lock-in, and decentralised edge solutions including EPRI's Wi-SUN stack, OpenDER and OpenDSS integration.">
+  <link rel="stylesheet" href="/reports/report-style.css">
+  <style>
+    /* ─── Tab layout ─────────────────────────────── */
+    .tab-nav { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 2rem; border-bottom: 2px solid var(--glass-border); padding-bottom: 1rem; }
+    .tab-btn  { padding: 8px 18px; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--bg-card); color: var(--color-text-secondary); font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all .2s; }
+    .tab-btn:hover  { border-color: var(--teal); color: var(--teal); }
+    .tab-btn.active { background: var(--teal); color: #fff; border-color: var(--teal); }
+    .tab-content    { display: none; }
+    .tab-content.active { display: block; }
+
+    /* ─── Stat grid ──────────────────────────────── */
+    .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+    .stat-box  { background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1.2rem 1rem; text-align: center; }
+    .stat-val  { font-size: 2rem; font-weight: 800; color: var(--teal); line-height: 1; }
+    .stat-lbl  { font-size: 0.75rem; color: var(--color-text-secondary); margin-top: 4px; }
+
+    /* ─── Inline ref links ───────────────────────── */
+    .ref-num  { display: inline-block; min-width: 32px; font-weight: 700; color: var(--teal); }
+    .ref-list { list-style: none; padding: 0; }
+    .ref-list li { padding: 6px 0; border-bottom: 1px solid var(--glass-border); font-size: 0.85rem; line-height: 1.55; }
+    .ref-list li:last-child { border-bottom: none; }
+
+    /* ─── Failure mode row ───────────────────────── */
+    .failure-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    @media(max-width:680px){ .failure-grid { grid-template-columns: 1fr; } }
+
+    /* ─── Risk bar ───────────────────────────────── */
+    .risk-bar-track { background: #e2e8f0; border-radius: 6px; height: 10px; margin: 6px 0 14px; overflow: hidden; }
+    .risk-bar-fill  { height: 10px; border-radius: 6px; transition: width .8s ease; }
+
+    /* ─── Recommendation table tweaks ───────────────*/
+    .rec-table th:first-child { width: 22%; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     HERO
+═══════════════════════════════════════ -->
+<header class="hero">
+  <a href="/reports" class="back-link">← Reports Index</a>
+  <div class="eyebrow">
+    <span class="tag tag-red">⚡ Operational Briefing</span>
+    <span class="tag tag-amber">🌍 Sub-Saharan Africa</span>
+    <span class="tag tag-teal">📡 Edge Topology</span>
+  </div>
+  <h1>SSA Mini-Grid Downtime:<br><em>Root Cause Analysis,</em><br>Cloud Lock-In &amp; Decentralised Edge</h1>
+  <p class="hero-sub">A rigorous technical investigation into why rural mini-grids across Sub-Saharan Africa sustain multi-day outages despite functional generation assets — and how decentralised edge computing, STS key access, and open-source utility stacks eliminate the systemic failure points.</p>
+  <div class="hero-kpis">
+    <div class="hero-kpi"><div class="hero-kpi-value">4+ days</div><div class="hero-kpi-label">Typical MTTR</div></div>
+    <div class="hero-kpi"><div class="hero-kpi-value">STS</div><div class="hero-kpi-label">IEC 62055-41/51</div></div>
+    <div class="hero-kpi"><div class="hero-kpi-value">EPRI</div><div class="hero-kpi-label">Wi-SUN wisund</div></div>
+    <div class="hero-kpi"><div class="hero-kpi-value">EMG-TECH-013</div><div class="hero-kpi-label">Document ID</div></div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════
+     NAV
+═══════════════════════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" onclick="switchTab('exec')">Executive Summary</a>
+    <a href="#" onclick="switchTab('comms')">Comm Failures</a>
+    <a href="#" onclick="switchTab('four-day')">Four-Day Outage</a>
+    <a href="#" onclick="switchTab('sts')">STS &amp; Vendor Lock-In</a>
+    <a href="#" onclick="switchTab('edge')">Edge Intelligence</a>
+    <a href="#" onclick="switchTab('rec')">Recommendations</a>
+    <a href="#" onclick="switchTab('refs')">References</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     MAIN
+═══════════════════════════════════════ -->
+<main class="container">
+
+  <!-- TAB NAV -->
+  <div class="tab-nav" role="tablist">
+    <button class="tab-btn active" id="tab-btn-exec"     role="tab" aria-selected="true"  aria-controls="panel-exec"     onclick="switchTab('exec')">01 · Executive Summary</button>
+    <button class="tab-btn"        id="tab-btn-comms"    role="tab" aria-selected="false" aria-controls="panel-comms"    onclick="switchTab('comms')">02 · Communication Failures</button>
+    <button class="tab-btn"        id="tab-btn-four-day" role="tab" aria-selected="false" aria-controls="panel-four-day" onclick="switchTab('four-day')">03 · Four-Day Outage</button>
+    <button class="tab-btn"        id="tab-btn-sts"      role="tab" aria-selected="false" aria-controls="panel-sts"      onclick="switchTab('sts')">04 · STS &amp; Lock-In</button>
+    <button class="tab-btn"        id="tab-btn-edge"     role="tab" aria-selected="false" aria-controls="panel-edge"     onclick="switchTab('edge')">05 · Edge Intelligence</button>
+    <button class="tab-btn"        id="tab-btn-rec"      role="tab" aria-selected="false" aria-controls="panel-rec"      onclick="switchTab('rec')">06 · Recommendations</button>
+    <button class="tab-btn"        id="tab-btn-refs"     role="tab" aria-selected="false" aria-controls="panel-refs"     onclick="switchTab('refs')">07 · References</button>
+  </div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TAB 01 · EXECUTIVE SUMMARY
+═══════════════════════════════════════════════════════════ -->
+<section class="tab-content active" id="panel-exec" role="tabpanel" aria-labelledby="tab-btn-exec">
+
+  <div class="section-header">
+    <div class="sec-num">Section 01</div>
+    <h2 class="sec-title">Executive Summary: The Cyber-Physical Downtime Problem</h2>
+    <p class="sec-desc">Distributed renewable energy mini-grids represent the most viable pathway to universal electrification in rural SSA. Yet operational availability is catastrophically undermined — not by failing panels or batteries, but by brittle cloud-dependent control and billing architectures.</p>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-box"><div class="stat-val">600M+</div><div class="stat-lbl">SSA residents without grid electricity [IEA, 2023]</div></div>
+    <div class="stat-box"><div class="stat-val">10,000+</div><div class="stat-lbl">Mini-grid sites deployed or in development [IRENA, 2023]</div></div>
+    <div class="stat-box"><div class="stat-val">4+ days</div><div class="stat-lbl">Typical mean time to repair (MTTR) in remote deployments</div></div>
+    <div class="stat-box"><div class="stat-val">~70%</div><div class="stat-lbl">Downtime events traceable to control/billing layer, not generation [ESMAP, 2022]</div></div>
+  </div>
+
+  <div class="card">
+    <h2>The Core Thesis</h2>
+    <p>While generation assets — solar PV arrays and lithium-ion or lead-acid battery banks — remain physically functional, the <strong>primary driver of extended mini-grid downtime is failure in the cyber-physical control and billing layers</strong>. Specifically, AMI systems that enforce synchronous cloud dependencies become non-operational the moment the cellular backhaul degrades, even briefly.</p>
+    <p style="margin-top:1rem;">This technical note dissects the root causes of network failures, analyzes the systemic vulnerabilities of cloud-dependent prepaid metering, outlines STS protocol fallbacks, and highlights decentralised edge solutions — including EPRI's open-source Wi-SUN stack — that eliminate these failure points permanently.</p>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title">
+        <div class="card-icon" style="background:var(--red-dim);color:var(--red);">📡</div>
+        <span>Communication Layer Brittleness</span>
+      </div>
+      <p>Both SMS/USSD cellular infrastructure and local sub-GHz RF mesh networks carry distinct, catastrophic failure modes in SSA's physical and regulatory environment — MNO tower de-energisation, RF attenuation from iron roofing, and routing collapses in sprawling linear villages.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">
+        <div class="card-icon" style="background:var(--amber-dim);color:var(--amber);">🔒</div>
+        <span>Commercial Vendor Lock-In</span>
+      </div>
+      <p>Smart meter vendors deliberately omit local keypad interfaces and cryptographic state machines to enforce cloud dependency — protecting SaaS subscription revenue at the direct expense of field uptime. This is a commercial architecture decision, not an engineering constraint.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">
+        <div class="card-icon" style="background:var(--teal-dim);color:var(--teal);">⚙️</div>
+        <span>The Decentralised Solution</span>
+      </div>
+      <p>Industrial Linux edge computers running open-source stacks — EPRI's <code>wisund</code>, OpenDER, and OpenDSS — combined with STS-compliant local vending and open RF mesh downlinks, eliminate every identified single point of failure while remaining fully standards-compliant.</p>
+    </div>
+  </div>
+
+  <div class="alert alert-blue">
+    <div class="alert-icon">📋</div>
+    <div class="alert-content">
+      <div class="alert-title">Scope and Applicability</div>
+      <div class="alert-text">This report addresses mini-grid deployments of 10 kW–2 MW peak capacity serving 50–2,000 household connections across SSA markets including Nigeria, Kenya, Tanzania, Uganda, Rwanda, and Mozambique. Findings are consistent with World Bank Lighting Global quality standards and NERC 2023 Mini-Grid Regulatory Framework requirements.</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TAB 02 · COMMUNICATION FAILURES
+═══════════════════════════════════════════════════════════ -->
+<section class="tab-content" id="panel-comms" role="tabpanel" aria-labelledby="tab-btn-comms">
+
+  <div class="section-header">
+    <div class="sec-num">Section 02</div>
+    <h2 class="sec-title">Communication Failure Modes: SMS Infrastructure vs. RF Mesh Congestion</h2>
+    <p class="sec-desc">A critical technical debate centers on whether mini-grid billing and telemetry failures originate in cellular SMS transport layers or in local sub-GHz RF mesh degradation. In the SSA field context, both layers suffer distinct, often simultaneous failures.</p>
+  </div>
+
+  <div class="failure-grid">
+    <div class="card">
+      <h2 style="font-size:1rem;margin-bottom:1rem;">🏗️ SMS / USSD Infrastructure Failures</h2>
+
+      <strong>MNO Tower De-energisation</strong>
+      <p style="font-size:0.87rem;margin:4px 0 10px;">Rural Base Transceiver Stations (BTS) are highly susceptible to grid failures, diesel generator fuel theft, and battery depletion during consecutive low-solar days. ITU data shows that 30–40% of SSA rural BTS sites experience at least one unplanned outage per month. <sup>[1]</sup></p>
+      <div class="risk-bar-track"><div class="risk-bar-fill" style="width:82%;background:linear-gradient(90deg,#dc2626,#f87171);"></div></div>
+      <small style="color:var(--color-text-secondary);">Severity: Critical</small>
+
+      <strong style="display:block;margin-top:1rem;">Low-Priority M2M Traffic Throttling</strong>
+      <p style="font-size:0.87rem;margin:4px 0 10px;">MNOs routinely deprioritise SMS and machine-to-machine (M2M) traffic under network load. Latencies from hours to days are documented. GSMA's IoT guidelines explicitly acknowledge this as an unresolved operator policy gap for energy applications. <sup>[2]</sup></p>
+      <div class="risk-bar-track"><div class="risk-bar-fill" style="width:72%;background:linear-gradient(90deg,#d97706,#fbbf24);"></div></div>
+      <small style="color:var(--color-text-secondary);">Severity: High</small>
+
+      <strong style="display:block;margin-top:1rem;">Mobile Money Aggregator API Failures</strong>
+      <p style="font-size:0.87rem;margin:4px 0 10px;">The transactional loop routes through third-party APIs (M-Pesa, MTN MoMo, Orange Money) via SMS aggregators. A fault at any node in this multi-party chain stalls token distribution. A 2021 analysis found M-Pesa experienced 14 significant API outages in a single calendar year in Kenya. <sup>[3]</sup></p>
+      <div class="risk-bar-track"><div class="risk-bar-fill" style="width:65%;background:linear-gradient(90deg,#d97706,#fbbf24);"></div></div>
+      <small style="color:var(--color-text-secondary);">Severity: High</small>
+    </div>
+
+    <div class="card">
+      <h2 style="font-size:1rem;margin-bottom:1rem;">📶 RF Mesh Network Failures</h2>
+
+      <strong>RF Congestion in Unlicensed ISM Bands</strong>
+      <p style="font-size:0.87rem;margin:4px 0 10px;">Operating on 868 MHz or 915 MHz ISM bands, mini-grid mesh networks lack regulatory protection. Interference from agricultural IoT sensors, local security radios, and consumer electronics is pervasive and growing. IEEE 802.15.4g frequency-hopping spread spectrum (FHSS) partially mitigates this, but only when implemented. <sup>[4]</sup></p>
+      <div class="risk-bar-track"><div class="risk-bar-fill" style="width:60%;background:linear-gradient(90deg,#d97706,#fbbf24);"></div></div>
+      <small style="color:var(--color-text-secondary);">Severity: High</small>
+
+      <strong style="display:block;margin-top:1rem;">Physical Attenuation: Iron Roofing &amp; Mud-Brick Walls</strong>
+      <p style="font-size:0.87rem;margin:4px 0 10px;">Corrugated iron sheet roofing — ubiquitous in SSA rural housing — is a highly effective RF reflector and attenuator, creating destructive multi-path interference. A 2020 empirical study measured 15–22 dB additional signal loss through a single iron-roofed structure at 900 MHz vs. open-field propagation. <sup>[5]</sup></p>
+      <div class="risk-bar-track"><div class="risk-bar-fill" style="width:78%;background:linear-gradient(90deg,#dc2626,#f87171);"></div></div>
+      <small style="color:var(--color-text-secondary);">Severity: Critical</small>
+
+      <strong style="display:block;margin-top:1rem;">Dynamic Routing Collapse (Hop Limit Exceeded)</strong>
+      <p style="font-size:0.87rem;margin:4px 0 10px;">In linearly distributed villages, mesh packets must hop from meter to meter toward the DCU. Without deterministic RPL (IPv6 Routing Protocol for Low-Power and Lossy Networks) configuration, networks experience routing loops or exceed maximum hop depth, isolating entire segments silently. <sup>[6]</sup></p>
+      <div class="risk-bar-track"><div class="risk-bar-fill" style="width:70%;background:linear-gradient(90deg,#d97706,#fbbf24);"></div></div>
+      <small style="color:var(--color-text-secondary);">Severity: High</small>
+    </div>
+  </div>
+
+  <div class="alert alert-amber">
+    <div class="alert-icon">⚠️</div>
+    <div class="alert-content">
+      <div class="alert-title">Compound Failure: The Perfect Storm</div>
+      <div class="alert-text">These two failure planes are not independent. A prolonged low-solar event depletes both the mini-grid batteries <em>and</em> the MNO tower batteries simultaneously — the precise moment when customers need to purchase emergency top-up credit. Compounding this, RF attenuation from corrugated iron roofing degrades the local mesh, preventing even local DCU-side meter commands from reaching devices. This simultaneous multi-layer collapse is the primary generator of four-day-plus downtime events.</div>
+    </div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead>
+        <tr>
+          <th>Failure Vector</th>
+          <th>Layer</th>
+          <th>Typical Duration</th>
+          <th>Remediation Complexity</th>
+          <th>Open-Source Mitigation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>MNO BTS Outage</strong></td>
+          <td>WAN Backhaul</td>
+          <td>2–72 hours</td>
+          <td>None (external dependency)</td>
+          <td>Local-first DCU with async cloud sync; VSAT fallback</td>
+        </tr>
+        <tr>
+          <td><strong>M2M Traffic Throttling</strong></td>
+          <td>WAN Transport</td>
+          <td>Hours to days</td>
+          <td>Low (SIM switching)</td>
+          <td>EMQX dual-SIM failover; store-and-forward queues</td>
+        </tr>
+        <tr>
+          <td><strong>Aggregator API Fault</strong></td>
+          <td>Application</td>
+          <td>Minutes to hours</td>
+          <td>Medium (multi-vendor chain)</td>
+          <td>Local OpenPAYGO / STS vending server; offline token cache</td>
+        </tr>
+        <tr>
+          <td><strong>ISM Band RF Congestion</strong></td>
+          <td>RF PHY</td>
+          <td>Continuous / intermittent</td>
+          <td>Medium (frequency plan)</td>
+          <td>EPRI wisund FHSS; Wi-SUN FAN channel hopping</td>
+        </tr>
+        <tr>
+          <td><strong>Iron Roof Attenuation</strong></td>
+          <td>RF PHY</td>
+          <td>Permanent (structural)</td>
+          <td>High (siting required)</td>
+          <td>Outdoor meter placement; NanoPi relay extender nodes</td>
+        </tr>
+        <tr>
+          <td><strong>RPL Routing Collapse</strong></td>
+          <td>Network (L3)</td>
+          <td>Variable (until reboot)</td>
+          <td>Medium (config)</td>
+          <td>Deterministic RPL via wisund; ThingsBoard CE topology monitor</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TAB 03 · FOUR-DAY OUTAGE
+═══════════════════════════════════════════════════════════ -->
+<section class="tab-content" id="panel-four-day" role="tabpanel" aria-labelledby="tab-btn-four-day">
+
+  <div class="section-header">
+    <div class="sec-num">Section 03</div>
+    <h2 class="sec-title">The "Four-Day Offline" Phenomenon: Root Cause Anatomy</h2>
+    <p class="sec-desc">When a remote village goes offline for four or more consecutive days, it is rarely a catastrophic component failure. It is almost always a compounding failure of operational logistics combined with rigid cloud-synchronous AMI architectures.</p>
+  </div>
+
+  <div class="card">
+    <h2>Backhaul Choke-Point Architecture: Failure Cascade Diagram</h2>
+    <div class="diagram-box">
+      <div class="diagram-title">⛓️ Cloud-Synchronous AMI Failure Cascade</div>
+      <svg viewBox="0 0 900 280" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg"
+           style="background:#ffffff; border-radius:12px; border:1px solid #cbd5e1; font-family:'Inter',system-ui,sans-serif; display:block; margin:16px 0;">
+        <defs>
+          <marker id="arr-rd" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10z" fill="#dc2626"/>
+          </marker>
+          <marker id="arr-gr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10z" fill="#16a34a"/>
+          </marker>
+          <marker id="arr-sl" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10z" fill="#64748b"/>
+          </marker>
+        </defs>
+
+        <!-- Cloud Vending SaaS -->
+        <rect x="20" y="30" width="190" height="56" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+        <text x="115" y="54"  text-anchor="middle" fill="#1d4ed8" font-size="12" font-weight="700">Cloud Vending SaaS</text>
+        <text x="115" y="72"  text-anchor="middle" fill="#3b82f6" font-size="9.5">Token Generated Here</text>
+
+        <!-- Broken MNO Backhaul -->
+        <rect x="290" y="20" width="220" height="76" rx="10" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+        <text x="400" y="48"  text-anchor="middle" fill="#dc2626" font-size="13" font-weight="800">✕ MNO BACKHAUL</text>
+        <text x="400" y="64"  text-anchor="middle" fill="#ef4444" font-size="10">Cellular / VSAT link DROPPED</text>
+        <text x="400" y="80"  text-anchor="middle" fill="#ef4444" font-size="9">BTS de-energised, fuel theft, or congestion</text>
+
+        <!-- Local Gateway / DCU -->
+        <rect x="590" y="30" width="160" height="56" rx="10" fill="#fefce8" stroke="#ca8a04" stroke-width="1.5"/>
+        <text x="670" y="54"  text-anchor="middle" fill="#a16207" font-size="12" font-weight="700">Local DCU</text>
+        <text x="670" y="72"  text-anchor="middle" fill="#ca8a04" font-size="9.5">Cannot Authorise</text>
+
+        <!-- Smart Meters -->
+        <rect x="780" y="30" width="100" height="56" rx="10" fill="#fff1f2" stroke="#f43f5e" stroke-width="1.5"/>
+        <text x="830" y="51"  text-anchor="middle" fill="#be123c" font-size="11" font-weight="700">Smart</text>
+        <text x="830" y="65"  text-anchor="middle" fill="#be123c" font-size="11" font-weight="700">Meters</text>
+        <text x="830" y="79"  text-anchor="middle" fill="#f43f5e" font-size="8.5">TRIPPED</text>
+
+        <!-- Broken arrow from cloud to backhaul -->
+        <line x1="210" y1="58" x2="284" y2="58" stroke="#dc2626" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arr-rd)"/>
+        <text x="247" y="48" text-anchor="middle" fill="#dc2626" font-size="9" font-weight="700">BLOCKED</text>
+
+        <!-- Arrow from backhaul to DCU -->
+        <line x1="510" y1="58" x2="584" y2="58" stroke="#dc2626" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arr-rd)"/>
+
+        <!-- Arrow from DCU to Meters -->
+        <line x1="750" y1="58" x2="774" y2="58" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr-sl)"/>
+
+        <!-- Step callouts below -->
+        <rect x="20"  y="115" width="190" height="44" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+        <text x="115" y="135" text-anchor="middle" fill="#475569" font-size="10" font-weight="700">① Token generation</text>
+        <text x="115" y="151" text-anchor="middle" fill="#64748b" font-size="9">requires cloud round-trip</text>
+
+        <rect x="290" y="115" width="220" height="44" rx="8" fill="#fef2f2" stroke="#fca5a5"/>
+        <text x="400" y="135" text-anchor="middle" fill="#dc2626" font-size="10" font-weight="700">② Backhaul drops</text>
+        <text x="400" y="151" text-anchor="middle" fill="#ef4444" font-size="9">No failover. System is frozen.</text>
+
+        <rect x="590" y="115" width="160" height="44" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+        <text x="670" y="135" text-anchor="middle" fill="#475569" font-size="10" font-weight="700">③ DCU blindfolded</text>
+        <text x="670" y="151" text-anchor="middle" fill="#64748b" font-size="9">No local billing logic</text>
+
+        <rect x="760" y="115" width="120" height="44" rx="8" fill="#fff1f2" stroke="#fca5a5"/>
+        <text x="820" y="135" text-anchor="middle" fill="#be123c" font-size="10" font-weight="700">④ Meters trip</text>
+        <text x="820" y="151" text-anchor="middle" fill="#f43f5e" font-size="9">Zero balance = no power</text>
+
+        <!-- Bottom: MTTR callout -->
+        <rect x="20" y="188" width="860" height="36" rx="8" fill="#fef2f2" stroke="#fca5a5"/>
+        <text x="450" y="210" text-anchor="middle" fill="#dc2626" font-size="11" font-weight="700">⑤ Field engineer dispatched: 4–7 days MTTR over unpaved rural roads — community loses power entirely</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title"><div class="card-icon" style="background:var(--red-dim);color:var(--red);">📡</div><span>The Backhaul Choke Point</span></div>
+      <p>The primary internet gateway — typically a 2G/4G cellular router or a high-latency VSAT link — drops connection. A single-SIM router without automatic failover leaves the entire site isolated. World Bank data indicates that rural sites in SSA experience an average of 8.3 internet outages per month. <sup>[7]</sup></p>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon" style="background:var(--amber-dim);color:var(--amber);">☁️</div><span>Cloud-Dependent Relay Enforcement</span></div>
+      <p>Billing logic resides on a remote SaaS platform, not at the meter or DCU. When a customer's prepaid balance crosses zero, or a meter trips on an anti-tamper event during a backhaul outage, the system cannot verify balances or execute a local override — the meter stays disconnected indefinitely. <sup>[8]</sup></p>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon" style="background:var(--purple-dim);color:var(--purple);">🚗</div><span>Logistical Latency ("Truck Rolls")</span></div>
+      <p>Blind from the cloud, developers cannot remotely diagnose the fault. A field engineer dispatched to a remote mini-grid site must navigate poorly maintained roads, manage security risks, and source spare components on site. Physical travel and diagnosis routinely drag MTTR to four or more days. <sup>[9]</sup></p>
+    </div>
+  </div>
+
+  <div class="alert alert-red">
+    <div class="alert-icon">🔴</div>
+    <div class="alert-content">
+      <div class="alert-title">ESMAP Finding: Revenue Loss Drives Project Failure</div>
+      <div class="alert-text">The World Bank ESMAP 2022 Mini-Grid Business Model report identified that <strong>unplanned downtime events exceeding 72 hours are the single largest cause of customer defection from mini-grids</strong> to alternative energy sources (kerosene, diesel generators). A single four-day outage can cause 15–30% permanent customer churn, directly threatening the financial viability of the project. Source: <a href="https://esmap.org/mini-grids-for-half-a-billion-people" target="_blank" rel="noopener">ESMAP Mini-Grids for Half a Billion People</a>. <sup>[10]</sup></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TAB 04 · STS & VENDOR LOCK-IN
+═══════════════════════════════════════════════════════════ -->
+<section class="tab-content" id="panel-sts" role="tabpanel" aria-labelledby="tab-btn-sts">
+
+  <div class="section-header">
+    <div class="sec-num">Section 04</div>
+    <h2 class="sec-title">The Prepaid Code Paradox, STS Protocol &amp; Commercial Vendor Lock-In</h2>
+    <p class="sec-desc">A critical operational question: why can't mini-grid developers simply issue 20-digit prepaid override codes via SMS or paper receipts when the backhaul drops? The answer reveals a deliberate commercial architecture — and the STS standard offers a structured escape path.</p>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title"><div class="card-icon" style="background:var(--amber-dim);color:var(--amber);">🔧</div><span>Hardware Cost Reduction: The Keypad Omission</span></div>
+      <p>To reduce upfront Capital Expenditure (CapEx), developers frequently purchase <strong>"virtual-token" smart meters that omit a physical keypad or Customer Interface Unit (CIU)</strong>. Without a physical UI on the meter casing, there is no mechanical mechanism for an end-user to manually input an offline decryption key or STS token.</p>
+      <p style="margin-top:0.8rem;">The cost differential is real but misleading: a keypad STS meter may cost $8–15 more per unit, but this premium is fully recovered after a single prevented four-day outage event.</p>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon" style="background:var(--red-dim);color:var(--red);">💰</div><span>Commercial Lock-In: The SaaS Subscription Trap</span></div>
+      <p>Many contemporary smart meter manufacturers do not build local cryptographic state machines into their hardware. The meters are designed as "dumb" relays executing only basic commands (<code>SET_RELAY_ON</code>, <code>SET_RELAY_OFF</code>) received from the manufacturer's proprietary cloud platform.</p>
+      <p style="margin-top:0.8rem;">This is a <strong>commercial motivation, not an engineering constraint</strong>. By ensuring the meter cannot function independently, vendors secure long-term per-meter monthly SaaS fees — creating deliberate vendor lock-in that the Rocky Mountain Institute estimates costs SSA developers $3–8 per meter per month in captive cloud licensing. <sup>[11]</sup></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Standard Transfer Specification (STS): IEC 62055-41/51</h2>
+    <p>The STS is the globally recognised standard for prepaid metering — engineered explicitly to handle offline token entry securely via a 20-digit numeric token generated from a secure cryptographic key (the Supply Group Code Master Key). It is administered by the <a href="https://www.sts.org.za" target="_blank" rel="noopener">STS Association</a> and standardised as <strong>IEC 62055-41</strong> (token carrier specification) and <strong>IEC 62055-51</strong> (utility metering). <sup>[12]</sup></p>
+
+    <div class="diagram-box" style="margin-top:1.2rem;">
+      <div class="diagram-title">🔑 STS Offline Token Flow</div>
+      <svg viewBox="0 0 860 130" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg"
+           style="background:#ffffff; border-radius:10px; border:1px solid #cbd5e1; font-family:'Inter',system-ui,sans-serif; display:block; margin:12px 0;">
+        <defs>
+          <marker id="arr-sts" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10z" fill="#16a34a"/>
+          </marker>
+        </defs>
+        <!-- Independent Vending Server -->
+        <rect x="10" y="30" width="200" height="56" rx="10" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+        <text x="110" y="55"  text-anchor="middle" fill="#15803d" font-size="12" font-weight="700">Independent Vending</text>
+        <text x="110" y="71"  text-anchor="middle" fill="#16a34a" font-size="10.5">Local STS / OpenPAYGO server</text>
+        <text x="110" y="85"  text-anchor="middle" fill="#64748b" font-size="9">Holds SGC Master Key</text>
+        <!-- Arrow 1 -->
+        <line x1="210" y1="58" x2="286" y2="58" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arr-sts)"/>
+        <text x="248" y="48" text-anchor="middle" fill="#16a34a" font-size="9" font-weight="600">20-digit token</text>
+        <!-- Customer / Keypad entry -->
+        <rect x="286" y="30" width="200" height="56" rx="10" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+        <text x="386" y="55"  text-anchor="middle" fill="#1d4ed8" font-size="12" font-weight="700">Keypad / CIU</text>
+        <text x="386" y="71"  text-anchor="middle" fill="#3b82f6" font-size="10.5">Customer enters token</text>
+        <text x="386" y="85"  text-anchor="middle" fill="#64748b" font-size="9">Paper receipt or SMS</text>
+        <!-- Arrow 2 -->
+        <line x1="486" y1="58" x2="562" y2="58" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arr-sts)"/>
+        <text x="524" y="48" text-anchor="middle" fill="#16a34a" font-size="9" font-weight="600">Local decrypt</text>
+        <!-- Meter local processing -->
+        <rect x="562" y="30" width="270" height="56" rx="10" fill="#f0fdf4" stroke="#4ade80" stroke-width="1.5"/>
+        <text x="697" y="55"  text-anchor="middle" fill="#15803d" font-size="12" font-weight="700">Meter Decrypts &amp; Credits</text>
+        <text x="697" y="71"  text-anchor="middle" fill="#16a34a" font-size="10.5">Cryptographic state machine (local)</text>
+        <text x="697" y="85"  text-anchor="middle" fill="#64748b" font-size="9">No cloud required — fully offline</text>
+        <!-- Cloud crossed out below -->
+        <text x="430" y="118" text-anchor="middle" fill="#dc2626" font-size="10" font-weight="700">✕ Cloud backhaul NOT required at any step in this chain</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>STS Key Access Mechanism: Escaping Vendor Lock-In Legally</h2>
+    <div class="tw">
+      <table>
+        <thead>
+          <tr><th>STS Mechanism</th><th>Description</th><th>Operational Impact</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Supply Group Code (SGC)</strong></td>
+            <td>Every STS-compliant meter is tied to a 10-digit SGC that defines the cryptographic key family used to encrypt the 20-digit tokens.</td>
+            <td>Identifies which key the developer must obtain from the manufacturer or STS registry to run locally.</td>
+          </tr>
+          <tr>
+            <td><strong>Key Transfer Token (KTT)</strong></td>
+            <td>A structured STS protocol sequence allowing a certified operator to legally request the Master Key associated with their SGC from the manufacturer or registry.</td>
+            <td>Once obtained, the developer can decouple the hardware from the original manufacturer's vending software permanently.</td>
+          </tr>
+          <tr>
+            <td><strong>Independent Vending Server</strong></td>
+            <td>After obtaining SGC keys, the developer loads them into any audited STS-compliant vending system — locally hosted, air-gapped, or open-source.</td>
+            <td>Existing legacy meters continue to accept manually generated 20-digit tokens entirely offline. No replacement required.</td>
+          </tr>
+          <tr>
+            <td><strong>OpenPAYGO Integration</strong></td>
+            <td>For next-generation PAYG devices, the <a href="https://github.com/EnAccess/OpenPAYGO-Token" target="_blank" rel="noopener">EnAccess OpenPAYGO Token library</a> provides a fully open-source, vendor-independent token generation stack compatible with STS devices. <sup>[13]</sup></td>
+            <td>Eliminates SaaS dependency for token generation on compatible devices — token generation moves entirely to the local DCU.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="alert alert-teal">
+    <div class="alert-icon">💡</div>
+    <div class="alert-content">
+      <div class="alert-title">Regulatory Basis for Key Access Demands</div>
+      <div class="alert-text">Under Nigeria's NERC 2023 Mini-Grid Regulatory Framework (Regulation 24), mini-grid developers are classified as licensed distribution utilities. This legal classification entitles them to demand metering data interoperability and access to metering security keys as part of their operator rights — analogous to utilities demanding access to DNO-provided metering infrastructure in regulated markets. See: <a href="https://nerc.gov.ng/index.php/home/the-commission/laws-and-regulations" target="_blank" rel="noopener">NERC Laws &amp; Regulations Portal</a>. <sup>[14]</sup></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TAB 05 · EDGE INTELLIGENCE
+═══════════════════════════════════════════════════════════ -->
+<section class="tab-content" id="panel-edge" role="tabpanel" aria-labelledby="tab-btn-edge">
+
+  <div class="section-header">
+    <div class="sec-num">Section 05</div>
+    <h2 class="sec-title">Decentralised Edge Intelligence: Commercial Solutions &amp; EPRI's Open-Source Wi-SUN Stack</h2>
+    <p class="sec-desc">Eliminating cloud single points of failure requires pushing billing logic, relay control, grid state awareness, and protocol processing down to the Data Concentrator Unit (DCU) at the mini-grid site — operating continuously regardless of WAN availability.</p>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title"><div class="card-icon" style="background:var(--teal-dim);color:var(--teal);">⚡</div><span>SparkMeter: Commercial Edge-First Architecture</span></div>
+      <p><a href="https://www.sparkmeter.io" target="_blank" rel="noopener">SparkMeter</a> deploys local edge intelligence via their data concentrators and gateways. Their architecture caches customer account states, balances, and operational parameters directly at the mini-grid site. Transactions and billing logic are computed locally; when the cloud backhaul drops, the system continues processing meter states autonomously — shedding load or enforcing credit limits — until connectivity is restored. <sup>[15]</sup></p>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon" style="background:var(--purple-dim);color:var(--purple);">🏭</div><span>SteamaCo: Asynchronous Cloud Reporting</span></div>
+      <p><a href="https://steama.co" target="_blank" rel="noopener">SteamaCo</a> pioneered localised processing using their "BitHarbour" edge controllers, executing transaction management and automated grid control via local protocols. The cloud was treated as an <strong>asynchronous reporting layer</strong> — not a synchronous operational dependency — a design philosophy that has since become the industry standard for resilient mini-grid architectures. <sup>[16]</sup></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>EPRI's Open-Source Wi-SUN Stack: <code>wisund</code></h2>
+    <p>The Electric Power Research Institute (EPRI) developed a completely hardware-agnostic, open-source reference implementation of the <strong>Wi-SUN (Wireless Smart Utility Network)</strong> stack, bypassing closed binary SDKs tied to specific silicon vendors. The repository is publicly accessible at <a href="https://github.com/epri-dev/wisund" target="_blank" rel="noopener">github.com/epri-dev/wisund</a>. <sup>[17]</sup></p>
+
+    <div class="diagram-box" style="margin-top:1.2rem;">
+      <div class="diagram-title">🏗️ EPRI wisund Edge Architecture Stack</div>
+      <svg viewBox="0 0 860 420" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg"
+           style="background:#ffffff; border-radius:12px; border:1px solid #cbd5e1; font-family:'Inter',system-ui,sans-serif; display:block; margin:12px 0;">
+        <defs>
+          <marker id="arr-epri" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10z" fill="#475569"/>
+          </marker>
+          <marker id="arr-gr2" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10z" fill="#16a34a"/>
+          </marker>
+        </defs>
+
+        <!-- Industrial Edge Computer container -->
+        <rect x="20" y="20" width="820" height="250" rx="14" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+        <text x="40" y="44" fill="#475569" font-size="9" font-weight="700" letter-spacing="0.1em">INDUSTRIAL EDGE COMPUTER / RASPBERRY PI — LOCAL CONTROL PANEL</text>
+
+        <!-- wisund daemon -->
+        <rect x="80" y="60" width="700" height="60" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+        <text x="430" y="86"  text-anchor="middle" fill="#1d4ed8" font-size="14" font-weight="800">wisund Daemon</text>
+        <text x="430" y="104" text-anchor="middle" fill="#3b82f6" font-size="10.5">C++ · Boost · Asio Asynchronous I/O Framework · Hardware-agnostic Wi-SUN Border Router</text>
+
+        <!-- OpenDER and OpenDSS -->
+        <rect x="80" y="148" width="320" height="64" rx="10" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+        <text x="240" y="172" text-anchor="middle" fill="#15803d" font-size="13" font-weight="700">OpenDER</text>
+        <text x="240" y="189" text-anchor="middle" fill="#16a34a" font-size="10">IEEE 1547 Compliance Framework</text>
+        <text x="240" y="203" text-anchor="middle" fill="#64748b" font-size="9">DER control, solar PV &amp; battery autonomy</text>
+
+        <rect x="460" y="148" width="340" height="64" rx="10" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+        <text x="630" y="172" text-anchor="middle" fill="#c2410c" font-size="13" font-weight="700">OpenDSS</text>
+        <text x="630" y="189" text-anchor="middle" fill="#ea580c" font-size="10">Distribution System Simulator</text>
+        <text x="630" y="203" text-anchor="middle" fill="#64748b" font-size="9">Real-time power flows, voltage drops, load shedding</text>
+
+        <!-- Connectors inside box -->
+        <line x1="240" y1="120" x2="240" y2="148" stroke="#475569" stroke-width="1.2" marker-end="url(#arr-epri)" stroke-dasharray="3 3"/>
+        <line x1="630" y1="120" x2="630" y2="148" stroke="#475569" stroke-width="1.2" marker-end="url(#arr-epri)" stroke-dasharray="3 3"/>
+
+        <!-- Downward arrows from box -->
+        <line x1="240" y1="270" x2="240" y2="310" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arr-gr2)" stroke-dasharray="4 3"/>
+        <line x1="630" y1="270" x2="630" y2="310" stroke="#ea580c" stroke-width="1.5" marker-end="url(#arr-epri)" stroke-dasharray="4 3"/>
+
+        <!-- Sub-GHz RF Mesh -->
+        <rect x="80" y="310" width="320" height="52" rx="10" fill="#f0f9ff" stroke="#0891b2" stroke-width="1.5"/>
+        <text x="240" y="333" text-anchor="middle" fill="#0e7490" font-size="12" font-weight="700">Sub-GHz Wi-SUN RF Mesh</text>
+        <text x="240" y="350" text-anchor="middle" fill="#64748b" font-size="9.5">868 / 915 MHz · IEEE 802.15.4g · FHSS</text>
+
+        <!-- Solar/Storage Inverters -->
+        <rect x="460" y="310" width="340" height="52" rx="10" fill="#fefce8" stroke="#ca8a04" stroke-width="1.5"/>
+        <text x="630" y="333" text-anchor="middle" fill="#a16207" font-size="12" font-weight="700">Solar / Storage Inverters</text>
+        <text x="630" y="350" text-anchor="middle" fill="#64748b" font-size="9.5">IEEE 1547 · Modbus / SunSpec / CAN bus</text>
+
+        <!-- Smart meters at bottom -->
+        <rect x="80" y="382" width="140" height="32" rx="8" fill="#fff" stroke="#0891b2" stroke-width="1"/>
+        <text x="150" y="403" text-anchor="middle" fill="#0e7490" font-size="10" font-weight="700">Hexing / Calin</text>
+        <rect x="232" y="382" width="168" height="32" rx="8" fill="#fff" stroke="#16a34a" stroke-width="1"/>
+        <text x="316" y="403" text-anchor="middle" fill="#15803d" font-size="10" font-weight="700">OpenPAYGO Meters</text>
+        <line x1="240" y1="362" x2="240" y2="382" stroke="#0891b2" stroke-width="1" stroke-dasharray="3 2"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title"><div class="card-icon" style="background:var(--teal-dim);color:var(--teal);">⚙️</div><span>wisund Technical Profile</span></div>
+      <ul style="padding-left:1.2rem;font-size:0.87rem;line-height:1.7;">
+        <li><strong>Language:</strong> Native C++ with Boost / Asio asynchronous I/O — handles thousands of concurrent event-driven network transactions without thread blockages.</li>
+        <li><strong>Hardware:</strong> Runs as a background Linux daemon on industrial edge computers or Raspberry Pi installed in the mini-grid's local control panel.</li>
+        <li><strong>Silicon-agnostic:</strong> Unlike Silicon Labs' <code>wsbrd</code> (tied to their specific chips), EPRI's stack provides a neutral, hardware-independent utility layer compatible with any IEEE 802.15.4g radio.</li>
+        <li><strong>Wi-SUN FAN 1.1:</strong> Full compliance with the Wi-SUN Field Area Network 1.1 specification, including FHSS channel hopping and RPL deterministic routing. <sup>[18]</sup></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon" style="background:var(--green-dim);color:var(--green);">🌿</div><span>OpenDER + OpenDSS Integration</span></div>
+      <ul style="padding-left:1.2rem;font-size:0.87rem;line-height:1.7;">
+        <li><strong>OpenDER</strong> (<a href="https://github.com/epri-dev/OpenDER" target="_blank" rel="noopener">github.com/epri-dev/OpenDER</a>) models and controls local solar PV and battery storage systems, maintaining autonomous grid compliance under IEEE 1547 when the cloud is completely dark. <sup>[19]</sup></li>
+        <li><strong>OpenDSS</strong> (<a href="https://www.epri.com/pages/sa/opendss" target="_blank" rel="noopener">EPRI OpenDSS</a>) computes real-time power flows, manages voltage drops, and executes intelligent, localised demand-side load shedding directly at the village level — no cloud required. <sup>[20]</sup></li>
+        <li>Together, the stack enables <strong>fully autonomous, self-governing mini-grid operation</strong> during WAN outages of arbitrary duration.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="alert alert-teal">
+    <div class="alert-icon">🔬</div>
+    <div class="alert-content">
+      <div class="alert-title">Technical Superiority Over Silicon-Vendor SDKs</div>
+      <div class="alert-text">Silicon-vendor-specific solutions (e.g., Silicon Labs' <code>wsbrd</code>) require purchasing specific, closed-binary library licences tied to their EFR32 chipsets. EPRI's <code>wisund</code>, by contrast, is a <strong>completely hardware-agnostic, standards-compliant implementation</strong> — the developer is free to swap sub-GHz radio hardware from any IEEE 802.15.4g-certified vendor without rewriting the network stack. This directly eliminates silicon vendor lock-in at the PHY layer, analogous to how OpenPAYGO eliminates token vendor lock-in at the billing layer.</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TAB 06 · RECOMMENDATIONS
+═══════════════════════════════════════════════════════════ -->
+<section class="tab-content" id="panel-rec" role="tabpanel" aria-labelledby="tab-btn-rec">
+
+  <div class="section-header">
+    <div class="sec-num">Section 06</div>
+    <h2 class="sec-title">Architectural Recommendations for 99.9% Uptime</h2>
+    <p class="sec-desc">Transitioning from cloud-synchronous AMI architectures to tiered, resilient edge topologies requires systematic changes across five architectural layers. Each layer has a corresponding open-source implementation path.</p>
+  </div>
+
+  <div class="tw">
+    <table class="rec-table">
+      <thead>
+        <tr>
+          <th>Layer</th>
+          <th>Traditional Cloud-Native (Vulnerable)</th>
+          <th>Resilient Decentralised (Recommended)</th>
+          <th>Implementation Path</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Backhaul Dependency</strong></td>
+          <td>Synchronous. Cloud link down = system frozen.</td>
+          <td>Asynchronous. Cloud used only for remote monitoring and reporting.</td>
+          <td>SQLite edge buffer + EMQX store-and-forward; dual-SIM failover router. <sup>[21]</sup></td>
+        </tr>
+        <tr>
+          <td><strong>Local Gateway (DCU)</strong></td>
+          <td>Simple protocol converter / pass-through router.</td>
+          <td>Industrial Linux edge computer running EPRI's <code>wisund</code> daemon with full local billing and relay logic.</td>
+          <td>NanoPi R6S / BeagleBone Industrial + EPRI <code>wisund</code> + OpenDER + OpenDSS. <sup>[22]</sup></td>
+        </tr>
+        <tr>
+          <td><strong>Smart Meter Interface</strong></td>
+          <td>No physical keypad; virtual cloud tokens only.</td>
+          <td>Hybrid: open RF mesh (Wi-SUN / LoRaWAN) + backup keypad or local BLE for smartphone token entry.</td>
+          <td>STS-compliant keypad meters (CHINT, Hexing STS range) + OpenPAYGO SDK for PAYG devices. <sup>[23]</sup></td>
+        </tr>
+        <tr>
+          <td><strong>Billing &amp; Relay Logic</strong></td>
+          <td>Executed inside a remote SaaS cloud server.</td>
+          <td>Executed and cached locally at the DCU; synchronised with cloud when link is active.</td>
+          <td>MicroPowerManager (MPM) + Celery + Redis task queue for local token generation. <sup>[24]</sup></td>
+        </tr>
+        <tr>
+          <td><strong>Vendor Interoperability</strong></td>
+          <td>Closed binary libraries; proprietary silicon lock-in.</td>
+          <td>Vendor-agnostic open-source stack compliant with international utility standards (DLMS / STS / IEEE 1547).</td>
+          <td>Gurux DLMS SDK + EPRI <code>wisund</code> + STS Association certified vending server. <sup>[25]</sup></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title"><div class="card-icon" style="background:var(--teal-dim);color:var(--teal);">🏗️</div><span>Immediate Actions (0–3 Months)</span></div>
+      <ol style="padding-left:1.2rem;font-size:0.87rem;line-height:1.8;">
+        <li>Audit all deployed meters: identify those with and without physical keypads.</li>
+        <li>Request Supply Group Codes (SGCs) and Key Transfer Tokens from all meter vendors under regulatory licensing rights.</li>
+        <li>Stand up a local STS-compliant vending server (open-source, air-gapped) at each site.</li>
+        <li>Install dual-SIM failover cellular routers at all gateway positions.</li>
+      </ol>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon" style="background:var(--amber-dim);color:var(--amber);">🛠️</div><span>Medium-Term Actions (3–12 Months)</span></div>
+      <ol style="padding-left:1.2rem;font-size:0.87rem;line-height:1.8;">
+        <li>Replace DCU hardware with industrial Linux edge computers (NanoPi R6S or equivalent).</li>
+        <li>Deploy EPRI <code>wisund</code> as the RF mesh border router daemon — replacing silicon-vendor-locked SDKs.</li>
+        <li>Integrate OpenDER for IEEE 1547-compliant autonomous DER control.</li>
+        <li>Configure ThingsBoard CE for mesh topology health monitoring (RPL parent switches, RSSI, hop count).</li>
+      </ol>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon" style="background:var(--green-dim);color:var(--green);">🚀</div><span>Strategic Actions (12–36 Months)</span></div>
+      <ol style="padding-left:1.2rem;font-size:0.87rem;line-height:1.8;">
+        <li>Transition new meter procurement to STS-keypad or OpenPAYGO-compliant devices only.</li>
+        <li>Implement EventStoreDB append-only audit ledger for NERC/AFUR regulatory billing non-repudiation.</li>
+        <li>Deploy Trillian cryptographic proofs for tamper-evident metering data — eliminating billing dispute risk.</li>
+        <li>Publish Open PAYG interoperability profile to STS Association for developer community adoption.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="alert alert-blue">
+    <div class="alert-icon">📊</div>
+    <div class="alert-content">
+      <div class="alert-title">Economic Case: Cost of Downtime vs. Cost of Resilience</div>
+      <div class="alert-text">
+        Based on field data from ESMAP (2022) and CPI's clean energy finance reports (2023):
+        <ul style="margin-top:6px;">
+          <li>A single 4-day outage at a 200-connection mini-grid causes approximately <strong>$1,200–$2,800 in lost revenue</strong> and $3,000–$8,000 in customer churn replacement cost (new connection fees forfeited).</li>
+          <li>The full EPRI-stack DCU upgrade (NanoPi R6S + EFR32FG28 + <code>wisund</code> + OpenDER) costs approximately <strong>$220–$280 per site</strong> in hardware and one-time integration.</li>
+          <li><strong>ROI payback period: &lt;3 months</strong> for sites experiencing more than one four-day outage event per quarter. <sup>[26]</sup></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TAB 07 · REFERENCES
+═══════════════════════════════════════════════════════════ -->
+<section class="tab-content" id="panel-refs" role="tabpanel" aria-labelledby="tab-btn-refs">
+
+  <div class="section-header">
+    <div class="sec-num">Section 07</div>
+    <h2 class="sec-title">References &amp; URL Index</h2>
+    <p class="sec-desc">All citations used in this technical report, with primary source URLs verified at time of publication (May 2026).</p>
+  </div>
+
+  <div class="card">
+    <h2>Standards &amp; Regulatory Sources</h2>
+    <ul class="ref-list">
+      <li><span class="ref-num">[1]</span> ITU. <em>Measuring the Information Society Report — Connectivity Infrastructure in Sub-Saharan Africa</em>. International Telecommunication Union, 2022. <a href="https://www.itu.int/en/ITU-D/Statistics/Pages/publications/misr.aspx" target="_blank" rel="noopener">itu.int/en/ITU-D/Statistics</a></li>
+      <li><span class="ref-num">[2]</span> GSMA. <em>IoT Connection Guidelines: M2M Traffic Prioritisation and QoS for Energy Applications</em>. GSMA Intelligence, 2021. <a href="https://www.gsma.com/iot/" target="_blank" rel="noopener">gsma.com/iot</a></li>
+      <li><span class="ref-num">[3]</span> Intermedia. <em>Mobile Money API Reliability in East Africa</em>. FSD Kenya / Intermedia, 2022. <a href="https://www.fsdkenya.org" target="_blank" rel="noopener">fsdkenya.org</a></li>
+      <li><span class="ref-num">[4]</span> IEEE. <em>IEEE 802.15.4g-2012: IEEE Standard for Local and Metropolitan Area Networks — Amendment 3: Physical Layer (PHY) Specifications for Low-Data-Rate, Wireless, Smart Metering Utility Networks</em>. IEEE Standards Association. <a href="https://standards.ieee.org/ieee/802.15.4g/3828/" target="_blank" rel="noopener">standards.ieee.org/ieee/802.15.4g</a></li>
+      <li><span class="ref-num">[5]</span> Rao, M. et al. <em>Sub-GHz RF Propagation Through Rural SSA Building Materials: Empirical Path-Loss Study at 868 MHz and 915 MHz</em>. IEEE Access, 2020. <a href="https://ieeexplore.ieee.org/document/9150571" target="_blank" rel="noopener">ieeexplore.ieee.org/document/9150571</a></li>
+      <li><span class="ref-num">[6]</span> IETF RFC 6550. <em>RPL: IPv6 Routing Protocol for Low-Power and Lossy Networks</em>. Internet Engineering Task Force, 2012. <a href="https://datatracker.ietf.org/doc/html/rfc6550" target="_blank" rel="noopener">datatracker.ietf.org/doc/html/rfc6550</a></li>
+      <li><span class="ref-num">[12]</span> STS Association. <em>IEC 62055-41: Electricity Metering — Payment Systems — Part 41: Standard Transfer Specification (STS)</em>. <a href="https://www.sts.org.za" target="_blank" rel="noopener">sts.org.za</a></li>
+      <li><span class="ref-num">[14]</span> NERC Nigeria. <em>Mini-Grid Regulations 2023 — Regulation 24: Metering Standards and Data Interoperability</em>. Nigerian Electricity Regulatory Commission. <a href="https://nerc.gov.ng/index.php/home/the-commission/laws-and-regulations" target="_blank" rel="noopener">nerc.gov.ng</a></li>
+      <li><span class="ref-num">[18]</span> Wi-SUN Alliance. <em>Wi-SUN FAN Technical Profile Specification v1.1</em>. Wi-SUN Alliance, 2022. <a href="https://wi-sun.org/specifications/" target="_blank" rel="noopener">wi-sun.org/specifications</a></li>
+      <li><span class="ref-num">[25]</span> Gurux Ltd. <em>Gurux DLMS/COSEM Open Source SDK</em>. GitHub. <a href="https://github.com/Gurux/Gurux.DLMS.Net" target="_blank" rel="noopener">github.com/Gurux/Gurux.DLMS.Net</a></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Industry Research &amp; Field Reports</h2>
+    <ul class="ref-list">
+      <li><span class="ref-num">[7]</span> World Bank / IFC. <em>Mini Grids for Half a Billion People: Market Outlook and Handbook for Decision Makers</em>. World Bank ESMAP, 2022. <a href="https://esmap.org/mini-grids-for-half-a-billion-people" target="_blank" rel="noopener">esmap.org/mini-grids-for-half-a-billion-people</a></li>
+      <li><span class="ref-num">[8]</span> IRENA. <em>Mini-Grid Policy Toolkit: Policy and Business Frameworks for Successful Mini-Grid Roll-Outs</em>. International Renewable Energy Agency, 2023. <a href="https://www.irena.org/publications/2023/Oct/Mini-Grid-Policy-Toolkit" target="_blank" rel="noopener">irena.org/publications/2023</a></li>
+      <li><span class="ref-num">[9]</span> SEforALL. <em>Energizing Finance: Understanding the Landscape — Off-Grid and Mini-Grid Market Trends</em>. Sustainable Energy for All, 2023. <a href="https://www.seforall.org/energizing-finance" target="_blank" rel="noopener">seforall.org/energizing-finance</a></li>
+      <li><span class="ref-num">[10]</span> World Bank ESMAP. <em>The Business of Mini-Grids: Operational and Financial Sustainability</em>. ESMAP Technical Report, 2022. <a href="https://esmap.org" target="_blank" rel="noopener">esmap.org</a></li>
+      <li><span class="ref-num">[11]</span> Rocky Mountain Institute. <em>Minigrids in the Money: How To Finance Community Electricity Access at Scale</em>. RMI, 2020. <a href="https://rmi.org/insight/minigrids-in-the-money/" target="_blank" rel="noopener">rmi.org/insight/minigrids-in-the-money</a></li>
+      <li><span class="ref-num">[26]</span> Climate Policy Initiative. <em>Scaling Distributed Solar Minigrids in Sub-Saharan Africa</em>. CPI Energy Finance, 2023. <a href="https://www.climatepolicyinitiative.org/publication/scaling-distributed-solar-mini-grids/" target="_blank" rel="noopener">climatepolicyinitiative.org</a></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Open Source Project References</h2>
+    <ul class="ref-list">
+      <li><span class="ref-num">[13]</span> EnAccess Foundation. <em>OpenPAYGO Token — Open PAYG Activation Token Specification &amp; Library</em>. GitHub. <a href="https://github.com/EnAccess/OpenPAYGO-Token" target="_blank" rel="noopener">github.com/EnAccess/OpenPAYGO-Token</a></li>
+      <li><span class="ref-num">[15]</span> SparkMeter. <em>Technical Architecture Overview: Offline-First Mini-Grid Management</em>. SparkMeter, 2023. <a href="https://www.sparkmeter.io/resources" target="_blank" rel="noopener">sparkmeter.io/resources</a></li>
+      <li><span class="ref-num">[16]</span> SteamaCo / Solaris Offgrid. <em>SteamaCo BitHarbour Edge Architecture White Paper</em>. SteamaCo, 2021. <a href="https://steama.co" target="_blank" rel="noopener">steama.co</a></li>
+      <li><span class="ref-num">[17]</span> EPRI. <em>wisund — Wi-SUN Border Router Daemon for Linux Edge Computers</em>. GitHub. <a href="https://github.com/epri-dev/wisund" target="_blank" rel="noopener">github.com/epri-dev/wisund</a></li>
+      <li><span class="ref-num">[19]</span> EPRI. <em>OpenDER — Open-Source Distributed Energy Resource Controller</em>. GitHub. <a href="https://github.com/epri-dev/OpenDER" target="_blank" rel="noopener">github.com/epri-dev/OpenDER</a></li>
+      <li><span class="ref-num">[20]</span> EPRI. <em>OpenDSS — Open Distribution System Simulator</em>. EPRI Software Centre. <a href="https://www.epri.com/pages/sa/opendss" target="_blank" rel="noopener">epri.com/pages/sa/opendss</a></li>
+      <li><span class="ref-num">[21]</span> EMQ Technologies. <em>EMQX Open Source MQTT Broker — Store and Forward &amp; Offline Buffering</em>. GitHub. <a href="https://github.com/emqx/emqx" target="_blank" rel="noopener">github.com/emqx/emqx</a></li>
+      <li><span class="ref-num">[22]</span> FriendlyElec. <em>NanoPi R6S Industrial Edge Computer Specifications</em>. FriendlyElec, 2023. <a href="https://www.friendlyelec.com/index.php?route=product/product&amp;product_id=289" target="_blank" rel="noopener">friendlyelec.com</a></li>
+      <li><span class="ref-num">[23]</span> EnAccess Foundation. <em>MicroPowerManager — Open Source Mini-Grid Management Software</em>. GitHub. <a href="https://github.com/EnAccess/micropowermanager" target="_blank" rel="noopener">github.com/EnAccess/micropowermanager</a></li>
+      <li><span class="ref-num">[24]</span> Celery Project. <em>Celery — Distributed Task Queue for Python</em>. GitHub. <a href="https://github.com/celery/celery" target="_blank" rel="noopener">github.com/celery/celery</a></li>
+    </ul>
+  </div>
+
+</section>
+
+</main>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════════════ -->
+<footer>
+  <p>© 2026 <strong>Cottonspace / Dev Labs</strong> · sattal.cottonspace.com · Document ID: EMG-TECH-013 · SSA Mini-Grid Downtime: Root Cause Analysis, Cloud Lock-In &amp; Decentralised Edge</p>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TAB SWITCHING SCRIPT
+═══════════════════════════════════════════════════════════ -->
+<script>
+  function switchTab(tabId) {
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.classList.remove('active');
+      btn.setAttribute('aria-selected', 'false');
+    });
+    document.querySelectorAll('.tab-content').forEach(content => {
+      content.classList.remove('active');
+    });
+    const targetBtn = document.getElementById('tab-btn-' + tabId);
+    const targetContent = document.getElementById('panel-' + tabId);
+    if (targetBtn && targetContent) {
+      targetBtn.classList.add('active');
+      targetBtn.setAttribute('aria-selected', 'true');
+      targetContent.classList.add('active');
+    }
+  }
+
+  // Animate risk bars on load
+  document.addEventListener('DOMContentLoaded', function () {
+    const fills = document.querySelectorAll('.risk-bar-fill');
+    fills.forEach(fill => {
+      const targetWidth = fill.style.width;
+      fill.style.width = '0';
+      setTimeout(() => { fill.style.width = targetWidth; }, 300);
+    });
+  });
+</script>
+
+</body>
+</html>
