@@ -443,9 +443,9 @@
         </div>
 
         <h3>Missing Cryptographic Assurance Primitives</h3>
-        <p>Enterprise utility billing platforms — such as <a href="https://www.oracle.com/utilities/customer-to-meter/" target="_blank" rel="noopener">Oracle C2M</a> or open equivalents like <a href="https://www.opensg.org/" target="_blank" rel="noopener">OpenSG</a> — implement one or more of the following that MPM currently omits:</p>
+        <p>Enterprise utility billing platforms — such as <a href="https://www.oracle.com/utilities/customer-to-meter/" target="_blank" rel="noopener">Oracle C2M</a> or open-standard equivalents governed by the <a href="https://osgp.net/" target="_blank" rel="noopener">OSGP Alliance</a> (Open Smart Grid Protocol) — implement one or more of the following that MPM currently omits:</p>
         <ul class="styled-list">
-            <li><strong>Merkle-tree audit chains:</strong> Each financial record block is hash-linked to its predecessor, making silent alteration mathematically detectable</li>
+            <li><strong>Merkle-tree audit chains:</strong> Each financial record block is hash-linked to its predecessor, making silent alteration mathematically detectable — the <a href="https://docs.openzeppelin.com/contracts/5.x/api/utils#MerkleProof" target="_blank" rel="noopener">OpenZeppelin MerkleProof library</a> is the canonical open-source implementation of this pattern, widely used for cryptographically verifiable audit trees and allowlists</li>
             <li><strong>Append-only partitioned tables:</strong> Database partitions are write-locked after period close, enforced at the RDBMS level rather than the application layer</li>
             <li><strong>HMAC-signed event streams:</strong> Each audit event is published with an HMAC digest keyed to a Hardware Security Module (HSM) secret, enabling third-party verification</li>
         </ul>
