@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Integrated Mini-Grid &amp; Productive-Use Mobility Ecosystems — EMG-EVAL-021</title>
+  <meta name="description" content="Technical report analyzing the techno-economic, regulatory, and safety barriers of integrated off-grid electrification and electric cargo fleets in SSA and South Asia.">
+  <link rel="stylesheet" href="/reports/report-style.css">
+</head>
+<body>
+
+<header class="hero">
+  <a href="/reports" class="back-link">← Reports Index</a>
+  <div class="eyebrow">
+    <span class="tag tag-teal">🌍 Policy &amp; Strategy</span>
+    <span class="tag tag-purple">⚡ e-Mobility</span>
+    <span class="tag tag-orange">🔑 Mini-Grids</span>
+  </div>
+  <h1>Integrated Mini-Grid &amp;<br><em>Productive-Use Mobility</em><br>Ecosystem Nexus</h1>
+  <p class="hero-sub">A publication-grade technical report analyzing the techno-economic, regulatory, and safety barriers to deploying integrated off-grid electrification and electric cargo fleets in SSA and South Asia.</p>
+  <div class="hero-kpis">
+    <div class="kpi"><div class="kpi-v">EMG-EVAL-021</div><div class="kpi-l">Document ID</div></div>
+    <div class="kpi"><div class="kpi-v">6.2–6.6</div><div class="kpi-l">CCHHP COP</div></div>
+    <div class="kpi"><div class="kpi-v">&lt;25%</div><div class="kpi-l">Base Load Factor</div></div>
+    <div class="kpi"><div class="kpi-v">4% / 3%</div><div class="kpi-l">Loss Caps</div></div>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#" onclick="switchTab('exec')">Executive Summary</a>
+    <a href="#" onclick="switchTab('assumptions')">Context &amp; Assumptions</a>
+    <a href="#" onclick="switchTab('analysis')">Techno-Economic Analysis</a>
+    <a href="#" onclick="switchTab('risks')">Systemic Risks</a>
+    <a href="#" onclick="switchTab('refs')">References</a>
+  </div>
+</nav>
+
+<main class="container">
+
+  <!-- TAB 01: EXECUTIVE SUMMARY -->
+  <section class="tab-content active" id="panel-exec" role="tabpanel" aria-labelledby="tab-btn-exec">
+    <div class="section-header">
+      <div class="sec-num">Section 01</div>
+      <h2 class="sec-title">Executive Summary</h2>
+      <p class="sec-desc">A brief macro view of the project viability, financial sustainability, and required structural pivots.</p>
+    </div>
+    <div class="card">
+      <p>The proposed integrated off-grid electrification and electric cargo mobility ecosystem in Sub-Saharan Africa and South Asia is technically viable but financially unsustainable under current capital deployment models. Stagnant rural load factors under 25% and high pre-financing barriers for productive-use equipment create a systemic cash-flow deficit. The project requires a structural pivot toward concessional debt, localized asset financing for machinery, and edge-autonomous metering to mitigate persistent macro-economic and operational volatility.</p>
+    </div>
+  </section>
+
+  <!-- TAB 02: STRUCTURAL CONTEXT & ASSUMPTIONS -->
+  <section class="tab-content" id="panel-assumptions" role="tabpanel" aria-labelledby="tab-btn-assumptions">
+    <div class="section-header">
+      <div class="sec-num">Section 02</div>
+      <h2 class="sec-title">Structural Context &amp; Assumptions</h2>
+      <p class="sec-desc">Challenging the planning assumptions of off-grid deployment under regional operational realities.</p>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--amber-dim);color:var(--amber);">💸</div>
+          <span>1. The Productive-Use of Energy (PUE) Liquidity Trap</span>
+        </div>
+        <p>The core planning assumption posits that co-locating electric cargo vehicles (eATVs) and Combined Cooling &amp; Heating Heat Pumps (CCHHP) will naturally raise mini-grid load factors by shifting consumption to peak midday solar hours. This framework ignores the regional liquidity constraint: local cooperatives and smallholder farmers lack the capital to purchase or lease expensive eATVs ($2,800 to $10,000) or CCHHPs, even under Pay-As-You-Go (PAYG) financing ($45 to $160 per month). Without dedicated asset-level pre-financing from development finance institutions (DFIs), the load factor remains stuck under 25%, rendering the mini-grid's capital expenditure unrecoverable.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--red-dim);color:var(--red);">⚖️</div>
+          <span>2. Regulatory Rigidity and Macro-Economic Exposure</span>
+        </div>
+        <p>Tariff models like the NERC Multi-Year Tariff Order (MYTO) assume that cost-reflective tariffs protect developer IRR. However, rapid currency depreciation in Sub-Saharan Africa (e.g., Nigerian Naira volatility) immediately erodes local-currency revenue when mapped against USD-denominated capital debt. Furthermore, regulatory agencies mandate strict distribution loss caps (typically 4% technical and 3% commercial). In weak, low-density rural grids with high theft rates, developers are forced to absorb losses exceeding these caps, destroying margins unless smart-metering architectures are deployed to enforce real-time auditing.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--purple-dim);color:var(--purple);">📶</div>
+          <span>3. Cellular Backhaul and Cloud-Synchronous Vulnerabilities</span>
+        </div>
+        <p>Billing platforms (such as MicroPowerManager) assume reliable cellular backhaul (SMS/USSD) for payment verification and token vending. In practice, fragile mobile network operator (MNO) infrastructure, fuel theft at cellular towers, and regional outages lead to frequent offline periods. Under cloud-synchronous architectures, a four-day network outage completely halts energy billing and vending, leaving local communities without power despite functional solar generation assets. This represents a critical systemic reliability failure.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 03: TECHNO-ECONOMIC ANALYSIS -->
+  <section class="tab-content" id="panel-analysis" role="tabpanel" aria-labelledby="tab-btn-analysis">
+    <div class="section-header">
+      <div class="sec-num">Section 03</div>
+      <h2 class="sec-title">Techno-Economic Analysis</h2>
+      <p class="sec-desc">Key capital expenditures, operating costs, and performance parameters across the energy, agro-processing, and mobility value chains.</p>
+    </div>
+    
+    <div class="card" style="margin-bottom: 2rem;">
+      <h3>Table 1: e-Mobility Value Chain &amp; PAYG Financing Parameters</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Parameter</th>
+            <th>Lite Variant</th>
+            <th>Pro Variant</th>
+            <th>4x4 Heavy Variant</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Capital Cost (CAPEX)</strong></td>
+            <td>$2,800</td>
+            <td>$5,500</td>
+            <td>$10,000</td>
+          </tr>
+          <tr>
+            <td><strong>PAYG Monthly Payment (48 mos)</strong></td>
+            <td>$45</td>
+            <td>$90</td>
+            <td>$160</td>
+          </tr>
+          <tr>
+            <td><strong>Operational Cost ($/km)</strong></td>
+            <td>$0.12</td>
+            <td>$0.13</td>
+            <td>$0.15</td>
+          </tr>
+          <tr>
+            <td><strong>Diesel Tractor Equivalent Cost</strong></td>
+            <td>$0.80/km</td>
+            <td>$0.95/km</td>
+            <td>$1.20/km</td>
+          </tr>
+          <tr>
+            <td><strong>Net Savings per Household</strong></td>
+            <td>$300/year</td>
+            <td>$350/year</td>
+            <td>$400/year</td>
+          </tr>
+          <tr>
+            <td><strong>Fleet CAPEX (3-5 Villages)</strong></td>
+            <td>—</td>
+            <td>—</td>
+            <td>$42,000–$62,000</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" style="margin-bottom: 2rem;">
+      <h3>Table 2: CCHHP Post-Harvest Agro-Processing Performance</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Parameter</th>
+            <th>Value / Metric</th>
+            <th>Technical Specification / Model</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Daily Milk Processing Capacity</strong></td>
+            <td>800–1,200 Liters</td>
+            <td>Dual 500L Bulk Milk Chiller (BMC)</td>
+          </tr>
+          <tr>
+            <td><strong>Daily Crop Dehydration Capacity</strong></td>
+            <td>400–600 kg</td>
+            <td>Tray drying chamber (waste heat recovery)</td>
+          </tr>
+          <tr>
+            <td><strong>Compressor Technology</strong></td>
+            <td>Copeland Scroll</td>
+            <td>ZR/ZB Series, R134a or low-GWP R513A</td>
+          </tr>
+          <tr>
+            <td><strong>System Combined COP</strong></td>
+            <td>6.2–6.6</td>
+            <td>Midday thermal battery charging</td>
+          </tr>
+          <tr>
+            <td><strong>Thermal Storage Medium</strong></td>
+            <td>Water-ice PCM</td>
+            <td>Latent heat vault ($334\text{ kJ/kg}$)</td>
+          </tr>
+          <tr>
+            <td><strong>Capital Payback Period</strong></td>
+            <td>22–28 months</td>
+            <td>Based on conventional diesel displacement</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>Table 3: Mini-Grid Tariff and Portfolio Performance Metrics</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>South Asia Grid-Connected</th>
+            <th>SSA Isolated Solar Mini-Grid</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Average Installed Capacity</strong></td>
+            <td>50 kW – 1.7 MW</td>
+            <td>3 kW – 100 kW</td>
+          </tr>
+          <tr>
+            <td><strong>Tariff Range ($/kWh)</strong></td>
+            <td>$0.18 – $0.35</td>
+            <td>$0.45 – $1.00 (pico up to $4.50)</td>
+          </tr>
+          <tr>
+            <td><strong>Target Load Factor</strong></td>
+            <td>45–60%</td>
+            <td>&lt;25% (pre-PUE intervention)</td>
+          </tr>
+          <tr>
+            <td><strong>Distribution Loss Caps</strong></td>
+            <td>4% technical, 3% commercial</td>
+            <td>4% technical, 3% commercial</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- TAB 04: SYSTEMIC RISKS & RECOMMENDATIONS -->
+  <section class="tab-content" id="panel-risks" role="tabpanel" aria-labelledby="tab-btn-risks">
+    <div class="section-header">
+      <div class="sec-num">Section 04</div>
+      <h2 class="sec-title">Systemic Risks &amp; Recommendations</h2>
+      <p class="sec-desc">Engineering, operational, and regulatory safety mitigations aligned with the IEEE Code of Ethics.</p>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--red-dim);color:var(--red);">⚠️</div>
+          <span>1. Structural Suspension &amp; Braking Upgrades (IEEE 1.1 Public Safety)</span>
+        </div>
+        <p>The stock Motrike TrikeXplor E-Truck utilizes bicycle-grade air-fork suspension and braking systems. Under utility operations with a 340 kg GVW load, these systems suffer structural buckling, traction loss on steep grades, and brake fade. To hold public safety paramount:</p>
+        <ul>
+          <li><strong>Suspension:</strong> Replace stock air-forks with dual-wishbone A-arm geometries utilizing motorsport-grade coilover shocks (sourcing Gabriel India/Uno Minda).</li>
+          <li><strong>Brakes:</strong> Replace bicycle caliper configurations with UTV-grade hydraulic dual-piston calipers, larger ventilated rotors, and sintered metal pads.</li>
+          <li><strong>Chassis:</strong> Rebuild the occupant protection cage using 18-gauge DOM steel tubing to ensure structural integrity during rollovers.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--amber-dim);color:var(--amber);">⚡</div>
+          <span>2. Grid Power Quality &amp; Phase Balancing</span>
+        </div>
+        <p>Single-phase EV charging and localized agricultural load switching introduce severe phase unbalance and triplen harmonics on weak mini-grid feeders:</p>
+        <ul>
+          <li><strong>Voltage Unbalance Factor (VUF):</strong> Deploy edge-level active asymmetric inverter control loops (3P4W) managed by LF Energy Fledge/OpenFMB to inject asymmetric reactive power ($Q$) and balance phase voltage vectors.</li>
+          <li><strong>Harmonic Suppression:</strong> Implement primary Delta-Wye ($\Delta$-Y) transformer windings at primary distribution nodes to trap and dissipate zero-sequence triplen harmonics as heat.</li>
+          <li><strong>Dynamic Line Rating:</strong> Oversize conductor cross-sections by 3–5% during initial grid installation to accommodate Volt/VAR feeder optimization and prevent thermal line bottlenecks.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--teal-dim);color:var(--accent-teal);">🔒</div>
+          <span>3. Software Hardening and Offline Resilience</span>
+        </div>
+        <p>Proprietary software stacks suffer from single-point-of-failure cloud sync structures and weak cryptographic primitives:</p>
+        <ul>
+          <li><strong>Local DCU Cache:</strong> Hardened Data Concentrator Units (DCUs) must integrate local SQLite Write-Ahead Logging (WAL) transaction caching to handle offline billing when cellular networks fail.</li>
+          <li><strong>Cryptographic Assurance:</strong> Replace perimeter-only container security with cryptographic auditing chains. Smart meters must utilize local cryptographic state machines and keypads to enable offline STS (Standard Transfer Specification) token entry (IEC 62055-41/51).</li>
+          <li><strong>Life-Safety Disconnection:</strong> Mandate Type B Residual Current Devices (RCDs) on all tenant lines with strict trip limits (<strong>6mA DC</strong> for solar backfeed isolation and <strong>30mA AC</strong> for human safety) paired with automated solid-state relay (SSR) disconnection. Remote re-energization must be systemically blocked if earth leakage currents persist.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 05: REFERENCES -->
+  <section class="tab-content" id="panel-refs" role="tabpanel" aria-labelledby="tab-btn-refs">
+    <div class="section-header">
+      <div class="sec-num">Section 05</div>
+      <h2 class="sec-title">References</h2>
+      <p class="sec-desc">Standard documents and guidelines referenced in this analysis.</p>
+    </div>
+    <div class="card">
+      <ol class="ref-list">
+        <li>NERC Multi-Year Tariff Order (MYTO).</li>
+        <li>IEEE Standard 90-1987: Recommended Practice for Electric Power Systems.</li>
+        <li>IFC Guidelines on Off-Grid Solar Energy Investments.</li>
+        <li>World Bank Report on Rural Electrification Challenges in Sub-Saharan Africa.</li>
+      </ol>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>© 2026 <strong>Cottonspace / Dev Labs</strong> · sattal.cottonspace.com · Document ID: EMG-EVAL-021 · Integrated Mini-Grid and Productive-Use Mobility Ecosystems</p>
+</footer>
+
+<script>
+  function switchTab(tabId) {
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.classList.remove('active');
+      btn.setAttribute('aria-selected', 'false');
+    });
+    document.querySelectorAll('.tab-content').forEach(content => {
+      content.classList.remove('active');
+    });
+    const targetBtn = document.getElementById('tab-btn-' + tabId);
+    const targetContent = document.getElementById('panel-' + tabId);
+    if (targetBtn && targetContent) {
+      targetBtn.classList.add('active');
+      targetBtn.setAttribute('aria-selected', 'true');
+      targetContent.classList.add('active');
+    }
+  }
+</script>
+
+</body>
+</html>
