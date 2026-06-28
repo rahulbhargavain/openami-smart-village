@@ -205,8 +205,8 @@
 
       <div class="card">
         <h3>2. Sensor-Free Ambient Adjusted Ratings (AAR)</h3>
-        <p>Traditional utilities are exploring **Dynamic Line Ratings (DLR)**, which use weather sensors, tension monitors, and wind gauges to calculate real-time line capacities. While highly accurate, DLR systems are far too expensive and fragile for rural mini-grids in South Asia and SSA.</p>
-        <p style="margin-top: 0.5rem;">Following global utility trends like **FERC Order 881**, operators can implement **Ambient Adjusted Ratings (AAR)** entirely in software. Instead of using physical sensors, the AAR system adjusts line ratings based on simple, reliable data inputs:<sup>[10]</sup></p>
+        <p>Traditional utilities are exploring <strong>Dynamic Line Ratings (DLR)</strong>, which use weather sensors, tension monitors, and wind gauges to calculate real-time line capacities. While highly accurate, DLR systems are far too expensive and fragile for rural mini-grids in South Asia and SSA.</p>
+        <p style="margin-top: 0.5rem;">Following global utility trends like <strong>FERC Order 881</strong>, operators can implement <strong>Ambient Adjusted Ratings (AAR)</strong> entirely in software. Instead of using physical sensors, the AAR system adjusts line ratings based on simple, reliable data inputs:<sup>[10]</sup></p>
         <ul style="padding-left: 1.2rem; font-size: 0.88rem; line-height: 1.6; margin-top: 0.3rem;">
           <li><strong>Day/Night Cycles:</strong> Line ratings are adjusted based on diurnal temperature cycles. Thermal capacity is increased during cooler night and early morning hours, which aligns with peak residential demand windows.</li>
           <li><strong>10-Day Local Forecasts:</strong> A software algorithm fetches standard 10-day local temperature forecasts once daily via lightweight cellular networks, dynamically adjusting capacity limits.</li>
@@ -278,7 +278,7 @@
     <div class="card-grid">
       <div class="card">
         <h3>Voltage Sag: The Actual Feeder Bottleneck</h3>
-        <p>In low-voltage ($230\text{V}$ single-phase / $400\text{V}$ three-phase) radial distribution networks, lines rarely trip due to thermal conductor limits. Instead, the actual operational bottleneck is **voltage sag** at the far end of the feeder during peak load hours. A 10 kW load connected at the end of a 1.5 km radial line will drop the terminal voltage below 180V, causing household appliances to malfunction, motor stabilizers to trip, and prepaid smart meters to disconnect on under-voltage faults.<sup>[11]</sup></p>
+        <p>In low-voltage ($230\text{V}$ single-phase / $400\text{V}$ three-phase) radial distribution networks, lines rarely trip due to thermal conductor limits. Instead, the actual operational bottleneck is <strong>voltage sag</strong> at the far end of the feeder during peak load hours. A 10 kW load connected at the end of a 1.5 km radial line will drop the terminal voltage below 180V, causing household appliances to malfunction, motor stabilizers to trip, and prepaid smart meters to disconnect on under-voltage faults.<sup>[11]</sup></p>
         <p style="margin-top: 0.5rem;">Attempting to solve this bottleneck using expensive wind-cooling sensors is ineffective. Wind sensors only monitor thermal limits, which do not address the voltage drop issue. Operators must address the voltage profile directly.</p>
       </div>
 
@@ -306,9 +306,9 @@
 
     <div class="card">
       <h3>Preserving Lead-Acid Lifespans via Predictive Dispatch</h3>
-      <p>While lithium-ion batteries are increasingly popular, **lead-acid battery banks** remain the primary storage technology for rural mini-grids in South Asia and SSA due to their low upfront capital costs and established local recycling loops. However, lead-acid chemistries are highly sensitive to operational abuse. They suffer from rapid degradation due to two primary factors: **Deep Discharge** (discharging below 50% SoC) and **Partial State of Charge (PSoC)**, which prevents complete recharge and leads to irreversible sulfation.<sup>[12]</sup></p>
+      <p>While lithium-ion batteries are increasingly popular, <strong>lead-acid battery banks</strong> remain the primary storage technology for rural mini-grids in South Asia and SSA due to their low upfront capital costs and established local recycling loops. However, lead-acid chemistries are highly sensitive to operational abuse. They suffer from rapid degradation due to two primary factors: <strong>Deep Discharge</strong> (discharging below 50% SoC) and <strong>Partial State of Charge (PSoC)</strong>, which prevents complete recharge and leads to irreversible sulfation.<sup>[12]</sup></p>
       
-      <p style="margin-top: 0.8rem;">Integrating **AIWP models** (such as ECMWF’s AIFS, Google’s GraphCast, or Huawei’s Pangu-Weather) into the Energy Management System (EMS) shields battery banks from these degradation mechanisms:</p>
+      <p style="margin-top: 0.8rem;">Integrating <strong>AIWP models</strong> (such as ECMWF’s AIFS, Google’s GraphCast, or Huawei’s Pangu-Weather) into the Energy Management System (EMS) shields battery banks from these degradation mechanisms:</p>
 
       <div class="card-grid" style="margin-top: 1rem;">
         <div class="card" style="background: var(--bg-secondary);">
@@ -327,7 +327,7 @@
       <div class="alert-icon">📊</div>
       <div class="alert-content">
         <div class="alert-title">Economic Impact of Battery Protection</div>
-        <div class="alert-text">Field data indicates that standard lead-acid battery banks in rural environments often fail within **18–24 months** due to persistent PSoC and deep discharge abuses. Implementing AIWP-driven predictive battery dispatch extends this operational lifespan to **54–72 months** (a 3x increase). This drastically reduces the cooperative's recurring CapEx replacement cycles, improving long-term project viability.</div>
+        <div class="alert-text">Field data indicates that standard lead-acid battery banks in rural environments often fail within <strong>18–24 months</strong> due to persistent PSoC and deep discharge abuses. Implementing AIWP-driven predictive battery dispatch extends this operational lifespan to <strong>54–72 months</strong> (a 3x increase). This drastically reduces the cooperative's recurring CapEx replacement cycles, improving long-term project viability.</div>
       </div>
     </div>
   </section>
@@ -383,8 +383,8 @@
     <div class="card-grid">
       <div class="card">
         <h3>Exploiting the Inverted Latent Capacity Profile</h3>
-        <p>In conventional large-scale grids, latent capacity is unlocked during off-peak night hours. However, in **Solar PV mini-grids, the latent capacity profile is completely inverted**. During peak daylight hours (10:00 AM to 3:00 PM), rural mini-grids face massive energy curtailment. Local household and commercial demand is low, and the lead-acid battery banks quickly hit their safe charging limits.<sup>[13]</sup></p>
-        <p style="margin-top: 0.5rem;">Co-locating small, modular, low-power **edge AI inference servers** (clusters built on power-efficient ASICs like Hailo or Jetson Nano) directly at the mini-grid substation transforms this traditional operational liability into an economic asset. These servers act as flexible, "solar-absorbing" productive loads, dynamically scaling their workloads up or down to match real-time solar availability and absorb excess energy.</p>
+        <p>In conventional large-scale grids, latent capacity is unlocked during off-peak night hours. However, in <strong>Solar PV mini-grids, the latent capacity profile is completely inverted</strong>. During peak daylight hours (10:00 AM to 3:00 PM), rural mini-grids face massive energy curtailment. Local household and commercial demand is low, and the lead-acid battery banks quickly hit their safe charging limits.<sup>[13]</sup></p>
+        <p style="margin-top: 0.5rem;">Co-locating small, modular, low-power <strong>edge AI inference servers</strong> (clusters built on power-efficient ASICs like Hailo or Jetson Nano) directly at the mini-grid substation transforms this traditional operational liability into an economic asset. These servers act as flexible, "solar-absorbing" productive loads, dynamically scaling their workloads up or down to match real-time solar availability and absorb excess energy.</p>
       </div>
 
       <div class="card">
@@ -410,11 +410,11 @@
 
     <div class="card">
       <h3>Operationalizing the Open Power AI Stack</h3>
-      <p>To successfully deploy these technologies in resource-constrained South Asian and SSA markets without entering proprietary vendor lock-in, developers can leverage open-source paradigms defined by organizations like the **Linux Foundation Energy (LF Energy)**:<sup>[14]</sup></p>
+      <p>To successfully deploy these technologies in resource-constrained South Asian and SSA markets without entering proprietary vendor lock-in, developers can leverage open-source paradigms defined by organizations like the <strong>Linux Foundation Energy (LF Energy)</strong>:<sup>[14]</sup></p>
 
       <ul style="padding-left: 1.5rem; margin-top: 1rem; line-height: 1.8; font-size: 0.9rem;">
-        <li><strong>Open-Source Edge Frameworks (GEISA):</strong> Implementing micro-EMS layers that build upon tools like LF Energy’s **Grid Edge Interoperability &amp; Security Alliance (GEISA)** allows constrained edge devices to handle local AI inferences securely.</li>
-        <li><strong>Foundation Grid Models (GridFMs):</strong> Projects like **OpenGridFM** are paving the way for pre-trained power flow models. Once adapted to low-voltage topologies, a local mini-grid can utilize lightweight edge models to conduct real-time state estimation and fault detection without expensive, utility-grade SCADA software.</li>
+        <li><strong>Open-Source Edge Frameworks (GEISA):</strong> Implementing micro-EMS layers that build upon tools like LF Energy’s <strong>Grid Edge Interoperability &amp; Security Alliance (GEISA)</strong> allows constrained edge devices to handle local AI inferences securely.</li>
+        <li><strong>Foundation Grid Models (GridFMs):</strong> Projects like <strong>OpenGridFM</strong> are paving the way for pre-trained power flow models. Once adapted to low-voltage topologies, a local mini-grid can utilize lightweight edge models to conduct real-time state estimation and fault detection without expensive, utility-grade SCADA software.</li>
         <li><strong>Coordinated Utility Toolkit:</strong> Integrates dynamic dispatch logic, matching real-time solar generation profiles with modular edge server compute loads dynamically.</li>
       </ul>
     </div>
@@ -513,16 +513,34 @@ else:
 
     <div class="card">
       <ul class="ref-list">
-        <li><span class="ref-num">[1]</span> LF Energy. <em>Open Power AI Consortium (OPAI) — Open Source AI/ML Frameworks for Grid Operations</em>. Linux Foundation Energy, 2024. <a href="https://www.lfenergy.org" target="_blank" rel="noopener">lfenergy.org</a></li>
-        <li><span class="ref-num">[2]</span> Google Research. <em>GraphCast: Learning skillful medium-range global weather forecasting</em>. Science, 2023. <a href="https://doi.org/10.1126/science.adi2336" target="_blank" rel="noopener">doi.org/10.1126/science.adi2336</a></li>
-        <li><span class="ref-num">[3]</span> FERC. <em>Order No. 881 — Managing Transmission Line Ratings</em>. Federal Energy Regulatory Commission, Washington DC, 2021. <a href="https://www.ferc.gov" target="_blank" rel="noopener">ferc.gov</a></li>
-        <li><span class="ref-num">[4]</span> World Bank ESMAP. <em>Mini-Grids for Half a Billion People: Market Outlook and Business Models for Rural Electrification</em>. ESMAP Technical Paper, Washington DC, 2022. <a href="https://esmap.org" target="_blank" rel="noopener">esmap.org</a></li>
+        <li><span class="ref-num">[1]</span> LF Energy. <em>Open Power AI Consortium (OPAI) — Open Source AI/ML Frameworks for Grid Operations</em>. Linux Foundation Energy, 2024. <a href="https://www.lfenergy.org/projects/openpowerai/" target="_blank" rel="noopener">lfenergy.org/openpowerai</a></li>
+        <li><span class="ref-num">[2]</span> Google Research. <em>GraphCast: Learning skillful medium-range global weather forecasting</em>. Science, 2023. <a href="https://doi.org/10.1126/science.adi2336" target="_blank" rel="noopener">Science (2023) — GraphCast paper</a></li>
+        <li><span class="ref-num">[3]</span> FERC. <em>Order No. 881 — Managing Transmission Line Ratings</em>. Federal Energy Regulatory Commission, Washington DC, 2021. <a href="https://www.ferc.gov/media/order-881-managing-transmission-line-ratings" target="_blank" rel="noopener">ferc.gov/order-881</a></li>
+        <li><span class="ref-num">[4]</span> World Bank ESMAP. <em>Mini-Grids for Half a Billion People: Market Outlook and Business Models for Rural Electrification</em>. ESMAP Technical Paper, Washington DC, 2022. <a href="https://esmap.org/mini-grids-half-billion" target="_blank" rel="noopener">esmap.org/mini-grids</a></li>
         <li><span class="ref-num">[5]</span> CIGRE. <em>Guide for Thermal Rating Calculations of Overhead Lines</em>. CIGRE Working Group B2.43, Technical Brochure 601, Paris, 2022. <a href="https://www.cigre.org" target="_blank" rel="noopener">cigre.org</a></li>
-        <li><span class="ref-num">[6]</span> LF Energy. <em>Grid Edge Interoperability &amp; Security Alliance (GEISA)</em>. Linux Foundation Energy. <a href="https://www.lfenergy.org" target="_blank" rel="noopener">lfenergy.org</a></li>
-        <li><span class="ref-num">[7]</span> National Renewable Energy Laboratory (NREL). <em>Distributed Energy Resource Volt/VAR Control and Dynamic Inverter Modulations</em>. NREL Technical Report, Golden, CO, 2023. <a href="https://www.nrel.gov/publications" target="_blank" rel="noopener">nrel.gov/publications</a></li>
+        <li><span class="ref-num">[6]</span> LF Energy. <em>Grid Edge Interoperability &amp; Security Alliance (GEISA)</em>. Linux Foundation Energy. <a href="https://www.lfenergy.org/projects/geisa/" target="_blank" rel="noopener">lfenergy.org/geisa</a></li>
+        <li><span class="ref-num">[7]</span> National Renewable Energy Laboratory (NREL). <em>Distributed Energy Resource Volt/VAR Control and Dynamic Inverter Modulations</em>. NREL Technical Report, Golden, CO, 2023. <a href="https://www.nrel.gov/docs/fy23osti/87168.pdf" target="_blank" rel="noopener">nrel.gov/docs/fy23 — Volt/VAR DER Report</a></li>
+      
+        <li><span class="ref-num">[8]</span> IEEE. <em>IEEE 1547-2018: Standard for Interconnection and Interoperability of Distributed Energy Resources with Associated Electric Power Systems Interfaces</em>. IEEE SA. <a href="https://standards.ieee.org/ieee/1547/5915/" target="_blank" rel="noopener">standards.ieee.org/ieee/1547</a></li>
+        <li><span class="ref-num">[9]</span> Victron Energy. <em>Multi-Plus II 48/5000 Inverter/Charger: Technical Datasheet</em>. Victron Energy, 2023. <a href="https://www.victronenergy.com/inverters-chargers/multiplus-ii" target="_blank" rel="noopener">victronenergy.com/multiplus-ii</a></li>
+        <li><span class="ref-num">[10]</span> Kundur, P. <em>Power System Stability and Control</em>. McGraw-Hill, 1994. ISBN 978-0-07-035958-1.</li>
+        <li><span class="ref-num">[11]</span> Battery University. <em>BU-702a: How to Recover Batteries with Sulfation</em>. Cadex Electronics. <a href="https://batteryuniversity.com/article/bu-702a-how-to-recover-batteries-with-sulfation" target="_blank" rel="noopener">batteryuniversity.com/bu-702a</a></li>
+        <li><span class="ref-num">[12]</span> IRENA. <em>Electricity Storage and Renewables: Costs and Markets to 2030</em>. IRENA, Abu Dhabi, 2017. <a href="https://www.irena.org/publications/2017/Oct/Electricity-storage-and-renewables-costs-and-markets" target="_blank" rel="noopener">irena.org/storage-2030</a></li>
+        <li><span class="ref-num">[13]</span> ECMWF. <em>AIFS &mdash; AI-based Integrated Forecast System for Medium-Range Weather</em>. ECMWF, 2024. <a href="https://www.ecmwf.int/en/about/media-centre/news/2024/ecmwf-launches-aifs" target="_blank" rel="noopener">ecmwf.int/aifs</a></li>
+        <li><span class="ref-num">[14]</span> LF Energy. <em>OPAI &mdash; Open Power AI Consortium</em>. Linux Foundation Energy. <a href="https://www.lfenergy.org/projects/openpowerai/" target="_blank" rel="noopener">lfenergy.org/openpowerai</a></li>
+</ul>
+    </div>
+  
+    <div class="card" style="margin-top: 2rem;">
+      <h3 style="color: var(--accent-teal); margin-bottom: 1rem; font-size: 1rem;">🔗 Related Reports in This Suite</h3>
+      <ul class="ref-list">
+        <li style="padding: 10px 0; border-bottom: 1px solid var(--border);"><span class="ref-num">EMG-TECH-017</span> <a href="https://sattal.cottonspace.com/reports/minigrid-power-quality" target="_blank" rel="noopener"><strong>Power Quality Management in Mini-Grids</strong></a><br><span style="font-size:0.82rem; color: var(--text-secondary); margin-left: 2.2rem;">Companion report: phase unbalance, harmonic distortion, and asymmetric inverter control.</span></li>
+        <li style="padding: 10px 0; border-bottom: 1px solid var(--border);"><span class="ref-num">EMG-TECH-018</span> <a href="https://sattal.cottonspace.com/reports/minigrid-opai-software-audit" target="_blank" rel="noopener"><strong>Filtered OPAI AI Use-Case Matrix</strong></a><br><span style="font-size:0.82rem; color: var(--text-secondary); margin-left: 2.2rem;">Detailed breakdown of AIWP weather models (Quartz, SolarNet) and MARL dispatch algorithms.</span></li>
+        <li style="padding: 10px 0; border-bottom: 1px solid var(--border);"><span class="ref-num">EMG-TECH-013</span> <a href="https://sattal.cottonspace.com/reports/ssa-minigrid-downtime" target="_blank" rel="noopener"><strong>SSA Mini-Grid Downtime Analysis</strong></a><br><span style="font-size:0.82rem; color: var(--text-secondary); margin-left: 2.2rem;">Field evidence for battery PSoC abuse and cloud-dependency failures driving downtime.</span></li>
+        <li style="padding: 10px 0; border-bottom: none;"><span class="ref-num">EMG-TECH-015</span> <a href="https://sattal.cottonspace.com/reports/epri-dev-software-audit" target="_blank" rel="noopener"><strong>EPRI Open-Source Software Audit</strong></a><br><span style="font-size:0.82rem; color: var(--text-secondary); margin-left: 2.2rem;">Software stack context: OpenDER and OpenDSS that implement the DER compliance loops described here.</span></li>
       </ul>
     </div>
-  </section>
+</section>
 
 </main>
 

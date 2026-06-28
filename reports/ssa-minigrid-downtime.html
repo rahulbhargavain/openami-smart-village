@@ -8,23 +8,23 @@
   <link rel="stylesheet" href="/reports/report-style.css">
   <style>
     /* ─── Tab layout ─────────────────────────────── */
-    .tab-nav { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 2rem; border-bottom: 2px solid var(--glass-border); padding-bottom: 1rem; }
-    .tab-btn  { padding: 8px 18px; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--bg-card); color: var(--color-text-secondary); font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all .2s; }
-    .tab-btn:hover  { border-color: var(--teal); color: var(--teal); }
-    .tab-btn.active { background: var(--teal); color: #fff; border-color: var(--teal); }
+    .tab-nav { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 2rem; border-bottom: 2px solid var(--border); padding-bottom: 1rem; }
+    .tab-btn  { padding: 8px 18px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-secondary); font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all .2s; }
+    .tab-btn:hover  { border-color: var(--accent-teal); color: var(--accent-teal); }
+    .tab-btn.active { background: var(--accent-teal); color: #fff; border-color: var(--accent-teal); }
     .tab-content    { display: none; }
     .tab-content.active { display: block; }
 
     /* ─── Stat grid ──────────────────────────────── */
     .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
-    .stat-box  { background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1.2rem 1rem; text-align: center; }
-    .stat-val  { font-size: 2rem; font-weight: 800; color: var(--teal); line-height: 1; }
-    .stat-lbl  { font-size: 0.75rem; color: var(--color-text-secondary); margin-top: 4px; }
+    .stat-box  { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem 1rem; text-align: center; }
+    .stat-val  { font-size: 2rem; font-weight: 800; color: var(--accent-teal); line-height: 1; }
+    .stat-lbl  { font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px; }
 
     /* ─── Inline ref links ───────────────────────── */
-    .ref-num  { display: inline-block; min-width: 32px; font-weight: 700; color: var(--teal); }
+    .ref-num  { display: inline-block; min-width: 32px; font-weight: 700; color: var(--accent-teal); }
     .ref-list { list-style: none; padding: 0; }
-    .ref-list li { padding: 6px 0; border-bottom: 1px solid var(--glass-border); font-size: 0.85rem; line-height: 1.55; }
+    .ref-list li { padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; line-height: 1.55; }
     .ref-list li:last-child { border-bottom: none; }
 
     /* ─── Failure mode row ───────────────────────── */
@@ -133,7 +133,7 @@
     </div>
     <div class="card">
       <div class="card-title">
-        <div class="card-icon" style="background:var(--teal-dim);color:var(--teal);">⚙️</div>
+        <div class="card-icon" style="background:var(--teal-dim);color:var(--accent-teal);">⚙️</div>
         <span>The Decentralised Solution</span>
       </div>
       <p>Industrial Linux edge computers running open-source stacks — EPRI's <code>wisund</code>, OpenDER, and OpenDSS — combined with STS-compliant local vending and open RF mesh downlinks, eliminate every identified single point of failure while remaining fully standards-compliant.</p>
@@ -168,17 +168,17 @@
       <strong>MNO Tower De-energisation</strong>
       <p style="font-size:0.87rem;margin:4px 0 10px;">Rural Base Transceiver Stations (BTS) are highly susceptible to grid failures, diesel generator fuel theft, and battery depletion during consecutive low-solar days. ITU data shows that 30–40% of SSA rural BTS sites experience at least one unplanned outage per month. <sup>[1]</sup></p>
       <div class="risk-bar-track"><div class="risk-bar-fill" style="width:82%;background:linear-gradient(90deg,#dc2626,#f87171);"></div></div>
-      <small style="color:var(--color-text-secondary);">Severity: Critical</small>
+      <small style="color:var(--text-secondary);">Severity: Critical</small>
 
       <strong style="display:block;margin-top:1rem;">Low-Priority M2M Traffic Throttling</strong>
       <p style="font-size:0.87rem;margin:4px 0 10px;">MNOs routinely deprioritise SMS and machine-to-machine (M2M) traffic under network load. Latencies from hours to days are documented. GSMA's IoT guidelines explicitly acknowledge this as an unresolved operator policy gap for energy applications. <sup>[2]</sup></p>
       <div class="risk-bar-track"><div class="risk-bar-fill" style="width:72%;background:linear-gradient(90deg,#d97706,#fbbf24);"></div></div>
-      <small style="color:var(--color-text-secondary);">Severity: High</small>
+      <small style="color:var(--text-secondary);">Severity: High</small>
 
       <strong style="display:block;margin-top:1rem;">Mobile Money Aggregator API Failures</strong>
       <p style="font-size:0.87rem;margin:4px 0 10px;">The transactional loop routes through third-party APIs (M-Pesa, MTN MoMo, Orange Money) via SMS aggregators. A fault at any node in this multi-party chain stalls token distribution. A 2021 analysis found M-Pesa experienced 14 significant API outages in a single calendar year in Kenya. <sup>[3]</sup></p>
       <div class="risk-bar-track"><div class="risk-bar-fill" style="width:65%;background:linear-gradient(90deg,#d97706,#fbbf24);"></div></div>
-      <small style="color:var(--color-text-secondary);">Severity: High</small>
+      <small style="color:var(--text-secondary);">Severity: High</small>
     </div>
 
     <div class="card">
@@ -187,17 +187,17 @@
       <strong>RF Congestion in Unlicensed ISM Bands</strong>
       <p style="font-size:0.87rem;margin:4px 0 10px;">Operating on 868 MHz or 915 MHz ISM bands, mini-grid mesh networks lack regulatory protection. Interference from agricultural IoT sensors, local security radios, and consumer electronics is pervasive and growing. IEEE 802.15.4g frequency-hopping spread spectrum (FHSS) partially mitigates this, but only when implemented. <sup>[4]</sup></p>
       <div class="risk-bar-track"><div class="risk-bar-fill" style="width:60%;background:linear-gradient(90deg,#d97706,#fbbf24);"></div></div>
-      <small style="color:var(--color-text-secondary);">Severity: High</small>
+      <small style="color:var(--text-secondary);">Severity: High</small>
 
       <strong style="display:block;margin-top:1rem;">Physical Attenuation: Iron Roofing &amp; Mud-Brick Walls</strong>
       <p style="font-size:0.87rem;margin:4px 0 10px;">Corrugated iron sheet roofing — ubiquitous in SSA rural housing — is a highly effective RF reflector and attenuator, creating destructive multi-path interference. A 2020 empirical study measured 15–22 dB additional signal loss through a single iron-roofed structure at 900 MHz vs. open-field propagation. <sup>[5]</sup></p>
       <div class="risk-bar-track"><div class="risk-bar-fill" style="width:78%;background:linear-gradient(90deg,#dc2626,#f87171);"></div></div>
-      <small style="color:var(--color-text-secondary);">Severity: Critical</small>
+      <small style="color:var(--text-secondary);">Severity: Critical</small>
 
       <strong style="display:block;margin-top:1rem;">Dynamic Routing Collapse (Hop Limit Exceeded)</strong>
       <p style="font-size:0.87rem;margin:4px 0 10px;">In linearly distributed villages, mesh packets must hop from meter to meter toward the DCU. Without deterministic RPL (IPv6 Routing Protocol for Low-Power and Lossy Networks) configuration, networks experience routing loops or exceed maximum hop depth, isolating entire segments silently. <sup>[6]</sup></p>
       <div class="risk-bar-track"><div class="risk-bar-fill" style="width:70%;background:linear-gradient(90deg,#d97706,#fbbf24);"></div></div>
-      <small style="color:var(--color-text-secondary);">Severity: High</small>
+      <small style="color:var(--text-secondary);">Severity: High</small>
     </div>
   </div>
 
@@ -499,7 +499,7 @@
 
   <div class="card-grid">
     <div class="card">
-      <div class="card-title"><div class="card-icon" style="background:var(--teal-dim);color:var(--teal);">⚡</div><span>SparkMeter: Commercial Edge-First Architecture</span></div>
+      <div class="card-title"><div class="card-icon" style="background:var(--teal-dim);color:var(--accent-teal);">⚡</div><span>SparkMeter: Commercial Edge-First Architecture</span></div>
       <p><a href="https://www.sparkmeter.io" target="_blank" rel="noopener">SparkMeter</a> deploys local edge intelligence via their data concentrators and gateways. Their architecture caches customer account states, balances, and operational parameters directly at the mini-grid site. Transactions and billing logic are computed locally; when the cloud backhaul drops, the system continues processing meter states autonomously — shedding load or enforcing credit limits — until connectivity is restored. <sup>[15]</sup></p>
     </div>
     <div class="card">
@@ -575,7 +575,7 @@
 
   <div class="card-grid">
     <div class="card">
-      <div class="card-title"><div class="card-icon" style="background:var(--teal-dim);color:var(--teal);">⚙️</div><span>wisund Technical Profile</span></div>
+      <div class="card-title"><div class="card-icon" style="background:var(--teal-dim);color:var(--accent-teal);">⚙️</div><span>wisund Technical Profile</span></div>
       <ul style="padding-left:1.2rem;font-size:0.87rem;line-height:1.7;">
         <li><strong>Language:</strong> Native C++ with Boost / Asio asynchronous I/O — handles thousands of concurrent event-driven network transactions without thread blockages.</li>
         <li><strong>Hardware:</strong> Runs as a background Linux daemon on industrial edge computers or Raspberry Pi installed in the mini-grid's local control panel.</li>
@@ -661,7 +661,7 @@
 
   <div class="card-grid">
     <div class="card">
-      <div class="card-title"><div class="card-icon" style="background:var(--teal-dim);color:var(--teal);">🏗️</div><span>Immediate Actions (0–3 Months)</span></div>
+      <div class="card-title"><div class="card-icon" style="background:var(--teal-dim);color:var(--accent-teal);">🏗️</div><span>Immediate Actions (0–3 Months)</span></div>
       <ol style="padding-left:1.2rem;font-size:0.87rem;line-height:1.8;">
         <li>Audit all deployed meters: identify those with and without physical keypads.</li>
         <li>Request Supply Group Codes (SGCs) and Key Transfer Tokens from all meter vendors under regulatory licensing rights.</li>
@@ -761,6 +761,16 @@
     </ul>
   </div>
 
+
+    <div class="card" style="margin-top: 2rem;">
+      <h3 style="color: var(--accent-teal); margin-bottom: 1rem; font-size: 1rem;">🔗 Related Reports in This Suite</h3>
+      <ul class="ref-list">
+        <li style="padding: 10px 0; border-bottom: 1px solid var(--border);"><span class="ref-num">EMG-CRIT-012</span> <a href="https://sattal.cottonspace.com/reports/micropowermanager-critique" target="_blank" rel="noopener"><strong>MicroPowerManager Architectural Critique</strong></a><br><span style="font-size:0.82rem; color: var(--text-secondary); margin-left: 2.2rem;">Deep-dive critique of the open-source SCADA platform most commonly associated with SSA downtime events.</span></li>
+        <li style="padding: 10px 0; border-bottom: 1px solid var(--border);"><span class="ref-num">EMG-TRD-011</span> <a href="https://sattal.cottonspace.com/reports/open-source-dcu-mesh-hes" target="_blank" rel="noopener"><strong>Open-Source DCU Edge Architecture &amp; Wi-SUN Mesh</strong></a><br><span style="font-size:0.82rem; color: var(--text-secondary); margin-left: 2.2rem;">The offline-first hardware and mesh topology that eliminates cloud dependency failures.</span></li>
+        <li style="padding: 10px 0; border-bottom: 1px solid var(--border);"><span class="ref-num">EMG-TECH-015</span> <a href="https://sattal.cottonspace.com/reports/epri-dev-software-audit" target="_blank" rel="noopener"><strong>EPRI Open-Source Software Audit</strong></a><br><span style="font-size:0.82rem; color: var(--text-secondary); margin-left: 2.2rem;">Software hardening: Gurux.DLMS, SQLite WAL, and OTA bootloaders replacing the fragile cloud stack.</span></li>
+        <li style="padding: 10px 0; border-bottom: none;"><span class="ref-num">EMG-TECH-016</span> <a href="https://sattal.cottonspace.com/reports/minigrid-dynamic-capacity-ai" target="_blank" rel="noopener"><strong>Mini-Grid Dynamic Capacity &amp; AI Optimization</strong></a><br><span style="font-size:0.82rem; color: var(--text-secondary); margin-left: 2.2rem;">AI-driven battery dispatch to prevent the PSoC degradation that compounds downtime.</span></li>
+      </ul>
+    </div>
 </section>
 
 </main>

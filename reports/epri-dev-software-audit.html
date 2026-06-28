@@ -112,7 +112,7 @@
       <div class="card-grid" style="margin-top: 1.2rem;">
         <div class="card">
           <strong style="color: var(--accent-teal);">1. epri-dev/DLMS-COSEM (C/C++ Stack)</strong>
-          <p style="font-size: 0.88rem; margin-top: 4px;">Designed to demonstrate simple client-server communication loops over the DLMS/COSEM (IEC 62056) protocol. It lacks the core interface classes, ciphering suites, and physical layer transport bindings required to communicate with real-world edge meters like **Calin** or **Hexing**.</p>
+          <p style="font-size: 0.88rem; margin-top: 4px;">Designed to demonstrate simple client-server communication loops over the DLMS/COSEM (IEC 62056) protocol. It lacks the core interface classes, ciphering suites, and physical layer transport bindings required to communicate with real-world edge meters like <strong>Calin</strong> or <strong>Hexing</strong>.</p>
         </div>
         <div class="card">
           <strong style="color: var(--accent-purple);">2. epri-dev/dlms-access-point (AMI DCU)</strong>
@@ -120,7 +120,7 @@
         </div>
         <div class="card">
           <strong style="color: var(--accent-orange);">3. epri-dev/OpenDER (DER Controller)</strong>
-          <p style="font-size: 0.88rem; margin-top: 4px;">An active distributed energy resource control engine built to align inverters with the **IEEE 1547-2018** standard. Highly modular and robust, this repository is the most mature of the three, though it still requires external physical integration mappings and real-time simulator loops.</p>
+          <p style="font-size: 0.88rem; margin-top: 4px;">An active distributed energy resource control engine built to align inverters with the <strong>IEEE 1547-2018</strong> standard. Highly modular and robust, this repository is the most mature of the three, though it still requires external physical integration mappings and real-time simulator loops.</p>
         </div>
       </div>
     </div>
@@ -205,7 +205,7 @@
     <div class="card-grid">
       <div class="card">
         <h3>1. Missing Core COSEM Interface Classes</h3>
-        <p>Commercial smart meters organize billing data, events, and telemetry logs into predefined object models called **COSEM Interface Classes (ICs)**. The EPRI C/C++ repository only implements minor boilerplate components: partial definitions for **Data (Class 1)**, **Clock (Class 8)**, and **Association LN (Class 15)**. To reliably communicate with Calin or Hexing commercial meters, the stack completely lacks:<sup>[5]</sup></p>
+        <p>Commercial smart meters organize billing data, events, and telemetry logs into predefined object models called <strong>COSEM Interface Classes (ICs)</strong>. The EPRI C/C++ repository only implements minor boilerplate components: partial definitions for <strong>Data (Class 1)</strong>, <strong>Clock (Class 8)</strong>, and <strong>Association LN (Class 15)</strong>. To reliably communicate with Calin or Hexing commercial meters, the stack completely lacks:<sup>[5]</sup></p>
         <ul style="padding-left: 1.2rem; font-size: 0.88rem; line-height: 1.6; margin-top: 0.4rem;">
           <li><strong>Profile Generic (Class 7):</strong> The most critical missing component. Commercial meters store hourly load profiles (historical energy consumption interval logs) inside Class 7 generic registers. Without this, you cannot extract time-series consumption logs.</li>
           <li><strong>Register (Class 3) &amp; Extended Register (Class 4):</strong> Used to fetch instantaneous telemetry values such as voltage, current, active/reactive power, power factor, and cumulative billing energy registers.</li>
@@ -220,7 +220,7 @@
         <ul style="padding-left: 1.2rem; font-size: 0.88rem; line-height: 1.6; margin-top: 0.4rem;">
           <li><strong>Low-Level Security (LLS) Limits:</strong> The EPRI stack is limited to LLS, which relies on simple plaintext passwords sent over the physical wire. This is vulnerable to packet sniffing and capture-replay attacks.</li>
           <li><strong>Missing High-Level Security (HLS):</strong> Modern Calin and Hexing meters enforce HLS (Suite 0, 1, or 2), which requires multi-pass cryptographic handshakes (Mechanisms 5, 6, and 7) using <strong>GMAC</strong> or <strong>SHA-256</strong> to authenticate connections.</li>
-          <li><strong>Missing APDU Encryption:</strong> The stack lacks cryptographic engines to handle **AES-GCM (128/256-bit)** or **ECDSA** digital signatures. Secure meters will reject any unencrypted connection attempt at the initial `AARQ` (Application Association Request) stage.</li>
+          <li><strong>Missing APDU Encryption:</strong> The stack lacks cryptographic engines to handle <strong>AES-GCM (128/256-bit)</strong> or <strong>ECDSA</strong> digital signatures. Secure meters will reject any unencrypted connection attempt at the initial `AARQ` (Application Association Request) stage.</li>
         </ul>
       </div>
     </div>
@@ -343,7 +343,7 @@
     <div class="card-grid">
       <div class="card">
         <h3>3. Scale, Concurrency &amp; Traffic Prioritization</h3>
-        <p>The EPRI sandbox simulates a tiny footprint (3 meters). In actual deployments, a single Access Point manages between **50 and 1,000 meters** over a shared, low-speed wireless mesh connection. This requires a robust task engine:<sup>[12]</sup></p>
+        <p>The EPRI sandbox simulates a tiny footprint (3 meters). In actual deployments, a single Access Point manages between <strong>50 and 1,000 meters</strong> over a shared, low-speed wireless mesh connection. This requires a robust task engine:<sup>[12]</sup></p>
         <ul style="padding-left: 1.2rem; font-size: 0.88rem; line-height: 1.6; margin-top: 0.4rem;">
           <li><strong>Asynchronous Task Scheduler:</strong> The stack must run an asynchronous scheduler (using lightweight threads or an event-driven loop) that prevents scheduled massive bulk downloads (e.g., pulling a month of historical load profiles from 500 meters) from blocking high-priority, real-time alarms.</li>
           <li><strong>Priority-Queue Mechanism:</strong> Urgent alarm notifications (such as "anti-tamper switch triggered" or "instant power outage") must immediately bypass the queue and transmit to the HES.</li>
@@ -423,7 +423,7 @@
     <div class="card-grid">
       <div class="card">
         <h3>IEEE 1547-2018 Standards Compliance</h3>
-        <p>The **IEEE 1547-2018** standard defines the technical requirements for interconnecting Distributed Energy Resources (like solar PV arrays and battery energy storage) with the electric power grid. Historically, inverters were required to disconnect immediately during any grid anomaly. With higher DER penetration, this sudden disconnection could cause regional blackouts. OpenDER is designed to help stabilize the grid by enforcing complex compliance features:<sup>[15]</sup></p>
+        <p>The <strong>IEEE 1547-2018</strong> standard defines the technical requirements for interconnecting Distributed Energy Resources (like solar PV arrays and battery energy storage) with the electric power grid. Historically, inverters were required to disconnect immediately during any grid anomaly. With higher DER penetration, this sudden disconnection could cause regional blackouts. OpenDER is designed to help stabilize the grid by enforcing complex compliance features:<sup>[15]</sup></p>
         <ul style="padding-left: 1.2rem; font-size: 0.88rem; line-height: 1.6; margin-top: 0.4rem;">
           <li><strong>Volt-Var Regulation:</strong> Dynamically adjusts reactive power injection ($Q$) based on grid voltage fluctuations ($V$) to stabilize local feeder voltages.</li>
           <li><strong>Volt-Watt Curtailment:</strong> Automatically reduces active power output ($P$) when grid voltage exceeds safety thresholds to prevent high-voltage grid damage.</li>
@@ -434,10 +434,10 @@
 
       <div class="card">
         <h3>OpenDER Codebase Maturity &amp; Applications</h3>
-        <p>Unlike the DLMS-COSEM reference stack, the **epri-dev/OpenDER** framework is highly robust, written in modular Python with an architecture that allows direct integration with real-world simulation and control pipelines. It is actively utilized across several mature academic and utility initiatives:<sup>[16]</sup></p>
+        <p>Unlike the DLMS-COSEM reference stack, the <strong>epri-dev/OpenDER</strong> framework is highly robust, written in modular Python with an architecture that allows direct integration with real-world simulation and control pipelines. It is actively utilized across several mature academic and utility initiatives:<sup>[16]</sup></p>
         <ul style="padding-left: 1.2rem; font-size: 0.88rem; line-height: 1.6; margin-top: 0.4rem;">
           <li><strong>LF Energy &amp; Seapath Integration:</strong> Collaborates with the Linux Foundation Energy (LF Energy) suite to provide open-source grid virtualization and security orchestration models.</li>
-          <li><strong>PNNL Grid Simulation Frameworks:</strong> Pacific Northwest National Laboratory (PNNL) integrates OpenDER with **OpenDSS** and **GridLAB-D** to simulate massive distribution systems and validate the impacts of thousands of solar assets on the utility grid.</li>
+          <li><strong>PNNL Grid Simulation Frameworks:</strong> Pacific Northwest National Laboratory (PNNL) integrates OpenDER with <strong>OpenDSS</strong> and <strong>GridLAB-D</strong> to simulate massive distribution systems and validate the impacts of thousands of solar assets on the utility grid.</li>
           <li><strong>NREL solar PV inverters loops:</strong> The National Renewable Energy Laboratory (NREL) uses OpenDER to simulate hardware-in-the-loop (HIL) inverter behaviors under high solar penetration scenarios.</li>
         </ul>
       </div>
@@ -525,12 +525,12 @@
     <div class="card-grid">
       <div class="card">
         <h3>Step 1: Replace EPRI DLMS Stack with Gurux.DLMS</h3>
-        <p>Instead of writing thousands of lines of custom C code to add missing security suites, dynamic OBIS parsing, and physical layer Mode E handshakes to EPRI's DLMS-COSEM codebase, developers should shift to a mature, compliant stack such as the open-source **Gurux.DLMS** framework. Gurux is available in C, C++, C#, Java, and Python and carries official DLMS UA certification, ensuring full compatibility with commercial Calin and Hexing meters out of the box.</p>
+        <p>Instead of writing thousands of lines of custom C code to add missing security suites, dynamic OBIS parsing, and physical layer Mode E handshakes to EPRI's DLMS-COSEM codebase, developers should shift to a mature, compliant stack such as the open-source <strong>Gurux.DLMS</strong> framework. Gurux is available in C, C++, C#, Java, and Python and carries official DLMS UA certification, ensuring full compatibility with commercial Calin and Hexing meters out of the box.</p>
       </div>
 
       <div class="card">
         <h3>Step 2: Rebuild the DCU Local Storage Pipeline</h3>
-        <p>Replace the volatile database configuration of `dlms-access-point` with a local, transactional database like **SQLite** configured with write-ahead logging (WAL). Integrate a RAM-buffered caching layer that writes historical logs to flash memory in bulk at regular intervals. This minimizes eMMC/SD-card wear and protects the filesystem from corruption during sudden power failures.</p>
+        <p>Replace the volatile database configuration of `dlms-access-point` with a local, transactional database like <strong>SQLite</strong> configured with write-ahead logging (WAL). Integrate a RAM-buffered caching layer that writes historical logs to flash memory in bulk at regular intervals. This minimizes eMMC/SD-card wear and protects the filesystem from corruption during sudden power failures.</p>
       </div>
     </div>
 
@@ -542,7 +542,7 @@
 
       <div class="card">
         <h3>Step 4: Package with Yocto or OpenWrt</h3>
-        <p>Package the entire software stack onto a hardened embedded Linux operating system, such as a custom **Yocto Project** distribution or a hardened **OpenWrt** ecosystem. The software architecture must actively hook into physical watchdog timers and implement dual-bank A/B partition OTA upgrade strategies to prevent bricking remote physical assets.</p>
+        <p>Package the entire software stack onto a hardened embedded Linux operating system, such as a custom <strong>Yocto Project</strong> distribution or a hardened <strong>OpenWrt</strong> ecosystem. The software architecture must actively hook into physical watchdog timers and implement dual-bank A/B partition OTA upgrade strategies to prevent bricking remote physical assets.</p>
       </div>
     </div>
 
@@ -550,7 +550,7 @@
       <div class="alert-icon">💡</div>
       <div class="alert-content">
         <div class="alert-title">Transition Timeline for Engineering Teams</div>
-        <div class="alert-text">To transition a project from an EPRI-dev reference prototype to a field-ready AMI solution: specify the Gurux.DLMS wrapper within the first **30 days**. Rebuild the local storage pipeline and write flash protection databases by **Day 60**. Integrate the physical Wi-SUN mesh drivers and secure HSM keys by **Day 120**. Run a pilot project on a small cluster (10–20 meters) under real grid conditions by **Day 180** to validate the system before embarking on utility-wide rollouts.</div>
+        <div class="alert-text">To transition a project from an EPRI-dev reference prototype to a field-ready AMI solution: specify the Gurux.DLMS wrapper within the first <strong>30 days</strong> of the project. Rebuild the local storage pipeline and introduce write-protected flash databases by <strong>Day 60</strong>. Integrate the physical Wi-SUN mesh radio drivers and provision secure HSM key material by <strong>Day 120</strong>. Run a supervised pilot on a small cluster (10–20 meters) under live grid conditions by <strong>Day 180</strong> to validate the system before embarking on utility-wide rollouts.</div>
       </div>
     </div>
   </section>
@@ -567,9 +567,9 @@
 
     <div class="card">
       <ul class="ref-list">
-        <li><span class="ref-num">[1]</span> EPRI. <em>epri-dev/DLMS-COSEM — Reference Implementation of the DLMS/COSEM Protocol in C/C++</em>. GitHub. <a href="https://github.com/epri-dev/DLMS-COSEM" target="_blank" rel="noopener">github.com/epri-dev/DLMS-COSEM</a></li>
+        <li><span class="ref-num">[1]</span> EPRI. <em>epri-dev/DLMS-COSEM — Reference Implementation of the DLMS/COSEM Protocol in C/C++</em>. GitHub. <a href="https://github.com/epri-dev/DLMS-COSEM" target="_blank" rel="noopener">github.com/epri-dev/DLMS-COSEM</a> &mdash; Reference C/C++ implementation</li>
         <li><span class="ref-num">[2]</span> EPRI. <em>epri-dev/dlms-access-point — Simulation Sandbox of AMI Concentrator and Data Access Points</em>. GitHub. <a href="https://github.com/epri-dev/dlms-access-point" target="_blank" rel="noopener">github.com/epri-dev/dlms-access-point</a></li>
-        <li><span class="ref-num">[3]</span> EPRI. <em>epri-dev/OpenDER — Distributed Energy Resource Compliance Controller</em>. GitHub. <a href="https://github.com/epri-dev/OpenDER" target="_blank" rel="noopener">github.com/epri-dev/OpenDER</a></li>
+        <li><span class="ref-num">[3]</span> EPRI. <em>epri-dev/OpenDER — Distributed Energy Resource Compliance Controller</em>. GitHub. <a href="https://github.com/epri-dev/OpenDER" target="_blank" rel="noopener">github.com/epri-dev/OpenDER</a> &mdash; IEEE 1547-2018 compliant controller</li>
         <li><span class="ref-num">[4]</span> Gurux Ltd. <em>Gurux.DLMS open-source framework and client library</em>. GitHub. <a href="https://github.com/Gurux/Gurux.DLMS" target="_blank" rel="noopener">github.com/Gurux/Gurux.DLMS</a></li>
         <li><span class="ref-num">[5]</span> IEC. <em>IEC 62056-5-3: DLMS/COSEM Application Layer standard</em>. International Electrotechnical Commission. <a href="https://www.iec.ch" target="_blank" rel="noopener">iec.ch</a></li>
         <li><span class="ref-num">[6]</span> DLMS User Association. <em>DLMS/COSEM Blue Book — COSEM Interface Classes and Object Identification System (OBIS)</em>. DLMS UA. <a href="https://www.dlms.com" target="_blank" rel="noopener">dlms.com</a></li>
@@ -577,9 +577,26 @@
         <li><span class="ref-num">[8]</span> LF Energy. <em>Seapath — Software Enabled Automation Platform for Power Substations</em>. Linux Foundation Energy. <a href="https://www.lfenergy.org" target="_blank" rel="noopener">lfenergy.org</a></li>
         <li><span class="ref-num">[9]</span> Pacific Northwest National Laboratory (PNNL). <em>GridAPPS-D — Open Platform for Advanced Distribution Management System Applications</em>. GitHub. <a href="https://github.com/GRIDAPPSD" target="_blank" rel="noopener">github.com/GRIDAPPSD</a></li>
         <li><span class="ref-num">[10]</span> SQLite. <em>SQLite Database Engine with Write-Ahead Logging (WAL) configuration</em>. SQLite. <a href="https://www.sqlite.org" target="_blank" rel="noopener">sqlite.org</a></li>
+      
+        <li><span class="ref-num">[11]</span> Wi-SUN Alliance. <em>Wi-SUN FAN Technical Profile Specification v1.1</em>. Wi-SUN Alliance, 2022. <a href="https://wi-sun.org/specifications/" target="_blank" rel="noopener">wi-sun.org/specifications</a></li>
+        <li><span class="ref-num">[12]</span> Silicon Labs. <em>wisun-br-linux: Wi-SUN Border Router for Linux</em>. GitHub. <a href="https://github.com/SiliconLabs/wisun-br-linux" target="_blank" rel="noopener">github.com/SiliconLabs/wisun-br-linux</a></li>
+        <li><span class="ref-num">[13]</span> Infineon Technologies. <em>OPTIGA TPM 2.0 SLB 9670 Embedded Security Controller Datasheet</em>. Infineon, 2023. <a href="https://www.infineon.com/cms/en/product/security-smart-card-solutions/optiga-embedded-security-solutions/optiga-tpm/" target="_blank" rel="noopener">infineon.com/optiga-tpm</a></li>
+        <li><span class="ref-num">[14]</span> The Yocto Project. <em>Yocto Project Reference Manual</em>. Linux Foundation. <a href="https://docs.yoctoproject.org/ref-manual/" target="_blank" rel="noopener">docs.yoctoproject.org</a></li>
+        <li><span class="ref-num">[15]</span> IEEE. <em>IEEE 1547-2018: Standard for Interconnection and Interoperability of Distributed Energy Resources</em>. IEEE SA. <a href="https://standards.ieee.org/ieee/1547/5915/" target="_blank" rel="noopener">standards.ieee.org/ieee/1547</a></li>
+        <li><span class="ref-num">[16]</span> PNNL. <em>GridAPPS-D: Open Platform for Distribution System Applications</em>. GitHub / PNNL. <a href="https://github.com/GRIDAPPSD" target="_blank" rel="noopener">github.com/GRIDAPPSD</a></li>
+</ul>
+    </div>
+  
+    <div class="card" style="margin-top: 2rem;">
+      <h3 style="color: var(--accent-teal); margin-bottom: 1rem; font-size: 1rem;">🔗 Related Reports in This Suite</h3>
+      <ul class="ref-list">
+        <li style="padding: 10px 0; border-bottom: 1px solid var(--border);"><span class="ref-num">EMG-TRD-011</span> <a href="https://sattal.cottonspace.com/reports/open-source-dcu-mesh-hes" target="_blank" rel="noopener"><strong>Open-Source DCU Edge Architecture &amp; Wi-SUN Mesh</strong></a><br><span style="font-size:0.82rem; color: var(--text-secondary); margin-left: 2.2rem;">Hardware complement: DCU board design, Wi-SUN FAN RF topology, and HES integration.</span></li>
+        <li style="padding: 10px 0; border-bottom: 1px solid var(--border);"><span class="ref-num">EMG-TECH-018</span> <a href="https://sattal.cottonspace.com/reports/minigrid-opai-software-audit" target="_blank" rel="noopener"><strong>Filtered OPAI AI Use-Case Matrix</strong></a><br><span style="font-size:0.82rem; color: var(--text-secondary); margin-left: 2.2rem;">AI/ML models from the LF Energy OPAI consortium that overlay onto the software stacks audited here.</span></li>
+        <li style="padding: 10px 0; border-bottom: 1px solid var(--border);"><span class="ref-num">EMG-TRD-005</span> <a href="https://sattal.cottonspace.com/reports/openami-smart-metering-spec" target="_blank" rel="noopener"><strong>OpenAMI Smart Metering Reference Design</strong></a><br><span style="font-size:0.82rem; color: var(--text-secondary); margin-left: 2.2rem;">Grid code and metering hardware spec that the DLMS/COSEM stack must interface with.</span></li>
+        <li style="padding: 10px 0; border-bottom: none;"><span class="ref-num">EMG-TECH-013</span> <a href="https://sattal.cottonspace.com/reports/ssa-minigrid-downtime" target="_blank" rel="noopener"><strong>SSA Mini-Grid Downtime Analysis</strong></a><br><span style="font-size:0.82rem; color: var(--text-secondary); margin-left: 2.2rem;">Operational motivation: how software gaps in cloud-dependent systems cause 4-day offline events.</span></li>
       </ul>
     </div>
-  </section>
+</section>
 
 </main>
 

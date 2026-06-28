@@ -251,7 +251,7 @@ def heuristic_phase_swap_optimizer():
     <div class="card-grid">
       <div class="card">
         <h3>Recommendation for SSA Isolated Grids</h3>
-        <p>Gather 15-minute interval data from consumer smart meters. Run this Python optimization script quarterly to identify which single-phase consumers should be physically re-terminated to a different phase during standard maintenance routines. Focus on minimizing **Neutral Wire Current** ($I_N$) to eliminate transformer core losses, protect earthing safety, and stabilize battery banks.</p>
+        <p>Gather 15-minute interval data from consumer smart meters. Run this Python optimization script quarterly to identify which single-phase consumers should be physically re-terminated to a different phase during standard maintenance routines. Focus on minimizing <strong>Neutral Wire Current</strong> ($I_N$) to eliminate transformer core losses, protect earthing safety, and stabilize battery banks.</p>
       </div>
 
       <div class="card">
@@ -333,7 +333,7 @@ def heuristic_phase_swap_optimizer():
           <li><strong>Voltage Sags:</strong> The heavily loaded phase experiences severe voltage sags because the inverter cannot supply differential current.</li>
           <li><strong>Reverse Power:</strong> The inverter may push excess, unneeded power back through the lightly loaded phases, triggering localized over-voltages and anti-islanding trips.</li>
         </ul>
-        <p style="margin-top: 0.5rem;">To mitigate this, operators must deploy **Three-Phase, Four-Wire (or Four-Leg) Hybrid Inverters** driven by an open-source Edge Energy Management System (such as LF Energy’s **Fledge** or **OpenFMB** frameworks). These systems bypass balanced three-phase operation and enforce **Asymmetric P and Q Inversion**.</p>
+        <p style="margin-top: 0.5rem;">To mitigate this, operators must deploy <strong>Three-Phase, Four-Wire (or Four-Leg) Hybrid Inverters</strong> driven by an open-source Edge Energy Management System (such as LF Energy’s <strong>Fledge</strong> or <strong>OpenFMB</strong> frameworks). These systems bypass balanced three-phase operation and enforce <strong>Asymmetric P and Q Inversion</strong>.</p>
       </div>
 
       <div class="card">
@@ -422,13 +422,13 @@ def heuristic_phase_swap_optimizer():
     <div class="card-grid">
       <div class="card">
         <h3>The Triplen Harmonic Bottleneck</h3>
-        <p>Because mini-grid networks in developing agricultural markets rely heavily on low-cost LED lighting, phone chargers, variable frequency water drives, and lower-tier solar inverters, they suffer from high concentrations of **Total Harmonic Distortion (THD)**. Unlike phase unbalances, harmonic distortion cannot be fixed by moving wires or injecting fundamental active/reactive power currents.<sup>[11]</sup></p>
-        <p style="margin-top: 0.5rem;">Single-phase non-linear consumer electronics generate massive **3rd, 9th, and 15th order harmonics** (known as triplen harmonics). These triplen harmonics do not cancel out in a three-phase system; instead, they add up in phase on the neutral wire, flowing back to the substation transformer and causing severe heating and equipment degradation.</p>
+        <p>Because mini-grid networks in developing agricultural markets rely heavily on low-cost LED lighting, phone chargers, variable frequency water drives, and lower-tier solar inverters, they suffer from high concentrations of <strong>Total Harmonic Distortion (THD)</strong>. Unlike phase unbalances, harmonic distortion cannot be fixed by moving wires or injecting fundamental active/reactive power currents.<sup>[11]</sup></p>
+        <p style="margin-top: 0.5rem;">Single-phase non-linear consumer electronics generate massive <strong>3rd, 9th, and 15th order harmonics</strong> (known as triplen harmonics). These triplen harmonics do not cancel out in a three-phase system; instead, they add up in phase on the neutral wire, flowing back to the substation transformer and causing severe heating and equipment degradation.</p>
       </div>
 
       <div class="card">
         <h3>Trapping Harmonics via Delta-Wye Configurations</h3>
-        <p>In isolated Sub-Saharan Africa mini-grids, operators can mitigate triplen harmonics by specifying that the primary distribution transformer uses a **Delta-Wye ($\Delta$-Y) connection configuration**:</p>
+        <p>In isolated Sub-Saharan Africa mini-grids, operators can mitigate triplen harmonics by specifying that the primary distribution transformer uses a <strong>Delta-Wye ($\Delta$-Y) connection configuration</strong>:</p>
         <ul style="padding-left: 1.2rem; font-size: 0.88rem; line-height: 1.6; margin-top: 0.5rem;">
           <li><strong>Zero-Sequence Isolation:</strong> The triplen harmonic currents add up in the neutral wire and flow back to the transformer secondary (Wye side). Because they are zero-sequence in nature, they are magnetically coupled to the primary (Delta side).</li>
           <li><strong>Circulating Current Trap:</strong> The Delta primary winding configuration provides a closed electrical loop. The zero-sequence harmonic currents circulate harmlessly within the delta windings and dissipate as heat, trapping them and preventing them from flowing back to the main generator.</li>
@@ -449,9 +449,9 @@ def heuristic_phase_swap_optimizer():
 
     <div class="card">
       <h3>Preventing Grid Resonance Failures</h3>
-      <p>Before connecting new industrial loads—such as telecom towers, cold-storage units, or large motor-driven mills—to a mini-grid feeder, operators must audit their harmonic profiles. Mini-grid lines have inherent inductance ($L$) and capacitance ($C$). If an incoming commercial load injects harmonics that match the grid's natural resonance frequency, the system can experience a **parallel resonance condition**. This can cause severe voltage amplification spikes, blowing out fuses, damaging output filters, and burning out household appliances.<sup>[12]</sup></p>
+      <p>Before connecting new industrial loads—such as telecom towers, cold-storage units, or large motor-driven mills—to a mini-grid feeder, operators must audit their harmonic profiles. Mini-grid lines have inherent inductance ($L$) and capacitance ($C$). If an incoming commercial load injects harmonics that match the grid's natural resonance frequency, the system can experience a <strong>parallel resonance condition</strong>. This can cause severe voltage amplification spikes, blowing out fuses, damaging output filters, and burning out household appliances.<sup>[12]</sup></p>
       
-      <p style="margin-top: 0.8rem;">To prevent these failures, operators can use the **EPRI Grid-IQ Harmonics Evaluation Module (OS-HEM)** to run predictive simulations:</p>
+      <p style="margin-top: 0.8rem;">To prevent these failures, operators can use the <strong>EPRI Grid-IQ Harmonics Evaluation Module (OS-HEM)</strong> to run predictive simulations:</p>
 
       <ul style="padding-left: 1.5rem; margin-top: 0.8rem; line-height: 1.8; font-size: 0.9rem;">
         <li><strong>Harmonic Injection Modeling:</strong> Inject the measured or manufacturer-specified harmonic spectrum of the incoming commercial load into the OpenDSS circuit model using the Grid-IQ tool.</li>
@@ -517,15 +517,31 @@ def heuristic_phase_swap_optimizer():
     <div class="card">
       <ul class="ref-list">
         <li><span class="ref-num">[1]</span> EPRI. <em>OpenDSS — Open Distribution System Simulator</em>. EPRI Software. <a href="https://www.epri.com/pages/sa/opendss" target="_blank" rel="noopener">epri.com/pages/sa/opendss</a></li>
-        <li><span class="ref-num">[2]</span> IEEE. <em>IEEE 519-2022 — IEEE Recommended Practice and Requirements for Harmonic Control in Electric Power Systems</em>. IEEE Standards Association. <a href="https://standards.ieee.org" target="_blank" rel="noopener">standards.ieee.org</a></li>
-        <li><span class="ref-num">[3]</span> LF Energy. <em>Fledge — Industrial Edge Framework for IoT and Smart Grid Operations</em>. Linux Foundation Energy. <a href="https://www.lfenergy.org" target="_blank" rel="noopener">lfenergy.org</a></li>
-        <li><span class="ref-num">[4]</span> LF Energy. <em>OpenFMB — Open Field Message Bus for Symmetrical Grid Components</em>. Linux Foundation Energy. <a href="https://www.lfenergy.org" target="_blank" rel="noopener">lfenergy.org</a></li>
+        <li><span class="ref-num">[2]</span> IEEE. <em>IEEE 519-2022 — IEEE Recommended Practice and Requirements for Harmonic Control in Electric Power Systems</em>. IEEE Standards Association. <a href="https://standards.ieee.org/ieee/519/6389/" target="_blank" rel="noopener">standards.ieee.org/ieee/519</a></li>
+        <li><span class="ref-num">[3]</span> LF Energy. <em>Fledge — Industrial Edge Framework for IoT and Smart Grid Operations</em>. Linux Foundation Energy. <a href="https://www.lfenergy.org/projects/fledge/" target="_blank" rel="noopener">lfenergy.org/projects/fledge</a></li>
+        <li><span class="ref-num">[4]</span> LF Energy. <em>OpenFMB — Open Field Message Bus for Symmetrical Grid Components</em>. Linux Foundation Energy. <a href="https://www.lfenergy.org/projects/openfmb/" target="_blank" rel="noopener">lfenergy.org/projects/openfmb</a></li>
         <li><span class="ref-num">[5]</span> CIGRE. <em>Power Quality Mitigation Strategies in Distributed Generation Grids</em>. CIGRE Technical Brochure 812, Paris, 2023. <a href="https://www.cigre.org" target="_blank" rel="noopener">cigre.org</a></li>
-        <li><span class="ref-num">[6]</span> World Bank ESMAP. <em>Isolated Solar Mini-Grids: Design Standards and Power Quality Requirements for Developing Nations</em>. ESMAP Technical Paper, Washington DC, 2022. <a href="https://esmap.org" target="_blank" rel="noopener">esmap.org</a></li>
+        <li><span class="ref-num">[6]</span> World Bank ESMAP. <em>Isolated Solar Mini-Grids: Design Standards and Power Quality Requirements for Developing Nations</em>. ESMAP Technical Paper, Washington DC, 2022. <a href="https://esmap.org/mini-grids-design-standards" target="_blank" rel="noopener">esmap.org/mini-grids</a></li>
         <li><span class="ref-num">[7]</span> EPRI. <em>Grid-IQ Harmonics Evaluation Module (OS-HEM) and Spectrogram Audits</em>. EPRI Product Catalogue. <a href="https://www.epri.com" target="_blank" rel="noopener">epri.com</a></li>
+      
+        <li><span class="ref-num">[8]</span> OpenDSS. <em>Open Distribution System Simulator &mdash; Python Interface and Phase Rebalancing Modules</em>. EPRI Software Centre. <a href="https://www.epri.com/pages/sa/opendss" target="_blank" rel="noopener">epri.com/opendss</a></li>
+        <li><span class="ref-num">[9]</span> Arya, L.D., Choube, S.C. &amp; Shrivastava, M. <em>Technique for loss reduction and improving voltage profile using reactive power injection by identified nodes of radial distribution systems</em>. Energy Conversion and Management, 2012. <a href="https://doi.org/10.1016/j.enconman.2012.03.022" target="_blank" rel="noopener">doi.org/10.1016/j.enconman.2012.03.022</a></li>
+        <li><span class="ref-num">[10]</span> Walling, R.A. et al. <em>Summary of Distributed Resources Impact on Power Delivery Systems</em>. IEEE Transactions on Power Delivery, 2008. <a href="https://doi.org/10.1109/TPWRD.2007.909776" target="_blank" rel="noopener">doi.org/10.1109/TPWRD.2007.909776</a></li>
+        <li><span class="ref-num">[11]</span> Blaabjerg, F. et al. <em>Overview of Control and Grid Synchronization for Distributed Power Generation Systems</em>. IEEE Transactions on Industrial Electronics, 2006. <a href="https://doi.org/10.1109/TIE.2006.878357" target="_blank" rel="noopener">doi.org/10.1109/TIE.2006.878357</a></li>
+        <li><span class="ref-num">[12]</span> Mohan, N., Undeland, T.M. &amp; Robbins, W.P. <em>Power Electronics: Converters, Applications, and Design</em> (3rd ed.). Wiley, 2002. ISBN 978-0-471-22693-2.</li>
+</ul>
+    </div>
+  
+    <div class="card" style="margin-top: 2rem;">
+      <h3 style="color: var(--accent-teal); margin-bottom: 1rem; font-size: 1rem;">🔗 Related Reports in This Suite</h3>
+      <ul class="ref-list">
+        <li style="padding: 10px 0; border-bottom: 1px solid var(--border);"><span class="ref-num">EMG-TECH-016</span> <a href="https://sattal.cottonspace.com/reports/minigrid-dynamic-capacity-ai" target="_blank" rel="noopener"><strong>Mini-Grid Dynamic Capacity &amp; AI Optimization</strong></a><br><span style="font-size:0.82rem; color: var(--text-secondary); margin-left: 2.2rem;">Companion report: Ambient Adjusted Ratings, voltage sag management, and AI-driven battery dispatch.</span></li>
+        <li style="padding: 10px 0; border-bottom: 1px solid var(--border);"><span class="ref-num">EMG-TECH-018</span> <a href="https://sattal.cottonspace.com/reports/minigrid-opai-software-audit" target="_blank" rel="noopener"><strong>Filtered OPAI AI Use-Case Matrix</strong></a><br><span style="font-size:0.82rem; color: var(--text-secondary); margin-left: 2.2rem;">Covers AI/ML models (PowerNet, SolarNet) for autonomous phase rebalancing and load forecasting.</span></li>
+        <li style="padding: 10px 0; border-bottom: 1px solid var(--border);"><span class="ref-num">EMG-TECH-015</span> <a href="https://sattal.cottonspace.com/reports/epri-dev-software-audit" target="_blank" rel="noopener"><strong>EPRI Open-Source Software Audit</strong></a><br><span style="font-size:0.82rem; color: var(--text-secondary); margin-left: 2.2rem;">DLMS/COSEM, OpenDER, and OpenDSS stacks that implement the inverter control loops cited here.</span></li>
+        <li style="padding: 10px 0; border-bottom: none;"><span class="ref-num">EMG-TECH-013</span> <a href="https://sattal.cottonspace.com/reports/ssa-minigrid-downtime" target="_blank" rel="noopener"><strong>SSA Mini-Grid Downtime Analysis</strong></a><br><span style="font-size:0.82rem; color: var(--text-secondary); margin-left: 2.2rem;">Operational context: SMS/RF failure modes and cloud lock-in causing power quality degradation.</span></li>
       </ul>
     </div>
-  </section>
+</section>
 
 </main>
 
