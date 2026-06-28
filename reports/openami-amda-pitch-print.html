@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OpenAMI — Technical Pitch for AMDA Members</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@600;700;800&display=swap');
+
+  @page {
+    size: A4;
+    margin: 14mm 13mm 12mm 13mm;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 7.8pt;
+    line-height: 1.45;
+    color: #1a2520;
+    background: #fff;
+    width: 183mm; /* A4 width minus margins */
+  }
+
+  /* ─── HEADER ─── */
+  .doc-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    border-bottom: 2px solid #1b4332;
+    padding-bottom: 5pt;
+    margin-bottom: 6pt;
+  }
+  .doc-header-left h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 14pt;
+    font-weight: 800;
+    color: #1b4332;
+    line-height: 1.1;
+  }
+  .doc-header-left .sub {
+    font-size: 7pt;
+    color: #5a7a6a;
+    margin-top: 2pt;
+    max-width: 120mm;
+  }
+  .doc-header-right {
+    text-align: right;
+    font-size: 6.5pt;
+    color: #5a7a6a;
+    line-height: 1.6;
+  }
+  .doc-header-right .ref {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 7pt;
+    color: #c07b3a;
+  }
+  .amda-tag {
+    display: inline-block;
+    background: #d1fae5;
+    color: #065f46;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 6pt;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 1.5pt 6pt;
+    border-radius: 20pt;
+    margin-bottom: 3pt;
+  }
+
+  /* ─── LAYOUT ─── */
+  .page-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 5pt;
+  }
+  /* First row: 3 cols, second row: full-width bottom strip */
+
+  .col { break-inside: avoid; }
+
+  /* ─── SECTION TITLES ─── */
+  .sec-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 7.5pt;
+    font-weight: 800;
+    color: #1b4332;
+    border-left: 2.5pt solid #1b4332;
+    padding-left: 4pt;
+    margin-bottom: 4pt;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* ─── CARDS ─── */
+  .card {
+    background: #f8faf9;
+    border: 0.5pt solid #d4e6dc;
+    border-radius: 4pt;
+    padding: 5pt 6pt;
+    margin-bottom: 4pt;
+    break-inside: avoid;
+  }
+  .card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 7pt;
+    font-weight: 700;
+    color: #1b4332;
+    margin-bottom: 2.5pt;
+  }
+  .card p, .card li {
+    font-size: 7.2pt;
+    color: #3d5a4a;
+    line-height: 1.45;
+  }
+  .card ul {
+    padding-left: 9pt;
+    margin-top: 2pt;
+  }
+  .card li { margin-bottom: 1.5pt; }
+
+  .highlight {
+    background: #ecfdf5;
+    border-left: 2pt solid #059669;
+    padding: 3pt 5pt;
+    border-radius: 0 3pt 3pt 0;
+    font-size: 7pt;
+    color: #065f46;
+    margin: 3pt 0;
+    font-style: italic;
+  }
+
+  /* ─── LAYER TABLE ─── */
+  .layer-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 6.8pt;
+    margin-bottom: 4pt;
+  }
+  .layer-table th {
+    background: #1b4332;
+    color: #fff;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    padding: 2.5pt 4pt;
+    text-align: left;
+    font-size: 6.5pt;
+  }
+  .layer-table td {
+    padding: 2.5pt 4pt;
+    border-bottom: 0.5pt solid #d4e6dc;
+    color: #3d5a4a;
+    vertical-align: top;
+  }
+  .layer-table tr:nth-child(even) td { background: #f0f9f4; }
+  .layer-table td:first-child {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    color: #0891b2;
+    white-space: nowrap;
+  }
+
+  /* ─── AUDIENCE GRID ─── */
+  .audience-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3pt;
+    margin-bottom: 4pt;
+  }
+  .audience-card {
+    background: #f0f9f4;
+    border: 0.5pt solid #a7d9bf;
+    border-radius: 3pt;
+    padding: 4pt 5pt;
+  }
+  .audience-card h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 6.8pt;
+    font-weight: 700;
+    margin-bottom: 2pt;
+    color: #1b4332;
+  }
+  .audience-card p { font-size: 6.5pt; color: #3d5a4a; line-height: 1.4; }
+
+  /* ─── EPRI BLOCKS ─── */
+  .epri-block {
+    border-left: 2.5pt solid #7c3aed;
+    background: #faf5ff;
+    border-radius: 0 3pt 3pt 0;
+    padding: 4pt 5pt;
+    margin-bottom: 3pt;
+  }
+  .epri-block h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 7pt;
+    font-weight: 700;
+    color: #6d28d9;
+    margin-bottom: 2pt;
+  }
+  .epri-block p { font-size: 6.8pt; color: #4b3a70; line-height: 1.45; }
+  .epri-block .caveat {
+    display: inline-block;
+    background: #fef3c7;
+    color: #92400e;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 5.5pt;
+    text-transform: uppercase;
+    padding: 0.5pt 4pt;
+    border-radius: 10pt;
+    margin-right: 3pt;
+  }
+  .epri-block a { color: #0891b2; font-weight: 600; font-size: 6.5pt; }
+
+  /* ─── STEPS ─── */
+  .steps { list-style: none; padding: 0; }
+  .steps li {
+    display: flex;
+    gap: 5pt;
+    align-items: flex-start;
+    margin-bottom: 3pt;
+    font-size: 7pt;
+    color: #3d5a4a;
+    line-height: 1.4;
+  }
+  .steps li::before {
+    content: attr(data-n);
+    flex-shrink: 0;
+    width: 13pt;
+    height: 13pt;
+    background: #1b4332;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 6.5pt;
+    margin-top: 0.5pt;
+  }
+
+  /* ─── RESOURCES ─── */
+  .resource-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 6.5pt;
+  }
+  .resource-table tr { border-bottom: 0.5pt solid #e2ede8; }
+  .resource-table td { padding: 2.5pt 3pt; color: #3d5a4a; vertical-align: top; }
+  .resource-table td:first-child { color: #5a7a6a; width: 42%; }
+  .resource-table td:last-child { color: #0891b2; font-weight: 600; }
+
+  /* ─── BLOCKQUOTE ─── */
+  blockquote {
+    border-left: 2pt solid #0891b2;
+    padding: 3pt 5pt;
+    background: #ecfeff;
+    border-radius: 0 3pt 3pt 0;
+    font-style: italic;
+    font-size: 7pt;
+    color: #155e75;
+    margin: 3pt 0;
+  }
+  blockquote cite {
+    display: block;
+    font-style: normal;
+    font-size: 6pt;
+    color: #5a7a6a;
+    margin-top: 2pt;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── SVG DIAGRAM ─── */
+  .diagram-row {
+    grid-column: 1 / -1;
+    margin-top: 1pt;
+  }
+  .diagram-row .sec-title { margin-bottom: 4pt; }
+
+  /* ─── FOOTER ─── */
+  .doc-footer {
+    grid-column: 1 / -1;
+    border-top: 1pt solid #d4e6dc;
+    padding-top: 4pt;
+    margin-top: 2pt;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 6pt;
+    color: #8aab98;
+  }
+  .doc-footer strong { color: #1b4332; }
+
+  strong { font-weight: 600; }
+</style>
+</head>
+<body>
+
+<!-- DOCUMENT HEADER -->
+<div class="doc-header">
+  <div class="doc-header-left">
+    <div class="amda-tag">🌍 Africa Minigrid Developers Association</div>
+    <h1>OpenAMI — Technical Pitch for AMDA Members</h1>
+    <div class="sub">Open metering interoperability for mini-grid and village energy operators — without buying a full utility AMI stack</div>
+  </div>
+  <div class="doc-header-right">
+    <div class="ref">EMG-PITCH-019</div>
+    IEEE Smart Village · ISV Tech Committee<br>
+    sattal.cottonspace.com/reports<br>
+    June 2026
+  </div>
+</div>
+
+<!-- MAIN BODY: 3-COLUMN GRID -->
+<div class="page-body">
+
+  <!-- ═══ COL 1: Problem + What OpenAMI Is ═══ -->
+  <div class="col">
+    <div class="sec-title">The Problem</div>
+
+    <blockquote>
+      "Rural metering stalls when every vendor ships a closed AMI bundle… no single commercial player can credibly write the common contract everyone else must adopt."
+      <cite>— IEEE Smart Village ISV Knowledge Base</cite>
+    </blockquote>
+
+    <div class="card">
+      <h3>The Closed-Bundle Trap</h3>
+      <p>Every AMI vendor ships meters + HES + billing as a locked bundle. Every tender copies utility MDMS boilerplate. Swapping a meter OEM means rewriting billing. Operators either:</p>
+      <ul>
+        <li><strong>Over-buy</strong> — utility-grade head-end software they never fully use</li>
+        <li><strong>Under-buy</strong> — manual reads, revenue loss, zero theft visibility</li>
+      </ul>
+    </div>
+
+    <div class="sec-title" style="margin-top:5pt;">What OpenAMI Is</div>
+
+    <div class="card">
+      <h3>A geo-asset model + northbound API contract — not a product</h3>
+      <table class="layer-table">
+        <thead>
+          <tr><th>Layer</th><th>Specifies</th><th>Does NOT specify</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Asset model</td><td>Feeder→pole→meter→customer (GeoJSON)</td><td>Database, cloud</td></tr>
+          <tr><td>Northbound</td><td>MQTT topic schema; per-customer read envelope</td><td>HES, billing system</td></tr>
+          <tr><td>VMRS tiers</td><td>3 field-validated OEM capability tiers</td><td>Which OEM to buy</td></tr>
+          <tr><td>Gateway norm</td><td>Translate vendor frames at edge; publish reads</td><td>Gateway hardware</td></tr>
+        </tbody>
+      </table>
+      <div class="highlight">
+        Practical effect: mix OEM fleets on one feeder, swap a vendor without rewriting billing, let integrators bid against a common scope.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ COL 2: Why IEEE + AMDA Benefits ═══ -->
+  <div class="col">
+    <div class="sec-title">Why IEEE · Why ISV</div>
+
+    <div class="card">
+      <h3>Neutral convening — outside every product line</h3>
+      <p>IEEE has no meters to sell, no HES to license, no integration margin to protect. EnAccess, Energy IoT, and individual OEMs all have legitimate roles — none can write the contract the others must accept. <strong>IEEE can.</strong></p>
+      <p style="margin-top:3pt;">ISV's Technology Committee publishes shared practice operators and vendors can point to: northbound MQTT schema, VMRS tiers, vendor benchmark scorecards, POC gap matrices — validated on real deployments, not lab simulations.</p>
+    </div>
+
+    <div class="sec-title" style="margin-top:5pt;">What This Means for AMDA Members</div>
+
+    <div class="audience-grid">
+      <div class="audience-card">
+        <h4>🏗️ Developer / IPP</h4>
+        <p>Scope procurement from VMRS tier sheet. Avoid MDMS lock-in from day one.</p>
+      </div>
+      <div class="audience-card">
+        <h4>⚙️ Operator / O&M</h4>
+        <p>Per-customer reads + prepaid billing without a full utility stack. Theft flag in gateway normalisation.</p>
+      </div>
+      <div class="audience-card">
+        <h4>🔌 Integrator</h4>
+        <p>Bid against a published contract. Build once, deploy across operators on different OEM fleets.</p>
+      </div>
+      <div class="audience-card">
+        <h4>🏛️ Policy / DFI</h4>
+        <p>Reference artifacts for technology-neutral procurement language in concession agreements.</p>
+      </div>
+    </div>
+
+    <div class="sec-title" style="margin-top:5pt;">Next Steps for AMDA</div>
+    <ul class="steps">
+      <li data-n="1"><span>Map your members' OEM fleet against the VMRS tier matrix — identify which vendors publish parseable DLMS frames.</span></li>
+      <li data-n="2"><span>Pilot a Street Pole EMS gateway kit on one active feeder using the EPRI DLMS-COSEM stack as the parsing layer.</span></li>
+      <li data-n="3"><span>Contribute field-derived African OBIS profiles back to ISV — the interoperability data the ecosystem is missing.</span></li>
+      <li data-n="4"><span>Embed the northbound MQTT contract in AMDA's model procurement annex so future tenders create a multi-vendor market.</span></li>
+    </ul>
+  </div>
+
+  <!-- ═══ COL 3: EPRI Code Reuse ═══ -->
+  <div class="col">
+    <div class="sec-title">EPRI Open-Source Code Reuse</div>
+    <p style="font-size:6.8pt;color:#3d5a4a;margin-bottom:4pt;">Both repos are BSD-2-Clause — compatible with ISV's open-artifact model. See companion report EMG-TECH-015 for a full code audit.</p>
+
+    <div class="epri-block">
+      <h3>epri-dev/DLMS-COSEM · Gateway Normalisation</h3>
+      <p>C-language IEC 62056 stack (OBIS resolution, COSEM object parsing, HDLC framing) spoken by most meters deployed in Africa — Calin, Hexing, CHINT, Landis+Gyr, Itron.</p>
+      <p style="margin-top:3pt;"><strong>Use 1 — Street Pole EMS:</strong> Eliminates per-integrator frame parsers. Drop in as the normalisation layer at the gateway edge.</p>
+      <p style="margin-top:2pt;"><strong>Use 2 — VMRS Benchmarks:</strong> Neutral reference codec to score OEM DLMS conformance.</p>
+      <p style="margin-top:3pt;"><span class="caveat">Caveat</span>African deployments use non-standard OBIS mappings not in EPRI's default profiles. An OBIS profile registry layer is required on top — ISV's added-value field contribution.</p>
+      <a href="https://github.com/epri-dev/DLMS-COSEM">github.com/epri-dev/DLMS-COSEM</a>
+    </div>
+
+    <div class="epri-block" style="border-left-color:#0891b2; background:#ecfeff;">
+      <h3 style="color:#0e7490;">epri-dev/IEEE-2030.5-Client · Northbound Transport</h3>
+      <p>C++ SEP 2.0 client with DER messaging, TLS/certificate handling and scheduler. More narrowly applicable; useful at specific northbound integration points.</p>
+      <p style="margin-top:3pt;"><strong>Use 1 — MirrorUsagePoint codec:</strong> Map the SEP 2.0 usage-point envelope onto OpenAMI's MQTT read message without writing a custom XML/EXI parser.</p>
+      <p style="margin-top:2pt;"><strong>Use 2 — TLS scaffold:</strong> Reuse EPRI certificate management for gateways reporting to USAID/DFI donor aggregators.</p>
+      <p style="margin-top:3pt;"><span class="caveat">Caveat</span>Adopt <em>only</em> the codec + transport layers. The scheduler assumes a US-utility head-end on the other side. SEP 2.0 profile needs adaptation for PAYG mini-grid semantics.</p>
+      <a href="https://github.com/epri-dev/IEEE-2030.5-Client">github.com/epri-dev/IEEE-2030.5-Client</a>
+    </div>
+
+    <div class="sec-title" style="margin-top:5pt;">Resources</div>
+    <table class="resource-table">
+      <tr><td>ISV Knowledge Base</td><td>overview-solutions.github.io/isv-ai-wiki</td></tr>
+      <tr><td>EPRI DLMS-COSEM</td><td>github.com/epri-dev/DLMS-COSEM</td></tr>
+      <tr><td>EPRI IEEE 2030.5 Client</td><td>github.com/epri-dev/IEEE-2030.5-Client</td></tr>
+      <tr><td>ISV Wiki Source</td><td>github.com/overview-solutions/isv-ai-wiki</td></tr>
+      <tr><td>AMDA</td><td>africamda.org</td></tr>
+      <tr><td>EPRI Audit (EMG-TECH-015)</td><td>sattal.cottonspace.com/reports/epri-dev-software-audit</td></tr>
+    </table>
+  </div>
+
+  <!-- ═══ FULL-WIDTH FOOTER ═══ -->
+  <div class="doc-footer">
+    <span>© 2026 <strong>Cottonspace / Dev Labs</strong> · <strong>sattal.cottonspace.com/reports</strong></span>
+    <span>OpenAMI and Street Pole EMS are reference artifacts, not certified IEEE standards.</span>
+    <span><strong>EMG-PITCH-019</strong> · IEEE Smart Village ISV Technology Committee · June 2026</span>
+  </div>
+
+</div>
+
+</body>
+</html>

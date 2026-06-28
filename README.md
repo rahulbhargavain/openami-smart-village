@@ -39,12 +39,13 @@ wiki/
 
 ## 📂 The Technical & Strategic Reports Catalog
 
-This repository archives **18 active, publication-grade technical reference specifications, regulatory policy frameworks, engineering audits, and strategic capitalization prospectuses** that support OpenAMI and IEEE Smart Village operations across South Asia and Sub-Saharan Africa (SSA). All reports are maintained under git version control and deployed as interactive, responsive, multi-tabbed dashboards.
+This repository archives **19 active, publication-grade technical reference specifications, regulatory policy frameworks, engineering audits, and strategic capitalization prospectuses** that support OpenAMI and IEEE Smart Village operations across South Asia and Sub-Saharan Africa (SSA). All reports are maintained under git version control and deployed as interactive, responsive, multi-tabbed dashboards.
 
 ### 📋 Registry of Active Reports (EMG Suite)
 
 | Document ID | Category | Title | Live Portal URL (Firebase) |
 | :--- | :--- | :--- | :--- |
+| **EMG-EVAL-020** | Portfolio Study | EEP Africa Mini-Grid Study: Opportunities &amp; Challenges | [eep-minigrid-sector-africa](https://sattal.cottonspace.com/reports/eep-minigrid-sector-africa) |
 | **EMG-TECH-018** | Technical Spec | Filtered AI Architecture & OPAI Use-Case Matrix | [minigrid-opai-software-audit](https://sattal.cottonspace.com/reports/minigrid-opai-software-audit) |
 | **EMG-TECH-017** | Technical Spec | Power Quality (PQ) Management in Decentralized Mini-Grids | [minigrid-power-quality](https://sattal.cottonspace.com/reports/minigrid-power-quality) |
 | **EMG-TECH-016** | Technical Spec | Mini-Grid Dynamic Capacity & AI-Driven Optimization | [minigrid-dynamic-capacity-ai](https://sattal.cottonspace.com/reports/minigrid-dynamic-capacity-ai) |

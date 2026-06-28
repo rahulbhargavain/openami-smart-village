@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/rahulbhargavain/openami-smart-village/issues"
   },
-  "homepage": "https://github.com/rahulbhargavain/openami-smart-village#readme"
+  "homepage": "https://github.com/rahulbhargavain/openami-smart-village#readme",
+  "devDependencies": {
+    "puppeteer": "^25.2.1"
+  }
 }

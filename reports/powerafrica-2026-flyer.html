@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>IEEE Smart Village PowerAfrica 2026 Student Competition Flyer</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap');
+
+  @page {
+    size: A4;
+    margin: 8mm 9mm 6mm 9mm;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 7.2pt;
+    line-height: 1.35;
+    color: #1e293b;
+    background: #fff;
+    width: 192mm; /* A4 width (210) minus margins (18) */
+    height: 283mm; /* A4 height (297) minus margins (14) */
+    position: relative;
+  }
+
+  /* ─── COLOR PALETTE ─── */
+  :root {
+    --primary: #0a3622;     /* Deep Forest Green */
+    --primary-light: #1b4332;
+    --accent-teal: #0891b2; /* Electric Teal */
+    --accent-gold: #d97706; /* Amber Gold */
+    --accent-gold-dark: #b45309;
+    --bg-light: #f8fafc;
+    --border-color: #cbd5e1;
+    --text-muted: #64748b;
+  }
+
+  /* ─── HEADER ─── */
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    border-bottom: 2.5pt solid var(--primary);
+    padding-bottom: 5pt;
+    margin-bottom: 6pt;
+  }
+
+  .header-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 32%;
+    border-right: 1px solid var(--border-color);
+    padding-right: 8pt;
+  }
+
+  .logo-box {
+    display: flex;
+    align-items: center;
+    gap: 5pt;
+    background: var(--primary);
+    color: #fff;
+    padding: 4pt 6pt;
+    border-radius: 3pt;
+  }
+
+  .logo-box svg {
+    fill: #fff;
+    width: 14pt;
+    height: 14pt;
+  }
+
+  .logo-text {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 8pt;
+    letter-spacing: 0.03em;
+    line-height: 1.1;
+  }
+
+  .conf-details {
+    margin-top: 4pt;
+  }
+
+  .conf-title {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 8.5pt;
+    color: var(--primary);
+    line-height: 1.15;
+  }
+
+  .conf-date-loc {
+    display: flex;
+    flex-direction: column;
+    gap: 2pt;
+    margin-top: 4pt;
+    font-size: 6.8pt;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  .conf-date-loc span {
+    display: flex;
+    align-items: center;
+    gap: 3pt;
+  }
+
+  .header-right {
+    width: 66%;
+    padding-left: 8pt;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .isv-pill {
+    display: inline-block;
+    align-self: flex-start;
+    background: #d1fae5;
+    color: #065f46;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 6pt;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 1.5pt 5pt;
+    border-radius: 12pt;
+    margin-bottom: 2pt;
+  }
+
+  .main-title {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 900;
+    font-size: 16pt;
+    color: var(--primary);
+    line-height: 1.1;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+
+  .main-subtitle {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 8.5pt;
+    color: var(--accent-teal);
+    margin-top: 2pt;
+    line-height: 1.2;
+  }
+
+  /* ─── ANCHOR BANNER ─── */
+  .anchor-banner {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #fff;
+    border-radius: 4pt;
+    padding: 5pt 8pt;
+    margin-bottom: 6pt;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .anchor-left {
+    width: 72%;
+  }
+
+  .anchor-left p {
+    font-size: 7.2pt;
+    line-height: 1.35;
+    color: #cbd5e1;
+  }
+
+  .anchor-left strong {
+    color: #38bdf8;
+    font-weight: 700;
+  }
+
+  .anchor-right {
+    width: 25%;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 3pt;
+    padding: 3pt 5pt;
+    text-align: center;
+  }
+
+  .anchor-right .term {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 9pt;
+    color: #38bdf8;
+  }
+
+  .anchor-right .desc {
+    font-size: 5.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #94a3b8;
+  }
+
+  /* ─── GRID LAYOUT ─── */
+  .grid-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7pt;
+    margin-bottom: 6pt;
+  }
+
+  .section-column {
+    display: flex;
+    flex-direction: column;
+    gap: 6pt;
+  }
+
+  /* ─── CARDS ─── */
+  .card {
+    background: var(--bg-light);
+    border: 0.5pt solid var(--border-color);
+    border-radius: 4pt;
+    padding: 5pt 7pt;
+  }
+
+  .card-header {
+    border-left: 2.5pt solid var(--primary);
+    padding-left: 4pt;
+    margin-bottom: 3.5pt;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .card-header-teal {
+    border-left-color: var(--accent-teal);
+  }
+
+  .card-header-gold {
+    border-left-color: var(--accent-gold);
+  }
+
+  .card-title {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 7.8pt;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .card-title-teal {
+    color: #0e7490;
+  }
+
+  .card-title-gold {
+    color: var(--accent-gold-dark);
+  }
+
+  .card-subtitle {
+    font-size: 5.8pt;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  .card p {
+    font-size: 6.8pt;
+    color: #334155;
+    margin-bottom: 3pt;
+  }
+
+  .card p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ─── FORMAT LIST ─── */
+  .format-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4pt;
+  }
+
+  .format-item {
+    display: flex;
+    gap: 5pt;
+    align-items: flex-start;
+  }
+
+  .format-number {
+    flex-shrink: 0;
+    width: 12pt;
+    height: 12pt;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 900;
+    font-size: 7pt;
+    margin-top: 1pt;
+  }
+
+  .format-number-teal {
+    background: var(--accent-teal);
+  }
+
+  .format-info h4 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 7.2pt;
+    color: var(--primary);
+    line-height: 1.1;
+  }
+
+  .format-info h4.teal-text {
+    color: #0e7490;
+  }
+
+  .format-info p {
+    font-size: 6.5pt;
+    color: #475569;
+    margin: 1.5pt 0 0 0;
+    line-height: 1.25;
+  }
+
+  /* ─── ARCHITECTURE SCHEMATIC ─── */
+  .schematic-box {
+    background: #fff;
+    border: 1px dashed var(--accent-teal);
+    border-radius: 3pt;
+    padding: 3pt;
+    margin: 3pt 0;
+  }
+
+  /* ─── DATES TABLE ─── */
+  .timeline-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 6.5pt;
+  }
+
+  .timeline-table tr {
+    border-bottom: 0.5pt solid #e2e8f0;
+  }
+
+  .timeline-table tr:last-child {
+    border-bottom: none;
+  }
+
+  .timeline-table td {
+    padding: 2.5pt 2pt;
+    vertical-align: middle;
+  }
+
+  .timeline-event {
+    font-weight: 700;
+    color: #334155;
+  }
+
+  .timeline-date {
+    text-align: right;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    color: var(--primary);
+  }
+
+  .timeline-date.extended {
+    color: #dc2626;
+  }
+
+  .extended-badge {
+    background: #fee2e2;
+    color: #b91c1c;
+    font-size: 5pt;
+    font-weight: 800;
+    padding: 0.5pt 2.5pt;
+    border-radius: 2pt;
+    margin-left: 2pt;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: inline-block;
+  }
+
+  /* ─── PRIZES SECTION ─── */
+  .prizes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4pt;
+    margin-top: 3pt;
+  }
+
+  .prize-tier {
+    background: #fff;
+    border: 0.5pt solid #e2e8f0;
+    border-radius: 3pt;
+    padding: 3pt 4pt;
+  }
+
+  .prize-tier h5 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 6.5pt;
+    color: var(--primary);
+    border-bottom: 0.5pt solid #e2e8f0;
+    padding-bottom: 1.5pt;
+    margin-bottom: 2pt;
+    text-transform: uppercase;
+  }
+
+  .prize-list {
+    list-style: none;
+  }
+
+  .prize-list li {
+    font-size: 6.2pt;
+    color: #475569;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1pt;
+  }
+
+  .prize-list li strong {
+    color: var(--accent-gold-dark);
+  }
+
+  .travel-grant-callout {
+    margin-top: 4pt;
+    background: #fef3c7;
+    border: 0.5pt solid #fde68a;
+    border-radius: 3pt;
+    padding: 3pt 5pt;
+    font-size: 6.5pt;
+    color: #92400e;
+    font-weight: 600;
+  }
+
+  /* ─── LARGE DIAGRAM SECTION ─── */
+  .diagram-section {
+    background: #fdfdfd;
+    border: 0.5pt solid var(--border-color);
+    border-radius: 4pt;
+    padding: 5pt 7pt;
+    margin-bottom: 6pt;
+  }
+
+  .diagram-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 2.5pt;
+    margin-bottom: 4.5pt;
+  }
+
+  .diagram-heading {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 7.8pt;
+    color: var(--primary);
+    text-transform: uppercase;
+  }
+
+  .diagram-subheading {
+    font-size: 6.2pt;
+    font-weight: 600;
+    color: var(--accent-teal);
+    text-transform: uppercase;
+  }
+
+  .diagram-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8pt;
+  }
+
+  .diagram-desc {
+    width: 32%;
+  }
+
+  .diagram-desc p {
+    font-size: 6.5pt;
+    color: #475569;
+    line-height: 1.3;
+    margin-bottom: 3.5pt;
+  }
+
+  .diagram-desc p:last-child {
+    margin-bottom: 0;
+  }
+
+  .diagram-desc strong {
+    color: var(--primary);
+  }
+
+  .svg-container {
+    width: 66%;
+    background: #fff;
+    border: 0.5pt solid #e2e8f0;
+    border-radius: 3pt;
+    padding: 4pt;
+  }
+
+  /* ─── LOGISTICS / SHIPPING ─── */
+  .logistics-banner {
+    background: #ecfeff;
+    border: 0.5pt solid #a5f3fc;
+    border-radius: 4pt;
+    padding: 4.5pt 7pt;
+    margin-bottom: 6pt;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logistics-left {
+    width: 78%;
+  }
+
+  .logistics-left h4 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 7.2pt;
+    color: #0e7490;
+    margin-bottom: 1.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .logistics-left p {
+    font-size: 6.8pt;
+    color: #1e293b;
+    line-height: 1.3;
+  }
+
+  .logistics-left strong {
+    color: var(--primary);
+  }
+
+  .logistics-right {
+    width: 18%;
+    text-align: center;
+    background: #fff;
+    border: 0.5pt solid #cbd5e1;
+    border-radius: 3pt;
+    padding: 3pt;
+  }
+
+  .hs-code-label {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 850;
+    font-size: 7.5pt;
+    color: #0f766e;
+  }
+
+  .hs-code-sub {
+    font-size: 5pt;
+    color: #64748b;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  /* ─── TAKEAWAYS & CTA BANNER ─── */
+  .bottom-row {
+    display: grid;
+    grid-template-columns: 53% 45%;
+    gap: 7pt;
+    margin-bottom: 6pt;
+  }
+
+  .takeaways-card {
+    background: #fff9f2;
+    border: 0.5pt solid #ffe4e6;
+    border-left: 3pt solid var(--accent-gold);
+    border-radius: 4pt;
+    padding: 5pt 7pt;
+  }
+
+  .takeaways-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 7.8pt;
+    color: var(--accent-gold-dark);
+    text-transform: uppercase;
+    margin-bottom: 3.5pt;
+  }
+
+  .takeaways-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5pt;
+  }
+
+  .takeaway-item {
+    background: #fff;
+    border: 0.5pt solid #fed7aa;
+    border-radius: 3pt;
+    padding: 3.5pt 5pt;
+  }
+
+  .takeaway-item h4 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 6.8pt;
+    color: var(--primary);
+    margin-bottom: 1.5pt;
+  }
+
+  .takeaway-item p {
+    font-size: 6.2pt;
+    color: #475569;
+    line-height: 1.25;
+  }
+
+  .cta-card {
+    background: #f0fdf4;
+    border: 0.5pt solid #bbf7d0;
+    border-radius: 4pt;
+    padding: 5pt 7pt;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .cta-header h3 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 7.8pt;
+    color: #166534;
+    text-transform: uppercase;
+    margin-bottom: 2pt;
+  }
+
+  .cta-header p {
+    font-size: 6.2pt;
+    color: #374151;
+    line-height: 1.2;
+  }
+
+  .cta-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6pt;
+    margin-top: 3pt;
+  }
+
+  .cta-left {
+    flex-grow: 1;
+  }
+
+  .cta-url-box {
+    background: #fff;
+    border: 0.5pt solid #86efac;
+    padding: 2.5pt 4pt;
+    border-radius: 3pt;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 6pt;
+    color: #15803d;
+    word-break: break-all;
+  }
+
+  .cta-form-link {
+    margin-top: 2.5pt;
+    font-size: 5.8pt;
+    color: #166534;
+    font-weight: 700;
+  }
+
+  .cta-form-link a {
+    color: var(--accent-teal);
+    text-decoration: underline;
+  }
+
+  .cta-qr-box {
+    width: 26pt;
+    height: 26pt;
+    flex-shrink: 0;
+    background: #fff;
+    border: 0.5pt solid #cbd5e1;
+    border-radius: 2pt;
+    padding: 1.5pt;
+  }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 0.5pt solid var(--border-color);
+    padding-top: 3.5pt;
+    font-size: 5.8pt;
+    color: var(--text-muted);
+  }
+
+  .footer-logos {
+    display: flex;
+    gap: 8pt;
+    align-items: center;
+  }
+
+  .logo-placeholder {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 5.5pt;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 1.5pt;
+  }
+
+  .logo-placeholder span {
+    width: 4pt;
+    height: 4pt;
+    background: var(--accent-teal);
+    border-radius: 50%;
+    display: inline-block;
+  }
+</style>
+</head>
+<body>
+
+  <!-- DOCUMENT HEADER -->
+  <div class="header-container">
+    <div class="header-left">
+      <div class="logo-box">
+        <!-- Stylized Map of Africa / Power Logo in SVG -->
+        <svg viewBox="0 0 24 24">
+          <path d="M12.89 2.2C10.74 3.73 7 7.56 7 11.2c0 2.2 1.3 4.2 3.2 5.1-.3-.6-.5-1.3-.5-2 0-2.8 3.5-5.8 4.2-6.5-.4 1 .2 2.7 1.2 3.6.8.8 1.6 2.1 1.6 3.6 0 1.2-.5 2.3-1.3 3.1.8-.7 1.3-1.8 1.3-3 0-1.8-1-3.6-2.2-4.8 1.4.9 2.2 2.6 2.2 4.3 0 2.9-2.3 5.3-5.3 5.3-3.3 0-6-2.7-6-6 0-3.3 2.5-6.7 6.4-9.3.3-.2.7.2.5.5z" />
+        </svg>
+        <span class="logo-text">POWERAFRICA<br>CONFERENCE</span>
+      </div>
+      <div class="conf-details">
+        <div class="conf-title">IEEE PES & IAS PowerAfrica 2026</div>
+        <div class="conf-date-loc">
+          <span>
+            <!-- Calendar Icon -->
+            <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            21st – 25th September 2026
+          </span>
+          <span>
+            <!-- Map Pin Icon -->
+            <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Nairobi, Kenya
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="isv-pill">⚡ IEEE Smart Village Next Generation (ISV)</div>
+      <div class="main-title">Student Competition 2026</div>
+      <div class="main-subtitle">Sovereign Minigrid Electrification & Smart Street-EMS Challenge</div>
+    </div>
+  </div>
+
+  <!-- ANCHOR BANNER -->
+  <div class="anchor-banner">
+    <div class="anchor-left">
+      <p>Moving beyond standard cloud-centric hackathons, this competition is anchored around the open-source <strong>Street-EMS</strong> energy management platform. Grounded in the spirit of IEEE Smart Village technology workshops, participants tackle real-world rural minigrid architectures combining physical power engineering with business-case and shipping sensitivity.</p>
+    </div>
+    <div class="anchor-right">
+      <div class="term">Street-EMS</div>
+      <div class="desc">Open Core Framework</div>
+    </div>
+  </div>
+
+  <!-- GRID STRUCTURE -->
+  <div class="grid-layout">
+    
+    <!-- COLUMN 1: The Challenge Format (Make Code Integrate) -->
+    <div class="section-column">
+      <div class="card">
+        <div class="card-header card-header-teal">
+          <div>
+            <h3 class="card-title card-title-teal">The Workshop Track</h3>
+            <div class="card-subtitle">"Make, Code, Integrate" Format</div>
+          </div>
+        </div>
+        <p>Delivered across three mentoring-driven sessions during the conference week, this track prepares in-country engineers and student teams to design, assemble, and program resilient minigrid interfaces.</p>
+        
+        <ul class="format-list" style="margin-top: 4pt;">
+          <li class="format-item">
+            <div class="format-number format-number-teal">1</div>
+            <div class="format-info">
+              <h4><strong>MAKE</strong> — Build the Physical EMS Controller</h4>
+              <p>Assemble a fully functional Street-EMS controller from PCB components. Learn assembly, testing, and hardware debug processes.</p>
+            </div>
+          </li>
+          <li class="format-item">
+            <div class="format-number format-number-teal">2</div>
+            <div class="format-info">
+              <h4><strong>INTEGRATE</strong> — Cabinet Wiring & Multi-Tenant Metering</h4>
+              <p>Mount the controller inside a 3-phase Street-EMS reference cabinet with DIN rail breakers, contactors, and multi-tenant metering variants.</p>
+            </div>
+          </li>
+          <li class="format-item">
+            <div class="format-number format-number-teal">3</div>
+            <div class="format-info">
+              <h4><strong>CODE</strong> — Cloud vs. Cloudless Aggregation Challenge</h4>
+              <p>Network Street-EMS under alternative cloud and cloudless protocols including DLMS/COSEM, the EnAccess REST API, and OpenEMS frameworks.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">Eligible Candidates</h3>
+            <div class="card-subtitle">African Institutions</div>
+          </div>
+        </div>
+        <p>All competing authors must be registered students (Undergraduate or Postgraduate) attending an institution of learning in Africa at the time of submission. Submissions allow individual or group teams of up to 3 members.</p>
+      </div>
+    </div>
+
+    <!-- COLUMN 2: Dates, Eligibility, and Prizes -->
+    <div class="section-column">
+      <div class="card">
+        <div class="card-header card-header-gold">
+          <div>
+            <h3 class="card-title card-title-gold">Important Dates</h3>
+            <div class="card-subtitle">Deadlines & Timelines</div>
+          </div>
+        </div>
+        <table class="timeline-table">
+          <tr>
+            <td class="timeline-event">Call for Project Submissions</td>
+            <td class="timeline-date">20th March 2026</td>
+          </tr>
+          <tr>
+            <td class="timeline-event">Due Date for Submissions</td>
+            <td class="timeline-date extended">4th July 2026 <span class="extended-badge">Extended</span></td>
+          </tr>
+          <tr>
+            <td class="timeline-event">Online Technical Interviews</td>
+            <td class="timeline-date">15th July 2026</td>
+          </tr>
+          <tr>
+            <td class="timeline-event">Final Selection & Notifications</td>
+            <td class="timeline-date">20th July 2026</td>
+          </tr>
+          <tr>
+            <td class="timeline-event">Award Ceremony & Live Final</td>
+            <td class="timeline-date">During PAC 2026</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-header card-header-gold">
+          <div>
+            <h3 class="card-title card-title-gold">Cash Prizes & Plaque Awards</h3>
+            <div class="card-subtitle">Top Categories</div>
+          </div>
+        </div>
+        <div class="prizes-grid">
+          <div class="prize-tier">
+            <h5>Postgraduate (PG)</h5>
+            <ul class="prize-list">
+              <li>1st: <strong>$500 + Plaque</strong></li>
+              <li>2nd: <strong>$300 + Plaque</strong></li>
+              <li>3rd: <strong>$200 + Plaque</strong></li>
+            </ul>
+          </div>
+          <div class="prize-tier">
+            <h5>Undergraduate (UG)</h5>
+            <ul class="prize-list">
+              <li>1st: <strong>$300 + Plaque</strong></li>
+              <li>2nd: <strong>$200 + Plaque</strong></li>
+              <li>3rd: <strong>$100 + Plaque</strong></li>
+            </ul>
+          </div>
+        </div>
+        <div class="travel-grant-callout">
+          ✈️ <strong>Travel Grants:</strong> Top 1st place winners receive a fully covered travel, accommodation, and food grant to Nairobi, Kenya!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARCHITECTURE SCHEMATIC SECTION -->
+  <div class="diagram-section">
+    <div class="diagram-title-row">
+      <h3 class="diagram-heading">Core Architecture Challenge</h3>
+      <span class="diagram-subheading">First-Kilometer Grid Distributed Intelligence</span>
+    </div>
+    <div class="diagram-wrapper">
+      <div class="diagram-desc">
+        <p>We introduce a <strong>truly cloudless, sovereign village electrification architecture</strong> option based on Street-EMS embedded LV Feeder distributed intelligence.</p>
+        <p>Shifting the LV feeder from the traditional "last kilometer" to the <strong>"first kilometer"</strong> of community-owned, villager-empowered resilient systems.</p>
+        <p><strong>Key Design Criteria:</strong> Measure everywhere, policy-based session admission, telecom-like P2P asset transfer control planes, and transmit-only actionable telemetry.</p>
+      </div>
+      <div class="svg-container">
+        <!-- SVG Architecture Diagram representing Street-EMS control plane -->
+        <svg viewBox="0 0 460 95" width="100%" height="auto" style="display:block; font-family:'Inter',sans-serif;">
+          <!-- Node 1: Edge Meters -->
+          <rect x="5" y="10" width="85" height="32" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+          <text x="47" y="24" text-anchor="middle" fill="#0f172a" font-size="6.5" font-weight="700">Edge Meters</text>
+          <text x="47" y="34" text-anchor="middle" fill="#0891b2" font-size="5.5" font-weight="600">DLMS / COSEM</text>
+
+          <!-- Arrow 1 -->
+          <path d="M90 26 H115" fill="none" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+          <!-- Node 2: Street-EMS Controller -->
+          <rect x="115" y="10" width="105" height="32" rx="4" fill="#ecfeff" stroke="#0891b2" stroke-width="1.5"/>
+          <text x="167" y="22" text-anchor="middle" fill="#0f172a" font-size="6.5" font-weight="800">Street-EMS Controller</text>
+          <text x="167" y="30" text-anchor="middle" fill="#0e7490" font-size="5.5" font-weight="600">Embedded Feeder Logic</text>
+          <text x="167" y="38" text-anchor="middle" fill="#b45309" font-size="5.2" font-weight="700">"Measure Everywhere"</text>
+
+          <!-- Arrow 2 (Splits into Cloud and P2P) -->
+          <path d="M220 26 H260" fill="none" stroke="#64748b" stroke-width="1.5"/>
+          <path d="M260 16 V36" fill="none" stroke="#64748b" stroke-width="1.5"/>
+          <path d="M260 16 H275" fill="none" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <path d="M260 36 H275" fill="none" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+          <!-- Node 3a: Cloud Backend -->
+          <rect x="275" y="4" width="100" height="22" rx="3" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+          <text x="325" y="14" text-anchor="middle" fill="#334155" font-size="6" font-weight="700">Cloud (OpenEMS/REST)</text>
+          <text x="325" y="21" text-anchor="middle" fill="#64748b" font-size="5.2">Standard Aggregation</text>
+
+          <!-- Node 3b: Sovereign P2P Control -->
+          <rect x="275" y="30" width="100" height="22" rx="3" fill="#f0fdf4" stroke="#16a34a" stroke-width="1"/>
+          <text x="325" y="40" text-anchor="middle" fill="#1565c0" font-size="6" font-weight="700">Sovereign P2P Control</text>
+          <text x="325" y="47" text-anchor="middle" fill="#16a34a" font-size="5.2" font-weight="600">Telecom-like Session Admission</text>
+
+          <!-- Node 4: Dynamic Decision Matrix (Tying it all) -->
+          <rect x="5" y="62" width="450" height="24" rx="3" fill="#fffbeb" stroke="#f59e0b" stroke-width="1"/>
+          <text x="230" y="74" text-anchor="middle" fill="#92400e" font-size="6.8" font-weight="800">Dynamic Decision Matrix Criterion</text>
+          <text x="230" y="82" text-anchor="middle" fill="#78350f" font-size="5.8">Trade-offs evaluated: deployment cost, scalability, sovereignty, communications overhead, and lifecycle sustainability</text>
+
+          <!-- Markers -->
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+              <path d="M 0 1 L 10 5 L 0 9 z" fill="#64748b" />
+            </marker>
+          </defs>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOGISTICS & SHIPPING SECTION -->
+  <div class="logistics-banner">
+    <div class="logistics-left">
+      <h4>In-Country Startups Track & Free Trade Logistics</h4>
+      <p>Startups and engineers will gain critical insights into leveraging recent cross-border <strong>African Free Trade Agreements (AfCFTA)</strong>. We introduce proper usage of the <strong>Harmonized System (HS) shipping codes</strong> for modules and PCB import, assembly, test, programming, repair, and export—enabling commercial viability.</p>
+    </div>
+    <div class="logistics-right">
+      <div class="hs-code-label">HS Code 85.37</div>
+      <div class="hs-code-sub">Electronic Controllers</div>
+    </div>
+  </div>
+
+  <!-- TAKEAWAYS & CTA -->
+  <div class="bottom-row">
+    <div class="takeaways-card">
+      <h3>Attendee Takeaways (Donor Funded)</h3>
+      <div class="takeaways-grid">
+        <div class="takeaway-item">
+          <h4>Take-Home EMS PCB</h4>
+          <p>The first <strong>15–20 registered attendees</strong> receive a fully functional, assembled, and programmed Street-EMS PCB kit to take home.</p>
+        </div>
+        <div class="takeaway-item">
+          <h4>Cabinet Donation</h4>
+          <p><strong>3–5 reference cabinets</strong> (single/three phase multi-tenant under 25 lbs) built during the track are donated to in-country institutions.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="cta-card">
+      <div class="cta-header">
+        <h3>Submit Your Proposal</h3>
+        <p>Register online and submit your team's structural design proposal. Teams selected for finals receive travel grants.</p>
+      </div>
+      <div class="cta-details">
+        <div class="cta-left">
+          <div class="cta-url-box">ieee-powerafrica.org/isvx-student-paper-contest/</div>
+          <div class="cta-form-link">Apply: <a href="https://forms.gle/DEtAb88AxCbweRH7" target="_blank">forms.gle/DEtAb88AxCbweRH7</a></div>
+        </div>
+        <div class="cta-qr-box">
+          <!-- Small SVG QR Code representation for clean layout -->
+          <svg viewBox="0 0 100 100" style="width:100%; height:100%; fill:#0f172a;">
+            <rect x="0" y="0" width="20" height="20" />
+            <rect x="20" y="20" width="10" height="10" />
+            <rect x="0" y="30" width="10" height="10" />
+            <rect x="30" y="0" width="10" height="20" />
+            <rect x="0" y="80" width="20" height="20" />
+            <rect x="20" y="70" width="10" height="10" />
+            <rect x="30" y="80" width="10" height="20" />
+            <rect x="80" y="0" width="20" height="20" />
+            <rect x="70" y="20" width="10" height="10" />
+            <rect x="80" y="30" width="10" height="10" />
+            <rect x="80" y="80" width="20" height="20" />
+            <rect x="70" y="70" width="10" height="10" />
+            <rect x="60" y="80" width="10" height="10" />
+            <rect x="40" y="40" width="20" height="20" />
+            <rect x="10" y="50" width="10" height="10" />
+            <rect x="50" y="10" width="10" height="10" />
+            <rect x="90" y="50" width="10" height="10" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span>© 2026 Cottonspace / Dev Labs · openami.cottonspace.com</span>
+    <div class="footer-logos">
+      <div class="logo-placeholder"><span></span>IEEE smart village</div>
+      <div class="logo-placeholder"><span></span>PES Power & Energy Society</div>
+      <div class="logo-placeholder"><span></span>IAS Industry Applications</div>
+      <div class="logo-placeholder"><span></span>IEEE Kenya Section</div>
+    </div>
+  </div>
+
+</body>
+</html>

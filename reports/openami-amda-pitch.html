@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenAMI: Technical Pitch for AMDA Members — EMG-PITCH-019</title>
+    <meta name="description" content="A one-page technical pitch for Africa Minigrid Developers Association (AMDA) members on OpenAMI — IEEE Smart Village's open metering interoperability initiative for rural mini-grid and village energy operators.">
+    <link rel="stylesheet" href="/reports/report-style.css">
+    <style>
+        .amda-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-teal-glow);
+            border: 1px solid var(--accent-teal);
+            color: var(--accent-teal);
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 5px 12px;
+            border-radius: 20px;
+            margin-bottom: 4px;
+        }
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin: 1.5rem 0;
+        }
+        .audience-card {
+            background: var(--bg-card-hover);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 1.1rem 1.25rem;
+        }
+        .audience-card h4 {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+        .audience-card p {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.5;
+        }
+        .layer-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.25rem 0;
+            font-size: 0.88rem;
+        }
+        .layer-table th {
+            text-align: left;
+            padding: 10px 14px;
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            border-bottom: 2px solid var(--border-accent);
+        }
+        .layer-table td {
+            padding: 11px 14px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+            vertical-align: top;
+            line-height: 1.55;
+        }
+        .layer-table tr:last-child td { border-bottom: none; }
+        .layer-table td:first-child {
+            font-family: var(--font-display);
+            font-weight: 700;
+            color: var(--accent-teal);
+            white-space: nowrap;
+        }
+        .epri-block {
+            border: 1px solid var(--border-accent);
+            border-left: 4px solid var(--accent-purple);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            margin: 1.25rem 0;
+            background: var(--bg-card);
+        }
+        .epri-block h3 {
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--accent-purple);
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .epri-block p { font-size: 0.87rem; color: var(--text-secondary); margin: 0 0 0.75rem; line-height: 1.6; }
+        .epri-block p:last-child { margin-bottom: 0; }
+        .caveat-pill {
+            display: inline-block;
+            background: var(--color-amber-glow);
+            color: var(--color-amber);
+            border: 1px solid var(--color-amber-border);
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 2px 8px;
+            border-radius: 20px;
+            margin-right: 6px;
+        }
+        .step-list {
+            list-style: none;
+            padding: 0;
+            counter-reset: step;
+            margin: 1rem 0;
+        }
+        .step-list li {
+            counter-increment: step;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 0.85rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        .step-list li:last-child { border-bottom: none; }
+        .step-list li::before {
+            content: counter(step);
+            flex-shrink: 0;
+            width: 26px;
+            height: 26px;
+            background: var(--accent-teal);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 0.8rem;
+            margin-top: 1px;
+        }
+        .resource-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.87rem;
+        }
+        .resource-row:last-child { border-bottom: none; }
+        .resource-label {
+            color: var(--text-secondary);
+            flex: 1;
+            line-height: 1.4;
+        }
+        .resource-link {
+            color: var(--accent-teal);
+            font-weight: 600;
+            font-family: var(--font-display);
+            font-size: 0.82rem;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .resource-link:hover { text-decoration: underline; }
+        .blockquote-field {
+            border-left: 3px solid var(--accent-teal);
+            padding: 1rem 1.25rem;
+            background: var(--bg-card-hover);
+            border-radius: 0 8px 8px 0;
+            margin: 1.25rem 0;
+            font-style: italic;
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .blockquote-field cite {
+            display: block;
+            margin-top: 0.5rem;
+            font-style: normal;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Document Header -->
+        <header>
+            <a href="/reports" class="back-link">← Reports Index</a>
+
+            <div class="meta-pill-container">
+                <div class="meta-pill">
+                    <span class="dot"></span>
+                    <span>IEEE Smart Village · ISV Tech Committee</span>
+                </div>
+                <div class="meta-pill working-group">
+                    <span class="dot"></span>
+                    <span>Audience: AMDA Members</span>
+                </div>
+                <div class="meta-pill">
+                    <span>June 2026</span>
+                </div>
+            </div>
+
+            <div class="amda-badge">🌍 Africa Minigrid Developers Association</div>
+            <h1 id="main-heading">OpenAMI — Technical Pitch for AMDA Members</h1>
+            <div class="subtitle">Open metering interoperability for mini-grid and village energy operators — without buying a full utility AMI stack</div>
+        </header>
+
+        <!-- Tab Navigation -->
+        <nav class="nav-tabs" role="tablist">
+            <button class="tab-btn active" id="tab-btn-problem" onclick="switchTab('problem')" role="tab" aria-selected="true" aria-controls="panel-problem">
+                The Problem
+            </button>
+            <button class="tab-btn" id="tab-btn-what" onclick="switchTab('what')" role="tab" aria-selected="false" aria-controls="panel-what">
+                What OpenAMI Is
+            </button>
+            <button class="tab-btn" id="tab-btn-why" onclick="switchTab('why')" role="tab" aria-selected="false" aria-controls="panel-why">
+                Why IEEE / ISV
+            </button>
+            <button class="tab-btn" id="tab-btn-amda" onclick="switchTab('amda')" role="tab" aria-selected="false" aria-controls="panel-amda">
+                AMDA Benefits
+            </button>
+            <button class="tab-btn" id="tab-btn-epri" onclick="switchTab('epri')" role="tab" aria-selected="false" aria-controls="panel-epri">
+                EPRI Code Reuse
+            </button>
+            <button class="tab-btn" id="tab-btn-next" onclick="switchTab('next')" role="tab" aria-selected="false" aria-controls="panel-next">
+                Next Steps
+            </button>
+        </nav>
+
+        <main>
+            <!-- Panel 1: The Problem -->
+            <section class="tab-content active" id="panel-problem" role="tabpanel" aria-labelledby="tab-btn-problem">
+                <div class="card">
+                    <h2>The Problem Your Members Hit Every Procurement Cycle</h2>
+                    <p>Mini-grid and village-energy operators in Africa are trapped in a loop: <strong>every AMI vendor ships a closed bundle</strong>, every tender copies MDMS boilerplate written for national utilities, and swapping a meter OEM means rewriting your billing integration.</p>
+                    <p>The result is that operators either <strong>over-buy</strong> — paying for utility-grade head-end software they will never fully use — or <strong>under-buy</strong> — running manual reads with all the revenue-loss and theft risk that entails.</p>
+
+                    <div class="blockquote-field">
+                        "Rural metering stalls when every vendor ships a closed AMI bundle… Meter OEMs, integrators, open-platform builders, and field operators all have legitimate interests — but no single commercial player can credibly write the common contract everyone else must adopt."
+                        <cite>— IEEE Smart Village ISV Knowledge Base</cite>
+                    </div>
+                </div>
+
+                <!-- Ecosystem SVG -->
+                <div class="card">
+                    <h2>The Closed-Bundle Lock-In Cycle</h2>
+                    <svg viewBox="0 0 740 280" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg"
+                         style="background:#ffffff; border-radius:12px; border:1px solid #e2e8f0; font-family:'Inter',system-ui,sans-serif; display:block; margin:12px 0;">
+                        <defs>
+                            <marker id="arr-r" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                <path d="M0 0 L10 5 L0 10z" fill="#ef4444"/>
+                            </marker>
+                            <marker id="arr-g" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                <path d="M0 0 L10 5 L0 10z" fill="#0891b2"/>
+                            </marker>
+                        </defs>
+                        <!-- Problem: Closed Bundles -->
+                        <rect x="30" y="30" width="160" height="58" rx="10" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+                        <text x="110" y="54" text-anchor="middle" fill="#dc2626" font-size="13" font-weight="700">Vendor A Bundle</text>
+                        <text x="110" y="72" text-anchor="middle" fill="#ef4444" font-size="10">Meters + HES + Billing (closed)</text>
+
+                        <rect x="290" y="30" width="160" height="58" rx="10" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+                        <text x="370" y="54" text-anchor="middle" fill="#dc2626" font-size="13" font-weight="700">Vendor B Bundle</text>
+                        <text x="370" y="72" text-anchor="middle" fill="#ef4444" font-size="10">Meters + HES + Billing (closed)</text>
+
+                        <rect x="550" y="30" width="160" height="58" rx="10" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+                        <text x="630" y="54" text-anchor="middle" fill="#dc2626" font-size="13" font-weight="700">Vendor C Bundle</text>
+                        <text x="630" y="72" text-anchor="middle" fill="#ef4444" font-size="10">Meters + HES + Billing (closed)</text>
+
+                        <!-- Arrows down to operator -->
+                        <line x1="110" y1="88" x2="320" y2="155" stroke="#ef4444" stroke-width="1.5" marker-end="url(#arr-r)"/>
+                        <line x1="370" y1="88" x2="370" y2="145" stroke="#ef4444" stroke-width="1.5" marker-end="url(#arr-r)"/>
+                        <line x1="630" y1="88" x2="430" y2="155" stroke="#ef4444" stroke-width="1.5" marker-end="url(#arr-r)"/>
+
+                        <!-- Lock-in labels -->
+                        <text x="200" y="125" text-anchor="middle" fill="#ef4444" font-size="9.5" font-weight="600">lock-in</text>
+                        <text x="400" y="125" text-anchor="middle" fill="#ef4444" font-size="9.5" font-weight="600">lock-in</text>
+                        <text x="540" y="125" text-anchor="middle" fill="#ef4444" font-size="9.5" font-weight="600">lock-in</text>
+
+                        <!-- Operator box -->
+                        <rect x="220" y="155" width="300" height="52" rx="10" fill="#fefce8" stroke="#fde68a" stroke-width="1.5"/>
+                        <text x="370" y="178" text-anchor="middle" fill="#a16207" font-size="13" font-weight="700">Mini-Grid Operator</text>
+                        <text x="370" y="196" text-anchor="middle" fill="#ca8a04" font-size="10">Cannot mix fleets · rewrite billing on swap · stalled tenders</text>
+
+                        <!-- OpenAMI solution arrow -->
+                        <line x1="370" y1="207" x2="370" y2="243" stroke="#0891b2" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arr-g)"/>
+                        <rect x="195" y="243" width="350" height="28" rx="8" fill="#ecfeff" stroke="#67e8f9" stroke-width="1.5"/>
+                        <text x="370" y="261" text-anchor="middle" fill="#0891b2" font-size="12" font-weight="700">OpenAMI: Northbound contract + gateway normalisation</text>
+                    </svg>
+                </div>
+            </section>
+
+            <!-- Panel 2: What OpenAMI Is -->
+            <section class="tab-content" id="panel-what" role="tabpanel" aria-labelledby="tab-btn-what">
+                <div class="card">
+                    <h2>What OpenAMI Actually Is</h2>
+                    <p><strong>OpenAMI is a geo-asset data model and a small, northbound API contract</strong> — not a product, not a head-end system, not a billing platform.</p>
+
+                    <table class="layer-table">
+                        <thead>
+                            <tr>
+                                <th>Layer</th>
+                                <th>What it specifies</th>
+                                <th>What it does NOT specify</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Asset model</td>
+                                <td>Feeder → pole → meter → customer hierarchy (GeoJSON-native)</td>
+                                <td>Which database, which cloud</td>
+                            </tr>
+                            <tr>
+                                <td>Northbound contract</td>
+                                <td>Lightweight MQTT topic schema; per-customer read envelope</td>
+                                <td>Head-end software, billing system</td>
+                            </tr>
+                            <tr>
+                                <td>VMRS tiers</td>
+                                <td>Vendor Meter Rating Scheme — 3 tiers of field-validated capability</td>
+                                <td>Which OEM to buy</td>
+                            </tr>
+                            <tr>
+                                <td>Gateway norm</td>
+                                <td>Translate vendor-specific frames at the edge; publish normalised reads</td>
+                                <td>Which gateway hardware</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="highlight-box">
+                        <strong>Practical effect:</strong> An operator can mix OEM fleets on one feeder, swap a vendor without rewriting billing, and let integrators bid against a common scope. The gateway normalises; the northbound contract stays stable.
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Architecture at a Glance</h2>
+                    <svg viewBox="0 0 720 310" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg"
+                         style="background:#ffffff; border-radius:12px; border:1px solid #e2e8f0; font-family:'Inter',system-ui,sans-serif; display:block; margin:12px 0;">
+                        <defs>
+                            <marker id="arr-a" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                <path d="M0 0 L10 5 L0 10z" fill="#475569"/>
+                            </marker>
+                        </defs>
+                        <!-- Northbound -->
+                        <rect x="60" y="20" width="600" height="50" rx="10" fill="#ecfeff" stroke="#67e8f9" stroke-width="1.5"/>
+                        <text x="360" y="42" text-anchor="middle" fill="#0891b2" font-size="13" font-weight="700">Northbound MQTT Contract (OpenAMI)</text>
+                        <text x="360" y="60" text-anchor="middle" fill="#0891b2" font-size="10">Billing system · ARPU analytics · Theft flag · Any operator dashboard</text>
+                        <!-- Arrow -->
+                        <line x1="360" y1="70" x2="360" y2="108" stroke="#475569" stroke-width="1.5" marker-end="url(#arr-a)"/>
+                        <!-- GeoJSON Asset Model -->
+                        <rect x="60" y="108" width="600" height="50" rx="10" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+                        <text x="360" y="130" text-anchor="middle" fill="#15803d" font-size="13" font-weight="700">GeoJSON Geo-Asset Model</text>
+                        <text x="360" y="148" text-anchor="middle" fill="#16a34a" font-size="10">Feeder topology · Pole → Meter → Customer · VMRS tier tags</text>
+                        <!-- Arrow -->
+                        <line x1="360" y1="158" x2="360" y2="196" stroke="#475569" stroke-width="1.5" marker-end="url(#arr-a)"/>
+                        <!-- Street Pole Gateway -->
+                        <rect x="60" y="196" width="600" height="50" rx="10" fill="#fefce8" stroke="#fde68a" stroke-width="1.5"/>
+                        <text x="360" y="218" text-anchor="middle" fill="#a16207" font-size="13" font-weight="700">Street Pole EMS Gateway (Reference Kit)</text>
+                        <text x="360" y="236" text-anchor="middle" fill="#ca8a04" font-size="10">Normalise vendor frames · DLMS/COSEM · OpenPAYGO token parse · Publish to MQTT</text>
+                        <!-- Arrow -->
+                        <line x1="360" y1="246" x2="360" y2="282" stroke="#475569" stroke-width="1.5" marker-end="url(#arr-a)"/>
+                        <!-- Meters -->
+                        <rect x="60" y="282" width="600" height="18" rx="8" fill="#fdf4ff" stroke="#e9d5ff" stroke-width="1.5"/>
+                        <text x="360" y="295" text-anchor="middle" fill="#7e22ce" font-size="11" font-weight="700">Multi-Vendor Meters: Calin · CHINT · Hexing · Savi/Donsun · OpenPAYGO</text>
+                    </svg>
+                    <p style="font-size:0.84rem; color: var(--text-muted); margin:0.5rem 0 0; text-align:center;">OpenAMI and Street Pole EMS are hardware threads inside ISV's shared metering practice — not certified standards, but validated field artifacts operators and vendors can point to.</p>
+                </div>
+            </section>
+
+            <!-- Panel 3: Why IEEE / ISV -->
+            <section class="tab-content" id="panel-why" role="tabpanel" aria-labelledby="tab-btn-why">
+                <div class="grid-2">
+                    <div class="card">
+                        <h2>Why IEEE</h2>
+                        <p>IEEE sits <strong>outside every product line</strong> in the mini-grid metering ecosystem. It has no meters to sell, no head-end to license, no integration margin to protect.</p>
+                        <p>That neutrality is exactly what the market cannot provide itself. EnAccess, Energy IoT, and individual OEMs all have legitimate roles — none can write the contract the others must accept.</p>
+                        <div class="highlight-box">
+                            <strong>IEEE can</strong> — and ISV's Technology Committee is building toward a rural energy metering ecosystem where open gateways compete on implementation, not lock-in.
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h2>What ISV's Tech Committee Publishes</h2>
+                        <div class="grid-3" style="margin-top:1rem; gap:12px;">
+                            <div style="background:var(--bg-card-hover);padding:1rem;border-radius:8px;border:1px solid var(--glass-border);">
+                                <h3 class="text-cyan" style="font-family:var(--font-display);font-size:0.82rem;margin-bottom:0.35rem;">Northbound MQTT Schema</h3>
+                                <p style="font-size:0.78rem;color:var(--text-secondary);margin:0;">Per-customer read envelope operators and billing platforms can agree on</p>
+                            </div>
+                            <div style="background:var(--bg-card-hover);padding:1rem;border-radius:8px;border:1px solid var(--glass-border);">
+                                <h3 class="text-purple" style="font-family:var(--font-display);font-size:0.82rem;margin-bottom:0.35rem;">VMRS Tier Matrix</h3>
+                                <p style="font-size:0.78rem;color:var(--text-secondary);margin:0;">Vendor Meter Rating Scheme — field-validated OEM capability tiers</p>
+                            </div>
+                            <div style="background:var(--bg-card-hover);padding:1rem;border-radius:8px;border:1px solid var(--glass-border);">
+                                <h3 class="text-orange" style="font-family:var(--font-display);font-size:0.82rem;margin-bottom:0.35rem;">POC Gap Matrices</h3>
+                                <p style="font-size:0.78rem;color:var(--text-secondary);margin:0;">Proof-of-concept gap analysis validated on real deployments — not lab simulations</p>
+                            </div>
+                            <div style="background:var(--bg-card-hover);padding:1rem;border-radius:8px;border:1px solid var(--glass-border);">
+                                <h3 class="text-green" style="font-family:var(--font-display);font-size:0.82rem;margin-bottom:0.35rem;">Vendor Benchmarks</h3>
+                                <p style="font-size:0.78rem;color:var(--text-secondary);margin:0;">OEM scorecards against the common northbound contract</p>
+                            </div>
+                            <div style="background:var(--bg-card-hover);padding:1rem;border-radius:8px;border:1px solid var(--glass-border);">
+                                <h3 class="text-cyan" style="font-family:var(--font-display);font-size:0.82rem;margin-bottom:0.35rem;">OpenAMI Asset Model</h3>
+                                <p style="font-size:0.78rem;color:var(--text-secondary);margin:0;">GeoJSON geo-asset hierarchy — feeder to customer, migration-safe</p>
+                            </div>
+                            <div style="background:var(--bg-card-hover);padding:1rem;border-radius:8px;border:1px solid var(--glass-border);">
+                                <h3 class="text-purple" style="font-family:var(--font-display);font-size:0.82rem;margin-bottom:0.35rem;">Street Pole EMS Kit</h3>
+                                <p style="font-size:0.78rem;color:var(--text-secondary);margin:0;">Pole-gateway reference hardware thread inside the same metering focus</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Panel 4: AMDA Benefits -->
+            <section class="tab-content" id="panel-amda" role="tabpanel" aria-labelledby="tab-btn-amda">
+                <div class="card">
+                    <h2>What This Means for AMDA Members Specifically</h2>
+                    <p>AMDA's membership spans the full mini-grid value chain. OpenAMI maps directly to the operational pain each segment faces:</p>
+                    <div class="audience-grid">
+                        <div class="audience-card">
+                            <h4 class="text-cyan">🏗️ Mini-Grid Developer / IPP</h4>
+                            <p>Scope procurement from VMRS tier sheet instead of copying utility tender boilerplate. Avoid MDMS lock-in from day one.</p>
+                        </div>
+                        <div class="audience-card">
+                            <h4 class="text-green">⚙️ Operator / O&M Firm</h4>
+                            <p>Per-customer reads and prepaid billing without buying a full utility stack. Theft flag built into gateway normalisation — visible without manual reads.</p>
+                        </div>
+                        <div class="audience-card">
+                            <h4 class="text-purple">🔌 Technology Integrator</h4>
+                            <p>Bid against a published northbound contract. Build once, deploy across operators on different OEM fleets without integration rewrites.</p>
+                        </div>
+                        <div class="audience-card">
+                            <h4 class="text-orange">🏛️ Policy / DFI Stakeholder</h4>
+                            <p>Reference artifacts to anchor technology-neutral procurement language in concession agreements and grant conditions.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>The Ecosystem Outcome ISV Is Building Toward</h2>
+                    <div class="grid-2" style="margin-top:1rem;">
+                        <div>
+                            <h3 class="text-cyan" style="font-family:var(--font-display);margin-bottom:0.5rem;">More Integrators Bidding</h3>
+                            <p>When the northbound contract is published and stable, any integrator can build to it — competitive market on implementation rather than proprietary APIs.</p>
+                            <h3 class="text-purple" style="font-family:var(--font-display);margin-bottom:0.5rem;margin-top:1.25rem;">Operators Mix OEM Fleets</h3>
+                            <p>Add Hexing meters to a feeder running Calin without a parallel billing stream. The gateway normalises; the asset model tracks both.</p>
+                        </div>
+                        <div>
+                            <h3 class="text-orange" style="font-family:var(--font-display);margin-bottom:0.5rem;">Migration Paths When Vendors Exit</h3>
+                            <p>Vendor exit is a real risk in SSA. If the northbound contract is stable and the asset model is open, operators migrate to a new OEM without data loss.</p>
+                            <h3 class="text-green" style="font-family:var(--font-display);margin-bottom:0.5rem;margin-top:1.25rem;">Open Gateways Compete on Quality</h3>
+                            <p>Gateway vendors differentiate on firmware maturity, uptime, and feature velocity — not on protocol lock-in.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Panel 5: EPRI Code Reuse -->
+            <section class="tab-content" id="panel-epri" role="tabpanel" aria-labelledby="tab-btn-epri">
+                <div class="card">
+                    <h2>Reusing EPRI Open-Source Code Blocks</h2>
+                    <p>EPRI has published two open-source repositories under <code>epri-dev</code> that OpenAMI can draw from directly. Both are licensed BSD-2-Clause — compatible with ISV's open-artifact publishing model.</p>
+                    <p>See the companion report <a href="/reports/epri-dev-software-audit.html" style="color:var(--accent-teal);font-weight:600;">EPRI Smart Grid Open-Source Stacks: Maturity Audit &amp; Hardening Specification (EMG-TECH-015)</a> for a full code and protocol-level review.</p>
+                </div>
+
+                <div class="epri-block">
+                    <h3>
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        epri-dev/DLMS-COSEM — Gateway Normalisation Layer
+                    </h3>
+                    <p>A C-language DLMS/COSEM stack implementing the IEC 62056 protocol spoken by the majority of electricity meters deployed in Africa (Calin, Hexing, CHINT, Landis+Gyr, Itron). This is OpenAMI's most immediately applicable EPRI block.</p>
+                    <p><strong>Use 1 — Gateway Normalisation (Street Pole EMS):</strong> The DLMS-COSEM stack provides OBIS code resolution, COSEM object parsing, and HDLC framing — exactly the translation logic OpenAMI places at the gateway edge. This eliminates the need for each integrator to independently write a meter-frame parser.</p>
+                    <p><strong>Use 2 — VMRS Benchmark Testing:</strong> The EPRI stack can serve as a neutral reference codec in VMRS lab tests, providing an open baseline against which OEM implementations are scored for conformance.</p>
+                    <p><span class="caveat-pill">Caveat</span> African deployments frequently use non-standard OBIS mappings not covered by the EPRI stack's default profiles (US/European). Any reuse requires an <strong>OBIS profile registry layer</strong> on top — field validation of African profiles is ISV's added-value contribution that no commercial player has done systematically.</p>
+                    <p style="margin:0;"><a href="https://github.com/epri-dev/DLMS-COSEM" target="_blank" rel="noopener" style="color:var(--accent-teal);font-weight:600;font-size:0.85rem;">→ github.com/epri-dev/DLMS-COSEM</a></p>
+                </div>
+
+                <div class="epri-block" style="border-left-color: var(--accent-teal);">
+                    <h3 style="color:var(--accent-teal);">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        epri-dev/IEEE-2030.5-Client — Northbound Transport Layer
+                    </h3>
+                    <p>An open-source C++ client framework for IEEE 2030.5 (SEP 2.0), covering DER resource messaging, TLS/certificate handling, and scheduler logic. More narrowly applicable than the DLMS-COSEM stack, but relevant for specific integration points.</p>
+                    <p><strong>Use 1 — DER Messaging Primitives:</strong> The IEEE 2030.5 MirrorUsagePoint structures map onto OpenAMI's northbound read envelope. Gateway implementations reporting to utility SCADA or donor monitoring platforms can link against the EPRI codec rather than writing their own XML/EXI parser.</p>
+                    <p><strong>Use 2 — TLS Mutual-Authentication Scaffold:</strong> Village-energy gateways reporting to donor aggregators (e.g., USAID-funded platforms) can reuse EPRI's certificate management utilities for the northbound TLS channel.</p>
+                    <p><span class="caveat-pill">Caveat</span> The EPRI client targets US DER utility use cases; its scheduler and event-handling logic assumes a full head-end server on the other side. OpenAMI should adopt <strong>only the codec and transport layers</strong> — not the application stack. The SEP 2.0 profile itself may need adaptation for PAYG mini-grid semantics not present in US DER standards.</p>
+                    <p style="margin:0;"><a href="https://github.com/epri-dev/IEEE-2030.5-Client" target="_blank" rel="noopener" style="color:var(--accent-teal);font-weight:600;font-size:0.85rem;">→ github.com/epri-dev/IEEE-2030.5-Client</a></p>
+                </div>
+
+                <div class="card">
+                    <h2>Reuse Summary Matrix</h2>
+                    <table class="layer-table">
+                        <thead>
+                            <tr>
+                                <th>EPRI Repo</th>
+                                <th>OpenAMI Use Case</th>
+                                <th>Adoption Scope</th>
+                                <th>Key Gap</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>DLMS-COSEM</td>
+                                <td>Street Pole EMS gateway frame parsing; VMRS benchmark codec</td>
+                                <td>OBIS resolver + HDLC framing layer only</td>
+                                <td>African OBIS profile variants need registry overlay</td>
+                            </tr>
+                            <tr>
+                                <td>IEEE-2030.5-Client</td>
+                                <td>Northbound TLS transport to utility/donor aggregators; MirrorUsagePoint codec</td>
+                                <td>Codec + TLS layer only; not application scheduler</td>
+                                <td>SEP 2.0 profile needs PAYG semantic adaptation</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Panel 6: Next Steps -->
+            <section class="tab-content" id="panel-next" role="tabpanel" aria-labelledby="tab-btn-next">
+                <div class="card">
+                    <h2>Concrete Next Steps for AMDA</h2>
+                    <ol class="step-list">
+                        <li><strong>Map your members' meter OEM fleet</strong> against the OpenAMI VMRS tier matrix — identify which vendors already publish parseable DLMS frames and which require custom gateway normalisation adapters.</li>
+                        <li><strong>Pilot a Street Pole EMS gateway kit</strong> on one active feeder with DLMS/COSEM-capable meters, using the EPRI DLMS-COSEM stack as the parsing layer. Target a feeder where theft visibility is an active operational problem.</li>
+                        <li><strong>Contribute field-derived African OBIS profiles</strong> back to the ISV knowledge base — this is the interoperability data the ecosystem is missing and that ISV's neutral position makes possible to aggregate.</li>
+                        <li><strong>Embed the northbound MQTT contract</strong> in AMDA's model procurement annex so future tenders create a competitive, multi-vendor market by default — not a closed bundle competition.</li>
+                    </ol>
+                </div>
+
+                <div class="card">
+                    <h2>Resources</h2>
+                    <div>
+                        <div class="resource-row">
+                            <span class="resource-label">⚡ ISV Knowledge Base — OpenAMI, Street Pole EMS, VMRS</span>
+                            <a href="https://overview-solutions.github.io/isv-ai-wiki/" target="_blank" rel="noopener" class="resource-link">overview-solutions.github.io/isv-ai-wiki</a>
+                        </div>
+                        <div class="resource-row">
+                            <span class="resource-label">🔌 EPRI DLMS-COSEM Stack (BSD-2-Clause)</span>
+                            <a href="https://github.com/epri-dev/DLMS-COSEM" target="_blank" rel="noopener" class="resource-link">github.com/epri-dev/DLMS-COSEM</a>
+                        </div>
+                        <div class="resource-row">
+                            <span class="resource-label">📡 EPRI IEEE 2030.5 Client (BSD-2-Clause)</span>
+                            <a href="https://github.com/epri-dev/IEEE-2030.5-Client" target="_blank" rel="noopener" class="resource-link">github.com/epri-dev/IEEE-2030.5-Client</a>
+                        </div>
+                        <div class="resource-row">
+                            <span class="resource-label">🌍 ISV AI Wiki GitHub Source</span>
+                            <a href="https://github.com/overview-solutions/isv-ai-wiki" target="_blank" rel="noopener" class="resource-link">github.com/overview-solutions/isv-ai-wiki</a>
+                        </div>
+                        <div class="resource-row">
+                            <span class="resource-label">🏢 AMDA — Africa Minigrid Developers Association</span>
+                            <a href="https://www.africamda.org/" target="_blank" rel="noopener" class="resource-link">africamda.org</a>
+                        </div>
+                        <div class="resource-row">
+                            <span class="resource-label">📄 EPRI Software Audit (this series) — EMG-TECH-015</span>
+                            <a href="/reports/epri-dev-software-audit.html" class="resource-link">View Report →</a>
+                        </div>
+                        <div class="resource-row">
+                            <span class="resource-label">📄 OpenAMI Strategic Report — EMG-REG-008</span>
+                            <a href="/reports/openami-strategic-report.html" class="resource-link">View Report →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="text-align:center; padding: 2rem;">
+                    <p style="font-size:0.82rem; color:var(--text-muted); margin:0;">
+                        <strong>IEEE Smart Village · ISV Technology Committee</strong><br>
+                        OpenAMI and Street Pole EMS are reference artifacts, not certified IEEE standards.<br>
+                        Document reference: <strong>EMG-PITCH-019</strong> · June 2026
+                    </p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p>© 2026 Cottonspace / Dev Labs · <strong>sattal.cottonspace.com</strong> · OpenAMI AMDA Technical Pitch EMG-PITCH-019</p>
+    </footer>
+
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.setAttribute('aria-selected', 'false');
+            });
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            const targetBtn = document.getElementById('tab-btn-' + tabId);
+            const targetContent = document.getElementById('panel-' + tabId);
+            if (targetBtn && targetContent) {
+                targetBtn.classList.add('active');
+                targetBtn.setAttribute('aria-selected', 'true');
+                targetContent.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
