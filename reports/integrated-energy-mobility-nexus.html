@@ -317,10 +317,12 @@
       content.classList.remove('active');
     });
     const targetBtn = document.getElementById('tab-btn-' + tabId);
-    const targetContent = document.getElementById('panel-' + tabId);
-    if (targetBtn && targetContent) {
+    if (targetBtn) {
       targetBtn.classList.add('active');
       targetBtn.setAttribute('aria-selected', 'true');
+    }
+    const targetContent = document.getElementById('panel-' + tabId);
+    if (targetContent) {
       targetContent.classList.add('active');
     }
   }
