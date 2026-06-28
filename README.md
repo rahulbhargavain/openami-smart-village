@@ -39,12 +39,13 @@ wiki/
 
 ## 📂 The Technical & Strategic Reports Catalog
 
-This repository archives **19 active, publication-grade technical reference specifications, regulatory policy frameworks, engineering audits, and strategic capitalization prospectuses** that support OpenAMI and IEEE Smart Village operations across South Asia and Sub-Saharan Africa (SSA). All reports are maintained under git version control and deployed as interactive, responsive, multi-tabbed dashboards.
+This repository archives **20 active, publication-grade technical reference specifications, regulatory policy frameworks, engineering audits, and strategic capitalization prospectuses** that support OpenAMI and IEEE Smart Village operations across South Asia and Sub-Saharan Africa (SSA). All reports are maintained under git version control and deployed as interactive, responsive, multi-tabbed dashboards.
 
 ### 📋 Registry of Active Reports (EMG Suite)
 
 | Document ID | Category | Title | Live Portal URL (Firebase) |
 | :--- | :--- | :--- | :--- |
+| **EMG-EVAL-021** | Portfolio Study | Integrated Mini-Grid &amp; Productive-Use Mobility Ecosystem Nexus | [integrated-energy-mobility-nexus](https://sattal.cottonspace.com/reports/integrated-energy-mobility-nexus) |
 | **EMG-EVAL-020** | Portfolio Study | EEP Africa Mini-Grid Study: Opportunities &amp; Challenges | [eep-minigrid-sector-africa](https://sattal.cottonspace.com/reports/eep-minigrid-sector-africa) |
 | **EMG-TECH-018** | Technical Spec | Filtered AI Architecture & OPAI Use-Case Matrix | [minigrid-opai-software-audit](https://sattal.cottonspace.com/reports/minigrid-opai-software-audit) |
 | **EMG-TECH-017** | Technical Spec | Power Quality (PQ) Management in Decentralized Mini-Grids | [minigrid-power-quality](https://sattal.cottonspace.com/reports/minigrid-power-quality) |
@@ -61,13 +62,18 @@ This repository archives **19 active, publication-grade technical reference spec
 | **EMG-NEX-004** | Regulatory/Policy | The Decentralized Energy Nexus: Solar-Biomass-eATV Loop | [cse-minigrid-biofuels-synthesis](https://sattal.cottonspace.com/reports/cse-minigrid-biofuels-synthesis) |
 | **EMG-CRIT-012** | Critique/Audit | MicroPowerManager: Architectural & Regulatory Critique | [micropowermanager-critique](https://sattal.cottonspace.com/reports/micropowermanager-critique) |
 | **TXE-CR-001** | Critique/Audit | Motrike TrikeXplor E-Truck Design & Upgrade Roadmap | [trikexplor-etruck-critique](https://sattal.cottonspace.com/reports/trikexplor-etruck-critique) |
-| **EMG-PITCH-007**| Capital Strategy | OpenAMI & IEEE Smart Village: Pan-African Pitch Blueprint | [openami-funding-pitch](https://sattal.cottonspace.com/reports/openami-funding-pitch) |
-| **EMG-PITCH-002**| Capital Strategy | eATV MiniGrid Nexus: SSA + South Asia Expansion Pitch | [eatv-minigrid-pitch](https://sattal.cottonspace.com/reports/eatv-minigrid-pitch) |
-| **EMG-SSA-V001**| Capital Strategy | Electric Cargo Vehicles as Productive-Use Anchors for SSA | [eATV-minigrid-ssa-vehicles](https://sattal.cottonspace.com/reports/eATV-minigrid-ssa-vehicles) |
+| **EMG-PITCH-007** | Capital Strategy | OpenAMI & IEEE Smart Village: Pan-African Pitch Blueprint | [openami-funding-pitch](https://sattal.cottonspace.com/reports/openami-funding-pitch) |
+| **EMG-PITCH-002** | Capital Strategy | eATV MiniGrid Nexus: SSA + South Asia Expansion Pitch | [eatv-minigrid-pitch](https://sattal.cottonspace.com/reports/eatv-minigrid-pitch) |
+| **EMG-SSA-V001** | Capital Strategy | Electric Cargo Vehicles as Productive-Use Anchors for SSA | [eATV-minigrid-ssa-vehicles](https://sattal.cottonspace.com/reports/eATV-minigrid-ssa-vehicles) |
 
 ---
 
 ### 🔑 Key Deep-Dive Technical Highlights
+
+#### ☀️ [Integrated Mini-Grid &amp; Productive-Use Mobility Ecosystem Nexus (EMG-EVAL-021)](https://sattal.cottonspace.com/reports/integrated-energy-mobility-nexus)
+* **Techno-Economic Modeling:** Maps capital expenditures (from $2,800 to $10,000) and Pay-As-You-Go monthly terms ($45 to $160/month) for electric cargo vehicles (eATVs) against conventional diesel tractor equivalents ($0.80 to $1.20/km).
+* **The PUE Liquidity Trap:** Challenges core planning assumptions of off-grid solar mini-grids, detailing the agricultural cooperative credit gap that maintains base load factors under 25% despite co-located assets.
+* **Grid Code &amp; Safety Hardening:** Recommends structural mechanical upgrades to utility cargo vehicle suspension (Gabriel/Uno Minda) and braking, delta-wye transformer zero-sequence triplen harmonic traps, and 6mA DC/30mA AC Type B RCD life-safety solid-state disconnection.
 
 #### 🔌 [EPRI Smart Grid Open-Source Stacks Audit & Hardening (EMG-TECH-015)](https://sattal.cottonspace.com/reports/epri-dev-software-audit)
 * **Code Audit & Gap Mapping:** Audits `epri-dev/DLMS-COSEM` C++ library files, exposing missing Interface Classes (Class 7 Profiles, Class 70 Disconnects, Class 18 OTA) and High-Level Security (HLS) deficiencies needed for Calin/Hexing edge meters.
