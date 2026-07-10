@@ -42,7 +42,7 @@
 
 <nav>
   <div class="nav-inner">
-    <a href="#" onclick="switchTab('exec')">Executive Summary</a>
+    <a href="#" class="active" onclick="switchTab('exec')">Executive Summary</a>
     <a href="#" onclick="switchTab('assumptions')">Context &amp; Assumptions</a>
     <a href="#" onclick="switchTab('analysis')">Techno-Economic Analysis</a>
     <a href="#" onclick="switchTab('risks')">Systemic Risks</a>
@@ -51,6 +51,15 @@
 </nav>
 
 <main class="container">
+
+  <!-- TAB NAV -->
+  <div class="tab-nav" role="tablist">
+    <button class="tab-btn active" id="tab-btn-exec" role="tab" aria-selected="true" aria-controls="panel-exec" onclick="switchTab('exec')">01 · Executive Summary</button>
+    <button class="tab-btn" id="tab-btn-assumptions" role="tab" aria-selected="false" aria-controls="panel-assumptions" onclick="switchTab('assumptions')">02 · Context &amp; Assumptions</button>
+    <button class="tab-btn" id="tab-btn-analysis" role="tab" aria-selected="false" aria-controls="panel-analysis" onclick="switchTab('analysis')">03 · Techno-Economic Analysis</button>
+    <button class="tab-btn" id="tab-btn-risks" role="tab" aria-selected="false" aria-controls="panel-risks" onclick="switchTab('risks')">04 · Systemic Risks &amp; Recs</button>
+    <button class="tab-btn" id="tab-btn-refs" role="tab" aria-selected="false" aria-controls="panel-refs" onclick="switchTab('refs')">05 · References</button>
+  </div>
 
   <!-- TAB 01: EXECUTIVE SUMMARY -->
   <section class="tab-content active" id="panel-exec" role="tabpanel" aria-labelledby="tab-btn-exec">
@@ -235,6 +244,98 @@
         </tbody>
       </table>
     </div>
+
+    <div class="card" style="margin-top: 2rem;">
+      <h2>Ecosystem Nexus: Thermodynamic, Mobility &amp; Grid Integration Loop</h2>
+      <div class="diagram-box">
+        <div class="diagram-title">⛓️ Integrated Mini-Grid, eATV Fleet, and CCHHP Processing Loop</div>
+        <svg viewBox="0 0 900 370" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg"
+             style="background:#ffffff; border-radius:12px; border:1px solid #cbd5e1; font-family:'Inter',system-ui,sans-serif; display:block; margin:16px 0;">
+          <defs>
+            <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10z" fill="#16a34a"/>
+            </marker>
+            <marker id="arr-teal" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10z" fill="#0891b2"/>
+            </marker>
+            <marker id="arr-orange" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10z" fill="#ea580c"/>
+            </marker>
+            <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10z" fill="#2563eb"/>
+            </marker>
+            <marker id="arr-amber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10z" fill="#d97706"/>
+            </marker>
+          </defs>
+
+          <!-- 1. Mini-Grid Power Hub -->
+          <rect x="30" y="130" width="200" height="95" rx="10" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+          <text x="130" y="152" text-anchor="middle" fill="#15803d" font-size="11" font-weight="800">SOLAR PV &amp; BESS HUB</text>
+          <text x="130" y="168" text-anchor="middle" fill="#16a34a" font-size="9.5" font-weight="600">3 kW – 100 kW Capacity</text>
+          <text x="130" y="184" text-anchor="middle" fill="#475569" font-size="9">Midday Solar Surplus Pool</text>
+          <text x="130" y="198" text-anchor="middle" fill="#475569" font-size="9">Base Load Factor &lt;25%</text>
+          <text x="130" y="212" text-anchor="middle" fill="#dc2626" font-size="8.5" font-weight="700">MYTO loss cap audit node</text>
+
+          <!-- 2. Power Quality Controls (Top Center) -->
+          <rect x="295" y="20" width="310" height="70" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+          <text x="450" y="42" text-anchor="middle" fill="#1d4ed8" font-size="10.5" font-weight="800">3P4W ACTIVE POWER QUALITY CONTROL</text>
+          <text x="450" y="58" text-anchor="middle" fill="#2563eb" font-size="9" font-weight="600">Asymmetric Inverter Loop (Fledge/OpenFMB)</text>
+          <text x="450" y="72" text-anchor="middle" fill="#475569" font-size="8.5">Delta-Wye Zero-Sequence Triplen Harmonic Trap</text>
+
+          <!-- 3. Copeland Scroll Compressor (Center) -->
+          <rect x="360" y="140" width="180" height="75" rx="12" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+          <text x="450" y="162" text-anchor="middle" fill="#c2410c" font-size="11" font-weight="800">COPELAND SCROLL</text>
+          <text x="450" y="178" text-anchor="middle" fill="#ea580c" font-size="9" font-weight="600">COMPRESSOR CORE</text>
+          <text x="450" y="192" text-anchor="middle" fill="#7c2d12" font-size="9">Combined COP: 6.2 – 6.6</text>
+          <text x="450" y="206" text-anchor="middle" fill="#b45309" font-size="8.5" font-weight="700">ZR/ZB Scroll compliance</text>
+
+          <!-- 4. eATV Fleet Charging & Swap Station (Bottom Center) -->
+          <rect x="295" y="265" width="310" height="80" rx="10" fill="#fefce8" stroke="#d97706" stroke-width="1.5"/>
+          <text x="450" y="285" text-anchor="middle" fill="#b45309" font-size="10.5" font-weight="800">eATV FLEET CHARGING &amp; SWAP STATION</text>
+          <text x="450" y="300" text-anchor="middle" fill="#ca8a04" font-size="9" font-weight="600">Midday Solar Absorption Peak ($1.00/session)</text>
+          <text x="450" y="315" text-anchor="middle" fill="#475569" font-size="8.5">PUE Cargo Trikes (Lite / Pro / Heavy)</text>
+          <text x="450" y="330" text-anchor="middle" fill="#15803d" font-size="8.5" font-weight="700">V2G Peak Discharge Backfeed</text>
+
+          <!-- 5. Crop Dehydration Tray Chamber (Right Top) -->
+          <rect x="650" y="55" width="220" height="75" rx="10" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+          <text x="760" y="78" text-anchor="middle" fill="#c2410c" font-size="11" font-weight="800">CROP DRYING CHAMBER</text>
+          <text x="760" y="94" text-anchor="middle" fill="#7c2d12" font-size="9">Tray dryer (400–600 kg capacity)</text>
+          <text x="760" y="110" text-anchor="middle" fill="#ea580c" font-size="9" font-weight="700">Condenser Waste Heat: 55°C–65°C</text>
+
+          <!-- 6. PCM Milk Chilling Vault (Right Bottom) -->
+          <rect x="650" y="210" width="220" height="75" rx="10" fill="#ecfeff" stroke="#0891b2" stroke-width="1.5"/>
+          <text x="760" y="232" text-anchor="middle" fill="#0e7490" font-size="11" font-weight="800">PCM MILK CHILLING VAULT</text>
+          <text x="760" y="248" text-anchor="middle" fill="#164e63" font-size="9">Dual 500L Bulk Milk Chillers</text>
+          <text x="760" y="264" text-anchor="middle" fill="#0891b2" font-size="9" font-weight="700">Water-Ice Latent Battery (334 kJ/kg)</text>
+
+          <!-- Flow Connections -->
+          <!-- Power Hub -> Compressor -->
+          <path d="M 230 178 L 360 178" fill="none" stroke="#16a34a" stroke-width="2" marker-end="url(#arr-green)"/>
+          <text x="295" y="170" text-anchor="middle" fill="#15803d" font-size="9" font-weight="700">Compressor Load</text>
+
+          <!-- Power Hub -> eATV Charging -->
+          <path d="M 130 225 L 130 305 L 295 305" fill="none" stroke="#16a34a" stroke-width="2" marker-end="url(#arr-green)"/>
+          <text x="200" y="297" text-anchor="middle" fill="#15803d" font-size="9" font-weight="700">Midday Charge</text>
+
+          <!-- eATV -> Power Hub (V2G) -->
+          <path d="M 295 320 L 110 320 L 110 225" fill="none" stroke="#d97706" stroke-width="1.5" stroke-dasharray="3 2" marker-end="url(#arr-amber)"/>
+          <text x="200" y="333" text-anchor="middle" fill="#b45309" font-size="8.5" font-weight="700">V2G Peak Return</text>
+
+          <!-- Compressor -> Crop Dryer (High Side Waste Heat) -->
+          <path d="M 490 140 L 490 92 L 650 92" fill="none" stroke="#ea580c" stroke-width="2" marker-end="url(#arr-orange)"/>
+          <text x="575" y="84" text-anchor="middle" fill="#c2410c" font-size="9" font-weight="700">High-Grade Gas</text>
+
+          <!-- Compressor -> PCM Vault (Low Side Chilling) -->
+          <path d="M 490 215 L 490 248 L 650 248" fill="none" stroke="#0891b2" stroke-width="2" marker-end="url(#arr-teal)"/>
+          <text x="575" y="240" text-anchor="middle" fill="#0e7490" font-size="9" font-weight="700">Sub-Zero Loop</text>
+
+          <!-- Power Quality -> Compressor & Hub control link -->
+          <path d="M 450 90 L 450 140" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="2 2" marker-end="url(#arr-blue)"/>
+          <path d="M 295 55 L 180 55 L 180 130" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="2 2" marker-end="url(#arr-blue)"/>
+        </svg>
+      </div>
+    </div>
   </section>
 
   <!-- TAB 04: SYSTEMIC RISKS & RECOMMENDATIONS -->
@@ -292,12 +393,27 @@
       <p class="sec-desc">Standard documents and guidelines referenced in this analysis.</p>
     </div>
     <div class="card">
-      <ol class="ref-list">
-        <li>NERC Multi-Year Tariff Order (MYTO).</li>
-        <li>IEEE Standard 90-1987: Recommended Practice for Electric Power Systems.</li>
-        <li>IFC Guidelines on Off-Grid Solar Energy Investments.</li>
-        <li>World Bank Report on Rural Electrification Challenges in Sub-Saharan Africa.</li>
-      </ol>
+      <ul class="ref-list">
+        <li><span class="ref-num">[1]</span> Nigerian Electricity Regulatory Commission (NERC). <em>Multi-Year Tariff Order (MYTO) II for the Determination of the Cost of Transmission Services</em>. Abuja, Nigeria, 2015. <a href="https://nerc.gov.ng" target="_blank" rel="noopener">nerc.gov.ng</a></li>
+        <li><span class="ref-num">[2]</span> IEEE Standards Association. <em>IEEE Std 1547-2018: Standard for Interconnection and Interoperability of Distributed Energy Resources with Associated Transmission Systems Interfaces</em>. IEEE Press, New York, 2018. <a href="https://standards.ieee.org/ieee/1547/5863/" target="_blank" rel="noopener">standards.ieee.org/ieee/1547</a></li>
+        <li><span class="ref-num">[3]</span> International Finance Corporation (IFC). <em>Operational and Financial Performance of Mini-grid Descos: Findings and Insights</em>. World Bank Group, 2017. <a href="https://www.ifc.org" target="_blank" rel="noopener">ifc.org</a></li>
+        <li><span class="ref-num">[4]</span> World Bank Group &amp; ESMAP. <em>Mini-Grids for Half a Billion People: Market Outlook and Handbook for Decision Makers</em>. Washington DC, 2022. <a href="https://esmap.org" target="_blank" rel="noopener">esmap.org</a></li>
+        <li><span class="ref-num">[5]</span> IEEE. <em>IEEE Code of Ethics, Section 1.1: Hold paramount the safety, health, and welfare of the public</em>. IEEE Corporate Governance, 2020. <a href="https://www.ieee.org/about/corporate/governance/p7-8.html" target="_blank" rel="noopener">ieee.org/ethics</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== RELATED REPORTS (auto-injected) ===== -->
+  <section style="padding: 2rem 0 0;">
+    <div class="card">
+      <h3 style="color: var(--accent-teal); margin-bottom: 1rem; font-size: 1rem; border-bottom: 2px solid var(--border); padding-bottom: 0.5rem;">&#128279; Related Reports in This Suite</h3>
+      <ul style="list-style:none;padding:0;margin:0;">
+      <li style="padding: 10px 0; border-bottom: 1px solid var(--border);"><span style="display:inline-block;min-width:120px;font-weight:700;color:var(--accent-teal);font-size:0.82rem;">EMG-EVAL-020</span> <a href="https://sattal.cottonspace.com/reports/eep-minigrid-sector-africa" rel="noopener"><strong>EEP Africa Mini-Grid Portfolio Study</strong></a><br><span style="font-size:0.82rem;color:var(--text-secondary);margin-left:128px;">Portfolio evidence: productive-use loads like dairy processing as anchor loads for mini-grid viability.</span></li>
+      <li style="padding: 10px 0; border-bottom: 1px solid var(--border);"><span style="display:inline-block;min-width:120px;font-weight:700;color:var(--accent-teal);font-size:0.82rem;">EMG-PITCH-002</span> <a href="https://sattal.cottonspace.com/reports/eatv-minigrid-pitch" rel="noopener"><strong>eATV MiniGrid Nexus Expansion Pitch</strong></a><br><span style="font-size:0.82rem;color:var(--text-secondary);margin-left:128px;">Strategic complement: e-cargo vehicles as the distribution backbone for chilled-produce logistics.</span></li>
+      <li style="padding: 10px 0; border-bottom: 1px solid var(--border);"><span style="display:inline-block;min-width:120px;font-weight:700;color:var(--accent-teal);font-size:0.82rem;">EMG-SSA-V001</span> <a href="https://sattal.cottonspace.com/reports/eATV-minigrid-ssa-vehicles" rel="noopener"><strong>Electric Cargo Vehicles as Productive-Use Anchors</strong></a><br><span style="font-size:0.82rem;color:var(--text-secondary);margin-left:128px;">Detailed vehicle specs for e-refrigerated transport linking farm gate to cooperative cold rooms.</span></li>
+      <li style="padding: 10px 0; border-bottom: 1px solid var(--border);"><span style="display:inline-block;min-width:120px;font-weight:700;color:var(--accent-teal);font-size:0.82rem;">EMG-TECH-014</span> <a href="https://sattal.cottonspace.com/reports/cchhp-milk-chilling-drying" rel="noopener"><strong>CCHHP for Rural Agro-Processing</strong></a><br><span style="font-size:0.82rem;color:var(--text-secondary);margin-left:128px;">Combined cooling &amp; heating heat pump for dairy cold chains — a key productive-use anchor load.</span></li>
+      <li style="padding: 10px 0; border-bottom: none;"><span style="display:inline-block;min-width:120px;font-weight:700;color:var(--accent-teal);font-size:0.82rem;">EMG-REG-003</span> <a href="https://sattal.cottonspace.com/reports/nerc-afur-minigrid-tariffs" rel="noopener"><strong>Prepaid Metering &amp; NERC Tariff Regulations</strong></a><br><span style="font-size:0.82rem;color:var(--text-secondary);margin-left:128px;">Regulatory framework for grid-arrival compensation and mini-grid tariff structures.</span></li>
+      </ul>
     </div>
   </section>
 
@@ -325,6 +441,14 @@
     if (targetContent) {
       targetContent.classList.add('active');
     }
+    
+    // Update navbar active link styling
+    document.querySelectorAll('.nav-inner a').forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('onclick') && link.getAttribute('onclick').includes(tabId)) {
+        link.classList.add('active');
+      }
+    });
   }
 </script>
 
